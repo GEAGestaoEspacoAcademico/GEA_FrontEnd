@@ -1,6 +1,6 @@
 # 📅 Projeto de Agendamento de Aulas - Frontend
 
-Este repositório contém a **parte de frontend** do sistema de **Agendamento de Aulas da FATEC Itu**, desenvolvido em **Angular**.  
+Este repositório contém a **parte de frontend** do sistema de **GEA - Gestão de espaços acadêmicos**, desenvolvido em **Angular**.  
 O objetivo do projeto é fornecer uma interface moderna, intuitiva e responsiva para que professores e administradores possam gerenciar seus agendamentos de forma prática.
 
 ---
