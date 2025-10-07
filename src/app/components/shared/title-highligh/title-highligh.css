@@ -1,0 +1,38 @@
+.title-highlight {
+  display: inline-block;
+
+  .title-text {
+    font-family: 'Times New Roman', serif;
+    color: #333333;
+    font-size: 1.75rem;
+    font-weight: bold;
+    position: relative;
+    margin-bottom: 0;
+    margin-left: 5px;
+    line-height: 1.1;
+  }
+
+  .title-underline {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 4px;
+    margin-top: 2px;
+    margin-left: 5px;
+  }
+
+  .line-thick {
+    background-color: #B22222;
+    height: 4px;
+    width: 60px;
+    border-radius: 2px;
+  }
+
+  .line-thin {
+    background-color: #B22222;
+    height: 2px;
+    width: 80px;
+    opacity: 0.6;
+    border-radius: 1px;
+  }
+}
