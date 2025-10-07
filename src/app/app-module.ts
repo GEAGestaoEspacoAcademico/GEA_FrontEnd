@@ -11,7 +11,7 @@ import { Header } from './components/shared/header/header';
 @NgModule({
   declarations: [
     App,
-    Header
+    Header,
     TitleHighligh
   ],
   imports: [
