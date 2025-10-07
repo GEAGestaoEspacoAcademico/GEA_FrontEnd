@@ -12,6 +12,7 @@ import { Header } from './components/shared/header/header';
   declarations: [
     App,
     Header
+    TitleHighligh
   ],
   imports: [
     BrowserModule,
