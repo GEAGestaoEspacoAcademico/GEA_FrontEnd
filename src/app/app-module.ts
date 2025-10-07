@@ -6,11 +6,12 @@ import { App } from './app';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { TitleHighligh } from './components/shared/title-highligh/title-highligh';
+import { Header } from './components/shared/header/header';
 
 @NgModule({
   declarations: [
     App,
+    Header,
     TitleHighligh
   ],
   imports: [
