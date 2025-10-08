@@ -1,0 +1,12 @@
+<div class="day-selector d-flex justify-content-center gap-2 overflow-auto py-2">
+  <div class="day-item text-center p-2 rounded"
+    *ngFor="let day of days"
+    [ngClass]="{'active text-danger fw-bold border border-danger': day.id === activeDayId, 'text-secondary': day.id !== activeDayId}"
+    role="button"
+    tabindex="0"
+    (click)="selectDay(day.id)"
+  >
+    <div class="day-date fs-5">{{ day.date }}</div>
+    <div class="day-week text-lowercase">{{ day.dayOfWeek }}</div>
+  </div>
+</div>

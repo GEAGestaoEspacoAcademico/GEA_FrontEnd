@@ -6,10 +6,12 @@ import { App } from './app';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { DaySelector } from './components/shared/day-selector/day-selector';
 
 @NgModule({
   declarations: [
-    App
+    App,
+    DaySelector
   ],
   imports: [
     BrowserModule,
