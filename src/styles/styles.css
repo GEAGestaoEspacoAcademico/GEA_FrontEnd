@@ -48,6 +48,11 @@ body {
   font-weight: var(--font-weight-bold);
 }
 
+.tabbar-text{
+  font-family: var(--font-family-primary);
+  font-size: 10px;
+}
+
 /*Desktop*/
 
 @media (min-width: 768px) {

@@ -9,13 +9,15 @@ import { environment } from '../environments/environment';
 import { Header } from './components/shared/header/header';
 import { TitleHighligh } from './components/shared/title-highligh/title-highligh';
 import { provideHttpClient } from '@angular/common/http';
-import { MatIconModule } from '@angular/material/icon'
+import { MatIconModule } from '@angular/material/icon';
+import { TabBar } from './components/shared/tab-bar/tab-bar'
 
 @NgModule({
   declarations: [
     App,
     Header,
-    TitleHighligh
+    TitleHighligh,
+    TabBar
   ],
   imports: [
     BrowserModule,
