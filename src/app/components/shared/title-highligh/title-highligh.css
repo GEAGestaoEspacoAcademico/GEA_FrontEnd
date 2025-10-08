@@ -2,10 +2,6 @@
   display: inline-block;
 
   .title-text {
-    font-family: 'Times New Roman', serif;
-    color: #333333;
-    font-size: 1.75rem;
-    font-weight: bold;
     position: relative;
     margin-bottom: 0;
     margin-left: 5px;
@@ -17,19 +13,19 @@
     align-items: center;
     width: 100%;
     height: 4px;
-    margin-top: 2px;
+    margin-top: 0px;
     margin-left: 5px;
   }
 
   .line-thick {
-    background-color: #B22222;
+    background-color: var(--color-primary-700);
     height: 4px;
     width: 60px;
     border-radius: 2px;
   }
 
   .line-thin {
-    background-color: #B22222;
+    background-color: var(--color-primary-700);
     height: 2px;
     width: 80px;
     opacity: 0.6;
