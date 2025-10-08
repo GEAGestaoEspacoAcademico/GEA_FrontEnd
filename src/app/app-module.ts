@@ -7,11 +7,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { TitleHighligh } from './components/shared/title-highligh/title-highligh';
+import { ClassInfoCard } from './components/class-info-card/class-info-card';
 
 @NgModule({
   declarations: [
     App,
-    TitleHighligh
+    TitleHighligh,
+    ClassInfoCard
   ],
   imports: [
     BrowserModule,
