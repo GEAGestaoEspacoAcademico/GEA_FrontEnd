@@ -1,0 +1,18 @@
+.day-selector {
+  white-space: nowrap;
+}
+
+.day-item {
+  min-width: 60px;
+  transition: all 0.2s ease-in-out;
+}
+
+.day-item:hover {
+  background-color: #f8f9fa;
+  transform: translateY(-2px);
+  cursor: pointer;
+}
+
+.day-item.active {
+  background-color: #ffe6e6;
+}
