@@ -1,0 +1,80 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="generic-form">
+  <div class="form-inputs-contain"></div>
+  @for (field of fields; track field.name; let isLast = $last) {
+    <div class="form-group" [class.is-last-item]="isLast">
+      <label [for]="field.name">{{ field.label }}</label>
+
+      @switch (field.type) {
+
+        @case ('date') {
+          <input 
+            type="date" 
+            [id]="field.name" 
+            [formControlName]="field.name" 
+            class="form-control captions">
+        }
+
+        @case ('select') {
+          <select 
+            [id]="field.name" 
+            [formControlName]="field.name" 
+            class="form-control captions">
+            <option [value]="null">{{ field.placeholder || 'Selecione...' }}</option>
+            @for (option of field.options; track option.value) {
+              <option [value]="option.value">{{ option.label }}</option>
+            }
+          </select>
+        }
+        @case ('multi-select') {
+          <div class="multi-select-container">
+            <div class="chips-box">
+              <mat-chip-grid #chipGrid>
+                @for (selectedValue of form.get(field.name)?.value; track selectedValue) {
+                  <mat-chip (removed)="onChipRemoved(field, selectedValue)">
+                    {{ getOptionLabel(field.options, selectedValue) }}
+                    <button matChipRemove>
+                      <mat-icon>cancel</mat-icon>
+                    </button>
+                  </mat-chip>
+                }
+              </mat-chip-grid>
+
+              <input
+                type="text"
+                id="software-input"
+                matInput
+                placeholder="Adicinoar software"
+                [formControl]="softwareCtrl"
+                [matAutocomplete]="auto"
+                [matChipInputFor]="chipGrid"
+                class="simple-input"
+              />
+
+              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="softwareSelected($event, field)">
+                @for (option of filteredOptions | async; track option.value) {
+                  <mat-option [value]="option.value">{{ option.label }}</mat-option>
+                }
+              </mat-autocomplete>
+            </div>
+          </div>
+
+        }
+
+        @default {
+          <p>Tipo de campo não suportado: {{ field.type }}</p>
+        }
+      }
+    </div>
+  }
+
+  <div class="form-actions">
+    @if(cancelButtonText !== undefined){
+        <button type="button" class="cancel-button">
+          {{ cancelButtonText }}
+        </button>
+    }
+    <button type="submit" [disabled]="form.invalid" class="submit-button gea-btn">
+      {{ submitButtonText || 'Salvar' }}
+    </button>
+  </div>
+</form>
