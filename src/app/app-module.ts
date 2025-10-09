@@ -11,7 +11,8 @@ import { Header } from './components/shared/header/header';
 import { TitleHighligh } from './components/shared/title-highligh/title-highligh';
 import { provideHttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
-import { TabBar } from './components/shared/tab-bar/tab-bar'
+import { TabBar } from './components/shared/tab-bar/tab-bar';
+import { ConfirmationModal } from './components/shared/confirmation-modal/confirmation-modal'
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TabBar } from './components/shared/tab-bar/tab-bar'
     DaySelector,
     Header,
     TitleHighligh,
-    TabBar
+    TabBar,
+    ConfirmationModal
   ],
   imports: [
     BrowserModule,
