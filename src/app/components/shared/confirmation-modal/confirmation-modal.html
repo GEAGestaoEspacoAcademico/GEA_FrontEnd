@@ -1,1 +1,19 @@
-<p>confirmation-modal works!</p>
+<ng-template #ConfirmationModal let-modal>
+	<div class="modal-header header-modal d-flex align-items-center justify-content-center position-relative ">
+  <mat-icon svgIcon="alert" class="position-absolute start-0 ms-3 alert-icon"></mat-icon>
+  <h5 class="text-center w-100 highlight-title">{{ title }}</h5>
+</div>
+	<div class="modal-body d-flex">
+		<div class="allign-center">{{ message }}</div>
+        
+	</div>
+    <div class="d-flex justify-content-center gap-2 px-3 pb-3">
+        <button type="button" class="gea-btn gea-btn-secondary flex-fill" (click)="modal.dismiss()">{{cancelText}}</button>
+		<button type="button" class="gea-btn gea-btn-primary flex-fill " (click)="modal.close()">{{confirmText}}</button>
+    </div>
+
+</ng-template>
+
+<button class="btn btn-outline-primary mb-2 me-2" (click)="openVerticallyCentered(ConfirmationModal)">
+	Modal vertically centered
+</button>

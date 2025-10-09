@@ -1,0 +1,20 @@
+.gea-btn-primary{
+  background-color: var(--color-primary-900);
+  height: 36px;
+  padding: 4px;
+}
+
+.gea-btn-secondary{
+  background-color: var(--color-neutral-100-rgb);
+  height: 36px;
+  padding: 4px;
+}
+
+.header-modal {
+  background-color:var(--color-neutral-100);
+}
+
+.alert-icon {
+    width: 36px;
+    height: 36px;
+}
