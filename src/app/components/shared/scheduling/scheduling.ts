@@ -1,7 +1,7 @@
 import type { OnInit } from '@angular/core';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import type { FormGroup} from '@angular/forms';
-import { FormBuilder} from '@angular/forms';
+import type { FormGroup, ValidatorFn} from '@angular/forms';
+import { FormBuilder, Validators} from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import type { Field, Option } from './types';
 import { map, startWith, type Observable } from 'rxjs';
@@ -15,7 +15,7 @@ import type { MatAutocompleteSelectedEvent } from '@angular/material/autocomplet
 })
 export class Scheduling implements OnInit {
   @Input() fields: Field[] = [];
-  @Input() submitButtonText: string = "Buscar";
+  @Input() submitButtonText: string = "Salvar";
   @Input() cancelButtonText: string | undefined;
   @Output() formSubmit = new EventEmitter<Record<string, any>>();
 
@@ -32,19 +32,48 @@ export class Scheduling implements OnInit {
   ngOnInit(): void {
     const controls: Record<string, FormControl>  = {};
     this.fields.forEach(field => {
+      const validators = this.buildValidators(field.validators);
+
       const initialValue = field.type === 'multi-select'
         ? (field.defaultValue ?? [])
-        : (field.defaultValue ?? null);
+        : (field.defaultValue ?? '');
       controls[field.name] = new FormControl(initialValue);
+
+      controls[field.name] = new FormControl(initialValue, validators);
     });
     this.form = this.fb.group(controls);
     const softwareField = this.fields.find(f => f.type === 'multi-select');
     const allSoftwares = softwareField ? softwareField.options : [];
 
+
+
     this.filteredOptions = this.softwareCtrl.valueChanges.pipe(
       startWith(''),
       map(value => this._filter(value || '', allSoftwares))
     );
+  }
+
+  private buildValidators(validatorsConfig: Field['validators']): ValidatorFn[] {
+    if (!validatorsConfig) {
+      return [];
+    }
+
+    const validators: ValidatorFn[] = [];
+
+    if (validatorsConfig.required) {
+      validators.push(Validators.required);
+    }
+    if (validatorsConfig.minLength) {
+      validators.push(Validators.minLength(validatorsConfig.minLength));
+    }
+    if (validatorsConfig.maxLength) {
+      validators.push(Validators.maxLength(validatorsConfig.maxLength));
+    }
+    if (validatorsConfig.pattern) {
+      validators.push(Validators.pattern(validatorsConfig.pattern));
+    }
+
+    return validators;
   }
 
   private _filter(value: string, options: Option[] | undefined): Option[] {

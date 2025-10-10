@@ -8,6 +8,13 @@ export interface Field {
   placeholder?: string;
   options?: Option[];
   defaultValue?: any;
+  validators?: {
+    required?: boolean;
+    minLength?: number;
+    maxLength?: number;
+    pattern?: string; // para regex
+    errorMessages?: Record<string, string>;
+  }
 }
 
 export interface Option{

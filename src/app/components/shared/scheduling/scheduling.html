@@ -12,6 +12,18 @@
             [id]="field.name" 
             [formControlName]="field.name" 
             class="form-control captions">
+          @if (form.get(field.name); as control) {
+            @if (control.invalid && (control.touched || control.dirty)) {
+              <div class="error-message">
+                @if (control.hasError('required')) {
+                  <span>{{ field.validators?.errorMessages?.['required'] }}</span>
+                }
+                @if (control.hasError('minLength')) {
+                  <span>{{ field.validators?.errorMessages?.['minLength'] }}</span>
+                }
+                </div>
+            }
+          }
         }
 
         @case ('select') {
@@ -19,11 +31,23 @@
             [id]="field.name" 
             [formControlName]="field.name" 
             class="form-control captions">
-            <option [value]="null">{{ field.placeholder || 'Selecione...' }}</option>
+            <option value="">{{ field.placeholder || 'Selecione...' }}</option>
             @for (option of field.options; track option.value) {
               <option [value]="option.value">{{ option.label }}</option>
             }
           </select>
+          @if (form.get(field.name); as control) {
+            @if (control.invalid && (control.touched || control.dirty)) {
+              <div class="error-message">
+                @if (control.hasError('required')) {
+                  <span>{{ field.validators?.errorMessages?.['required'] }}</span>
+                }
+                @if (control.hasError('minLength')) {
+                  <span>{{ field.validators?.errorMessages?.['minLength'] }}</span>
+                }
+                </div>
+            }
+          }
         }
         @case ('multi-select') {
           <div class="multi-select-container">
@@ -57,7 +81,18 @@
               </mat-autocomplete>
             </div>
           </div>
-
+          @if (form.get(field.name); as control) {
+            @if (control.invalid && (control.touched || control.dirty)) {
+              <div class="error-message">
+                @if (control.hasError('required')) {
+                  <span>{{ field.validators?.errorMessages?.['required'] }}</span>
+                }
+                @if (control.hasError('minLength')) {
+                  <span>{{ field.validators?.errorMessages?.['minLength'] }}</span>
+                }
+                </div>
+            }
+          }
         }
 
         @default {
