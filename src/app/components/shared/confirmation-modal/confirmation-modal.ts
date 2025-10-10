@@ -23,7 +23,7 @@ export class ConfirmationModal {
   modalTemplate!: TemplateRef<ConfirmationModal>;
 
   open(ConfirmationModal: TemplateRef<ConfirmationModal>) {
-    this.modalService.open(ConfirmationModal, { backdrop: 'static', centered: true });
+    this.modalService.open(ConfirmationModal, { backdrop: 'static', centered: true, size: 'sm' });
   }
 
   onModalConfirm(): void {
