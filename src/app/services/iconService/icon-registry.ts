@@ -24,6 +24,7 @@ export class IconRegistryService {
     this.addIcon('menu', 'menu.svg');
     this.addIcon('minimize', 'minimize.svg');
     this.addIcon('notification', 'notification.svg');
+    this.addIcon('notification-fill', 'notification-fill.svg')
     this.addIcon('settings', 'settings.svg');
     this.addIcon('user', 'user.svg');
   }

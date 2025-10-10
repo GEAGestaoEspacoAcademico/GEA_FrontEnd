@@ -19,6 +19,8 @@
   text-decoration: none;
   color: #5f6368;
   font-size: 14px;
+
+  transition: color ease-in-out 0.2s;
 }
 
 /* 3. Estilo do ícone DENTRO de um .footer-item */
