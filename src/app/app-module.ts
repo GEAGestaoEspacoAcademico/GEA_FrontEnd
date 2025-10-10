@@ -24,7 +24,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 @NgModule({
   declarations: [
     App,
-    ClassInfoCard
+    ClassInfoCard,
     DaySelector,
     Header,
     TitleHighligh,
