@@ -1,3 +1,89 @@
-@import 'variables.css'
+@import './variables.css';
+@import './buttons.css';
+@import './inputs.css';
+
+/*Configuration*/
+*{
+  box-sizing: border-box;
+}
+body { 
+  margin: 0; 
+}
 
 /*Design System*/
+
+.highlight-title{
+  font-family: var(--font-family-primary);
+  font-size: 26px;
+  font-weight: var(--font-weight-bold);
+}
+
+.main-title{
+  font-family: var(--font-family-primary);
+  font-size: 22px;
+  font-weight: var(--font-weight-bold);
+}
+
+.subtitle{
+  font-family: var(--font-family-primary);
+  font-size: 16px;
+  font-weight: var(--font-weight-regular);
+}
+
+.section-title{
+  font-family: var(--font-family-primary);
+  font-size: 16px;
+  font-weight: var(--font-weight-bold);
+}
+
+.captions{
+  font-family: var(--font-family-primary);
+  font-size: 14px;
+  font-weight: var(--font-weight-regular);
+}
+
+.time-caption{
+  font-family: var(--font-family-primary);
+  font-size: 12px;
+  font-weight: var(--font-weight-bold);
+}
+
+.tabbar-text{
+  font-family: var(--font-family-primary);
+  font-size: 10px;
+}
+
+/*Desktop*/
+
+@media (min-width: 768px) {
+  .highlight-title{
+    font-size: 36px;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .main-title{
+    font-size: 28px;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .subtitle{
+    font-size: 20px;
+    font-weight: var(--font-weight-regular);
+  }
+
+  .section-title{
+    font-size: 16px;
+    font-weight: var(--font-weight-bold);
+  }
+
+  .captions{
+    font-size: 14px;
+    font-weight: var(--font-weight-regular);
+  }
+
+  .time-caption{
+    font-size: 12px;
+    font-weight: var(--font-weight-bold);
+  }
+}
+

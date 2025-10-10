@@ -1,5 +1,65 @@
 :root{
-  /*Cores*/
+  /*CORES*/
 
-  /*Tipografias*/
+  /*Neutral Colors*/
+  --color-primary-100: #F21E18;
+  --color-primary-300: #D4120C;
+  --color-primary-500: #AD0F0A;
+  --color-primary-700: #870C08;
+  --color-primary-900: #600806;
+
+  /*Surface Colors*/
+  --color-surface-disabled: #BBC4C8;
+  --color-surface-base: #F8F8FF;
+  --color-surface-subtle: #E6E6E6;
+  --color-neutral-100: #788991;
+  --color-neutral-100-rgb: rgb(120, 137, 145);
+  --color-neutral-300: #65747C;
+  --color-neutral-500: #525F65;
+  --color-neutral-700: #404A4F;
+  --color-neutral-900: #2E3538;
+
+  /*Feedback colors*/
+  --color-feedback-error: #AD0F0A;
+  --color-feedback-success: #28A745;
+  --color-feedback-warning: #C68E17;
+
+  /*Accent Colors - Para Widgets*/
+  --color-accent-green-dark: #27AE60;
+  --color-accent-teal: #16A085;
+  --color-accent-blue: #3498DB;
+  --color-accent-red-orange: #E74C3C;
+  --color-accent-navy: #34495E;
+  --color-accent-purple-light: #9E2FE9;
+  --color-accent-purple: #9B59B6;
+  --color-accent-orange: #F39C12;
+
+  /*Default Colors*/
+  --color-default-black: black;
+  --color-default-white: white;
+
+  /*TIPOGRAFIAS*/
+  --font-family-primary: 'Merriweather Sans', sans-serif;
+  --font-weight-regular: 400;
+  --font-weight-bold: 700;
+
+  /*SPACING*/
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-5: 24px;
+  --spacing-6: 32px;
+  --spacing-7: 40px;
+  --spacing-8: 48px;
+  --spacing-9: 56px;
+  --spacing-10: 64px;
+  --spacing-11: 72px;
+  --spacing-12: 80px;
+  --spacing-13: 88px;
+  --spacing-14: 96px;
+  --spacing-15: 104px;
+  --spacing-16: 112px;
+  --spacing-17: 120px;
+  --spacing-18: 128px;
 }
