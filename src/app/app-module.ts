@@ -11,7 +11,14 @@ import { Header } from './components/shared/header/header';
 import { TitleHighligh } from './components/shared/title-highligh/title-highligh';
 import { provideHttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
-import { TabBar } from './components/shared/tab-bar/tab-bar'
+import { TabBar } from './components/shared/tab-bar/tab-bar';
+import { Scheduling } from './components/shared/scheduling/scheduling'
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -19,17 +26,24 @@ import { TabBar } from './components/shared/tab-bar/tab-bar'
     DaySelector,
     Header,
     TitleHighligh,
-    TabBar
+    TabBar,
+    Scheduling,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     NgbModule,
     MatIconModule,
+    ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       registrationStrategy: 'registerWhenStable:30000'
     }),
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatChipsModule,
+    MatAutocompleteModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
