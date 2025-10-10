@@ -13,3 +13,7 @@
     width: 26.25px;
     height: 35px;
 }
+
+a{
+    color: var(--color--default-white);
+}
