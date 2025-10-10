@@ -1,4 +1,8 @@
 <div class="container-fluid text-white fs-3 d-flex justify-content-beetween align-items-center header">
-        <div class="me-auto p-2"> <mat-icon svgIcon="icon-fatec" class="icon-fatec-big"></mat-icon> </div>
-        <div><mat-icon svgIcon="notification" class="icon-notification-medium"></mat-icon></div>
+        <a class="me-auto p-2" routerLink="/aulas"> 
+                <mat-icon svgIcon="icon-fatec" class="icon-fatec-big"></mat-icon> 
+        </a>
+        <a routerLink="/notificacoes" routerLinkActive="active" #rla="routerLinkActive">
+         <mat-icon [svgIcon]="rla.isActive ? 'notification-fill' : 'notification'" class="icon-notification-medium"></mat-icon>
+        </a>
 </div>
