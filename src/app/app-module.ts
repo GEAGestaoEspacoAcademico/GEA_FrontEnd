@@ -20,6 +20,10 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { Aulas } from './pages/aulas/aulas';
+import { Agenda } from './pages/agenda/agenda';
+import { Configuracoes } from './pages/configuracoes/configuracoes';
+import { Notificacoes } from './pages/notificacoes/notificacoes';
 
 @NgModule({
   declarations: [
@@ -30,6 +34,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     TitleHighligh,
     TabBar,
     Scheduling,
+    Aulas,
+    Agenda,
+    Configuracoes,
+    Notificacoes,
   ],
   imports: [
     BrowserModule,
