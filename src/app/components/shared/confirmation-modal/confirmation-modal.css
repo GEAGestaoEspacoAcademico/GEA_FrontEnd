@@ -4,31 +4,29 @@
   padding: 4px 0;
   border-radius: 10px;
   border: solid 2px var(--color-default-black);
+  color: var(--color-default-white);
 }
 
 .gea-btn-secondary {
-  background-color: var(--color-neutral-100-rgb);
+  background-color: #d9d9d9;
   height: 36px;
   padding: 4px 0;
   border-radius: 10px;
   border: solid 2px var(--color-default-black);
+  color: var(--color-default-black);
 }
 
 .header-modal {
   background-color: #d9d9d9;
-  border-radius: 4px;
-  border: solid 1px var(--color-default-black);
+  border-radius: 6px;
+  padding: 4px 6px;
+  border-bottom: solid 1px var(--color-default-black);
   display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .header-body {
   background-color: #f0f0f0;
-  border-radius: 0px;
-  border-bottom: solid 1px var(--color-default-black);
-  border-left: solid 1px var(--color-default-black);
-  border-right: solid 1px var(--color-default-black);
+  padding: 16px 16px;
 }
 
 .modal-geral {
@@ -39,4 +37,5 @@
 .alert-icon {
   width: 36px;
   height: 36px;
+  color: var(--color-default-black);
 }
