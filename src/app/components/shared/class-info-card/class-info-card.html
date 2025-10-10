@@ -1,0 +1,34 @@
+<div class="container-fluid px-0">
+  <div class="card-line border-bottom">
+
+    <div class="d-flex justify-content-between align-items-start row-top">
+      <div class="section-title text-neutral-900 mb-1">{{ classData.courseName }}</div>
+      <div class="time-primary fw-semibold text-end">{{ classData.time }}</div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-start row-mid">
+      <small class="text-secondary-600 meta mb-0">
+        {{ classData.location }} | {{ classData.semester }}
+        <div class="sub section-title text-neutral-900 subject mb-0">{{ classData.subject }}</div>
+      </small>
+
+      <div class="actions d-flex flex-column align-items-end text-end">
+        <button
+          type="button"
+          class="btn btn-link p-0 action-edit"
+          (click)="handleView()">
+          Alterar
+        </button>
+
+        <button
+          type="button"
+          class="btn btn-link p-0 action-cancel"
+          (click)="handleDelete()">
+          <span class="underline">Cancelar</span>
+        </button>
+      </div>
+    </div>
+
+
+  </div>
+</div>

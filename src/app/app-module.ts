@@ -9,7 +9,7 @@ import { environment } from '../environments/environment';
 import { DaySelector } from './components/shared/day-selector/day-selector';
 import { Header } from './components/shared/header/header';
 import { TitleHighligh } from './components/shared/title-highligh/title-highligh';
-import { ClassInfoCard } from './components/class-info-card/class-info-card';
+import { ClassInfoCard } from './components/shared/class-info-card/class-info-card';
 import { provideHttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { TabBar } from './components/shared/tab-bar/tab-bar';
