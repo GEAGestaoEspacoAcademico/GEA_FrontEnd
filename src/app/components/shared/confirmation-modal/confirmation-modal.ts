@@ -1,29 +1,38 @@
-import type { TemplateRef, WritableSignal } from '@angular/core';
-import { Component, EventEmitter, inject, Input, Output, signal } from '@angular/core';
+import type { TemplateRef } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-confirmation-modal',
   standalone: false,
   templateUrl: './confirmation-modal.html',
-  styleUrl: './confirmation-modal.css'
+  styleUrl: './confirmation-modal.css',
 })
 export class ConfirmationModal {
- 
   private modalService = inject(NgbModal);
-  closeResult: WritableSignal<string> = signal('');
 
-
-  @Input({required : true}) title!: string;
-  @Input({required : true}) message!: string;
+  @Input({ required: true }) title!: string;
+  @Input({ required: true }) message!: string;
   @Input() confirmText!: string;
   @Input() cancelText!: string;
 
   @Output() modalConfirm = new EventEmitter<void>();
   @Output() modalCancel = new EventEmitter<void>();
-  
- 		openVerticallyCentered(content: TemplateRef<any>) {
-		this.modalService.open(content, { centered: true });
-	}
 
+  @ViewChild('ConfirmationModal')
+  modalTemplate!: TemplateRef<ConfirmationModal>;
+
+  open(ConfirmationModal: TemplateRef<ConfirmationModal>) {
+    this.modalService.open(ConfirmationModal, { backdrop: 'static', centered: true });
+  }
+
+  onModalConfirm(): void {
+    this.modalConfirm.emit();
+    this.modalService.dismissAll();
+  }
+
+  onModalCancel(): void {
+    this.modalCancel.emit();
+    this.modalService.dismissAll();
+  }
 }
