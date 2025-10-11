@@ -1,0 +1,13 @@
+.line {
+  background-color: var(--color-neutral-500);
+  height: 2px;
+  width: 15px;
+  border-radius: 1px;
+  margin-top: 3px;
+}
+
+.icon-logout {
+  width: 12px;
+  height: 22px;
+  margin-top: 2px;
+}

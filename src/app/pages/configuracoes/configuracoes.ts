@@ -4,8 +4,10 @@ import { Component } from '@angular/core';
   selector: 'app-configuracoes',
   standalone: false,
   templateUrl: './configuracoes.html',
-  styleUrl: './configuracoes.css'
+  styleUrl: './configuracoes.css',
 })
 export class Configuracoes {
-
+  logout() {
+    console.warn('Professor deslogado');
+  }
 }
