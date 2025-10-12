@@ -1,0 +1,32 @@
+<div class="login-page d-flex flex-column min-vh-100">
+
+    <div class="header text-white py-5">
+        <img src="fatec-logo.png" alt="">
+        <div class="text-center mt-3">
+            <h1 class="fw-bold">Seja bem-vindo ao<br>Gestor de Espaços Acadêmicos</h1>
+            <h2 class="fw-bold mt-4">GEA</h2>
+        </div>
+    </div>
+
+    <div class="card flex-grow-1 rounded-top-5 border-0 card-login">
+        <div class="card-body">
+            <h3 class="fw-bold mb-5" style="color: #600806;">Login</h3>
+
+            <form [formGroup]="loginForm">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="userInput" formControlName="user" placeholder="">
+                    <label for="userInput">Usuário</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="passwordInput" formControlName="password"
+                        placeholder="">
+                    <label for="passwordInput">Senha</label>
+                </div>
+
+                <a href="#" class="text-muted small d-block text-start mb-3">Esqueceu a senha?</a>
+
+                <button class="btn btn-danger w-100 fw-bold py-2">Entrar</button>
+            </form>
+        </div>
+    </div>
+</div>
