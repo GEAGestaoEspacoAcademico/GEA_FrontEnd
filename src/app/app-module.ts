@@ -1,4 +1,4 @@
-import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { isDevMode, NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
@@ -26,6 +26,12 @@ import { Agenda } from './pages/agenda/agenda';
 import { Configuracoes } from './pages/configuracoes/configuracoes';
 import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { EditarAula } from './pages/editar-aula/visualizar-aula';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AgendamentoEffects } from './store/agendamento/agendamento.effects';
+import { agendamentoReducer } from './store/agendamento/agendamento.reducer';
+import { AGENDAMENTO_FEATURE_KEY } from './store/agendamento/agendamento.selectors';
 
 @NgModule({
   declarations: [
@@ -57,7 +63,18 @@ import { EditarAula } from './pages/editar-aula/visualizar-aula';
     MatSelectModule,
     MatInputModule,
     MatChipsModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    StoreModule.forRoot({}),
+    StoreModule.forFeature(AGENDAMENTO_FEATURE_KEY, agendamentoReducer),
+    EffectsModule.forRoot([]),
+    EffectsModule.forFeature([AgendamentoEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: !isDevMode(), 
+      autoPause: true,
+      trace: false, 
+      traceLimit: 75,
+    }),
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

@@ -1,1 +1,7 @@
-<p>visualizar-aula works!</p>
+<div *ngIf="aula$ | async as aula; else carregando">
+  <h1>Editando: {{ aula.id }}</h1>
+  </div>
+
+<ng-template #carregando>
+  <p>Carregando dados da aula...</p>
+</ng-template>

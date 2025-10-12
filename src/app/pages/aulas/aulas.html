@@ -13,13 +13,13 @@
 
   <div class="mt-3">
     <app-class-info-card
-        *ngFor="let class of classesForSelectedDay"
+        *ngFor="let class of classesForSelectedDay$ | async"
         [classData]="class"
         (delete)="handleDeleteClass($event)"
         (view)="handleViewClass($event)">
     </app-class-info-card>
 
-    <div *ngIf="!classesForSelectedDay?.length" class="text-secondary mt-3">
+    <div *ngIf="!((classesForSelectedDay$ | async)?.length) && (loading$ | async) === false" class="text-secondary mt-3">
       Sem aulas para este dia.
     </div>
   </div>

@@ -1,8 +1,10 @@
 export interface Class {
     id: number;
-    courseName: string;
-    time: string;
-    location: string;
-    semester: string;
-    subject: string;
+    usuario: string,
+    sala: string;
+    dataInicio: Date,
+    dataFinal: Date,
+    diaDaSemana: string,
+    horaInicio: string,
+    horaFim: string
 }
