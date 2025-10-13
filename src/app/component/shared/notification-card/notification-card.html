@@ -1,0 +1,14 @@
+<div class="notification-card border-top">
+  <div class="section-title text-neutral-900 mb-1">{{ source }}</div>
+
+  <div class="d-flex justify-content-between align-items-baseline mb-1">
+    <div class="title-primary">{{ title }}</div>
+    <div class="date text-end">
+      {{ date | date: 'dd/MM/yyyy' }}
+    </div>
+  </div>
+
+  <div class="snippet text-neutral-100">
+    {{ snippet }}
+  </div>
+</div>
