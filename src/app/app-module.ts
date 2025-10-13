@@ -7,8 +7,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { DaySelector } from './components/shared/day-selector/day-selector';
-import { Login } from './components/shared/login/login';
 import { ReactiveFormsModule } from '@angular/forms';
+import { Login } from './pages/login/login';
 
 @NgModule({
   declarations: [
