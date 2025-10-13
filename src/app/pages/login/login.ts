@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,14 +10,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class Login {
   loginForm = new FormGroup({
-    user: new FormControl('', [Validators.required]),
+    user: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required])
   });
 
   hidePassword: boolean = false;
   btnVisibility: boolean = false;
 
-  userTest: string = "Felipe Santos";
+  userTest: string = "felipenascimento@gmail.com";
   passwordTest: string = "123456";
 
   ngOnInit(): void {
@@ -24,6 +25,8 @@ export class Login {
       this.btnVisibility = !!(value && value.trim().length > 0);
     });
   }
+
+  constructor(private router: Router){}
 
   changeVisibility() {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions, eqeqeq
@@ -39,7 +42,6 @@ export class Login {
       return;
     }
 
-    //Aqui seria o codigo para a troca de rota
-    //this.router.navigate([/aulas])
+    this.router.navigate(['/aulas']);
   }
 }

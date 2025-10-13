@@ -15,11 +15,11 @@
             <form [formGroup]="loginForm">
                 <div class="form-floating mb-3">
                     <input type="email" class="form-control" id="userInput" formControlName="user" placeholder="">
-                    <label for="userInput">Usuário</label>
+                    <label for="userInput">E-mail</label>
 
                     <div *ngIf="loginForm.get('user')?.touched && loginForm.get('user')?.invalid"
                         class="text-danger mt-1 small">
-                        <div *ngIf="loginForm.get('user')?.hasError('required')">Usuário é obrigatório.</div>
+                        <div *ngIf="loginForm.get('user')?.hasError('required')">E-mail é obrigatório.</div>
                     </div>
 
                 </div>
@@ -57,10 +57,11 @@
                     </button>
                 </div>
 
+                <!-- Após feito, adicionar o routerLink para a pagina de recuperação de senha -->
                 <a href="#" class="text-muted small d-block text-start mb-3">Esqueceu a senha?</a>
-                
+
                 <div *ngIf="loginForm.invalid" class="text-danger mt-1 small">
-                    <div *ngIf="loginForm.getError('infoInvalid')">Usuário ou senha inválidos</div>
+                    <div *ngIf="loginForm.getError('infoInvalid')">E-mail ou senha inválidos</div>
                 </div>
 
                 <button class="btn btn-danger w-100 fw-bold py-2" (click)="onSubmit()">Entrar</button>

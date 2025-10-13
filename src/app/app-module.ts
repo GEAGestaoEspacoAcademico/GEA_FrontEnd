@@ -25,6 +25,7 @@ import { Aulas } from './pages/aulas/aulas';
 import { Agenda } from './pages/agenda/agenda';
 import { Configuracoes } from './pages/configuracoes/configuracoes';
 import { Notificacoes } from './pages/notificacoes/notificacoes';
+import { Login } from './pages/login/login';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { Notificacoes } from './pages/notificacoes/notificacoes';
     Agenda,
     Configuracoes,
     Notificacoes,
+    Login
   ],
   imports: [
     BrowserModule,
