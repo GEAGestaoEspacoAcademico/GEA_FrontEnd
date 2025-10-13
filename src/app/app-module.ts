@@ -26,6 +26,7 @@ import { Agenda } from './pages/agenda/agenda';
 import { Configuracoes } from './pages/configuracoes/configuracoes';
 import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { Login } from './pages/login/login';
+import { NotificationCard } from './components/shared/notification-card/notification-card';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { Login } from './pages/login/login';
     Agenda,
     Configuracoes,
     Notificacoes,
-    Login
+    Login,
+    NotificationCard
   ],
   imports: [
     BrowserModule,
