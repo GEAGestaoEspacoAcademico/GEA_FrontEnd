@@ -13,6 +13,7 @@ import { ClassInfoCard } from './components/shared/class-info-card/class-info-ca
 import { provideHttpClient } from '@angular/common/http';
 import { MatIconModule } from '@angular/material/icon';
 import { TabBar } from './components/shared/tab-bar/tab-bar';
+import { ConfirmationModal } from './components/shared/confirmation-modal/confirmation-modal'
 import { Scheduling } from './components/shared/scheduling/scheduling'
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -34,6 +35,7 @@ import { NotificationCard } from './component/shared/notification-card/notificat
     Header,
     TitleHighligh,
     TabBar,
+    ConfirmationModal,
     Scheduling,
     Aulas,
     Agenda,
