@@ -1,0 +1,19 @@
+.header {
+    background: linear-gradient(to right, rgba(135, 12, 8, 0), #870C08);
+    background-color: var(--color-primary-900) ;
+    padding: 0 var(--spacing-4);
+}
+
+.icon-fatec-big{
+    width: 78px;
+    height: 48px;
+}
+
+.icon-notification-medium{
+    width: 26.25px;
+    height: 35px;
+}
+
+a{
+    color: var(--color--default-white);
+}

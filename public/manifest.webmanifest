@@ -1,6 +1,6 @@
 {
-  "name": "AgendaSalasFatec_FrontEnd",
-  "short_name": "AgendaSalasFatec_FrontEnd",
+  "name": "Gestão de Espaço Acadêmico",
+  "short_name": "GEA'",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

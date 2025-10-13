@@ -1,0 +1,18 @@
+<div class="ms-3">
+  <div class="mt-2">
+    <app-title-highligh title="Configurações"></app-title-highligh>
+  </div>
+  <div class="container">
+    <div class="d-flex flex-column">
+      <div class="d-flex flex-row" routerLink="/agenda" routerLinkActive="active">
+        <div class="line mt-3"></div>
+        <div class="subtitle p-1">Alterar Senha</div>
+      </div>
+      <div class="d-flex flex-row">
+        <div class="line mt-3"></div>
+        <div tabindex="0" class="subtitle p-1" (click)="logout()" (keypress)="logout()">Logout</div>
+        <mat-icon svgIcon="logout" class="icon-logout"></mat-icon>
+      </div>
+    </div>
+  </div>
+</div>

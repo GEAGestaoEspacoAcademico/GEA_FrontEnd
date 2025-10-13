@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import type { Day } from './components/shared/day-selector/day-selector';
+import { Component, inject } from '@angular/core';
+import { IconRegistryService } from './services/iconService/icon-registry';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +7,9 @@ import type { Day } from './components/shared/day-selector/day-selector';
   standalone: false,
 })
 export class App {
+  private iconRegistryService = inject(IconRegistryService);
+  constructor() {
+    this.iconRegistryService.registerIcons();
+  }
 
 }

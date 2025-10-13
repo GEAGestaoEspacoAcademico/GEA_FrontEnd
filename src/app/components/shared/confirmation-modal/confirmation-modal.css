@@ -1,0 +1,43 @@
+.gea-btn-primary {
+  background-color: var(--color-primary-700);
+  height: 36px;
+  padding: 4px 0;
+  border-radius: 10px;
+  border: solid 2px var(--color-default-black);
+  color: var(--color-default-white);
+}
+
+.gea-btn-secondary {
+  background-color: var(--color-surface-base);
+  height: 36px;
+  padding: 4px 0;
+  border-radius: 10px;
+  border: solid 2px var(--color-default-black);
+  color: var(--color-default-black);
+}
+
+.header-modal {
+  background-color: var(--color-primary-700);
+  border-radius: 0 0 6px 6px;
+  padding: 4px 6px;
+  border-bottom: solid 1px var(--color-default-black);
+  display: flex;
+  color: var(--color-default-white)
+}
+
+.header-body {
+  background-color: #f0f0f0;
+  padding: 16px 16px;
+}
+
+.modal-geral {
+  border: solid 2px var(--color-default-black);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.alert-icon {
+  width: 36px;
+  height: 36px;
+  color: var(--color-default-white);
+}

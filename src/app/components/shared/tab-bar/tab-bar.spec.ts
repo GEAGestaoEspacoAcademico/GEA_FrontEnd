@@ -1,19 +1,19 @@
+import type { ComponentFixture} from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import type { ComponentFixture } from '@angular/core/testing';
 
-import { DaySelector } from './day-selector';
+import { TabBar } from './tab-bar';
 
-describe('DaySelector', () => {
-  let component: DaySelector;
-  let fixture: ComponentFixture<DaySelector>;
+describe('TabBar', () => {
+  let component: TabBar;
+  let fixture: ComponentFixture<TabBar>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DaySelector]
+      declarations: [TabBar]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DaySelector);
+    fixture = TestBed.createComponent(TabBar);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
