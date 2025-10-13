@@ -1,23 +1,25 @@
 .header {
     background-image:
-        linear-gradient(to bottom, rgba(135, 12, 8, 0.7)),
         url("../../../assets/images/loginBackground.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     flex-shrink: 0;
 }
+.login-page{
+    background-image: linear-gradient(to bottom, #870C08 0%, #210302 100%);
+    justify-content: space-between;
+}
 
 .card-login {
     background-color: #f9f9fb;
-    margin-top: -25px;
     border-top-left-radius: 35px !important;
     border-top-right-radius: 35px !important;
     box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .btn-danger {
-    background-color: #F21E18 !important;
+    background-color: var(--color-primary-700) !important;
 }
 
 .btn-danger:active {
@@ -47,7 +49,7 @@ h3 {
 }
 
 .b-line {
-    padding: 10px;
+    padding-bottom: 63px;
     border-bottom: 1px black solid;
     width: 50%;
     margin: 0 auto;

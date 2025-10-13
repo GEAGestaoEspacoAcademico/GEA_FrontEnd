@@ -18,7 +18,6 @@ export class DaySelector {
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Day {
   id: string | number;
   date: string;
