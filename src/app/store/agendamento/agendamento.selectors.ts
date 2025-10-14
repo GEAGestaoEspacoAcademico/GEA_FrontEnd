@@ -9,7 +9,7 @@ const selectAgendamentoState = createFeatureSelector<AgendamentoState>(AGENDAMEN
 // 2. Seletores que pegam pedaços específicos da fatia
 export const selectTodasAsAulas = createSelector(
   selectAgendamentoState,
-  (state) => state.aulas
+  (state) => state.agendamentos
 );
 
 export const selectAgendamentoLoading = createSelector(
@@ -24,5 +24,5 @@ export const selectAgendamentoError = createSelector(
 
 export const selectAulaById = (id: number) => createSelector(
   selectTodasAsAulas,
-  (aulas) => aulas.find(aula => aula.id === id)
+  (agendamentos) => agendamentos.find(agendamento => agendamento.id === id)
 );

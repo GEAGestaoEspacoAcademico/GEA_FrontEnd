@@ -1,6 +1,6 @@
 import type { OnInit } from '@angular/core';
 import { Component, inject } from '@angular/core';
-import type { Class } from '../../models/class.model';
+import type { Agendamento } from '../../models/agendamento.model';
 import type { Day } from '../../components/shared/day-selector/day-selector';
 import { Router } from '@angular/router';
 import { map, type Observable } from 'rxjs';
@@ -15,53 +15,58 @@ import { AgendamentoActions } from '../../store/agendamento/agendamento.actions'
   styleUrl: './aulas.css'
 })
 export class Aulas implements OnInit{
-  private classesByDay: Record<string, Class[]> = {};
+  private classesByDay: Record<string, Agendamento[]> = {};
   private store = inject(Store);
   private router = inject(Router)
+
   days: Day[] = [];
   activeDayId!: string;
 
-  classes$: Observable<Class[]> = this.store.select(selectTodasAsAulas);
+  agendamentos$: Observable<Agendamento[]> = this.store.select(selectTodasAsAulas);
   loading$: Observable<boolean> = this.store.select(selectAgendamentoLoading);
-
-    classesForSelectedDay$!: Observable<Class[]>;
-
-
-
-  classesForSelectedDay: Class[] = [];
+  agendamentosDoDiaSelecionado$!: Observable<Agendamento[]>;
 
   ngOnInit(): void {
-    this.store.dispatch(AgendamentoActions.loadAulas());
+    this.store.dispatch(AgendamentoActions.loadAgendamentos());
     this.days = this.buildNextDays(7);
     this.activeDayId = this.toId(new Date());
-
-
-    console.log('ID do dia ativo:', this.activeDayId);
-
-
-    this.updateClassesForActiveDay();
+    this.updateAgendamentosForActivyDay();
   }
 
   onDayChange(id: string | number) {
     this.activeDayId = String(id);
-    this.updateClassesForActiveDay();
+    this.updateAgendamentosForActivyDay();
   }
 
-  handleDeleteClass(id: number) {
-    this.store.dispatch(AgendamentoActions.deleteAula({ id }));
+  handleDeleteAgendamento(id: number) {
+    this.store.dispatch(AgendamentoActions.deleteAgendamento({ id }));
   }
 
-  handleViewClass(id: number) {
+  handleViewAgendamento(id: number) {
     this.router.navigate(['/aulas/alterar', id])
   }
 
-  private updateClassesForActiveDay(): void {
-    this.classesForSelectedDay$ = this.classes$.pipe(
-      map(aulas => {
-          const aulasFiltradas = aulas.filter(aula => this.toId(aula.dataInicio) ===   this.activeDayId);            
-          return aulasFiltradas.sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
-        }
-      )
+  private updateAgendamentosForActivyDay(): void {
+    this.agendamentosDoDiaSelecionado$ = this.agendamentos$.pipe(
+      map(agendamentos => {
+        const diaAtivoDate = new Date(`${this.activeDayId}T12:00:00Z`);
+        const diaDaSemanaAtivo = diaAtivoDate.toLocaleDateString('pt-BR', { weekday: 'long' });
+
+        const agendamentosFiltrados = agendamentos.filter(agendamento => {
+          const inicio = new Date(agendamento.dataInicio);
+          inicio.setUTCHours(0, 0, 0, 0);
+          
+          const fim = new Date(agendamento.dataFinal);
+          fim.setUTCHours(23, 59, 59, 999);
+
+          const isDentroDoIntervalo = diaAtivoDate >= inicio && diaAtivoDate <= fim;
+          const isMesmoDiaDaSemana = agendamento.diaDaSemana.toLowerCase() === diaDaSemanaAtivo.toLowerCase();
+
+          return isDentroDoIntervalo && isMesmoDiaDaSemana;
+        });
+        
+        return agendamentosFiltrados.sort((a, b) => a.horario.localeCompare(b.horario));
+      })
     );
   }
 

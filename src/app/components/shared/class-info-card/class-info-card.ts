@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import type { Class } from '../../../models/class.model';
+import type { Agendamento } from '../../../models/agendamento.model';
 
 
 @Component({
@@ -9,7 +9,7 @@ import type { Class } from '../../../models/class.model';
   styleUrl: './class-info-card.css'
 })
 export class ClassInfoCard {
-  @Input ({required: true}) classData!: Class;
+  @Input ({required: true}) classData!: Agendamento;
 
   @Output() delete = new EventEmitter<number>();
   @Output() view   = new EventEmitter<number>();

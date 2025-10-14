@@ -1,23 +1,28 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import type { Class } from '../../models/class.model';
+import type { Agendamento } from '../../models/agendamento.model';
 
 export const AgendamentoActions = createActionGroup({
   source: 'Agendamento',
   events: {
-    'Load Aulas': emptyProps(),
+    'Load Agendamentos': emptyProps(),
 
     // Ações disparadas pelo Effect após a chamada à API
-    'Load Aulas Success': props<{ aulas: Class[] }>(),
-    'Load Aulas Failure': props<{ error: string }>(),
+    'Load Agendamentos Success': props<{ agendamentos: Agendamento[] }>(),
+    'Load Agendamentos Failure': props<{ error: string }>(),
     
     // Ações para deletar
-    'Delete Aula': props<{ id: number }>(),
-    'Delete Aula Success': props<{ id: number }>(),
-    'Delete Aula Failure': props<{ error: string }>(),
+    'Delete Agendamento': props<{ id: number }>(),
+    'Delete Agendamento Success': props<{ id: number }>(),
+    'Delete Agendamento Failure': props<{ error: string }>(),
 
     // Ação para pegar por id
-    'Load Aula By Id': props<{ id: number }>(),
-    'Load Aula By Id Success': props<{ aula: Class }>(),
-    'Load Aula By Id Failure': props<{ error: string }>(),
+    'Load Agendamento By Id': props<{ id: number }>(),
+    'Load Agendamento By Id Success': props<{ agendamento: Agendamento }>(),
+    'Load Agendamento By Id Failure': props<{ error: string }>(),
+
+    //Ação para editar por id
+    'Edit Agendamento': props<{ agendamento: Agendamento}>(),
+    'Edit Agendamento Success': props<{ agendamento: Agendamento }>(),
+    'Edit Agendamento Failure': props<{ error: string }>(),
   },
 });

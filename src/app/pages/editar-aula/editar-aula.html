@@ -1,7 +1,14 @@
-<div *ngIf="aula$ | async as aula; else carregando">
-  <h1>Editando: {{ aula.id }}</h1>
-  </div>
+<div class="mt-2">
+    <app-title-highligh title="Alterar"></app-title-highligh>
+</div>
 
-<ng-template #carregando>
-  <p>Carregando dados da aula...</p>
-</ng-template>
+<ng-container *ngIf="aula$ | async as aula">
+  <app-scheduling 
+      *ngIf="formFields"
+      [fields]="formFields"
+      submitButtonText="Salvar Alterações"
+      (formSubmit)="onFormSubmit($event)"
+      class="d-flex justify-content-center align-items-center"
+      >
+  </app-scheduling>
+</ng-container>

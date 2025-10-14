@@ -1,13 +1,13 @@
-import type { Class } from '../../models/class.model';
+import type { Agendamento } from '../../models/agendamento.model';
 
 export interface AgendamentoState {
-  aulas: Class[];
+  agendamentos: Agendamento[];
   loading: boolean;
   error: string | null;
 }
 
 export const initialState: AgendamentoState = {
-  aulas: [],
+  agendamentos: [],
   loading: false,
   error: null,
 };

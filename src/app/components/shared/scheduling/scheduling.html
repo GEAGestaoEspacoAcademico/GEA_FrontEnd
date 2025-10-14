@@ -31,7 +31,7 @@
             [id]="field.name" 
             [formControlName]="field.name" 
             class="form-control captions">
-            <option value="">{{ field.placeholder || 'Selecione...' }}</option>
+            <option [value]="">{{ field.defaultValue || 'Selecione...' }}</option>
             @for (option of field.options; track option.value) {
               <option [value]="option.value">{{ option.label }}</option>
             }
@@ -81,6 +81,26 @@
               </mat-autocomplete>
             </div>
           </div>
+          @if (form.get(field.name); as control) {
+            @if (control.invalid && (control.touched || control.dirty)) {
+              <div class="error-message">
+                @if (control.hasError('required')) {
+                  <span>{{ field.validators?.errorMessages?.['required'] }}</span>
+                }
+                @if (control.hasError('minLength')) {
+                  <span>{{ field.validators?.errorMessages?.['minLength'] }}</span>
+                }
+                </div>
+            }
+          }
+        }
+
+        @case ('text') {
+          <input 
+            type="text" 
+            [id]="field.name" 
+            [formControlName]="field.name" 
+            class="form-control captions">
           @if (form.get(field.name); as control) {
             @if (control.invalid && (control.touched || control.dirty)) {
               <div class="error-message">

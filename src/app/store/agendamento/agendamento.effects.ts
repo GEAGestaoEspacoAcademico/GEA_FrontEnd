@@ -1,112 +1,101 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Actions} from '@ngrx/effects';
 import { createEffect, ofType } from '@ngrx/effects';
 import { catchError, delay, filter, map, mergeMap, of, withLatestFrom } from 'rxjs';
 import { AgendamentoActions } from './agendamento.actions';
-import type { Class } from '../../models/class.model';
+import type { Agendamento } from '../../models/agendamento.model';
 import { Store } from '@ngrx/store';
 import { selectTodasAsAulas } from './agendamento.selectors';
 
-let mockAulas: Class[] = [
-  {
-    id: 103,
-    usuario: 'Monitoria de Física',
-    sala: 'Sala de Estudos 02',
-    dataInicio: new Date('2025-10-12T00:00:00'),
-    dataFinal: new Date('2025-10-12T00:00:00'),
-    diaDaSemana: 'Domingo',
-    horaInicio: '14:00',
-    horaFim: '16:00'
-  },
-  {
-    id: 106,
-    usuario: 'Grupo de Estudo TCC',
-    sala: 'Sala 04',
-    dataInicio: new Date('2025-10-12T00:00:00'),
-    dataFinal: new Date('2025-10-12T00:00:00'),
-    diaDaSemana: 'Domingo',
-    horaInicio: '10:00',
-    horaFim: '12:00'
-  },
-
-  // --- Segunda-feira, 13 de Outubro ---
-  {
-    id: 101,
-    usuario: 'Prof. André Silva',
-    sala: 'Sala 04',
-    // Aula recorrente do semestre que acontece nesta segunda
-    dataInicio: new Date('2025-08-04T00:00:00'),
-    dataFinal: new Date('2025-12-15T00:00:00'),
+let mockAgendamentos: Agendamento[] = [
+   {
+    id: 1,
+    local: 'Sala C-205',
+    dataInicio: new Date('2025-10-13T08:00:00'),
+    dataFinal: new Date('2025-10-14T10:00:00'),
     diaDaSemana: 'Segunda-feira',
-    horaInicio: '07:40',
-    horaFim: '09:20'
+    horario: '08:00 - 10:00',
+    disciplina: 'Cálculo I',
+    semestre: '2025.2',
+    curso: 'ADS'
   },
-
-  // --- Terça-feira, 14 de Outubro ---
   {
-    id: 102,
-    usuario: 'Profa. Carla Souza',
-    sala: 'Laboratório 01',
-    // Aula recorrente do semestre que acontece nesta terça
-    dataInicio: new Date('2025-08-05T00:00:00'),
-    dataFinal: new Date('2025-12-16T00:00:00'),
+    id: 2,
+    local: 'Laboratório de Redes',
+    dataInicio: new Date('2025-10-14T10:00:00'),
+    dataFinal: new Date('2025-10-15T12:00:00'),
     diaDaSemana: 'Terça-feira',
-    horaInicio: '10:00',
-    horaFim: '11:40'
+    horario: '10:00 - 12:00',
+    disciplina: 'Redes de Computadores',
+    semestre: '2025.2',
+    curso: 'Mecatrônica'
   },
-
-  // --- Quarta-feira, 15 de Outubro ---
   {
-    id: 104,
-    usuario: 'Profa. Beatriz Lima',
-    sala: 'Sala 11',
-    // Aula recorrente do semestre que acontece nesta quarta
-    dataInicio: new Date('2025-08-06T00:00:00'),
-    dataFinal: new Date('2025-12-17T00:00:00'),
+    id: 3,
+    local: 'Auditório Bloco D',
+    dataInicio: new Date('2025-10-15T19:00:00'),
+    dataFinal: new Date('2025-10-16T22:30:00'),
     diaDaSemana: 'Quarta-feira',
-    horaInicio: '19:00',
-    horaFim: '20:40'
+    horario: '19:00 - 22:30',
+    disciplina: 'Inteligência Artificial',
+    semestre: '2025.2',
+    curso: 'GTI'
   },
-
-  // --- Quinta-feira, 16 de Outubro ---
   {
-    id: 107,
-    usuario: 'Lab. de Robótica',
-    sala: 'Lab 03',
-    // Evento único
-    dataInicio: new Date('2025-10-16T00:00:00'),
-    dataFinal: new Date('2025-10-16T00:00:00'),
+    id: 4,
+    local: 'Sala B-112',
+    dataInicio: new Date('2025-10-16T14:00:00'),
+    dataFinal: new Date('2025-10-17T16:00:00'),
     diaDaSemana: 'Quinta-feira',
-    horaInicio: '15:30',
-    horaFim: '17:10'
+    horario: '14:00 - 16:00',
+    disciplina: 'Estrutura de Dados',
+    semestre: '2025.2',
+    curso: 'ADS'
   },
-
-  // --- Sexta-feira, 17 de Outubro ---
   {
-    id: 105,
-    usuario: 'Palestra Convidado',
-    sala: 'Auditório Principal',
-    // Evento único
-    dataInicio: new Date('2025-10-17T00:00:00'),
-    dataFinal: new Date('2025-10-17T00:00:00'),
+    id: 5,
+    local: 'Sala de Reuniões - Coordenação',
+    dataInicio: new Date('2025-10-17T09:30:00'),
+    dataFinal: new Date('2025-10-18T11:00:00'),
     diaDaSemana: 'Sexta-feira',
-    horaInicio: '19:30',
-    horaFim: '21:00'
+    horario: '09:30 - 11:00',
+    disciplina: 'Projeto Integrador I',
+    semestre: '2025.2',
+    curso: 'Mecatrônica'
   },
-
-  // --- Sábado, 18 de Outubro ---
   {
-    id: 108,
-    usuario: 'Workshop de Impressão 3D',
-    sala: 'Oficina Maker',
-    // Evento único de sábado
-    dataInicio: new Date('2025-10-18T00:00:00'),
-    dataFinal: new Date('2025-10-18T00:00:00'),
-    diaDaSemana: 'Sábado',
-    horaInicio: '09:00',
-    horaFim: '13:00'
-  }
+    id: 6,
+    local: 'Sala A-301',
+    dataInicio: new Date('2025-10-18T19:00:00'),
+    dataFinal: new Date('2025-10-19T21:00:00'),
+    diaDaSemana: 'Segunda-feira',
+    horario: '19:00 - 21:00',
+    disciplina: 'Direito Constitucional',
+    semestre: '2025.2',
+    curso: 'GTI'
+  },
+  {
+    id: 7,
+    local: 'Laboratório de Física',
+    dataInicio: new Date('2025-10-19T15:00:00'),
+    dataFinal: new Date('2025-10-20T18:00:00'),
+    diaDaSemana: 'Quarta-feira',
+    horario: '15:00 - 18:00',
+    disciplina: 'Física Experimental II',
+    semestre: '2025.2',
+    curso: 'ADS'
+  },
+  {
+    id: 8,
+    local: 'Sala B-112',
+    dataInicio: new Date('2025-10-20T16:00:00'),
+    dataFinal: new Date('2025-10-21T18:00:00'),
+    diaDaSemana: 'Quinta-feira',
+    horario: '16:00 - 18:00',
+    disciplina: 'Estrutura de Dados - Monitoria',
+    semestre: '2025.2',
+    curso: 'ADS'
+  },
 ]
 
 
@@ -116,59 +105,67 @@ export class AgendamentoEffects {
   private store = inject(Store);
   // private http = inject(HttpClient)
 
-loadAulas$ = createEffect(() =>
+  loadAgendamentos$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AgendamentoActions.loadAulas),
+      ofType(AgendamentoActions.loadAgendamentos),
       withLatestFrom(this.store.select(selectTodasAsAulas)),
-      filter(([_, aulas]) => {
-        return aulas.length === 0;
+      filter(([_, agendamentos]) => {
+        return agendamentos.length === 0;
       }),
       mergeMap(() => {
-        console.log('[Effects] Aulas não encontradas no state. Carregando aulas mockadas...');
-        return of(mockAulas).pipe(
+        return of(mockAgendamentos).pipe(
           delay(500), 
-          map(aulas => AgendamentoActions.loadAulasSuccess({ aulas })),
-          catchError(_ => of(AgendamentoActions.loadAulasFailure({ error: 'Falha ao carregar aulas mockadas' })))
+          map(agendamentos => AgendamentoActions.loadAgendamentosSuccess({ agendamentos })),
+          catchError(_ => of(AgendamentoActions.loadAgendamentosFailure({ error: 'Falha ao carregar aulas mockadas' })))
         );
       })
     )
   );
 
-  loadAulaById$ = createEffect(() =>
+  loadAgendamentosById$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AgendamentoActions.loadAulaById),
+      ofType(AgendamentoActions.loadAgendamentoById),
       map(action => {
-        const aulaEncontrada = mockAulas.find(aula => aula.id === action.id);
+        const aulaEncontrada = mockAgendamentos.find(aula => aula.id === action.id);
 
         if (aulaEncontrada) {
-          return AgendamentoActions.loadAulaByIdSuccess({ aula: aulaEncontrada });
+          return AgendamentoActions.loadAgendamentoByIdSuccess({ agendamento: aulaEncontrada });
         } else {
-          return AgendamentoActions.loadAulaByIdFailure({ error: `Aula com ID ${action.id} não encontrada.` });
+          return AgendamentoActions.loadAgendamentoByIdFailure({ error: `Aula com ID ${action.id} não encontrada.` });
         }
       })
     )
   );
 
   
-  deleteAula$ = createEffect(() =>
+  deleteAgendamento$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(AgendamentoActions.deleteAula),
+      ofType(AgendamentoActions.deleteAgendamento),
       mergeMap(action => {
-        console.log(`[Effects] Deletando aula mockada com id: ${action.id}`);
-        
-        // Simula a lógica de deletar do backend
-        const aulaExiste = mockAulas.find(a => a.id === action.id);
+        const agendamentoExiste = mockAgendamentos.find(a => a.id === action.id);
 
-        if (!aulaExiste) {
-          // Simula um erro se a aula não for encontrada
-          return of(AgendamentoActions.deleteAulaFailure({ error: 'Aula não encontrada' })).pipe(delay(500));
+        if (!agendamentoExiste) {
+          return of(AgendamentoActions.deleteAgendamentoFailure({ error: 'Aula não encontrada' })).pipe(delay(500));
         }
+        mockAgendamentos = mockAgendamentos.filter(a => a.id !== action.id);
+        return of(AgendamentoActions.deleteAgendamentoSuccess({ id: action.id })).pipe(delay(500));
+      })
+    )
+  );
 
-        // Remove a aula do nosso "banco de dados"
-        mockAulas = mockAulas.filter(a => a.id !== action.id);
+   editAgendamento$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AgendamentoActions.editAgendamento),
+      mergeMap(({ agendamento }) => {
+        const index = mockAgendamentos.findIndex(a => a.id === agendamento.id);
 
-        // Retorna a ação de sucesso
-        return of(AgendamentoActions.deleteAulaSuccess({ id: action.id })).pipe(delay(500));
+        if (index === -1) {
+          return of(AgendamentoActions.editAgendamentoFailure({ error: `Aula com ID ${agendamento.id} não encontrada para edição.` })).pipe(delay(500));
+        }
+        mockAgendamentos = mockAgendamentos.map(item => 
+          item.id === agendamento.id ? agendamento : item
+        );
+        return of(AgendamentoActions.editAgendamentoSuccess({ agendamento })).pipe(delay(500));
       })
     )
   );
