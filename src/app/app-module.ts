@@ -32,6 +32,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AgendamentoEffects } from './store/agendamento/agendamento.effects';
 import { agendamentoReducer } from './store/agendamento/agendamento.reducer';
 import { AGENDAMENTO_FEATURE_KEY } from './store/agendamento/agendamento.selectors';
+import { Login } from './pages/login/login';
+import { NotificationCard } from './components/shared/notification-card/notification-card';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { AGENDAMENTO_FEATURE_KEY } from './store/agendamento/agendamento.selecto
     Configuracoes,
     Notificacoes,
     EditarAula,
+    Login,
+    NotificationCard
   ],
   imports: [
     BrowserModule,
