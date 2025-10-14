@@ -1,6 +1,7 @@
 import type { TemplateRef } from '@angular/core';
 import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import type { RoomData } from '../../../models/room.model';
 
 @Component({
   selector: 'app-confirmation-modal',
@@ -11,8 +12,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 export class ConfirmationModal {
   private modalService = inject(NgbModal);
 
+  @Input({ required: true }) mode: 'aviso' | 'detalhes' = 'aviso';
   @Input({ required: true }) title!: string;
-  @Input({ required: true }) message!: string;
+  @Input() message!: string;
+  @Input() detailsData!: RoomData;
   @Input() confirmText!: string;
   @Input() cancelText!: string;
 

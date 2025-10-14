@@ -1,19 +1,40 @@
-<ng-template #ConfirmationModal let-modal>
-  <div class="modal-geral">
-    <div class="header-modal">
-      <mat-icon svgIcon="alert" class="alert-icon"></mat-icon>
-      <div class="highlight-title w-100 text-center">{{ title }}</div>
-    </div>
-    <div class="d-flex flex-column header-body">
-      <div class="captions w-100 m-3">{{ message }}</div>
-      <div class="d-flex flex-fill gap-3">
-        <button class="gea-btn-secondary flex-fill" (click)="onModalCancel()">
-          {{ cancelText }}
-        </button>
-        <button class="gea-btn-primary flex-fill" (click)="onModalConfirm()">
-          {{ confirmText }}
-        </button>
+@if (mode === 'aviso') {
+  <ng-template #ConfirmationModal let-modal>
+    <div class="modal-geral">
+      <div class="header-modal">
+        <mat-icon svgIcon="alert" class="icons"></mat-icon>
+        <div class="highlight-title w-100 text-center">{{ title }}</div>
+      </div>
+      <div class="d-flex flex-column header-body">
+        <div class="captions w-100 m-3">{{ message }}</div>
+        <div class="d-flex flex-fill gap-3">
+          <button class="gea-btn-secondary flex-fill" (click)="onModalCancel()">
+            {{ cancelText }}
+          </button>
+          <button class="gea-btn-primary flex-fill" (click)="onModalConfirm()">
+            {{ confirmText }}
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-</ng-template>
+  </ng-template>
+}
+
+@if (mode === 'detalhes') {
+  <ng-template #SchedulingModal let-modal>
+    <div class="modal-geral">
+      <div class="header-modal">
+        <mat-icon svgIcon="arrow-back" class="icons"></mat-icon>
+        <div class="highlight-title w-100 text-center">{{ title }}</div>
+      </div>
+      <div class="d-flex flex-column header-body">
+        <div class="d-flex">
+          <p>Objeto</p>
+          <button class="gea-btn-primary" (click)="onModalConfirm()">
+            {{ confirmText }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+}
