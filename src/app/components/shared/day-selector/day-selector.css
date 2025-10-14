@@ -1,5 +1,40 @@
+.day-selector-wrapper {
+  position: relative;
+  
+  &::after, &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    width: 50px; /* Largura do gradiente */
+    height: 100%;
+    background: linear-gradient(to left, white, rgba(255, 255, 255, 0));
+    pointer-events: none; /* Permite clicar e rolar através do gradiente */
+    opacity: 0;
+  }
+}
+.day-selector-wrapper::before {
+  left: 0;
+  /* IMPORTANTE: Troque 'white' pela cor de fundo exata */
+  background: linear-gradient(to right, white, rgba(255, 255, 255, 0));
+}
+
+.day-selector-wrapper::after {
+  right: 0;
+  /* IMPORTANTE: Troque 'white' pela cor de fundo exata */
+  background: linear-gradient(to left, white, rgba(255, 255, 255, 0));
+}
+
+.day-selector-wrapper.show-left-fade::before {
+  opacity: 1;
+}
+
+.day-selector-wrapper.show-right-fade::after {
+  opacity: 1;
+}
+
 .day-selector {
   white-space: nowrap;
+  overflow-x: auto;
 }
 
 .day-item {

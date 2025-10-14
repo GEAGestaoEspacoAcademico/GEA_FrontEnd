@@ -1,7 +1,12 @@
 import type { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
-import type { Class } from '../../models/class.model';
+import { Component, inject } from '@angular/core';
+import type { Agendamento } from '../../models/agendamento.model';
 import type { Day } from '../../components/shared/day-selector/day-selector';
+import { Router } from '@angular/router';
+import { map, type Observable } from 'rxjs';
+import { selectTodasAsAulas, selectAgendamentoLoading } from '../../store/agendamento/agendamento.selectors';
+import { Store } from '@ngrx/store';
+import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
 
 @Component({
   selector: 'app-aulas',
@@ -10,49 +15,64 @@ import type { Day } from '../../components/shared/day-selector/day-selector';
   styleUrl: './aulas.css'
 })
 export class Aulas implements OnInit{
+  private classesByDay: Record<string, Agendamento[]> = {};
+  private store = inject(Store);
+  private router = inject(Router)
+
   days: Day[] = [];
   activeDayId!: string;
 
-  private classesByDay: Record<string, Class[]> = {};
-
-  classesForSelectedDay: Class[] = [];
+  agendamentos$: Observable<Agendamento[]> = this.store.select(selectTodasAsAulas);
+  loading$: Observable<boolean> = this.store.select(selectAgendamentoLoading);
+  agendamentosDoDiaSelecionado$!: Observable<Agendamento[]>;
 
   ngOnInit(): void {
+    this.store.dispatch(AgendamentoActions.loadAgendamentos());
     this.days = this.buildNextDays(7);
-
     this.activeDayId = this.toId(new Date());
-
-    this.seedClasses();
-
-    this.updateClassesForActiveDay();
+    this.updateAgendamentosForActivyDay();
   }
 
   onDayChange(id: string | number) {
     this.activeDayId = String(id);
-    this.updateClassesForActiveDay();
+    this.updateAgendamentosForActivyDay();
   }
 
-  handleDeleteClass(id: number) {
-    this.classesByDay[this.activeDayId] =
-      (this.classesByDay[this.activeDayId] ?? []).filter(c => c.id !== id);
-    this.updateClassesForActiveDay();
+  handleDeleteAgendamento(id: number) {
+    this.store.dispatch(AgendamentoActions.deleteAgendamento({ id }));
   }
 
-  handleViewClass(id: number) {
-    // eslint-disable-next-line no-console
-    console.log('[Alterar] aula id:', id, 'no dia', this.activeDayId);
+  handleViewAgendamento(id: number) {
+    this.router.navigate(['/aulas/alterar', id])
   }
 
-  private updateClassesForActiveDay(): void {
-    const list = this.classesByDay[this.activeDayId] ?? [];
-    this.classesForSelectedDay = [...list].sort((a, b) =>
-      a.time.localeCompare(b.time)
+  private updateAgendamentosForActivyDay(): void {
+    this.agendamentosDoDiaSelecionado$ = this.agendamentos$.pipe(
+      map(agendamentos => {
+        const diaAtivoDate = new Date(`${this.activeDayId}T12:00:00Z`);
+        const diaDaSemanaAtivo = diaAtivoDate.toLocaleDateString('pt-BR', { weekday: 'long' });
+
+        const agendamentosFiltrados = agendamentos.filter(agendamento => {
+          const inicio = new Date(agendamento.dataInicio);
+          inicio.setUTCHours(0, 0, 0, 0);
+          
+          const fim = new Date(agendamento.dataFinal);
+          fim.setUTCHours(23, 59, 59, 999);
+
+          const isDentroDoIntervalo = diaAtivoDate >= inicio && diaAtivoDate <= fim;
+          const isMesmoDiaDaSemana = agendamento.diaDaSemana.toLowerCase() === diaDaSemanaAtivo.toLowerCase();
+
+          return isDentroDoIntervalo && isMesmoDiaDaSemana;
+        });
+        
+        return agendamentosFiltrados.sort((a, b) => a.horario.localeCompare(b.horario));
+      })
     );
   }
 
   private buildNextDays(n: number): Day[] {
     const result: Day[] = [];
-    const fmtDate = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit' });
+    const fmtDate = new Intl.DateTimeFormat('pt-BR', { day: '2-digit' });
     const fmtWeek = new Intl.DateTimeFormat('pt-BR', { weekday: 'short' });
 
     const today = new Date();
@@ -75,36 +95,4 @@ export class Aulas implements OnInit{
     const day = String(d.getDate()).padStart(2, '0');
     return `${y}-${m}-${day}`;
   }
-
-  private seedClasses(): void {
-    const d0 = this.days[0]?.id;
-    const d1 = this.days[1]?.id;
-    const d2 = this.days[2]?.id;
-    const d3 = this.days[3]?.id;
-    const d4 = this.days[4]?.id;
-
-    if (d0) {this.classesByDay[d0] = [
-      { id: 101, courseName: 'Mecatrônica',            time: '07:40–09:20', location: 'Sala 04', semester: '2º Semestre', subject: 'Cálculo I' },
-      { id: 106, courseName: 'Mecatrônica',            time: '09:30–11:10', location: 'Sala 04', semester: '2º Semestre', subject: 'Álgebra Linear' },
-    ];}
-
-    if (d1) {this.classesByDay[d1] = [
-      { id: 102, courseName: 'Engenharia de Controle', time: '09:30–11:10', location: 'Sala 02', semester: '2º Semestre', subject: 'Física II' },
-      { id: 202, courseName: 'Engenharia de Controle', time: '13:30–15:10', location: 'Lab 01',  semester: '2º Semestre', subject: 'Sinais e Sistemas' },
-      { id: 203, courseName: 'Engenharia de Controle', time: '15:20–17:00', location: 'Sala 05', semester: '2º Semestre', subject: 'Controle I' },
-    ];}
-
-    if (d2) {this.classesByDay[d2] = [
-      { id: 103, courseName: 'Automação Industrial',   time: '13:30–15:10', location: 'Lab 01',  semester: '2º Semestre', subject: 'Eletrônica Digital' },
-    ];}
-
-    if (d3) {this.classesByDay[d3] = [
-      { id: 104, courseName: 'Computação Aplicada',    time: '15:20–17:00', location: 'Sala 10', semester: '2º Semestre', subject: 'Estruturas de Dados' },
-    ];}
-
-    if (d4) {this.classesByDay[d4] = [
-      { id: 105, courseName: 'Materiais e Processos',  time: '19:00–20:40', location: 'Sala 06', semester: '2º Semestre', subject: 'Resistência dos Materiais' },
-    ];}
-  }
-
 }
