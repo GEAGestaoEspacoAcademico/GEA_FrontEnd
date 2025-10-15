@@ -27,8 +27,8 @@ export class ConfirmationModal {
   @ViewChild('ConfirmationModal')
   modalTemplate!: TemplateRef<ConfirmationModal>;
 
-  open(content: TemplateRef<any>) {
-    this.modalService.open(content, { backdrop: 'static', centered: true, size: 'sm' });
+  open() {
+    this.modalService.open(this.modalTemplate, { backdrop: 'static', centered: true, size: 'sm' });
   }
 
   onModalConfirm(): void {
