@@ -7,19 +7,33 @@ import { Configuracoes } from './pages/configuracoes/configuracoes';
 import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { EditarAula } from './pages/editar-aula/visualizar-aula';
 import { Login } from './pages/login/login';
+import { MainLayout } from '../layouts/main-layout/main-layout';
+import { AuthLayout } from '../layouts/auth-layout/auth-layout';
 
 const routes: Routes = [
-  {path: 'login', component: Login},
-  {path: 'agenda', component: Agenda},
-  {path: 'aulas', component: Aulas},
-  {path: 'aulas/alterar/:id', component: EditarAula},
-  {path: 'configuracoes', component: Configuracoes},
-  {path: 'notificacoes', component: Notificacoes},
-  {path: '', redirectTo: '/login', pathMatch: 'full'}
+  {
+    path: '',
+    component: MainLayout,
+    children: [
+      { path: 'agenda', component: Agenda },
+      { path: 'aulas', component: Aulas },
+      { path: 'configuracoes', component: Configuracoes },
+      {path: 'aulas/alterar/:id', component: EditarAula},
+      { path: 'notificacoes', component: Notificacoes },
+      { path: '', redirectTo: '/login', pathMatch: 'full' }
+    ]
+  },
+  {
+    path: '',
+    component: AuthLayout,
+    children: [
+      { path: 'login', component: Login }
+    ]
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { scrollPositionRestoration: 'top' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
