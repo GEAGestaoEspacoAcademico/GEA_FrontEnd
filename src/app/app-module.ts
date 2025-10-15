@@ -34,6 +34,8 @@ import { agendamentoReducer } from './store/agendamento/agendamento.reducer';
 import { AGENDAMENTO_FEATURE_KEY } from './store/agendamento/agendamento.selectors';
 import { Login } from './pages/login/login';
 import { NotificationCard } from './components/shared/notification-card/notification-card';
+import { MainLayout } from '../layouts/main-layout/main-layout';
+import { AuthLayout } from '../layouts/auth-layout/auth-layout';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { NotificationCard } from './components/shared/notification-card/notifica
     Notificacoes,
     EditarAula,
     Login,
-    NotificationCard
+    NotificationCard,
+    MainLayout,
+    AuthLayout
   ],
   imports: [
     BrowserModule,

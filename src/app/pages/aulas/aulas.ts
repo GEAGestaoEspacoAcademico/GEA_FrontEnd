@@ -14,13 +14,15 @@ import { AgendamentoActions } from '../../store/agendamento/agendamento.actions'
   templateUrl: './aulas.html',
   styleUrl: './aulas.css'
 })
-export class Aulas implements OnInit{
-  private classesByDay: Record<string, Agendamento[]> = {};
+export class Aulas implements OnInit {
   private store = inject(Store);
-  private router = inject(Router)
+  private router = inject(Router);
 
+  private currentDate = new Date();
+  
   days: Day[] = [];
   activeDayId!: string;
+  monthToDisplay!: string;
 
   agendamentos$: Observable<Agendamento[]> = this.store.select(selectTodasAsAulas);
   loading$: Observable<boolean> = this.store.select(selectAgendamentoLoading);
@@ -28,24 +30,33 @@ export class Aulas implements OnInit{
 
   ngOnInit(): void {
     this.store.dispatch(AgendamentoActions.loadAgendamentos());
-    this.days = this.buildNextDays(7);
     this.activeDayId = this.toId(new Date());
+    this.generateDaysForMonth();
     this.updateAgendamentosForActivyDay();
   }
 
-  onDayChange(id: string | number) {
+  onMonthNavigate(direction: 'previous' | 'next'): void {
+    // Adiciona ou subtrai um mês da data atual
+    const newMonth = this.currentDate.getMonth() + (direction === 'next' ? 1 : -1);
+    this.currentDate.setMonth(newMonth);
+    this.generateDaysForMonth();
+    this.activeDayId = this.days[0].id;
+    this.updateAgendamentosForActivyDay();
+  }
+
+  onDayChange(id: string | number): void {
     this.activeDayId = String(id);
     this.updateAgendamentosForActivyDay();
   }
 
-  handleDeleteAgendamento(id: number) {
+  handleDeleteAgendamento(id: number): void {
     this.store.dispatch(AgendamentoActions.deleteAgendamento({ id }));
   }
 
-  handleViewAgendamento(id: number) {
-    this.router.navigate(['/aulas/alterar', id])
+  handleViewAgendamento(id: number): void {
+    this.router.navigate(['/aulas/alterar', id]);
   }
-
+  
   private updateAgendamentosForActivyDay(): void {
     this.agendamentosDoDiaSelecionado$ = this.agendamentos$.pipe(
       map(agendamentos => {
@@ -70,23 +81,27 @@ export class Aulas implements OnInit{
     );
   }
 
-  private buildNextDays(n: number): Day[] {
+  private generateDaysForMonth(): void {
     const result: Day[] = [];
+    const year = this.currentDate.getFullYear();
+    const month = this.currentDate.getMonth();
+
+    this.monthToDisplay = this.currentDate.toLocaleDateString('pt-BR', { month: 'short' }); 
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
     const fmtDate = new Intl.DateTimeFormat('pt-BR', { day: '2-digit' });
     const fmtWeek = new Intl.DateTimeFormat('pt-BR', { weekday: 'short' });
 
-    const today = new Date();
-    for (let i = 0; i < n; i++) {
-      const d = new Date(today);
-      d.setDate(today.getDate() + i);
-
+    for (let i = 1; i <= daysInMonth; i++) {
+      const d = new Date(year, month, i);
       result.push({
         id: this.toId(d),
         date: fmtDate.format(d),
-        dayOfWeek: fmtWeek.format(d).toLowerCase() 
+        dayOfWeek: fmtWeek.format(d).toLowerCase().replace('.', '')
       });
     }
-    return result;
+    this.days = result;
   }
 
   private toId(d: Date): string {

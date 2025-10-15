@@ -4,13 +4,13 @@
   </div>
   <div class="container">
     <div class="d-flex flex-column">
-      <div class="d-flex flex-row" routerLink="/agenda" routerLinkActive="active">
+      <div class="d-flex flex-row">
         <div class="line mt-3"></div>
-        <div class="subtitle p-1">Alterar Senha</div>
+        <a class="subtitle p-1" routerLink="/agenda">Alterar Senha</a>
       </div>
       <div class="d-flex flex-row">
         <div class="line mt-3"></div>
-        <div tabindex="0" class="subtitle p-1" (click)="logout()" (keypress)="logout()">Logout</div>
+        <a tabindex="0" class="subtitle p-1" routerLink="/login" (click)="logout()" (keypress)="logout()">Logout</a>
         <mat-icon svgIcon="logout" class="icon-logout"></mat-icon>
       </div>
     </div>
