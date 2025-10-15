@@ -75,6 +75,7 @@
   margin-right: auto;
   margin-top: 4px;
   margin-bottom: 2px;
+  border-width: 2px;
   border-color: var(--color-default-black);
 }
 

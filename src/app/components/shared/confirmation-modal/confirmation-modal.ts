@@ -16,19 +16,8 @@ export class ConfirmationModal {
   @Input({ required: true }) title!: string;
   @Input() message!: string;
   @Input() detailsData!: RoomData;
-  @Input() confirmText!: string;
-  @Input() cancelText!: string;
-
-  detalhes: RoomData[] = [
-    {
-      id: 1,
-      nome: 'Laboratorio 01',
-      data: '03/10/2025',
-      horario: '7:40-9:20',
-      capacidade: '10-20 alunos',
-      observacoes: ['projetor', '20 notebooks | 10 espaços extras'],
-    },
-  ];
+  @Input() confirmText: string = 'Confirmar';
+  @Input() cancelText: string = 'Cancelar';
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() onConfirm = new EventEmitter<RoomData>();

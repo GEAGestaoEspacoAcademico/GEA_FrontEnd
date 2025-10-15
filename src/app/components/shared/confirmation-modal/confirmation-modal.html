@@ -1,4 +1,4 @@
-<ng-template #Modal let-modal>
+<ng-template #ConfirmationModal let-modal>
   <div class="modal-geral">
     <div class="header-modal">
       @if (mode === 'aviso') {
@@ -6,7 +6,7 @@
         <div class="highlight-title w-100 text-center">{{ title }}</div>
       }
       @if (mode === 'detalhes') {
-        <mat-icon svgIcon="arrow-back" class="icon-arrow"></mat-icon>
+        <mat-icon svgIcon="arrow-back" class="icon-arrow" (click)="onModalCancel()"></mat-icon>
         <div class="highlight-title w-100 text-center">{{ title }}</div>
       }
     </div>
@@ -24,7 +24,7 @@
       }
       @if (mode === 'detalhes') {
         <div class="d-flex flex-column text-center">
-          @for (detalhe of detalhes; track $index) {
+          @for (detalhe of [detailsData]; track $index) {
             <div class="align-items-center">
               <div class="time-caption">
                 {{ detalhe.nome }}
@@ -62,5 +62,3 @@
     </div>
   </div>
 </ng-template>
-
-<button (click)="open(Modal)">Abre o modal</button>
