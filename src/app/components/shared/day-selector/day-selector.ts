@@ -8,8 +8,10 @@ import { Component, ElementRef, EventEmitter, inject, Input, Output } from '@ang
 })
 export class DaySelector {
   private el = inject(ElementRef)
+  @Input() currentMonthName!: string;
   @Input() days!: Day[];
   @Input() activeDayId!: string | number;
+  @Output() monthChange = new EventEmitter<'previous' | 'next'>();
   @Output() dayChange = new EventEmitter<string | number>();
 
   showLeftFade = false;
@@ -20,6 +22,11 @@ export class DaySelector {
       this.dayChange.emit(id);
     }
   }
+  
+  navigateMonth(direction: 'previous' | 'next'): void {
+    this.monthChange.emit(direction);
+  }
+
   onScroll(event: Event): void {
     this.checkScroll(event.target as HTMLElement);
   }
@@ -31,20 +38,14 @@ export class DaySelector {
     const scrollLeft = el.scrollLeft;
     const scrollWidth = el.scrollWidth;
     const clientWidth = el.clientWidth;
-    
-    // Tolerância para evitar problemas com valores decimais
     const tolerance = 1;
-
-    // Mostra o fade esquerdo se a rolagem não estiver no início
     this.showLeftFade = scrollLeft > tolerance;
-
-    // Mostra o fade direito se a rolagem não estiver no final
     this.showRightFade = scrollLeft + clientWidth < scrollWidth - tolerance;
   }
 }
 
 export interface Day {
-  id: string | number;
+  id: string;
   date: string;
   dayOfWeek: string;
 }
