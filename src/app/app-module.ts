@@ -27,6 +27,8 @@ import { Configuracoes } from './pages/configuracoes/configuracoes';
 import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { Login } from './pages/login/login';
 import { NotificationCard } from './components/shared/notification-card/notification-card';
+import { MainLayout } from '../layouts/main-layout/main-layout';
+import { AuthLayout } from '../layouts/auth-layout/auth-layout';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { NotificationCard } from './components/shared/notification-card/notifica
     Configuracoes,
     Notificacoes,
     Login,
-    NotificationCard
+    NotificationCard,
+    MainLayout,
+    AuthLayout
   ],
   imports: [
     BrowserModule,
