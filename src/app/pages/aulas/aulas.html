@@ -17,7 +17,7 @@
     <app-class-info-card
       *ngFor="let agendamento of agendamentosDoDiaSelecionado$ | async"
       [classData]="agendamento"
-      (delete)="handleDeleteAgendamento($event)"
+      (delete)="requestCancelConfirmation($event)"
       (view)="handleViewAgendamento($event)"
     >
     </app-class-info-card>
