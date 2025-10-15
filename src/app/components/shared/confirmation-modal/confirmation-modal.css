@@ -8,7 +8,7 @@
 }
 
 .gea-btn-secondary {
-  background-color: var(--color-surface-base);
+  background-color: #d9d9d9;
   height: 36px;
   padding: 4px 0;
   border-radius: 10px;
@@ -36,8 +36,50 @@
   overflow: hidden;
 }
 
-.icons {
+.icon-warn {
   width: 36px;
   height: 36px;
   color: var(--color-default-white);
+}
+
+.icon-arrow {
+  width: 24px;
+  height: 24px;
+  color: var(--color-default-white);
+  margin-top: 3px;
+}
+
+.observation-text {
+  color: var(--color-primary-700);
+}
+
+.time-caption {
+  display: block;
+  margin: 0 auto 8px auto;
+  font-weight: var(--font-weight-regular);
+}
+
+.hr-lg {
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4px;
+  margin-bottom: 2px;
+  border-width: 2px;
+  border-color: var(--color-default-black);
+}
+
+.hr-sm {
+  width: 37.5px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 4px;
+  margin-bottom: 2px;
+  border-color: var(--color-default-black);
+}
+
+.detail-button {
+  width: 120px;
+  display: block;
+  margin: 0 auto 8px auto;
 }

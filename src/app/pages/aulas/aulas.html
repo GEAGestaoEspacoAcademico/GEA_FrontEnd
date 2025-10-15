@@ -1,25 +1,38 @@
 <div class="mt-2">
-    <app-title-highligh title="Aulas"></app-title-highligh>
+  <app-title-highligh title="Aulas"></app-title-highligh>
 </div>
 
 <div class="container my-3">
-    <app-day-selector
-        class="w-100 d-block"
-        [days]="days"
-        [activeDayId]="activeDayId"
-        (dayChange)="onDayChange($event)">
-    </app-day-selector>
+  <app-day-selector
+    class="w-100 d-block"
+    [days]="days"
+    [activeDayId]="activeDayId"
+    (dayChange)="onDayChange($event)"
+  >
+  </app-day-selector>
 
-    <div class="mt-3">
-        <app-class-info-card
-            *ngFor="let agendamento of agendamentosDoDiaSelecionado$ | async"
-            [classData]="agendamento"
-            (delete)="handleDeleteAgendamento($event)"
-            (view)="handleViewAgendamento($event)">
-        </app-class-info-card>
+  <div class="mt-3">
+    <app-class-info-card
+      *ngFor="let agendamento of agendamentosDoDiaSelecionado$ | async"
+      [classData]="agendamento"
+      (delete)="handleDeleteAgendamento($event)"
+      (view)="handleViewAgendamento($event)"
+    >
+    </app-class-info-card>
 
-        <div *ngIf="!((agendamentosDoDiaSelecionado$ | async)?.length) && (loading$ | async) === false" class="text-secondary mt-3">
-            Sem aulas para este dia.
-        </div>
+    <div
+      *ngIf="!(agendamentosDoDiaSelecionado$ | async)?.length && (loading$ | async) === false"
+      class="text-secondary mt-3"
+    >
+      Sem aulas para este dia.
     </div>
+  </div>
 </div>
+
+<app-confirmation-modal
+  mode="aviso"
+  title="Aviso!"
+  message="Você tem certeza que deseja agendar esse local?"
+  confirmText="Confirmar"
+  cancelText="Cancelar"
+></app-confirmation-modal>
