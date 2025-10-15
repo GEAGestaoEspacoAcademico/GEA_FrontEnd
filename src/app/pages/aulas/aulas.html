@@ -5,9 +5,13 @@
 <div class="container my-3">
     <app-day-selector
         class="w-100 d-block"
+        [currentMonthName]="monthToDisplay"
         [days]="days"
         [activeDayId]="activeDayId"
-        (dayChange)="onDayChange($event)">
+        (dayChange)="onDayChange($event)"
+        (monthChange)="onMonthNavigate($event)"
+        >
+        
     </app-day-selector>
 
     <div class="mt-3">
