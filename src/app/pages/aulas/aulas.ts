@@ -1,5 +1,5 @@
 import type { OnInit } from '@angular/core';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import type { Agendamento } from '../../models/agendamento.model';
 import type { Day } from '../../components/shared/day-selector/day-selector';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { map, type Observable } from 'rxjs';
 import { selectTodasAsAulas, selectAgendamentoLoading } from '../../store/agendamento/agendamento.selectors';
 import { Store } from '@ngrx/store';
 import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
+import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 
 @Component({
   selector: 'app-aulas',
@@ -27,6 +28,9 @@ export class Aulas implements OnInit {
   agendamentos$: Observable<Agendamento[]> = this.store.select(selectTodasAsAulas);
   loading$: Observable<boolean> = this.store.select(selectAgendamentoLoading);
   agendamentosDoDiaSelecionado$!: Observable<Agendamento[]>;
+
+  @ViewChild('confirmModal') confirmModal!: ConfirmationModal;
+  agendamentoToCancelId: number | null = null;
 
   ngOnInit(): void {
     this.store.dispatch(AgendamentoActions.loadAgendamentos());
@@ -49,8 +53,34 @@ export class Aulas implements OnInit {
     this.updateAgendamentosForActivyDay();
   }
 
-  handleDeleteAgendamento(id: number): void {
+  requestCancelConfirmation(id: number): void {
+    this.agendamentoToCancelId = id;
+
+    if (this.confirmModal && typeof this.confirmModal.open === 'function') {
+      this.confirmModal.open();
+      return;
+    }
+
+    setTimeout(() => {
+      if (this.confirmModal && typeof this.confirmModal.open === 'function') {
+        this.confirmModal.open();
+      } else {
+        console.warn('ConfirmationModal não inicializado. Cancelamento não confirmado.');
+      }
+    }, 50);
+  }
+
+  confirmCancel(): void {
+    if (this.agendamentoToCancelId === null) { return; }
+
+    const id = this.agendamentoToCancelId;
     this.store.dispatch(AgendamentoActions.deleteAgendamento({ id }));
+
+    this.agendamentoToCancelId = null;
+  }
+
+  closeCancelModal(): void {
+    this.agendamentoToCancelId = null;
   }
 
   handleViewAgendamento(id: number): void {
