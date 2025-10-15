@@ -1,7 +1,12 @@
 import type { OnInit } from '@angular/core';
-import { Component } from '@angular/core';
-import type { Class } from '../../models/class.model';
+import { Component, inject } from '@angular/core';
+import type { Agendamento } from '../../models/agendamento.model';
 import type { Day } from '../../components/shared/day-selector/day-selector';
+import { Router } from '@angular/router';
+import { map, type Observable } from 'rxjs';
+import { selectTodasAsAulas, selectAgendamentoLoading } from '../../store/agendamento/agendamento.selectors';
+import { Store } from '@ngrx/store';
+import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
 
 @Component({
   selector: 'app-aulas',
@@ -9,64 +14,94 @@ import type { Day } from '../../components/shared/day-selector/day-selector';
   templateUrl: './aulas.html',
   styleUrl: './aulas.css'
 })
-export class Aulas implements OnInit{
+export class Aulas implements OnInit {
+  private store = inject(Store);
+  private router = inject(Router);
+
+  private currentDate = new Date();
+  
   days: Day[] = [];
   activeDayId!: string;
+  monthToDisplay!: string;
 
-  private classesByDay: Record<string, Class[]> = {};
-
-  classesForSelectedDay: Class[] = [];
+  agendamentos$: Observable<Agendamento[]> = this.store.select(selectTodasAsAulas);
+  loading$: Observable<boolean> = this.store.select(selectAgendamentoLoading);
+  agendamentosDoDiaSelecionado$!: Observable<Agendamento[]>;
 
   ngOnInit(): void {
-    this.days = this.buildNextDays(7);
-
+    this.store.dispatch(AgendamentoActions.loadAgendamentos());
     this.activeDayId = this.toId(new Date());
-
-    this.seedClasses();
-
-    this.updateClassesForActiveDay();
+    this.generateDaysForMonth();
+    this.updateAgendamentosForActivyDay();
   }
 
-  onDayChange(id: string | number) {
+  onMonthNavigate(direction: 'previous' | 'next'): void {
+    // Adiciona ou subtrai um mês da data atual
+    const newMonth = this.currentDate.getMonth() + (direction === 'next' ? 1 : -1);
+    this.currentDate.setMonth(newMonth);
+    this.generateDaysForMonth();
+    this.activeDayId = this.days[0].id;
+    this.updateAgendamentosForActivyDay();
+  }
+
+  onDayChange(id: string | number): void {
     this.activeDayId = String(id);
-    this.updateClassesForActiveDay();
+    this.updateAgendamentosForActivyDay();
   }
 
-  handleDeleteClass(id: number) {
-    this.classesByDay[this.activeDayId] =
-      (this.classesByDay[this.activeDayId] ?? []).filter(c => c.id !== id);
-    this.updateClassesForActiveDay();
+  handleDeleteAgendamento(id: number): void {
+    this.store.dispatch(AgendamentoActions.deleteAgendamento({ id }));
   }
 
-  handleViewClass(id: number) {
-    // eslint-disable-next-line no-console
-    console.log('[Alterar] aula id:', id, 'no dia', this.activeDayId);
+  handleViewAgendamento(id: number): void {
+    this.router.navigate(['/aulas/alterar', id]);
   }
+  
+  private updateAgendamentosForActivyDay(): void {
+    this.agendamentosDoDiaSelecionado$ = this.agendamentos$.pipe(
+      map(agendamentos => {
+        const diaAtivoDate = new Date(`${this.activeDayId}T12:00:00Z`);
+        const diaDaSemanaAtivo = diaAtivoDate.toLocaleDateString('pt-BR', { weekday: 'long' });
 
-  private updateClassesForActiveDay(): void {
-    const list = this.classesByDay[this.activeDayId] ?? [];
-    this.classesForSelectedDay = [...list].sort((a, b) =>
-      a.time.localeCompare(b.time)
+        const agendamentosFiltrados = agendamentos.filter(agendamento => {
+          const inicio = new Date(agendamento.dataInicio);
+          inicio.setUTCHours(0, 0, 0, 0);
+          
+          const fim = new Date(agendamento.dataFinal);
+          fim.setUTCHours(23, 59, 59, 999);
+
+          const isDentroDoIntervalo = diaAtivoDate >= inicio && diaAtivoDate <= fim;
+          const isMesmoDiaDaSemana = agendamento.diaDaSemana.toLowerCase() === diaDaSemanaAtivo.toLowerCase();
+
+          return isDentroDoIntervalo && isMesmoDiaDaSemana;
+        });
+        
+        return agendamentosFiltrados.sort((a, b) => a.horario.localeCompare(b.horario));
+      })
     );
   }
 
-  private buildNextDays(n: number): Day[] {
+  private generateDaysForMonth(): void {
     const result: Day[] = [];
-    const fmtDate = new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit' });
+    const year = this.currentDate.getFullYear();
+    const month = this.currentDate.getMonth();
+
+    this.monthToDisplay = this.currentDate.toLocaleDateString('pt-BR', { month: 'short' }); 
+
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+    const fmtDate = new Intl.DateTimeFormat('pt-BR', { day: '2-digit' });
     const fmtWeek = new Intl.DateTimeFormat('pt-BR', { weekday: 'short' });
 
-    const today = new Date();
-    for (let i = 0; i < n; i++) {
-      const d = new Date(today);
-      d.setDate(today.getDate() + i);
-
+    for (let i = 1; i <= daysInMonth; i++) {
+      const d = new Date(year, month, i);
       result.push({
         id: this.toId(d),
         date: fmtDate.format(d),
-        dayOfWeek: fmtWeek.format(d).toLowerCase() 
+        dayOfWeek: fmtWeek.format(d).toLowerCase().replace('.', '')
       });
     }
-    return result;
+    this.days = result;
   }
 
   private toId(d: Date): string {
@@ -75,36 +110,4 @@ export class Aulas implements OnInit{
     const day = String(d.getDate()).padStart(2, '0');
     return `${y}-${m}-${day}`;
   }
-
-  private seedClasses(): void {
-    const d0 = this.days[0]?.id;
-    const d1 = this.days[1]?.id;
-    const d2 = this.days[2]?.id;
-    const d3 = this.days[3]?.id;
-    const d4 = this.days[4]?.id;
-
-    if (d0) {this.classesByDay[d0] = [
-      { id: 101, courseName: 'Mecatrônica',            time: '07:40–09:20', location: 'Sala 04', semester: '2º Semestre', subject: 'Cálculo I' },
-      { id: 106, courseName: 'Mecatrônica',            time: '09:30–11:10', location: 'Sala 04', semester: '2º Semestre', subject: 'Álgebra Linear' },
-    ];}
-
-    if (d1) {this.classesByDay[d1] = [
-      { id: 102, courseName: 'Engenharia de Controle', time: '09:30–11:10', location: 'Sala 02', semester: '2º Semestre', subject: 'Física II' },
-      { id: 202, courseName: 'Engenharia de Controle', time: '13:30–15:10', location: 'Lab 01',  semester: '2º Semestre', subject: 'Sinais e Sistemas' },
-      { id: 203, courseName: 'Engenharia de Controle', time: '15:20–17:00', location: 'Sala 05', semester: '2º Semestre', subject: 'Controle I' },
-    ];}
-
-    if (d2) {this.classesByDay[d2] = [
-      { id: 103, courseName: 'Automação Industrial',   time: '13:30–15:10', location: 'Lab 01',  semester: '2º Semestre', subject: 'Eletrônica Digital' },
-    ];}
-
-    if (d3) {this.classesByDay[d3] = [
-      { id: 104, courseName: 'Computação Aplicada',    time: '15:20–17:00', location: 'Sala 10', semester: '2º Semestre', subject: 'Estruturas de Dados' },
-    ];}
-
-    if (d4) {this.classesByDay[d4] = [
-      { id: 105, courseName: 'Materiais e Processos',  time: '19:00–20:40', location: 'Sala 06', semester: '2º Semestre', subject: 'Resistência dos Materiais' },
-    ];}
-  }
-
 }

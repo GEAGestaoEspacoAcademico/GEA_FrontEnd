@@ -1,6 +1,6 @@
 .generic-form {
   border-radius: 8px;
-  max-width: 340px;
+  min-width: 340px;
   font-family: Arial, sans-serif;
   overflow: hidden;
 }

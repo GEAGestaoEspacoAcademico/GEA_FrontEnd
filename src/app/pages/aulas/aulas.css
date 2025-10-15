@@ -6,6 +6,12 @@
   padding-right: 12px;
   scroll-snap-type: x mandatory;
   scroll-padding-left: 12px;
+  scrollbar-width: none;
+  /* Para IE e Edge */
+  -ms-overflow-style: none;
+}
+.day-selector::-webkit-scrollbar {
+  display: none;
 }
 
 :host ::ng-deep .day-item {

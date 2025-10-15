@@ -1,12 +1,29 @@
-<div class="day-selector d-flex justify-content-center gap-2 overflow-auto py-2">
-  <div class="day-item text-center p-2 rounded"
-    *ngFor="let day of days"
-    [ngClass]="{'active text-danger fw-bold border border-danger': day.id === activeDayId, 'text-secondary': day.id !== activeDayId}"
-    role="button"
-    tabindex="0"
-    (click)="selectDay(day.id)"
-  >
-    <div class="day-date fs-5">{{ day.date }}</div>
-    <div class="day-week text-lowercase">{{ day.dayOfWeek }}</div>
+<div class="calendar-container">
+
+  <div class="month-selector">
+    <button class="nav-arrow" (click)="navigateMonth('previous')">
+      <mat-icon svgIcon="arrow-back" class="arrow-icon"></mat-icon>
+    </button>
+    <span class="month-name">{{ currentMonthName }}</span>
+    <button class="nav-arrow" (click)="navigateMonth('next')">
+      <mat-icon svgIcon="arrow-previus" class="arrow-icon"></mat-icon>
+    </button>
   </div>
+
+  <div class="day-selector-wrapper"
+    [class.show-left-fade]="showLeftFade"
+    [class.show-right-fade]="showRightFade">
+    <div #daySelector class="day-selector d-flex gap-2 overflow-auto py-2" (scroll)="onScroll($event)">
+      <div class="day-item text-center p-2 rounded"
+        *ngFor="let day of days"
+        [ngClass]="{'active text-danger fw-bold border border-danger': day.id === activeDayId, 'text-secondary': day.id !== activeDayId}"
+        role="button"
+        tabindex="0"
+        (click)="selectDay(day.id)">
+        <div class="day-date fs-5">{{ day.date }}</div>
+        <div class="day-week text-lowercase">{{ day.dayOfWeek }}</div>
+      </div>
+    </div>
+  </div>
+
 </div>
