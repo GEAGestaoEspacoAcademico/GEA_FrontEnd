@@ -29,4 +29,15 @@
       Sem aulas para este dia.
     </div>
   </div>
+
+  <app-confirmation-modal
+    #confirmModal
+    [mode]="'aviso'"
+    [title]="'Confirmar Cancelamento'"
+    [message]="'Você tem certeza que deseja cancelar este agendamento? Esta ação não pode ser desfeita.'"
+    [confirmText]="'Sim, cancelar'"
+    [cancelText]="'Não'"
+    (onConfirm)="confirmCancel()"
+    (onCancel)="closeCancelModal()">
+  </app-confirmation-modal>
 </div>
