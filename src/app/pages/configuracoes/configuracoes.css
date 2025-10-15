@@ -11,3 +11,8 @@
   height: 22px;
   margin-top: 2px;
 }
+
+a{
+  color: var(--color-default-black);
+  text-decoration: none;
+}
