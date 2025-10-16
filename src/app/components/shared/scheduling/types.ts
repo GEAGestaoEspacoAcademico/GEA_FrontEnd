@@ -1,5 +1,5 @@
 
-export type FieldType = 'text' | 'date' | 'select' | 'multi-select';
+export type FieldType = 'text' | 'date' | 'select' | 'multi-select' | 'equipment-select';
 
 export interface Field {
   name: string;

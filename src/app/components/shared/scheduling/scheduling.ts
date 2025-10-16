@@ -1,6 +1,6 @@
 import type { OnInit } from '@angular/core';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import type { FormGroup, ValidatorFn} from '@angular/forms';
+import type { FormArray, FormGroup, ValidatorFn} from '@angular/forms';
 import { FormBuilder, Validators} from '@angular/forms';
 import { FormControl } from '@angular/forms';
 import type { Field, Option } from './types';
@@ -22,35 +22,79 @@ export class Scheduling implements OnInit {
   private fb = inject(FormBuilder);
 
   form: FormGroup;
+  equipmentAddForm: FormGroup;
+
   softwareCtrl = new FormControl('');
   filteredOptions: Observable<Option[]> | undefined;
+  filteredEquipments: Observable<Option[]> | undefined;
+
   
   constructor() {
     this.form = this.fb.group({});
+    this.equipmentAddForm = this.fb.group({
+      equipment: [null, Validators.required],
+      quantity: [1, [Validators.required, Validators.min(1)]]
+    });
   }
 
-  ngOnInit(): void {
-    const controls: Record<string, FormControl>  = {};
+ngOnInit(): void {
+    const controls: Record<string, any> = {};
     this.fields.forEach(field => {
       const validators = this.buildValidators(field.validators);
 
-      const initialValue = field.type === 'multi-select'
-        ? (field.defaultValue ?? [])
-        : (field.defaultValue ?? '');
-      controls[field.name] = new FormControl(initialValue);
-
-      controls[field.name] = new FormControl(initialValue, validators);
+      if (field.type === 'equipment-select') {
+        controls[field.name] = this.fb.array([]);
+      } else {
+        const initialValue = field.type === 'multi-select' ? (field.defaultValue ?? []) : (field.defaultValue ?? '');
+        controls[field.name] = new FormControl(initialValue, validators);
+      }
     });
     this.form = this.fb.group(controls);
+
     const softwareField = this.fields.find(f => f.type === 'multi-select');
-    const allSoftwares = softwareField ? softwareField.options : [];
+    this.filteredOptions = this.setupAutocomplete(this.softwareCtrl, softwareField?.options);
 
+    const equipmentField = this.fields.find(f => f.type === 'equipment-select');
+    this.filteredEquipments = this.setupAutocomplete(this.equipmentAddForm.get('equipment') as FormControl, equipmentField?.options);
+  }
 
-
-    this.filteredOptions = this.softwareCtrl.valueChanges.pipe(
+  private setupAutocomplete(control: FormControl, options: Option[] | undefined): Observable<Option[]> {
+    return control.valueChanges.pipe(
       startWith(''),
-      map(value => this._filter(value || '', allSoftwares))
+      map(value => {
+        const filterValue = typeof value === 'string' ? value.toLowerCase() : value?.label.toLowerCase() || '';
+        return options ? options.filter(option => option.label.toLowerCase().includes(filterValue)) : [];
+      })
     );
+  }
+  getEquipmentControls(fieldName: string): any[] {
+    const control = this.form.get(fieldName) as FormArray;
+    return control ? control.controls : [];
+    }
+
+  addEquipment(field: Field): void {
+    if (this.equipmentAddForm.invalid) { return; }
+
+    const equipmentArray = this.form.get(field.name) as FormArray;
+    const { equipment, quantity } = this.equipmentAddForm.value;
+
+    equipmentArray.push(this.fb.group({
+      id: [equipment.value],
+      label: [equipment.label],
+      quantity: [quantity]
+    }));
+
+    this.equipmentAddForm.reset({ equipment: null, quantity: 1 });
+    (document.getElementById('equipment-input') as HTMLInputElement).value = '';
+  }
+
+  removeEquipment(field: Field, index: number): void {
+    const equipmentArray = this.form.get(field.name) as FormArray;
+    equipmentArray.removeAt(index);
+  }
+
+  displayEquipment(option: Option): string {
+    return option && option.label ? option.label : '';
   }
 
   private buildValidators(validatorsConfig: Field['validators']): ValidatorFn[] {
