@@ -114,6 +114,48 @@
             }
           }
         }
+      @case ('equipment-select') {
+        <div class="equipment-container">
+          <div class="chips-box">
+            <mat-chip-grid>
+              @for (control of getEquipmentControls(field.name); track $index) {
+                <mat-chip (removed)="removeEquipment(field, $index)">
+                  {{ control.value.label }} (Qtd: {{ control.value.quantity }})
+                  <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
+                </mat-chip>
+              }
+            </mat-chip-grid>
+          </div>
+
+          <div class="equipment-add-form" [formGroup]="equipmentAddForm">
+            <input
+              type="text"
+              id="equipment-input"
+              placeholder="Adicionar equipamento"
+              matInput
+              formControlName="equipment"
+              [matAutocomplete]="equipmentAuto"
+              class="simple-input equipment-name-input" />
+            <mat-autocomplete #equipmentAuto="matAutocomplete" [displayWith]="displayEquipment">
+              @for (option of filteredEquipments | async; track option.value) {
+                <mat-option [value]="option">{{ option.label }}</mat-option>
+              }
+            </mat-autocomplete>
+
+            <input
+              type="number"
+              formControlName="quantity"
+              placeholder="Qtd"
+              class="simple-input equipment-qty-input" />
+
+            <button type="button" (click)="addEquipment(field)" [disabled]="equipmentAddForm.invalid" class="add-button">
+              Adicionar
+            </button>
+          </div>
+        </div>
+      }
 
         @default {
           <p>Tipo de campo não suportado: {{ field.type }}</p>

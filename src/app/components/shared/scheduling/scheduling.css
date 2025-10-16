@@ -1,6 +1,7 @@
 .generic-form {
   border-radius: 8px;
-  min-width: 340px;
+  width: 100%; 
+  max-width: 500px;
   font-family: Arial, sans-serif;
   overflow: hidden;
 }
@@ -173,4 +174,40 @@ mat-chip button mat-icon {
 
   text-align: right; 
   padding-right: var(--spacing-1);
+}
+
+.equipment-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.equipment-add-form {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.equipment-name-input {
+  flex: 3;
+}
+
+.equipment-qty-input {
+  flex: 1;
+  max-width: 30px;
+}
+
+.add-button {
+  background-color: var(--color-primary-700);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.add-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }

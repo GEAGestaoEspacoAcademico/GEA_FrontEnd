@@ -1,1 +1,11 @@
-<p>agenda works!</p>
+<div class="d-flex flex-column">
+  <div class="container">
+    <h1>Agendar</h1>
+  
+    <app-scheduling
+      [fields]="fields"
+      submitButtonText="Buscar"
+      (formSubmit)="handleFormSubmit($event)"
+    ></app-scheduling>
+  </div>
+</div>
