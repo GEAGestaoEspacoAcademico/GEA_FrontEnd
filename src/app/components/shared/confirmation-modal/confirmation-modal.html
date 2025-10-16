@@ -1,19 +1,64 @@
 <ng-template #ConfirmationModal let-modal>
   <div class="modal-geral">
     <div class="header-modal">
-      <mat-icon svgIcon="alert" class="alert-icon"></mat-icon>
-      <div class="highlight-title w-100 text-center">{{ title }}</div>
+      @if (mode === 'aviso') {
+        <mat-icon svgIcon="alert" class="icon-warn"></mat-icon>
+        <div class="highlight-title w-100 text-center">{{ title }}</div>
+      }
+      @if (mode === 'detalhes') {
+        <mat-icon svgIcon="arrow-back" class="icon-arrow" (click)="onModalCancel()"></mat-icon>
+        <div class="highlight-title w-100 text-center">{{ title }}</div>
+      }
     </div>
     <div class="d-flex flex-column header-body">
-      <div class="captions w-100 m-3">{{ message }}</div>
-      <div class="d-flex flex-fill gap-3">
-        <button class="gea-btn-secondary flex-fill" (click)="onModalCancel()">
-          {{ cancelText }}
-        </button>
-        <button class="gea-btn-primary flex-fill" (click)="onModalConfirm()">
+      @if (mode === 'aviso') {
+        <div class="time-caption w-100 m-3">{{ message }}</div>
+        <div class="d-flex flex-fill gap-3">
+          <button class="gea-btn-secondary flex-fill" (click)="onModalCancel()">
+            {{ cancelText }}
+          </button>
+          <button class="gea-btn-primary flex-fill" (click)="onModalConfirm()">
+            {{ confirmText }}
+          </button>
+        </div>
+      }
+      @if (mode === 'detalhes') {
+        <div class="d-flex flex-column text-center">
+          @for (detalhe of [detailsData]; track $index) {
+            <div class="align-items-center">
+              <div class="time-caption">
+                {{ detalhe.nome }}
+                <hr class="hr-lg" />
+              </div>
+              <div class="time-caption">
+                {{ detalhe.data }}
+                <hr class="hr-lg" />
+              </div>
+              <div class="time-caption">
+                {{ detalhe.horario }}
+                <hr class="hr-lg" />
+              </div>
+              <div class="time-caption time-caption-small">
+                {{ detalhe.capacidade }}
+                <hr class="hr-sm" />
+              </div>
+              <div>
+                <div class="time-caption observation-text">Observações</div>
+                <hr class="hr-lg" />
+                @for (obs of detalhe.observacoes; track $index) {
+                  <div class="time-caption">
+                    {{ obs }}
+                    <hr class="hr-lg" />
+                  </div>
+                }
+              </div>
+            </div>
+          }
+        </div>
+        <button class="gea-btn-primary detail-button mt-2" (click)="onModalConfirm()">
           {{ confirmText }}
         </button>
-      </div>
+      }
     </div>
   </div>
 </ng-template>

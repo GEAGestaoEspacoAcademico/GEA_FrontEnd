@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
 import type { Field } from '../../components/shared/scheduling/types';
+import { Component, ViewChild } from '@angular/core';
+import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 
 @Component({
   selector: 'app-agenda',
   standalone: false,
   templateUrl: './agenda.html',
-  styleUrl: './agenda.css'
+  styleUrl: './agenda.css',
 })
 export class Agenda {
 
@@ -94,4 +95,6 @@ export class Agenda {
     console.log('Formulário submetido! Dados recebidos:', formData);
     this.submittedData = formData;
   }
+  @ViewChild('ConfirmationModal')
+  confirmModal!: ConfirmationModal;
 }
