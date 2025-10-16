@@ -92,7 +92,6 @@ export class Agenda {
     },
   ];
   handleFormSubmit(formData: any): void {
-    console.log('Formulário submetido! Dados recebidos:', formData);
     this.submittedData = formData;
   }
   @ViewChild('ConfirmationModal')
