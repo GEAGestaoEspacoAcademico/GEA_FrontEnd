@@ -16,7 +16,7 @@ export class Agenda {
       type: 'date',
       name: 'data',
       label: 'Data',
-      defaultValue: new Date().toISOString().split('T')[0], // Define a data de hoje como padrão
+      defaultValue: new Date().toISOString().split('T')[0],
       validators: {
         required: true,
         errorMessages: { required: 'A data é obrigatória.' }
@@ -69,9 +69,9 @@ export class Agenda {
     },
     {
       type: 'equipment-select',
-      name: 'equipamentos', // O nome do seu FormArray
+      name: 'equipamentos',
       label: 'Equipamento',
-      options: [ // Lista de equipamentos disponíveis para o autocomplete
+      options: [
         { value: 'proj', label: 'Projetor Multimídia' },
         { value: 'pc', label: 'Computador Desktop' },
         { value: 'lousa', label: 'Lousa Digital' },
@@ -82,7 +82,7 @@ export class Agenda {
       type: 'multi-select',
       name: 'softwares',
       label: 'Softwares',
-      options: [ // Lista de softwares disponíveis para o autocomplete
+      options: [
         { value: 'netbeans', label: 'NetBeans' },
         { value: 'sqlserver', label: 'SQL Server' },
         { value: 'vscode', label: 'VS Code' },
