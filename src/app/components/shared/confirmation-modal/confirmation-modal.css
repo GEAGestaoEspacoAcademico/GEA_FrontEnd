@@ -19,7 +19,7 @@
 .header-modal {
   background-color: var(--color-primary-700);
   border-radius: 0 0 6px 6px;
-  padding: 4px 6px;
+  padding: 6px 6px;
   border-bottom: solid 1px var(--color-default-black);
   display: flex;
   color: var(--color-default-white);
@@ -27,7 +27,7 @@
 
 .header-body {
   background-color: #f0f0f0;
-  padding: 16px 16px;
+  padding: 8px 8px;
 }
 
 .modal-geral {
@@ -37,8 +37,8 @@
 }
 
 .icon-warn {
-  width: 36px;
-  height: 36px;
+  width: 24px;
+  height: 24px;
   color: var(--color-default-white);
 }
 
@@ -46,7 +46,6 @@
   width: 24px;
   height: 24px;
   color: var(--color-default-white);
-  margin-top: 3px;
 }
 
 .observation-text {
@@ -83,4 +82,9 @@
   width: 120px;
   display: block;
   margin: 0 auto 8px auto;
+}
+
+.section-title {
+  margin-top: 2px;
+  margin-right: 12px;
 }
