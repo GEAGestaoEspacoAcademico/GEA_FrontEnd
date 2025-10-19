@@ -1,32 +1,48 @@
-<div class="container-fluid px-0">
+<article
+  class="container-fluid px-0 class-card-article"
+  role="article"
+  [attr.aria-labelledby]="'class-title-' + classData.id"
+>
   <div class="card-line border-bottom">
 
-    <div class="d-flex justify-content-between align-items-start row-top">
-      <div class="section-title text-neutral-900 mb-1"> {{classData.curso}} </div>
-      <div class="time-primary fw-semibold text-end">{{ classData.horaFim }}</div>
-    </div>
+    <header class="d-flex justify-content-between align-items-start row-top">
+      <h3 id="{{ 'class-title-' + classData.id }}" class="section-title text-neutral-900 mb-0">
+        {{ classData.curso }}
+      </h3>
+
+      <time class="time-primary fw-semibold text-end mb-0" aria-label="Horário">
+        {{ classData.horafim }}
+      </time>
+    </header>
 
     <div class="d-flex justify-content-between align-items-start row-mid">
-      <small class="text-secondary-600 meta mb-0">
-        {{ classData.nomeSala }} | {{classData.semestre}}
-        <div class="sub section-title text-neutral-900 subject mb-0"> {{classData.nomeDisciplina}} </div>
-      </small>
+      <div class="info-left">
+        <small class="meta text-secondary-600 mb-0" aria-label="Local e semestre">
+          {{ classData.nomeSala }} | {{ classData.semestre }}
+        </small>
+
+        <p class="sub section-title text-neutral-900 subject mb-0" aria-label="Disciplina">
+          {{ classData.nomeDisciplina }}
+        </p>
+      </div>
 
       <div class="actions d-flex flex-column align-items-end text-end">
         <button
           type="button"
           class="btn btn-link p-0 action-edit"
-          (click)="handleView()">
+          (click)="handleView()"
+          aria-label="Alterar aula {{ classData.id }}">
           Alterar
         </button>
 
         <button
           type="button"
           class="btn btn-link p-0 action-cancel"
-          (click)="handleDelete()">
+          (click)="handleDelete()"
+          aria-label="Cancelar aula {{ classData.id }}">
           <span class="underline">Cancelar</span>
         </button>
       </div>
     </div>
   </div>
-</div>
+</article>

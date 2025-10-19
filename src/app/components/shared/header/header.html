@@ -1,8 +1,20 @@
-<div class="container-fluid text-white fs-3 d-flex justify-content-beetween align-items-center header">
-        <a class="me-auto p-2" routerLink="/aulas"> 
-                <mat-icon svgIcon="icon-fatec" class="icon-fatec-big"></mat-icon> 
-        </a>
-        <a routerLink="/notificacoes" routerLinkActive="active" #rla="routerLinkActive">
-         <mat-icon [svgIcon]="rla.isActive ? 'notification-fill' : 'notification'" class="icon-notification-medium"></mat-icon>
-        </a>
-</div>
+<header class="container-fluid text-white fs-3 d-flex justify-content-between align-items-center header" role="banner">
+  <a class="me-auto p-2" routerLink="/aulas" aria-label="Ir para Aulas">
+    <mat-icon svgIcon="icon-fatec" class="icon-fatec-big" aria-hidden="true"></mat-icon>
+    <span class="visually-hidden">Fatec — Aulas</span>
+  </a>
+
+  <a
+    routerLink="/notificacoes"
+    routerLinkActive="active"
+    #rla="routerLinkActive"
+    aria-label="Ir para Notificações"
+    [attr.aria-current]="rla.isActive ? 'page' : null">
+    <mat-icon
+      [svgIcon]="rla.isActive ? 'notification-fill' : 'notification'"
+      class="icon-notification-medium"
+      aria-hidden="true">
+    </mat-icon>
+    <span class="visually-hidden">Notificações</span>
+  </a>
+</header>
