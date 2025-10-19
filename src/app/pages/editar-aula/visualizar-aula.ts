@@ -172,7 +172,6 @@
   }
 
   confirmCancel(): void {
-    this.confirmModal.close();
     this.pendingFormData = null;
   }
 }
