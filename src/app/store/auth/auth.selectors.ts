@@ -22,3 +22,8 @@ export const selectAuthIsLoading = createSelector(
   selectAuthState,
   (state) => state.isLoading
 );
+
+export const selectUserCargo = createSelector(
+  selectCurrentUser,
+  (user) => user?.cargo
+);
