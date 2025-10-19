@@ -40,6 +40,8 @@
 .day-item {
   min-width: 60px;
   transition: all 0.2s ease-in-out;
+  background: transparent;
+  border: none;
 }
 
 .day-item:hover {
