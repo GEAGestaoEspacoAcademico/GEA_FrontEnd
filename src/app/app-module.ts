@@ -1,45 +1,71 @@
-import { isDevMode, NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing-module';
-import { App } from './app';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
-import { DaySelector } from './components/shared/day-selector/day-selector';
-import { Header } from './components/shared/header/header';
-import { TitleHighligh } from './components/shared/title-highligh/title-highligh';
-import { ClassInfoCard } from './components/shared/class-info-card/class-info-card';
-import { provideHttpClient } from '@angular/common/http';
-import { MatIconModule } from '@angular/material/icon';
-import { TabBar } from './components/shared/tab-bar/tab-bar';
-import { ConfirmationModal } from './components/shared/confirmation-modal/confirmation-modal'
-import { Scheduling } from './components/shared/scheduling/scheduling'
 import { ReactiveFormsModule } from '@angular/forms';
+import { provideHttpClient } from '@angular/common/http';
+import { ServiceWorkerModule } from '@angular/service-worker';
+
+// Angular Material Imports
+import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
+// NGRX Imports
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { authReducer } from './store/auth/auth.reducer';
+import { AuthEffects } from './store/auth/auth.effects';
+import { agendamentoReducer } from './store/agendamento/agendamento.reducer';
+import { AgendamentoEffects } from './store/agendamento/agendamento.effects';
+import { AGENDAMENTO_FEATURE_KEY } from './store/agendamento/agendamento.selectors';
+
+// App Specific Imports
+import { AppRoutingModule } from './app-routing-module';
+import { App } from './app';
+import { environment } from '../environments/environment';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
+// Layouts
+import { MainLayout } from '../layouts/main-layout/main-layout';
+import { AuthLayout } from '../layouts/auth-layout/auth-layout';
+
+// Pages
 import { Aulas } from './pages/aulas/aulas';
 import { Agenda } from './pages/agenda/agenda';
 import { Configuracoes } from './pages/configuracoes/configuracoes';
 import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { EditarAula } from './pages/editar-aula/visualizar-aula';
-import { EffectsModule } from '@ngrx/effects';
-import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { AgendamentoEffects } from './store/agendamento/agendamento.effects';
-import { agendamentoReducer } from './store/agendamento/agendamento.reducer';
-import { AGENDAMENTO_FEATURE_KEY } from './store/agendamento/agendamento.selectors';
 import { Login } from './pages/login/login';
+
+// Shared Components
+import { DaySelector } from './components/shared/day-selector/day-selector';
+import { Header } from './components/shared/header/header';
+import { TitleHighligh } from './components/shared/title-highligh/title-highligh';
+import { ClassInfoCard } from './components/shared/class-info-card/class-info-card';
+import { TabBar } from './components/shared/tab-bar/tab-bar';
+import { ConfirmationModal } from './components/shared/confirmation-modal/confirmation-modal';
+import { Scheduling } from './components/shared/scheduling/scheduling';
 import { NotificationCard } from './components/shared/notification-card/notification-card';
-import { MainLayout } from '../layouts/main-layout/main-layout';
-import { AuthLayout } from '../layouts/auth-layout/auth-layout';
+import { metaReducers } from './store/meta-reducer';
+
 
 @NgModule({
   declarations: [
     App,
+    // Layouts
+    MainLayout,
+    AuthLayout,
+    // Pages
+    Aulas,
+    Agenda,
+    Configuracoes,
+    Notificacoes,
+    EditarAula,
+    Login,
+    // Shared Components
     ClassInfoCard,
     DaySelector,
     Header,
@@ -47,35 +73,31 @@ import { AuthLayout } from '../layouts/auth-layout/auth-layout';
     TabBar,
     ConfirmationModal,
     Scheduling,
-    Aulas,
-    Agenda,
-    Configuracoes,
-    Notificacoes,
-    EditarAula,
-    Login,
     NotificationCard,
-    MainLayout,
-    AuthLayout
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     NgbModule,
     MatIconModule,
-    ReactiveFormsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
     MatChipsModule,
     MatAutocompleteModule,
-    StoreModule.forRoot({}),
-    StoreModule.forFeature(AGENDAMENTO_FEATURE_KEY, agendamentoReducer),
-    EffectsModule.forRoot([]),
-    EffectsModule.forFeature([AgendamentoEffects]),
+    
+    // NGRX Setup Simplificado
+    StoreModule.forRoot(
+      {
+        auth: authReducer,
+        [AGENDAMENTO_FEATURE_KEY]: agendamentoReducer,
+      },
+      {
+        metaReducers
+      }
+    ),
+    EffectsModule.forRoot([AuthEffects, AgendamentoEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(), 
@@ -83,9 +105,13 @@ import { AuthLayout } from '../layouts/auth-layout/auth-layout';
       trace: false, 
       traceLimit: 75,
     }),
+
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [
-    provideBrowserGlobalErrorListeners(),
     provideHttpClient()
   ],
   bootstrap: [App]

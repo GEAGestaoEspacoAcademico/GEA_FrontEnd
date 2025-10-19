@@ -1,11 +1,28 @@
 export interface Agendamento {
-    id: number;
-    local: string;
-    dataInicio: Date,
-    dataFinal: Date,
-    diaDaSemana: string,
-    horario: string,
-    disciplina: string,
+    id: 0,
+    nomeUsuario: string,
+    nomeSala: string,
+    disciplinaId: 0,
+    nomeDisciplina: string,
     semestre: string,
-    curso: string
+    curso: string,
+    nomeProfessor: string,
+    dataInicio: string,
+    dataFim: string,
+    diaDaSemana: string,
+    horaInicio: string,
+    horaFim: string,
+    tipo: string
+}
+
+export interface EditAgendamento{
+  usuarioId: number,
+  salaId: number,
+  disciplinaId: number,
+  dataInicio: string,
+  dataFim: string,
+  diaDaSemana: string,
+  horaInicio: string,
+  horaFim: string,
+  tipo: string
 }

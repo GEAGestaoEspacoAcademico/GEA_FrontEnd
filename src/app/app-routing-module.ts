@@ -9,11 +9,13 @@ import { EditarAula } from './pages/editar-aula/visualizar-aula';
 import { Login } from './pages/login/login';
 import { MainLayout } from '../layouts/main-layout/main-layout';
 import { AuthLayout } from '../layouts/auth-layout/auth-layout';
+import { professorGuard } from './guards/professor.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: MainLayout,
+    canActivate: [professorGuard],
     children: [
       { path: 'agenda', component: Agenda },
       { path: 'aulas', component: Aulas },
