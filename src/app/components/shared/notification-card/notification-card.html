@@ -1,13 +1,19 @@
-<div class="notification-card border-top border-bottom border-dark">
-  <div class="section-title text-neutral-900 mb-1">{{ source }}</div>
-  <div class="d-flex justify-content-between align-items-baseline mb-1">
-    <div class="title-primary">{{ title }}</div>
-    <div class="date text-end">
-      {{ date | date: 'dd/MM/yyyy' }}
-    </div>
+<article class="notification-card border-top border-bottom border-dark" role="article" aria-label="Notificação">
+  <div class="section-title text-neutral-900 mb-1" aria-hidden="false">
+    {{ source }}
   </div>
 
-  <div class="snippet text-neutral-100">
+  <header class="d-flex justify-content-between align-items-baseline mb-1" role="group" aria-label="Título e data da notificação">
+    <h3 class="title-primary m-0">{{ title }}</h3>
+
+    <time
+      class="date text-end"
+      [attr.datetime]="(date | date:'yyyy-MM-dd')">
+      {{ date | date: 'dd/MM/yyyy' }}
+    </time>
+  </header>
+
+  <p class="snippet text-neutral-100 mb-0">
     {{ snippet }}
-  </div>
-</div>
+  </p>
+</article>

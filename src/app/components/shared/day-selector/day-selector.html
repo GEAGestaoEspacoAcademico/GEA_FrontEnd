@@ -1,29 +1,44 @@
-<div class="calendar-container">
+<section class="calendar-container" role="region" aria-label="Calendário mensal">
 
-  <div class="month-selector">
-    <button class="nav-arrow" (click)="navigateMonth('previous')">
+  <header class="month-selector" role="banner" aria-label="Navegação do mês">
+    <button class="nav-arrow" type="button" (click)="navigateMonth('previous')" aria-label="Mês anterior">
       <mat-icon svgIcon="arrow-back" class="arrow-icon"></mat-icon>
     </button>
-    <span class="month-name">{{ currentMonthName }}</span>
-    <button class="nav-arrow" (click)="navigateMonth('next')">
+
+    <span class="month-name" aria-live="polite">{{ currentMonthName }}</span>
+
+    <button class="nav-arrow" type="button" (click)="navigateMonth('next')" aria-label="Próximo mês">
       <mat-icon svgIcon="arrow-previus" class="arrow-icon"></mat-icon>
     </button>
-  </div>
+  </header>
 
-  <div class="day-selector-wrapper"
+  <div
+    class="day-selector-wrapper"
     [class.show-left-fade]="showLeftFade"
-    [class.show-right-fade]="showRightFade">
-    <div #daySelector class="day-selector d-flex gap-2 overflow-auto py-2" (scroll)="onScroll($event)">
-      <div class="day-item text-center p-2 rounded"
+    [class.show-right-fade]="showRightFade"
+  >
+    <nav
+      #daySelector
+      class="day-selector d-flex gap-2 overflow-auto py-2"
+      (scroll)="onScroll($event)"
+      role="navigation"
+      aria-label="Seleção de dias"
+    >
+      <button
         *ngFor="let day of days"
-        [ngClass]="{'active text-danger fw-bold border border-danger': day.id === activeDayId, 'text-secondary': day.id !== activeDayId}"
-        role="button"
-        tabindex="0"
-        (click)="selectDay(day.id)">
+        type="button"
+        class="day-item text-center p-2 rounded"
+        [ngClass]="{
+          'active text-danger fw-bold border border-danger': day.id === activeDayId,
+          'text-secondary': day.id !== activeDayId
+        }"
+        (click)="selectDay(day.id)"
+        [attr.aria-pressed]="day.id === activeDayId"
+        [attr.aria-current]="day.id === activeDayId ? 'date' : null"
+      >
         <div class="day-date fs-5">{{ day.date }}</div>
         <div class="day-week text-lowercase">{{ day.dayOfWeek }}</div>
-      </div>
-    </div>
+      </button>
+    </nav>
   </div>
-
-</div>
+</section>

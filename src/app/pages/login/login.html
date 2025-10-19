@@ -63,6 +63,9 @@
                 <div *ngIf="loginForm.invalid" class="text-danger mt-1 small">
                     <div *ngIf="loginForm.getError('infoInvalid')">E-mail ou senha inválidos</div>
                 </div>
+                @if(error$ | async; as errorMessage){
+                    <p class="text-danger samll">{{errorMessage}}</p>
+                }
 
                 <button class="btn btn-danger w-100 fw-bold py-2" (click)="onSubmit()">Entrar</button>
                 <div class="b-line"></div>

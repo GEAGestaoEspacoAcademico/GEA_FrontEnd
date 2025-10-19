@@ -1,13 +1,17 @@
   import type { OnInit } from '@angular/core';
   import { Component, inject, ViewChild } from '@angular/core';
   import { ActivatedRoute, Router } from '@angular/router';
-  import { filter, map, switchMap, tap, type Observable } from 'rxjs';
-  import type { Agendamento } from '../../models/agendamento.model';
+  import { filter, forkJoin, map, Subject, switchMap, take, takeUntil, tap, type Observable } from 'rxjs';
+  import type { Agendamento, EditAgendamento } from '../../models/agendamento.model';
   import { selectAgendamentoLoading, selectAulaById } from '../../store/agendamento/agendamento.selectors';
   import { Store } from '@ngrx/store';
   import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
   import type { Field } from '../../components/shared/scheduling/types';
   import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
+import { DisciplinaService } from '../../services/disciplina/disciplina.service';
+import { CursoService } from '../../services/curso/curso.service';
+import type { User } from '../../models/user.model';
+import { selectCurrentUser } from '../../store/auth/auth.selectors';
 
   @Component({
     selector: 'app-editar-aula',
@@ -19,18 +23,27 @@
     private route = inject(ActivatedRoute)
     private router = inject(Router)
     private store = inject(Store)
+    private disciplinaService = inject(DisciplinaService)
+    private cursoService = inject(CursoService)
 
     @ViewChild('confirmModal') confirmModal!: ConfirmationModal;
 
     aula$!: Observable<Agendamento | undefined>;
-    loading$: Observable<boolean> = this.store.select(selectAgendamentoLoading);
+    private destroy$ = new Subject<void>();
+    currentUser: User | null = null;
+    isloading = false;
 
     aulaId: string | null = null;
     agendamentoAtual: Agendamento | null = null;
     pendingFormData: Record<string, any> | null = null;
-    formFields: Field[] | undefined;
+    formFields!: Field[];
 
     ngOnInit(): void {
+      this.store.select(selectCurrentUser).pipe(
+        takeUntil(this.destroy$) // Garante que a inscrição será finalizada
+      ).subscribe(user => {
+        this.currentUser = user || null; // Armazena o usuário na propriedade
+      });
       this.aula$ = this.route.paramMap.pipe(
         map(params => Number(params.get('id'))),
         filter(id => !!id),
@@ -42,6 +55,7 @@
               }else{
                 this.agendamentoAtual = aula;
                 this.formFields = this.createFormFields(aula)
+                this.loadOptionsForSelects();
               }
             })
           )
@@ -49,74 +63,103 @@
       );
     }
 
-    private createFormFields(agendamento: Agendamento): Field[] {
-      return [
-        {
-          name: 'disciplina',
-          label: 'Disciplina',
-          type: 'select',
-          defaultValue: agendamento.disciplina,
-          options: [
-            {label: 'Disciplina 1', value: 'Disciplina 1'},
-            {label: 'Disciplina 2', value: 'Disciplina 2'},
-            {label: 'Disciplina 3', value: 'Disciplina 3'},
-          ],
-          validators: { required: true, errorMessages: { required: 'O campo disciplina é obrigatório.' } }
-        },
-        {
-          name: 'data',
-          label: 'Data',
-          type: 'date',
-          defaultValue: this.formatDateForInput(agendamento.dataInicio),
-          validators: { required: true, errorMessages: { required: 'A seleção da sala é obrigatória.' } }
-        },
-        {
-          name: 'horario',
-          label: 'Horario',
-          type: 'select', 
-          defaultValue: (`${this.formatarHora(agendamento.dataInicio)}-${this.formatarHora(agendamento.dataFinal)}`),
-          options: [
-            {label: '7:40-9:20', value: '7:40-9:20'},
-            {label: '9:30-11:10', value: '9:30-11:10'},
-            {label: '11:20-13:00', value: '11:20-13:00'},
-          ],
-          validators: { required: true, errorMessages: { required: 'A seleção da sala é obrigatória.' } }
-        },
-        {
-          name: 'local',
-          label: 'Local',
-          type: 'select',
-          defaultValue: agendamento.local,
-          options: [
-              { value: 'Sala A', label: 'Sala A' },
-              { value: 'Sala B', label: 'Sala B' },
-              { value: 'Laboratório 1', label: 'Laboratório 1' },
-          ],
-          validators: { required: true, errorMessages: { required: 'A seleção da sala é obrigatória.' } }
-        },
-        {
-          name: 'curso',
-          label: 'Curso',
-          type: 'select',
-          defaultValue: agendamento.curso,
-          options: [
-            { value: 'ADS', label: 'ADS' },
-            { value: 'Mecatronica', label: 'Mecatronica' },
-            { value: 'GTI', label: 'GTI' },
-          ],
-          validators: { required: true, errorMessages: { required: 'A data de início é obrigatória.' } }
-        },
-      ];
+    private loadOptionsForSelects(): void {
+      forkJoin({
+        disciplinas: this.disciplinaService.getDisciplinas(),
+        cursos: this.cursoService.getCursos()
+      }).pipe(
+        take(1)
+      ).subscribe(({ disciplinas, cursos }) => {
+        const disciplinaField = this.formFields.find(f => f.name === 'disciplina');
+        if (disciplinaField) {
+          disciplinaField.options = disciplinas.map(d => ({ label: d.nome, value: d.id }));
+        }
+        
+        const cursoField = this.formFields.find(f => f.name === 'curso');
+        if (cursoField) {
+          cursoField.options = cursos.map(c => ({ label: c.nomeCurso, value: c.id }));
+        }
+
+        this.formFields = [...this.formFields];
+        this.isloading = false;
+      });
     }
 
-    formatDateForInput(date: Date): string {
+ private createFormFields(agendamento: Agendamento): Field[] {
+    return [
+      {
+        name: 'disciplina',
+        label: 'Disciplina',
+        type: 'select',
+        defaultValue: agendamento.nomeDisciplina,
+        options: [],
+        validators: { required: true, errorMessages: { required: 'O campo disciplina é obrigatório.' } }
+      },
+      {
+        name: 'data',
+        label: 'Data',
+        type: 'date',
+        defaultValue: this.formatDateForInput(agendamento.dataInicio),
+        validators: { required: true, errorMessages: { required: 'A data é obrigatória.' } }
+      },
+      {
+        name: 'horario',
+        label: 'Horário',
+        type: 'select',
+        defaultValue: (`${this.formatarHora(agendamento.dataInicio)}-${this.formatarHora(agendamento.dataFim)}`),
+        options: [
+          {label: '7:40-9:20', value: '7:40-9:20'},
+          {label: '9:30-11:10', value: '9:30-11:10'},
+          {label: '11:20-13:00', value: '11:20-13:00'},
+        ],
+        validators: { required: true, errorMessages: { required: 'O horário é obrigatório.' } }
+      },
+      {
+        name: 'local',
+        label: 'Local',
+        type: 'select',
+        defaultValue: agendamento.nomeSala,
+        options: [
+          { value: 'Sala A', label: 'Sala A' },
+          { value: 'Sala B', label: 'Sala B' },
+          { value: 'Laboratório 1', label: 'Laboratório 1' },
+        ],
+        validators: { required: true, errorMessages: { required: 'A seleção da sala é obrigatória.' } }
+      },
+      {
+        name: 'curso',
+        label: 'Curso',
+        type: 'select',
+        defaultValue: agendamento.curso,
+        options: [],
+        validators: { required: true, errorMessages: { required: 'O curso é obrigatório.' } }
+      },
+      {
+        name: "semestre",
+        label: "Semestre",
+        type: "select",
+        defaultValue: agendamento.semestre,
+        options: [
+          {label: "2024.1", value: "2024.1"},
+          {label: "2024.2", value: "2024.2"},
+          {label: "2024.1", value: "2024.1"},
+          {label: "2024.2", value: "2024.2"},
+          {label: "2025.1", value: "2025.1"},
+          {label: "2025.2", value: "2025.2"},
+        ]
+      }
+    ];
+  }
+
+    formatDateForInput(date: string): string {
       const d = new Date(date);
       const year = d.getFullYear();
       const month = (d.getMonth() + 1).toString().padStart(2, '0');
       const day = d.getDate().toString().padStart(2, '0');
       return `${year}-${month}-${day}`;
     }
-    formatarHora(data: Date): string {
+    formatarHora(date: string): string {
+      const data = new Date(date)
       const horas = data.getHours().toString();
       const minutos = data.getMinutes().toString();
       const horasFormatadas = horas.padStart(2, '0');
@@ -124,7 +167,7 @@
       return `${horasFormatadas}:${minutosFormatados}`;
     }
   onFormSubmit(formData: Record<string, any>): void {
-    if (!this.agendamentoAtual) {
+    if (!this.agendamentoAtual || !this.currentUser) {
       console.error("Dados do agendamento original não encontrados. Não é possível atualizar.");
       return;
     }
@@ -142,18 +185,22 @@
     novaDataFim.setHours(horaFim, minFim, 0, 0);
     
     const novoDiaDaSemana = novaData.toLocaleDateString('pt-BR', { weekday: 'long' });
-
-    const agendamentoAtualizado: Agendamento = {
-      ...this.agendamentoAtual,
-      local: formData['local'],
-      dataInicio: novaDataInicio,
-      dataFinal: novaDataFim,
+    console.log("Disciplina: " + formData['disciplina'])
+    console.log("Horario: " + formData['horario'])
+    console.log("FormData", formData)
+    const agendamentoAtualizado: EditAgendamento = {
+      dataInicio: this.formatDateForInput(novaDataInicio.toString()),
+      dataFim: this.formatDateForInput(novaDataFim.toString()),
       diaDaSemana: novoDiaDaSemana,
-      horario: formData['horario'],
-      disciplina: formData['disciplina'],
-      curso: formData['curso'],
+      horaInicio: formData['horario'].split('-')[0],
+      horaFim: formData['horario'].split('-')[1],
+      disciplinaId: formData['disciplina'],
+      usuarioId: this.currentUser?.id,
+      tipo: 'sala',
+      salaId: 0,
     };
-    this.store.dispatch(AgendamentoActions.editAgendamento({ agendamento: agendamentoAtualizado }));
+    this.store.dispatch(AgendamentoActions.editAgendamento({id: this.agendamentoAtual.id, agendamento: agendamentoAtualizado }));
+    console.log(agendamentoAtualizado);
     this.router.navigate(['/aulas']);
   }
 
