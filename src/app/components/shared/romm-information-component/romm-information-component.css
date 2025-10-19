@@ -2,22 +2,11 @@
   border-radius: 5px;
   padding: 10px 15px;
   cursor: pointer;
-  transition: background 0.2s;
+  background-color: #D9D9D9;
+
+  border: black solid 1px;
 }
 
 .collapsed-card:hover {
   background-color: #e5e5e5;
-}
-
-.bg-dark-red {
-  background-color: #7a0a0a;
-}
-
-.btn-dark-red {
-  background-color: #7a0a0a;
-  border: none;
-}
-
-.btn-dark-red:hover {
-  background-color: #5c0808;
 }
