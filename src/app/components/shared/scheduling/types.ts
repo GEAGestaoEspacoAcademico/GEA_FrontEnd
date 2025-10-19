@@ -15,6 +15,7 @@ export interface Field {
     pattern?: string; // para regex
     errorMessages?: Record<string, string>;
   }
+  isloading?: boolean  
 }
 
 export interface Option{
