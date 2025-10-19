@@ -21,7 +21,9 @@
     <dl>
       <div class="d-flex flex-row gap-1">
         <dt>Nome:</dt>
-        <dd>{{mockTeacher.nome}}</dd>
+        @if(user$ | async; as user){
+          <dd>{{user.nome}}</dd>
+        }
       </div>
 
       <dt>Disciplinas:</dt>

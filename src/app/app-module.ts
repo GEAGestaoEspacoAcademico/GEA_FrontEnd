@@ -36,6 +36,8 @@ import { Login } from './pages/login/login';
 import { NotificationCard } from './components/shared/notification-card/notification-card';
 import { MainLayout } from '../layouts/main-layout/main-layout';
 import { AuthLayout } from '../layouts/auth-layout/auth-layout';
+import { authReducer } from './store/auth/auth.reducer';
+import { AuthEffects } from './store/auth/auth.effects';
 
 @NgModule({
   declarations: [
@@ -76,6 +78,8 @@ import { AuthLayout } from '../layouts/auth-layout/auth-layout';
     StoreModule.forFeature(AGENDAMENTO_FEATURE_KEY, agendamentoReducer),
     EffectsModule.forRoot([]),
     EffectsModule.forFeature([AgendamentoEffects]),
+    StoreModule.forRoot({ auth: authReducer }),
+    EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(), 

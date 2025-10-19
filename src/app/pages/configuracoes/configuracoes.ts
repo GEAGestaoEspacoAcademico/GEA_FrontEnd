@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import type { Teacher } from '../../models/teacher.model';
+import { AuthActions } from '../../store/auth/auth.actions';
+import { Store } from '@ngrx/store';
+import type { User } from '../../models/user.model';
+import type { Observable } from 'rxjs';
+import { selectCurrentUser } from '../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-configuracoes',
@@ -7,9 +13,15 @@ import type { Teacher } from '../../models/teacher.model';
   templateUrl: './configuracoes.html',
   styleUrl: './configuracoes.css',
 })
-export class Configuracoes {
+export class Configuracoes implements OnInit{
+  ngOnInit(): void {
+    this.user$ = this.store.select(selectCurrentUser);
+  }
+  private store = inject(Store);
+  user$!: Observable<User | null>;
+
   logout() {
-    console.warn('Professor deslogado');
+    this.store.dispatch(AuthActions.logout());
   }
   mockTeacher: Teacher = {
     nome: "Prof. Dr. Lorem Ipsum",

@@ -1,9 +1,11 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import type { OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import { AuthActions } from '../../store/auth/auth.actions';
+import type { UserCredencials } from '../../types/auth.type';
+import { Store } from '@ngrx/store';
 @Component({
   selector: 'app-login',
   standalone: false,
@@ -12,8 +14,8 @@ import { AuthService } from '../../services/auth/auth.service';
 })
 export class Login implements OnInit{
   private router = inject(Router);
-  private http = inject(HttpClient)
   private authService = inject(AuthService)
+  private store = inject(Store)
   
   loginForm = new FormGroup({
     user: new FormControl('', [Validators.required, Validators.email]),
@@ -42,12 +44,11 @@ export class Login implements OnInit{
       return;
     }
 
-    this.authService.loginUser({login: username, senha: password}).subscribe(
-      (userData) => {
-        console.log(userData);
-        this.router.navigate(["aulas"])
-      }
-    )
+    const userCredencials: UserCredencials = {
+      login: username,
+      senha: password
+    }
+    this.store.dispatch(AuthActions.login({ userCredencials }));
   }
 
 
