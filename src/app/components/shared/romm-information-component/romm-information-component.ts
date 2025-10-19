@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 // eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationModal } from '../confirmation-modal/confirmation-modal';
+import { RoomData } from '../../../models/room.model';
 
 @Component({
   selector: 'app-romm-information-component',
@@ -10,9 +11,9 @@ import { ConfirmationModal } from '../confirmation-modal/confirmation-modal';
   styleUrl: './romm-information-component.css'
 })
 export class RommInformationComponent {
-  @Input() labData!: LabInfo;
+  @Input() labData!: RoomData;
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() onConfirmSchedule = new EventEmitter<LabInfo>();
+  @Output() onConfirmSchedule = new EventEmitter<RoomData>();
 
   @Input() mode!: string;
   @Input() title!: string;
@@ -20,7 +21,6 @@ export class RommInformationComponent {
   // eslint-disable-next-line @angular-eslint/prefer-inject
   constructor(private modalService: NgbModal) { }
 
-  showModal = false;
 
   openModal() {
     const modalRef = this.modalService.open(ConfirmationModal, {
@@ -37,12 +37,4 @@ export class RommInformationComponent {
       modalRef.close();
     });
   }
-}
-
-export interface LabInfo {
-  nome: string;
-  data: string;
-  horario: string;
-  capacidade: string;
-  observacoes: string[];
 }
