@@ -13,6 +13,22 @@
 }
 
 a{
-  color: var(--color-default-black);
+  color: var(--color-neutral-900);
   text-decoration: none;
+}
+
+.informations{
+  color: var(--color-neutral-900);
+}
+
+.informations dl dt{
+  font-size: 16px;
+  font-weight: var(--font-weight-regular);
+  font-family: var(--font-family-primary);
+}
+
+
+ul{
+  list-style: none;
+  padding-left: 0;
 }
