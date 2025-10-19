@@ -2,7 +2,7 @@
   import { Component, inject, ViewChild } from '@angular/core';
   import { ActivatedRoute, Router } from '@angular/router';
   import { filter, map, switchMap, tap, type Observable } from 'rxjs';
-  import type { Agendamento } from '../../models/agendamento.model';
+  import type { Agendamento, EditAgendamento } from '../../models/agendamento.model';
   import { selectAgendamentoLoading, selectAulaById } from '../../store/agendamento/agendamento.selectors';
   import { Store } from '@ngrx/store';
   import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
@@ -55,7 +55,7 @@
           name: 'disciplina',
           label: 'Disciplina',
           type: 'select',
-          defaultValue: agendamento.disciplina,
+          defaultValue: agendamento.disciplinaId,
           options: [
             {label: 'Disciplina 1', value: 'Disciplina 1'},
             {label: 'Disciplina 2', value: 'Disciplina 2'},
@@ -74,7 +74,7 @@
           name: 'horario',
           label: 'Horario',
           type: 'select', 
-          defaultValue: (`${this.formatarHora(agendamento.dataInicio)}-${this.formatarHora(agendamento.dataFinal)}`),
+          defaultValue: (`${this.formatarHora(agendamento.dataInicio)}-${this.formatarHora(agendamento.dataFim)}`),
           options: [
             {label: '7:40-9:20', value: '7:40-9:20'},
             {label: '9:30-11:10', value: '9:30-11:10'},
@@ -86,7 +86,7 @@
           name: 'local',
           label: 'Local',
           type: 'select',
-          defaultValue: agendamento.local,
+          defaultValue: agendamento.nomeSala,
           options: [
               { value: 'Sala A', label: 'Sala A' },
               { value: 'Sala B', label: 'Sala B' },
@@ -109,14 +109,15 @@
       ];
     }
 
-    formatDateForInput(date: Date): string {
+    formatDateForInput(date: string): string {
       const d = new Date(date);
       const year = d.getFullYear();
       const month = (d.getMonth() + 1).toString().padStart(2, '0');
       const day = d.getDate().toString().padStart(2, '0');
       return `${year}-${month}-${day}`;
     }
-    formatarHora(data: Date): string {
+    formatarHora(date: string): string {
+      const data = new Date(date)
       const horas = data.getHours().toString();
       const minutos = data.getMinutes().toString();
       const horasFormatadas = horas.padStart(2, '0');
@@ -143,17 +144,17 @@
     
     const novoDiaDaSemana = novaData.toLocaleDateString('pt-BR', { weekday: 'long' });
 
-    const agendamentoAtualizado: Agendamento = {
+    const agendamentoAtualizado: EditAgendamento = {
       ...this.agendamentoAtual,
-      local: formData['local'],
-      dataInicio: novaDataInicio,
-      dataFinal: novaDataFim,
+      dataInicio: novaDataInicio.toString(),
+      dataFim: novaDataFim.toString(),
       diaDaSemana: novoDiaDaSemana,
-      horario: formData['horario'],
-      disciplina: formData['disciplina'],
-      curso: formData['curso'],
+      horaInicio: formData['horario'],
+      disciplinaId: formData['disciplina'],
+      usuarioId: 0,
+      salaId: 0
     };
-    this.store.dispatch(AgendamentoActions.editAgendamento({ agendamento: agendamentoAtualizado }));
+    this.store.dispatch(AgendamentoActions.editAgendamento({id: this.agendamentoAtual.id, agendamento: agendamentoAtualizado }));
     console.log(agendamentoAtualizado);
     this.router.navigate(['/aulas']);
   }

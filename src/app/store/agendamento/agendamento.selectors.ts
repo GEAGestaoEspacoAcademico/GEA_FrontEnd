@@ -7,7 +7,7 @@ export const AGENDAMENTO_FEATURE_KEY = 'agendamento';
 const selectAgendamentoState = createFeatureSelector<AgendamentoState>(AGENDAMENTO_FEATURE_KEY);
 
 // 2. Seletores que pegam pedaços específicos da fatia
-export const selectTodasAsAulas = createSelector(
+export const selectTodasOsAgendamentos = createSelector(
   selectAgendamentoState,
   (state) => state.agendamentos
 );
@@ -23,6 +23,6 @@ export const selectAgendamentoError = createSelector(
 );
 
 export const selectAulaById = (id: number) => createSelector(
-  selectTodasAsAulas,
+  selectTodasOsAgendamentos,
   (agendamentos) => agendamentos.find(agendamento => agendamento.id === id)
 );

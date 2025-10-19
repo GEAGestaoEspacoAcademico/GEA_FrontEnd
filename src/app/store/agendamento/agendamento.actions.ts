@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import type { Agendamento } from '../../models/agendamento.model';
+import type { Agendamento, EditAgendamento } from '../../models/agendamento.model';
 
 export const AgendamentoActions = createActionGroup({
   source: 'Agendamento',
@@ -21,7 +21,7 @@ export const AgendamentoActions = createActionGroup({
     'Load Agendamento By Id Failure': props<{ error: string }>(),
 
     //Ação para editar por id
-    'Edit Agendamento': props<{ agendamento: Agendamento}>(),
+    'Edit Agendamento': props<{ id: number, agendamento: EditAgendamento}>(),
     'Edit Agendamento Success': props<{ agendamento: Agendamento }>(),
     'Edit Agendamento Failure': props<{ error: string }>(),
   },

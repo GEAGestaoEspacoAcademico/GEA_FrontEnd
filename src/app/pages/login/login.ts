@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import type { OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthActions } from '../../store/auth/auth.actions';
 import type { UserCredencials } from '../../types/auth.type';
 import { Store } from '@ngrx/store';

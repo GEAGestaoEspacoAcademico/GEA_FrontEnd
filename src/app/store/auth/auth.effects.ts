@@ -7,7 +7,6 @@ import { AuthService } from '../../services/auth/auth.service';
 import { AuthActions } from './auth.actions';
 import { Router } from '@angular/router';
 import type { HttpErrorResponse} from '@angular/common/http';
-import { HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class AuthEffects {
