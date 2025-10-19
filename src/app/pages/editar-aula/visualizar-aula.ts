@@ -172,6 +172,7 @@
   }
 
   confirmCancel(): void {
-    console.log("CANCELADO");
+    this.confirmModal.close();
+    this.pendingFormData = null;
   }
 }
