@@ -22,13 +22,12 @@ export class AgendamentoEffects {
     this.actions$.pipe(
       ofType(AgendamentoActions.loadAgendamentos),
       withLatestFrom(
-        this.store.select(selectTodasOsAgendamentos),
-        this.store.select(selectCurrentUser)
+        this.store.select(selectCurrentUser),
       ),
-      filter(([_, agendamentos, user]) => {
-        return agendamentos.length === 0 && user !== null;
+      filter(([_, user]) => {
+        return user !== null;
       }),
-      mergeMap(([_,, user]) => {
+      mergeMap(([_, user]) => {
         const userId = user!.id;
         return this.agendamentoService.getAgendamentosProfessor(userId).pipe(
           map(agendamentos => {
