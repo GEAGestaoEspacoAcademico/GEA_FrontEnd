@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import type { OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth/auth.service';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthActions } from '../../store/auth/auth.actions';
 import type { UserCredencials } from '../../types/auth.type';
 import { Store } from '@ngrx/store';
+import type { Observable } from 'rxjs';
+import { selectAuthError } from '../../store/auth/auth.selectors';
 @Component({
   selector: 'app-login',
   standalone: false,
@@ -13,10 +13,9 @@ import { Store } from '@ngrx/store';
   styleUrl: './login.css'
 })
 export class Login implements OnInit{
-  private router = inject(Router);
-  private authService = inject(AuthService)
   private store = inject(Store)
-  
+  error$!: Observable<string | null>;
+
   loginForm = new FormGroup({
     user: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required])
@@ -25,13 +24,12 @@ export class Login implements OnInit{
   hidePassword: boolean = false;
   btnVisibility: boolean = false;
 
-  userTest: string = "felipenascimento@gmail.com";
-  passwordTest: string = "123456";
-
   ngOnInit(): void {
     this.loginForm.get('password')?.valueChanges.subscribe(value => {
       this.btnVisibility = !!(value && value.trim().length > 0);
     });
+    this.error$ = this.store.select(selectAuthError);
+    this.loginForm.reset();
   }
 
   fetchUser(){

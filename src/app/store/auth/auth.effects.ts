@@ -6,6 +6,8 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth.service';
 import { AuthActions } from './auth.actions';
 import { Router } from '@angular/router';
+import type { HttpErrorResponse} from '@angular/common/http';
+import { HttpResponse } from '@angular/common/http';
 
 @Injectable()
 export class AuthEffects {
@@ -19,7 +21,10 @@ export class AuthEffects {
       exhaustMap(action =>
         this.authService.loginUser(action.userCredencials).pipe(
           map(user => AuthActions.loginSuccess({ user })),
-          catchError(error => of(AuthActions.loginFailure({ error })))
+          catchError((apiError: HttpErrorResponse) => {
+            const errorMessage = apiError.error?.message || 'Credenciais inválidas.';
+            return of(AuthActions.loginFailure({ error: errorMessage }));
+          })
         )
       )
     )

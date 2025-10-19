@@ -12,3 +12,13 @@ export const selectIsLoggedIn = createSelector(
   selectCurrentUser,
   (user) => user !== null 
 );
+
+export const selectAuthError = createSelector(
+  selectAuthState,
+  (state) => state.error
+);
+
+export const selectAuthIsLoading = createSelector(
+  selectAuthState,
+  (state) => state.isLoading
+);
