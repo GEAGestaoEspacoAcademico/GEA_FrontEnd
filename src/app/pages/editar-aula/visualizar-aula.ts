@@ -100,9 +100,9 @@
           type: 'select',
           defaultValue: agendamento.curso,
           options: [
-            { value: 'ADS', label: 'ADS' },
-            { value: 'Mecatronica', label: 'Mecatronica' },
-            { value: 'GTI', label: 'GTI' },
+            { value: 1, label: 'ADS' },
+            { value: 2, label: 'Mecatronica' },
+            { value: 3, label: 'GTI' },
           ],
           validators: { required: true, errorMessages: { required: 'A data de início é obrigatória.' } }
         },
@@ -154,6 +154,7 @@
       curso: formData['curso'],
     };
     this.store.dispatch(AgendamentoActions.editAgendamento({ agendamento: agendamentoAtualizado }));
+    console.log(agendamentoAtualizado);
     this.router.navigate(['/aulas']);
   }
 
