@@ -1,5 +1,5 @@
   import type { OnInit } from '@angular/core';
-  import { Component, inject } from '@angular/core';
+  import { Component, inject, ViewChild } from '@angular/core';
   import { ActivatedRoute, Router } from '@angular/router';
   import { filter, map, switchMap, tap, type Observable } from 'rxjs';
   import type { Agendamento } from '../../models/agendamento.model';
@@ -7,6 +7,7 @@
   import { Store } from '@ngrx/store';
   import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
   import type { Field } from '../../components/shared/scheduling/types';
+  import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 
   @Component({
     selector: 'app-editar-aula',
@@ -19,11 +20,14 @@
     private router = inject(Router)
     private store = inject(Store)
 
+    @ViewChild('confirmModal') confirmModal!: ConfirmationModal;
+
     aula$!: Observable<Agendamento | undefined>;
     loading$: Observable<boolean> = this.store.select(selectAgendamentoLoading);
 
     aulaId: string | null = null;
-    private agendamentoAtual: Agendamento | null = null;
+    agendamentoAtual: Agendamento | null = null;
+    pendingFormData: Record<string, any> | null = null;
     formFields: Field[] | undefined;
 
     ngOnInit(): void {
@@ -105,7 +109,7 @@
       ];
     }
 
-    private formatDateForInput(date: Date): string {
+    formatDateForInput(date: Date): string {
       const d = new Date(date);
       const year = d.getFullYear();
       const month = (d.getMonth() + 1).toString().padStart(2, '0');
@@ -119,39 +123,56 @@
       const minutosFormatados = minutos.padStart(2, '0');
       return `${horasFormatadas}:${minutosFormatados}`;
     }
-    onFormSubmit(formData: Record<string, any>): void {
-  // 1. Validação: Garante que temos os dados originais antes de continuar
-  if (!this.agendamentoAtual) {
-    console.error("Dados do agendamento original não encontrados. Não é possível atualizar.");
-    return;
+  onFormSubmit(formData: Record<string, any>): void {
+    if (!this.agendamentoAtual) {
+      console.error("Dados do agendamento original não encontrados. Não é possível atualizar.");
+      return;
+    }
+  
+    const novaData = new Date(`${formData['data']}T12:00:00`);
+    
+    const [horaInicioStr, horaFimStr] = formData['horario'].split('-');
+    const [horaInicio, minInicio] = horaInicioStr.split(':').map(Number);
+    const [horaFim, minFim] = horaFimStr.split(':').map(Number);
+
+    const novaDataInicio = new Date(novaData);
+    novaDataInicio.setHours(horaInicio, minInicio, 0, 0);
+
+    const novaDataFim = new Date(novaData);
+    novaDataFim.setHours(horaFim, minFim, 0, 0);
+    
+    const novoDiaDaSemana = novaData.toLocaleDateString('pt-BR', { weekday: 'long' });
+
+    const agendamentoAtualizado: Agendamento = {
+      ...this.agendamentoAtual,
+      local: formData['local'],
+      dataInicio: novaDataInicio,
+      dataFinal: novaDataFim,
+      diaDaSemana: novoDiaDaSemana,
+      horario: formData['horario'],
+      disciplina: formData['disciplina'],
+      curso: formData['curso'],
+    };
+    this.store.dispatch(AgendamentoActions.editAgendamento({ agendamento: agendamentoAtualizado }));
+    this.router.navigate(['/aulas']);
   }
-  
-  const novaData = new Date(`${formData['data']}T12:00:00`);
-  
-  const [horaInicioStr, horaFimStr] = formData['horario'].split('-');
-  const [horaInicio, minInicio] = horaInicioStr.split(':').map(Number);
-  const [horaFim, minFim] = horaFimStr.split(':').map(Number);
 
-  const novaDataInicio = new Date(novaData);
-  novaDataInicio.setHours(horaInicio, minInicio, 0, 0);
+  onScheduleSubmitAttempt(formData: Record<string, any>): void {
+    this.pendingFormData = formData;
+    this.confirmModal.open(); 
+  }
 
-  const novaDataFim = new Date(novaData);
-  novaDataFim.setHours(horaFim, minFim, 0, 0);
-  
-  const novoDiaDaSemana = novaData.toLocaleDateString('pt-BR', { weekday: 'long' });
+  onConfirmSubmit(): void {
+    if (this.pendingFormData) {
+        this.onFormSubmit(this.pendingFormData);
+        this.pendingFormData = null;
+    } else {
+        console.error("Confirmação de submit sem dados pendentes.");
+    }
+  }
 
-  const agendamentoAtualizado: Agendamento = {
-    ...this.agendamentoAtual,
-    local: formData['local'],
-    dataInicio: novaDataInicio,
-    dataFinal: novaDataFim,
-    diaDaSemana: novoDiaDaSemana,
-    horario: formData['horario'],
-    disciplina: formData['disciplina'],
-    curso: formData['curso'],
-  };
-  this.store.dispatch(AgendamentoActions.editAgendamento({ agendamento: agendamentoAtualizado }));
-  this.router.navigate(['/aulas']);
-}
-
+  confirmCancel(): void {
+    this.confirmModal.close();
+    this.pendingFormData = null;
+  }
 }
