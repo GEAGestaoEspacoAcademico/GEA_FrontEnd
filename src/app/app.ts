@@ -12,4 +12,9 @@ export class App {
     this.iconRegistryService.registerIcons();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  handleSchedule(event: any) {
+    console.log('Agendamento confirmado:', event);
+  }
+
 }

@@ -1,1 +1,13 @@
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->
+
+<app-romm-information-component
+    [labData]="{
+    nome: 'Laboratório 01',
+    data: '03/10/2025',
+    horario: '7:40 - 9:20',
+    capacidade: '10 - 20 alunos',
+    observacoes: ['20 notebooks | 10 espaços extras', 'projetor']}"
+  (onConfirmSchedule)="handleSchedule($event)"
+>
+
+</app-romm-information-component>

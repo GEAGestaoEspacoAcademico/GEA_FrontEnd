@@ -36,6 +36,7 @@ import { Login } from './pages/login/login';
 import { NotificationCard } from './components/shared/notification-card/notification-card';
 import { MainLayout } from '../layouts/main-layout/main-layout';
 import { AuthLayout } from '../layouts/auth-layout/auth-layout';
+import { RommInformationComponent } from './components/shared/romm-information-component/romm-information-component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { AuthLayout } from '../layouts/auth-layout/auth-layout';
     Login,
     NotificationCard,
     MainLayout,
-    AuthLayout
+    AuthLayout,
+    RommInformationComponent
   ],
   imports: [
     BrowserModule,
