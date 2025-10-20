@@ -29,7 +29,8 @@ export class IconRegistryService {
     this.addIcon('user', 'user.svg');
     this.addIcon('logout', 'logout.svg');
     this.addIcon('arrow-back', 'arrow-back.svg');
-    this.addIcon('arrow-previus', 'arrow-previus.svg')
+    this.addIcon('arrow-previus', 'arrow-previus.svg');
+    this.addIcon('details-arrow', 'details-arrow.svg')
   }
 
   private addIcon(iconName: string, fileName: string): void {

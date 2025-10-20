@@ -33,6 +33,9 @@ export class Aulas implements OnInit {
   @ViewChild('confirmModal') confirmModal!: ConfirmationModal;
   agendamentoToCancelId: number | null = null;
 
+    abremodal() : void {
+    this.confirmModal.open();
+  }
 
   ngOnInit(): void {
     this.store.dispatch(AgendamentoActions.loadAgendamentos());
@@ -121,4 +124,5 @@ export class Aulas implements OnInit {
     const day = String(d.getDate()).padStart(2, '0');
     return `${y}-${m}-${day}`;
   }
+
 }

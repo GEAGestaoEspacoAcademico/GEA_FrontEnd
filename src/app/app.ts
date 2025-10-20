@@ -11,5 +11,4 @@ export class App {
   constructor() {
     this.iconRegistryService.registerIcons();
   }
-
 }

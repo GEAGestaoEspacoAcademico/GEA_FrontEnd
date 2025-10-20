@@ -49,6 +49,7 @@ import { TabBar } from './components/shared/tab-bar/tab-bar';
 import { ConfirmationModal } from './components/shared/confirmation-modal/confirmation-modal';
 import { Scheduling } from './components/shared/scheduling/scheduling';
 import { NotificationCard } from './components/shared/notification-card/notification-card';
+import { RommInformationComponent } from './components/shared/romm-information-component/romm-information-component';
 import { metaReducers } from './store/meta-reducer';
 
 
@@ -74,6 +75,9 @@ import { metaReducers } from './store/meta-reducer';
     ConfirmationModal,
     Scheduling,
     NotificationCard,
+    MainLayout,
+    AuthLayout,
+    RommInformationComponent
   ],
   imports: [
     BrowserModule,

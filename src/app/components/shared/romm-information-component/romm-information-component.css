@@ -1,0 +1,19 @@
+.collapsed-card {
+  border-radius: 5px;
+  width: 150px;
+  cursor: pointer;
+  color: var(--color-neutral-900);
+  background-color: #D9D9D9;
+
+  border: black solid 1px;
+}
+
+.collapsed-card:hover {
+  background-color: #e5e5e5;
+}
+
+.icon-arrow{
+  color: rgba(46, 53, 56, 0.6);
+  width: 20px;
+  height: auto;
+}

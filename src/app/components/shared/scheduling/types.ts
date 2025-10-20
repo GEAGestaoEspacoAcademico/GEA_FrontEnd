@@ -7,7 +7,7 @@ export interface Field {
   type: FieldType;
   placeholder?: string;
   options?: Option[];
-  defaultValue?: any;
+  defaultValue?: string | number;
   validators?: {
     required?: boolean;
     minLength?: number;
