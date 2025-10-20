@@ -1,9 +1,9 @@
   import type { OnInit } from '@angular/core';
   import { Component, inject, ViewChild } from '@angular/core';
   import { ActivatedRoute, Router } from '@angular/router';
-  import { filter, forkJoin, map, min, Subject, switchMap, take, takeUntil, tap, type Observable } from 'rxjs';
+  import { filter, forkJoin, map, Subject, switchMap, take, takeUntil, tap, type Observable } from 'rxjs';
   import type { Agendamento, EditAgendamento } from '../../models/agendamento.model';
-  import { selectAgendamentoLoading, selectAulaById } from '../../store/agendamento/agendamento.selectors';
+  import {selectAulaById } from '../../store/agendamento/agendamento.selectors';
   import { Store } from '@ngrx/store';
   import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
   import type { Field } from '../../components/shared/scheduling/types';
@@ -64,8 +64,9 @@ import { selectCurrentUser } from '../../store/auth/auth.selectors';
     }
 
     private loadOptionsForSelects(): void {
+      if(!this.currentUser) {return;}
       forkJoin({
-        disciplinas: this.disciplinaService.getDisciplinas(),
+        disciplinas: this.disciplinaService.getDisciplinaProfessor(this.currentUser?.id),
         cursos: this.cursoService.getCursos()
       }).pipe(
         take(1)
@@ -151,53 +152,42 @@ import { selectCurrentUser } from '../../store/auth/auth.selectors';
     ];
   }
 
-    formatDateForInput(date: string): string {
-      const d = new Date(date);
-      const year = d.getFullYear();
-      const month = (d.getMonth() + 1).toString().padStart(2, '0');
-      const day = d.getDate().toString().padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    }
-    formatarHora(date: string): string {
-      const data = new Date(date)
-      const horas = data.getHours().toString();
-      const minutos = data.getMinutes().toString();
-      const horasFormatadas = horas.padStart(2, '0');
-      const minutosFormatados = minutos.padStart(2, '0');
-      return `${horasFormatadas}:${minutosFormatados}`;
-    }
+  formatDateForInput(date: string): string {
+    const d = new Date(date);
+    const year = d.getUTCFullYear();
+    const month = (d.getUTCMonth() + 1).toString().padStart(2, '0');
+    const day = d.getUTCDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  formatarHora(date: string): string {
+    const data = new Date(date)
+    const horas = data.getHours().toString();
+    const minutos = data.getMinutes().toString();
+    const horasFormatadas = horas.padStart(2, '0');
+    const minutosFormatados = minutos.padStart(2, '0');
+    return `${horasFormatadas}:${minutosFormatados}`;
+  }
+
   onFormSubmit(formData: Record<string, any>): void {
     if (!this.agendamentoAtual || !this.currentUser) {
       console.error("Dados do agendamento original não encontrados. Não é possível atualizar.");
       return;
     }
-  
-    const novaData = new Date(`${formData['data']}T12:00:00`);
-    
-    const [horaInicioStr, horaFimStr] = formData['horario'].split('-');
-    const [horaInicio, minInicio] = horaInicioStr.split(':').map(Number);
-    const [horaFim, minFim] = horaFimStr.split(':').map(Number);
 
-    const novaDataInicio = new Date(novaData);
-    novaDataInicio.setHours(horaInicio, minInicio, 0, 0);
-
-    const novaDataFim = new Date(novaData);
-    novaDataFim.setHours(horaFim, minFim, 0, 0);
-    
+    const novaData = new Date(`${formData['data']}T12:00:00Z`);
     const novoDiaDaSemana = novaData.toLocaleDateString('pt-BR', { weekday: 'long' });
+
     const agendamentoAtualizado: EditAgendamento = {
-      dataInicio: this.formatDateForInput(novaDataInicio.toString()),
-      dataFim: this.formatDateForInput(novaDataFim.toString()),
+      dataInicio: formData['data'],
+      dataFim: formData['data'],
       diaDaSemana: novoDiaDaSemana,
       horaInicio: this.formateHours(formData['horario'].split('-')[0]),
       horaFim: this.formateHours(formData['horario'].split('-')[1]),
       disciplinaId: Number(formData['disciplina']),
-      usuarioId: this.currentUser?.id,
-      tipo: 'sala',
-      salaId: 0,
+      salaId: 1,
     };
     this.store.dispatch(AgendamentoActions.editAgendamento({id: this.agendamentoAtual.id, agendamento: agendamentoAtualizado }));
-
     this.router.navigate(['/aulas']);
   }
 

@@ -18,7 +18,7 @@ export class Notificacoes {
       source: 'Lembrete de Reunião',
       title: 'Você tem uma reunião agendada para amanhã às 14h com a equipe de backend.',
       date: new Date('2024-06-14T09:00:00'),
-      snippet: 'Clique aqui para ver detalhes',
+      snippet: 'Lorem lorem',
     },
   ];
 }

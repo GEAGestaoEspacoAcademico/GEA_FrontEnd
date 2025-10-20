@@ -16,7 +16,6 @@ export interface Agendamento {
 }
 
 export interface EditAgendamento{
-  usuarioId: number,
   salaId: number,
   disciplinaId: number,
   dataInicio: string,
@@ -24,5 +23,4 @@ export interface EditAgendamento{
   diaDaSemana: string,
   horaInicio: string,
   horaFim: string,
-  tipo: string
 }

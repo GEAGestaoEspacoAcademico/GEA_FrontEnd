@@ -15,4 +15,8 @@ export class DisciplinaService {
     return this.http.get<Disciplina[]>(this.baseUrl);
   }
 
+  public getDisciplinaProfessor(idProfessor: number): Observable<Disciplina[]>{
+    return this.http.get<Disciplina[]>(`${this.baseUrl}/professor/${idProfessor}`);
+  }
+
 }

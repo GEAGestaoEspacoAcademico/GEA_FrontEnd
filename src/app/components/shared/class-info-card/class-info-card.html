@@ -11,7 +11,7 @@
       </h3>
 
       <time class="time-primary fw-semibold text-end mb-0" aria-label="Horário">
-        {{ classData.horaFim }}
+        {{ classData.horaInicio | slice:0:5 }} - {{ classData.horaFim | slice:0:5 }}
       </time>
     </header>
 

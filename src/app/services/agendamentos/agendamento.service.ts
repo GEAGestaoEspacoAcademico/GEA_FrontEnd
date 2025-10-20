@@ -23,7 +23,7 @@ export class AgendamentoService {
   }
 
   public editAgendamento(id:number, agendamento: EditAgendamento): Observable<Agendamento>{
-    return this.http.post<Agendamento>(this.baseUrl, agendamento)
+    return this.http.put<Agendamento>(`${this.baseUrl}/${id}`, agendamento)
   }
 
 }

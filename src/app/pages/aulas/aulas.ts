@@ -31,6 +31,7 @@ export class Aulas implements OnInit {
   agendamentosDoDiaSelecionado$!: Observable<Agendamento[]>;
 
   @ViewChild('confirmModal') confirmModal!: ConfirmationModal;
+  @ViewChild('confirmCancelModal') confirmCancelModal!: ConfirmationModal;
   agendamentoToCancelId: number | null = null;
 
     abremodal() : void {
@@ -71,6 +72,11 @@ export class Aulas implements OnInit {
     if (this.agendamentoToCancelId === null) { return; }
     this.store.dispatch(AgendamentoActions.deleteAgendamento({ id: this.agendamentoToCancelId }));
     this.agendamentoToCancelId = null;
+    this.confirmCancelModal.open();
+  }
+
+  closeModal(){
+    this.agendamentoToCancelId = null;
   }
 
   closeCancelModal(): void {
@@ -83,18 +89,15 @@ export class Aulas implements OnInit {
   private updateAgendamentosForActivyDay(): void {
     this.agendamentosDoDiaSelecionado$ = this.agendamentos$.pipe(
       map(agendamentos => {
-        const diaAtivoDate = new Date(`${this.activeDayId}T12:00:00Z`);
-        const diaDaSemanaAtivo = diaAtivoDate.toLocaleDateString('pt-BR', { weekday: 'long' });
-
         const agendamentosFiltrados = agendamentos.filter(agendamento => {
-          const isDentroDoIntervalo = this.activeDayId >= agendamento.dataInicio && this.activeDayId <= agendamento.dataFim;
-          const isMesmoDiaDaSemana = agendamento.diaDaSemana.toLowerCase() === diaDaSemanaAtivo.toLowerCase();
-          return isDentroDoIntervalo && isMesmoDiaDaSemana;
+          const isDentroDoIntervalo = this.activeDayId === agendamento.dataInicio;
+          return isDentroDoIntervalo;
         });
         return agendamentosFiltrados.sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
       })
     );
   }
+  
   private generateDaysForMonth(): void {
     const result: Day[] = [];
     const year = this.currentDate.getFullYear();
@@ -119,9 +122,9 @@ export class Aulas implements OnInit {
   }
 
   private toId(d: Date): string {
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
+    const y = d.getUTCFullYear();
+    const m = String(d.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(d.getUTCDate()).padStart(2, '0');
     return `${y}-${m}-${day}`;
   }
 
