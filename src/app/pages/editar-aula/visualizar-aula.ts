@@ -1,7 +1,7 @@
   import type { OnInit } from '@angular/core';
   import { Component, inject, ViewChild } from '@angular/core';
   import { ActivatedRoute, Router } from '@angular/router';
-  import { filter, forkJoin, map, Subject, switchMap, take, takeUntil, tap, type Observable } from 'rxjs';
+  import { filter, forkJoin, map, min, Subject, switchMap, take, takeUntil, tap, type Observable } from 'rxjs';
   import type { Agendamento, EditAgendamento } from '../../models/agendamento.model';
   import { selectAgendamentoLoading, selectAulaById } from '../../store/agendamento/agendamento.selectors';
   import { Store } from '@ngrx/store';
@@ -142,10 +142,10 @@ import { selectCurrentUser } from '../../store/auth/auth.selectors';
         options: [
           {label: "2024.1", value: "2024.1"},
           {label: "2024.2", value: "2024.2"},
-          {label: "2024.1", value: "2024.1"},
-          {label: "2024.2", value: "2024.2"},
           {label: "2025.1", value: "2025.1"},
           {label: "2025.2", value: "2025.2"},
+          {label: "2026.1", value: "2026.1"},
+          {label: "2026.2", value: "2026.2"},
         ]
       }
     ];
@@ -189,14 +189,15 @@ import { selectCurrentUser } from '../../store/auth/auth.selectors';
       dataInicio: this.formatDateForInput(novaDataInicio.toString()),
       dataFim: this.formatDateForInput(novaDataFim.toString()),
       diaDaSemana: novoDiaDaSemana,
-      horaInicio: formData['horario'].split('-')[0],
-      horaFim: formData['horario'].split('-')[1],
-      disciplinaId: formData['disciplina'],
+      horaInicio: this.formateHours(formData['horario'].split('-')[0]),
+      horaFim: this.formateHours(formData['horario'].split('-')[1]),
+      disciplinaId: Number(formData['disciplina']),
       usuarioId: this.currentUser?.id,
       tipo: 'sala',
       salaId: 0,
     };
     this.store.dispatch(AgendamentoActions.editAgendamento({id: this.agendamentoAtual.id, agendamento: agendamentoAtualizado }));
+
     this.router.navigate(['/aulas']);
   }
 
@@ -216,5 +217,17 @@ import { selectCurrentUser } from '../../store/auth/auth.selectors';
 
   confirmCancel(): void {
     this.pendingFormData = null;
+  }
+
+  formateHours(horas: string){
+    const [h, m] = horas.split(":")
+    const novaData = new Date()
+    novaData.setHours(Number(h))
+    novaData.setMinutes(Number(m))
+
+    const hora = String(novaData.getHours()).padStart(2, '0');
+    const minutos = String(novaData.getMinutes()).padStart(2, '0');
+
+    return `${hora}:${minutos}`
   }
 }

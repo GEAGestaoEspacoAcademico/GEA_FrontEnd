@@ -11,6 +11,14 @@ body {
   background-color: var(--color-surface-base);
 }
 
+main {
+  flex: 1;
+  overflow-y: auto;
+  padding-top: 20px;
+  padding-bottom: 61px; /* mesma altura do footer */
+  box-sizing: border-box;
+}
+
 /*Design System*/
 
 .highlight-title{
@@ -87,7 +95,3 @@ body {
     font-weight: var(--font-weight-bold);
   }
 }
-
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,11 +1,33 @@
-<div class="d-flex flex-column">
-  <div class="container">
-    <h1>Agendar</h1>
-  
+<div class="d-flex flex-column gap-4">
+  <div class="container-fluid"> 
+    <app-title-highligh class="mt-2" title="Agendar"></app-title-highligh>
     <app-scheduling
       [fields]="fields"
       submitButtonText="Buscar"
       (formSubmit)="handleFormSubmit($event)"
     ></app-scheduling>
   </div>
+
+  <div class="container-fluid"> 
+    <app-title-highligh class="mt-2" title="Baseado no seu perfil"></app-title-highligh>
+    <div class="d-flex flex-wrap gap-2 flex-row">
+      <app-romm-information-component [labData]="roomData[0]" (ConfirmSchedule)="openModal($event)"></app-romm-information-component>
+      <app-romm-information-component [labData]="roomData[1]" (ConfirmSchedule)="openModal($event)"></app-romm-information-component>
+      <app-romm-information-component [labData]="roomData[2]" (ConfirmSchedule)="openModal($event)"></app-romm-information-component>
+      <app-romm-information-component [labData]="roomData[3]" (ConfirmSchedule)="openModal($event)"></app-romm-information-component>
+      <app-romm-information-component [labData]="roomData[4]" (ConfirmSchedule)="openModal($event)"></app-romm-information-component>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <app-title-highligh class="mt-2" title="Outras Opções"></app-title-highligh>
+    <p>Não há outras opções neste momento.</p>
+  </div>
+
+  <app-confirmation-modal
+    #classInfoModal
+    mode="detalhes"
+    [detailsData]="roomData[currentIndex]"
+    title="Detalhes">
+  </app-confirmation-modal>
 </div>
