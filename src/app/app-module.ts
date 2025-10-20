@@ -49,8 +49,6 @@ import { TabBar } from './components/shared/tab-bar/tab-bar';
 import { ConfirmationModal } from './components/shared/confirmation-modal/confirmation-modal';
 import { Scheduling } from './components/shared/scheduling/scheduling';
 import { NotificationCard } from './components/shared/notification-card/notification-card';
-import { MainLayout } from '../layouts/main-layout/main-layout';
-import { AuthLayout } from '../layouts/auth-layout/auth-layout';
 import { RommInformationComponent } from './components/shared/romm-information-component/romm-information-component';
 import { metaReducers } from './store/meta-reducer';
 

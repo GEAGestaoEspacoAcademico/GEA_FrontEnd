@@ -5,7 +5,6 @@ import type { Observable} from 'rxjs';
 import { catchError, filter, map, mergeMap, of, withLatestFrom } from 'rxjs';
 import { AgendamentoActions } from './agendamento.actions'; 
 import { Store } from '@ngrx/store';
-import { selectTodasOsAgendamentos } from './agendamento.selectors';
 import { AgendamentoService } from '../../services/agendamentos/agendamento.service';
 import type { User } from '../../models/user.model';
 import { selectCurrentUser } from '../auth/auth.selectors';

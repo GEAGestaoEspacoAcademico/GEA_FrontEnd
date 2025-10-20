@@ -1,5 +1,5 @@
 import type { OnInit } from '@angular/core';
-import { Component, inject, viewChild, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import type { Agendamento } from '../../models/agendamento.model';
 import type { Day } from '../../components/shared/day-selector/day-selector';
 import { Router } from '@angular/router';
@@ -8,7 +8,6 @@ import { selectTodasOsAgendamentos, selectAgendamentoLoading } from '../../store
 import { Store } from '@ngrx/store';
 import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import { RoomData } from '../../models/room.model';
 
 @Component({
   selector: 'app-aulas',
@@ -126,14 +125,4 @@ export class Aulas implements OnInit {
     return `${y}-${m}-${day}`;
   }
 
-    detalhes: RoomData = {
-    id: 1,
-    nome: 'Laboratorio 01',
-    data: '03/10/2025',
-    horario: '7:40-9:20',
-    capacidade: '10-20 alunos',
-    observacoes: ['projetor', '20 notebooks | 10 espaços extras'],
-  };
-
-}
 }

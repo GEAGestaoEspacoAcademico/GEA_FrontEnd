@@ -185,9 +185,6 @@ import { selectCurrentUser } from '../../store/auth/auth.selectors';
     novaDataFim.setHours(horaFim, minFim, 0, 0);
     
     const novoDiaDaSemana = novaData.toLocaleDateString('pt-BR', { weekday: 'long' });
-    console.log("Disciplina: " + formData['disciplina'])
-    console.log("Horario: " + formData['horario'])
-    console.log("FormData", formData)
     const agendamentoAtualizado: EditAgendamento = {
       dataInicio: this.formatDateForInput(novaDataInicio.toString()),
       dataFim: this.formatDateForInput(novaDataFim.toString()),
@@ -200,7 +197,6 @@ import { selectCurrentUser } from '../../store/auth/auth.selectors';
       salaId: 0,
     };
     this.store.dispatch(AgendamentoActions.editAgendamento({id: this.agendamentoAtual.id, agendamento: agendamentoAtualizado }));
-    console.log(agendamentoAtualizado);
     this.router.navigate(['/aulas']);
   }
 
