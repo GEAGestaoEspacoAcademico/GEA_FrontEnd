@@ -1,6 +1,5 @@
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
  
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import type { RoomData } from '../../../models/room.model';
 
 @Component({
@@ -10,11 +9,10 @@ import type { RoomData } from '../../../models/room.model';
   styleUrl: './romm-information-component.css'
 })
 export class RommInformationComponent {
-  private modalService = inject(NgbModal)
   @Input() labData!: RoomData;
-  @Output() ConfirmSchedule = new EventEmitter<void>();
+  @Output() ConfirmSchedule = new EventEmitter<number>();
 
   execute(){
-    this.ConfirmSchedule.emit();
+    this.ConfirmSchedule.emit(this.labData.id);
   }
 }

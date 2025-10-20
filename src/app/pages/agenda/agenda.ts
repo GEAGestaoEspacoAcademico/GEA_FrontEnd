@@ -1,6 +1,7 @@
 import type { Field } from '../../components/shared/scheduling/types';
 import { Component, ViewChild } from '@angular/core';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
+import type { RoomData } from '../../models/room.model';
 
 @Component({
   selector: 'app-agenda',
@@ -11,6 +12,51 @@ import type { ConfirmationModal } from '../../components/shared/confirmation-mod
 export class Agenda {
 
   public submittedData: any;
+  @ViewChild('classInfoModal') classInfoModal!: ConfirmationModal;
+  currentIndex!: number;
+  roomData: RoomData[] = 
+  [
+  {
+    "id": 1,
+    "nome": "Sala 01",
+    "data": "2025-10-20",
+    "horario": "10:00 - 11:00",
+    "capacidade": "12 pessoas",
+    "observacoes": ["Possui projetor", "Quadro branco disponível"]
+  },
+  {
+    "id": 2,
+    "nome": "Laboratório 2",
+    "data": "2025-10-21",
+    "horario": "14:00 - 16:30",
+    "capacidade": "50 pessoas",
+    "observacoes": ["Necessário microfone", "Sistema de som integrado"]
+  },
+  {
+    "id": 3,
+    "nome": "Sala 9",
+    "data": "2025-10-20",
+    "horario": "09:00 - 10:30",
+    "capacidade": "8 pessoas",
+    "observacoes": ["Pufes e área de descanso", "Muitos post-its"]
+  },
+  {
+    "id": 4,
+    "nome": "Auditório",
+    "data": "2025-10-22",
+    "horario": "08:00 - 12:00",
+    "capacidade": "150 pessoas",
+    "observacoes": ["Palco elevado", "Equipamento de tradução simultânea (solicitar)"]
+  },
+  {
+    "id": 5,
+    "nome": "Laboratório 4",
+    "data": "2025-10-20",
+    "horario": "15:00 - 15:30",
+    "capacidade": "4 pessoas",
+    "observacoes": ["Ambiente silencioso", "Água disponível"]
+  }
+]
   public fields: Field[] = [
     {
       type: 'date',
@@ -94,6 +140,10 @@ export class Agenda {
   handleFormSubmit(formData: any): void {
     this.submittedData = formData;
   }
-  @ViewChild('ConfirmationModal')
-  confirmModal!: ConfirmationModal;
+
+  openModal(id: number){
+    this.currentIndex = id-1;
+    this.classInfoModal.open();
+  }
+
 }
