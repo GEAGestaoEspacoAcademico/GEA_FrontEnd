@@ -8,11 +8,12 @@
   import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
   import type { Field } from '../../components/shared/scheduling/types';
   import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import { DisciplinaService } from '../../services/disciplina/disciplina.service';
-import { CursoService } from '../../services/curso/curso.service';
-import type { User } from '../../models/user.model';
-import { selectCurrentUser } from '../../store/auth/auth.selectors';
-import { SalaService } from '../../services/salas/sala.service';
+  import { DisciplinaService } from '../../services/disciplina/disciplina.service';
+  import { CursoService } from '../../services/curso/curso.service';
+  import type { User } from '../../models/user.model';
+  import { selectCurrentUser } from '../../store/auth/auth.selectors';
+  import { SalaService } from '../../services/salas/sala.service';
+  import type {Option} from '../../components/shared/scheduling/types'
 
   @Component({
     selector: 'app-editar-aula',
@@ -27,13 +28,16 @@ import { SalaService } from '../../services/salas/sala.service';
     private disciplinaService = inject(DisciplinaService)
     private cursoService = inject(CursoService)
     private salaService = inject(SalaService)
-
+    
     @ViewChild('confirmModal') confirmModal!: ConfirmationModal;
-
+    
     aula$!: Observable<Agendamento | undefined>;
     private destroy$ = new Subject<void>();
     currentUser: User | null = null;
     isloading = false;
+    salaIdAtual: number | undefined = undefined;
+    cursoIdAtual: number | undefined = undefined;
+    
 
     aulaId: string | null = null;
     agendamentoAtual: Agendamento | null = null;
@@ -54,10 +58,9 @@ import { SalaService } from '../../services/salas/sala.service';
             tap(aula => {
               if (!aula) {
                 this.store.dispatch(AgendamentoActions.loadAgendamentoById({ id }));
-              }else{
+              }else if(!this.agendamentoAtual){
                 this.agendamentoAtual = aula;
-                this.formFields = this.createFormFields(aula)
-                this.loadOptionsForSelects();
+                this.loadDataAndBuildForm();
               }
             })
           )
@@ -65,41 +68,44 @@ import { SalaService } from '../../services/salas/sala.service';
       );
     }
 
-    private loadOptionsForSelects(): void {
-      if(!this.currentUser) {return;}
-      forkJoin({
-        disciplinas: this.disciplinaService.getDisciplinaProfessor(this.currentUser?.id),
-        cursos: this.cursoService.getCursos(),
-        salas: this.salaService.getSalas()
-      }).pipe(
-        take(1)
-      ).subscribe(({ disciplinas, cursos, salas }) => {
-        const disciplinaField = this.formFields.find(f => f.name === 'disciplina');
-        if (disciplinaField) {
-          disciplinaField.options = disciplinas.map(d => ({ label: d.nome, value: d.id }));
-        }
-        const cursoField = this.formFields.find(f => f.name === 'curso');
-        if (cursoField) {
-          cursoField.options = cursos.map(c => ({ label: c.nomeCurso, value: c.id }));
-        }
-        const salaFiel = this.formFields.find(f => f.name === 'local');
-        if(salaFiel){
-          salaFiel.options = salas.filter(s => s.disponibilidade === true).map(s => ({label: s.nome, value: s.id}))
-        }
+  private loadDataAndBuildForm(): void {
+    if (!this.currentUser || !this.agendamentoAtual) { return; }
+    forkJoin({
+      disciplinas: this.disciplinaService.getDisciplinaProfessor(this.currentUser.id),
+      cursos: this.cursoService.getCursos(),
+      salas: this.salaService.getSalas()
+    }).pipe(
+      take(1)
+    ).subscribe(({ disciplinas, cursos, salas }) => {
+      this.cursoIdAtual = cursos.find(c => c.nomeCurso === this.agendamentoAtual?.curso)?.id;
+      this.salaIdAtual = salas.find(s => s.nome === this.agendamentoAtual?.nomeSala)?.id;
+      
+      const disciplinaOptions = disciplinas.map(d => ({ label: d.nome, value: d.id }));
+      const cursoOptions = cursos.map(c => ({ label: c.nomeCurso, value: c.id }));
+      const salaOptions = salas.filter(s => s.disponibilidade === true || s.id === this.salaIdAtual ).map(s => ({ label: s.nome, value: s.id }));
 
-        this.formFields = [...this.formFields];
-        this.isloading = false;
-      });
-    }
+      this.formFields = this.createFormFields(
+        this.agendamentoAtual!,
+        disciplinaOptions,
+        cursoOptions,
+        salaOptions
+      );
+    });
+  }
 
- private createFormFields(agendamento: Agendamento): Field[] {
+  private createFormFields(
+    agendamento: Agendamento,
+    disciplinaOptions: Option[], 
+    cursoOptions: Option[],      
+    salaOptions: Option[]        
+  ): Field[] {
     return [
       {
-        name: 'disciplina',
+        name: 'disciplinaId',
         label: 'Disciplina',
         type: 'select',
-        defaultValue: agendamento.nomeDisciplina,
-        options: [],
+        defaultValue: agendamento.disciplinaId,
+        options: disciplinaOptions,
         validators: { required: true, errorMessages: { required: 'O campo disciplina é obrigatório.' } }
       },
       {
@@ -113,7 +119,7 @@ import { SalaService } from '../../services/salas/sala.service';
         name: 'horario',
         label: 'Horário',
         type: 'select',
-        defaultValue: (`${this.formatarHora(agendamento.dataInicio)}-${this.formatarHora(agendamento.dataFim)}`),
+        defaultValue: (`${this.formatarHoraParaDropdown(agendamento.horaInicio)}-${this.formatarHoraParaDropdown(agendamento.horaFim)}`),
         options: [
           {label: '7:40-9:20', value: '7:40-9:20'},
           {label: '9:30-11:10', value: '9:30-11:10'},
@@ -122,19 +128,19 @@ import { SalaService } from '../../services/salas/sala.service';
         validators: { required: true, errorMessages: { required: 'O horário é obrigatório.' } }
       },
       {
-        name: 'local',
+        name: 'salaId', 
         label: 'Local',
         type: 'select',
-        defaultValue: agendamento.nomeSala,
-        options: [],
+        defaultValue: this.salaIdAtual,
+        options: salaOptions,
         validators: { required: true, errorMessages: { required: 'A seleção da sala é obrigatória.' } }
       },
       {
-        name: 'curso',
+        name: 'cursoId', 
         label: 'Curso',
         type: 'select',
-        defaultValue: agendamento.curso,
-        options: [],
+        defaultValue: this.cursoIdAtual,
+        options: cursoOptions, 
         validators: { required: true, errorMessages: { required: 'O curso é obrigatório.' } }
       },
       {
@@ -161,6 +167,12 @@ import { SalaService } from '../../services/salas/sala.service';
     const day = d.getUTCDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
   }
+  private formatarHoraParaDropdown(horaComSegundos: string): string {
+    const partes = horaComSegundos.split(':');
+    const hora = parseInt(partes[0], 10).toString(); 
+    const minutos = partes[1];
+    return `${hora}:${minutos}`;
+}
 
   formatarHora(date: string): string {
     const data = new Date(date)
@@ -186,8 +198,8 @@ import { SalaService } from '../../services/salas/sala.service';
       diaDaSemana: novoDiaDaSemana,
       horaInicio: this.formateHours(formData['horario'].split('-')[0]),
       horaFim: this.formateHours(formData['horario'].split('-')[1]),
-      disciplinaId: Number(formData['disciplina']),
-      salaId: 1,
+      disciplinaId: Number(formData['disciplinaId']),
+      salaId: Number(formData["salaId"]),
     };
     this.store.dispatch(AgendamentoActions.editAgendamento({id: this.agendamentoAtual.id, agendamento: agendamentoAtualizado }));
     this.router.navigate(['/aulas']);
