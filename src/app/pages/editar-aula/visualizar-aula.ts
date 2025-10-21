@@ -12,6 +12,7 @@ import { DisciplinaService } from '../../services/disciplina/disciplina.service'
 import { CursoService } from '../../services/curso/curso.service';
 import type { User } from '../../models/user.model';
 import { selectCurrentUser } from '../../store/auth/auth.selectors';
+import { SalaService } from '../../services/salas/sala.service';
 
   @Component({
     selector: 'app-editar-aula',
@@ -25,6 +26,7 @@ import { selectCurrentUser } from '../../store/auth/auth.selectors';
     private store = inject(Store)
     private disciplinaService = inject(DisciplinaService)
     private cursoService = inject(CursoService)
+    private salaService = inject(SalaService)
 
     @ViewChild('confirmModal') confirmModal!: ConfirmationModal;
 
@@ -67,18 +69,22 @@ import { selectCurrentUser } from '../../store/auth/auth.selectors';
       if(!this.currentUser) {return;}
       forkJoin({
         disciplinas: this.disciplinaService.getDisciplinaProfessor(this.currentUser?.id),
-        cursos: this.cursoService.getCursos()
+        cursos: this.cursoService.getCursos(),
+        salas: this.salaService.getSalas()
       }).pipe(
         take(1)
-      ).subscribe(({ disciplinas, cursos }) => {
+      ).subscribe(({ disciplinas, cursos, salas }) => {
         const disciplinaField = this.formFields.find(f => f.name === 'disciplina');
         if (disciplinaField) {
           disciplinaField.options = disciplinas.map(d => ({ label: d.nome, value: d.id }));
         }
-        
         const cursoField = this.formFields.find(f => f.name === 'curso');
         if (cursoField) {
           cursoField.options = cursos.map(c => ({ label: c.nomeCurso, value: c.id }));
+        }
+        const salaFiel = this.formFields.find(f => f.name === 'local');
+        if(salaFiel){
+          salaFiel.options = salas.filter(s => s.disponibilidade === true).map(s => ({label: s.nome, value: s.id}))
         }
 
         this.formFields = [...this.formFields];
@@ -120,11 +126,7 @@ import { selectCurrentUser } from '../../store/auth/auth.selectors';
         label: 'Local',
         type: 'select',
         defaultValue: agendamento.nomeSala,
-        options: [
-          { value: 'Sala A', label: 'Sala A' },
-          { value: 'Sala B', label: 'Sala B' },
-          { value: 'Laboratório 1', label: 'Laboratório 1' },
-        ],
+        options: [],
         validators: { required: true, errorMessages: { required: 'A seleção da sala é obrigatória.' } }
       },
       {
