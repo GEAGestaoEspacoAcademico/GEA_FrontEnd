@@ -5,7 +5,7 @@ import { AuthActions } from '../../store/auth/auth.actions';
 import type { UserCredencials } from '../../types/auth.type';
 import { Store } from '@ngrx/store';
 import type { Observable } from 'rxjs';
-import { selectAuthError } from '../../store/auth/auth.selectors';
+import { selectAuthError, selectAuthIsLoading } from '../../store/auth/auth.selectors';
 @Component({
   selector: 'app-login',
   standalone: false,
@@ -15,6 +15,7 @@ import { selectAuthError } from '../../store/auth/auth.selectors';
 export class Login implements OnInit{
   private store = inject(Store)
   error$!: Observable<string | null>;
+  loading$: Observable<boolean | null> = this.store.select(selectAuthIsLoading);
 
   loginForm = new FormGroup({
     user: new FormControl('', [Validators.required, Validators.email]),

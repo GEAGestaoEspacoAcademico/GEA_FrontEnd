@@ -1,26 +1,35 @@
 <div class="mt-2">
     <app-title-highligh title="Alterar"></app-title-highligh>
 </div>
-<div class="container">
-  <ng-container *ngIf="aula$ | async as aula">
-    <app-scheduling 
-        *ngIf="formFields"
-        [fields]="formFields"
-        submitButtonText="Salvar Alterações"
-        (formSubmit)="onScheduleSubmitAttempt($event)"
-        class="d-flex justify-content-center align-items-center"
-        >
-    </app-scheduling>
-  </ng-container>
-</div>
 
-  <app-confirmation-modal
-    #confirmModal
-    mode="aviso"
-    title="Confirmar Alterações"
-    message="Você tem certeza que deseja alterar essas informações?"
-    confirmText="Confirmar"
-    cancelText="Cancelar"
-    (onConfirm)="onConfirmSubmit()"
-    (onCancel)="confirmCancel()">
-  </app-confirmation-modal>
+@if (loading$ | async) {
+  <div class="d-flex justify-content-center align-items-center mt-4">
+    <mat-spinner diameter="50"></mat-spinner>
+  </div>
+}
+
+@if ((loading$ | async) === false) {
+  <div class="container">
+    <ng-container *ngIf="aula$ | async as aula">
+      <app-scheduling 
+          *ngIf="formFields"
+          [fields]="formFields"
+          submitButtonText="Salvar Alterações"
+          (formSubmit)="onScheduleSubmitAttempt($event)"
+          class="d-flex justify-content-center align-items-center"
+          >
+      </app-scheduling>
+    </ng-container>
+  </div>
+}
+
+<app-confirmation-modal
+  #confirmModal
+  mode="aviso"
+  title="Confirmar Alterações"
+  message="Você tem certeza que deseja alterar essas informações?"
+  confirmText="Confirmar"
+  cancelText="Cancelar"
+  (onConfirm)="onConfirmSubmit()"
+  (onCancel)="confirmCancel()">
+</app-confirmation-modal>

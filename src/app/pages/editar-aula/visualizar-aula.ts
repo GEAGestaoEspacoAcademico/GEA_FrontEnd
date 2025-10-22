@@ -3,7 +3,7 @@
   import { ActivatedRoute, Router } from '@angular/router';
   import { filter, forkJoin, map, Subject, switchMap, take, takeUntil, tap, type Observable } from 'rxjs';
   import type { Agendamento, EditAgendamento } from '../../models/agendamento.model';
-  import {selectAulaById } from '../../store/agendamento/agendamento.selectors';
+  import { selectAgendamentoLoading, selectAulaById } from '../../store/agendamento/agendamento.selectors';
   import { Store } from '@ngrx/store';
   import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
   import type { Field } from '../../components/shared/scheduling/types';
@@ -32,9 +32,9 @@
     @ViewChild('confirmModal') confirmModal!: ConfirmationModal;
     
     aula$!: Observable<Agendamento | undefined>;
+    loading$: Observable<boolean> = this.store.select(selectAgendamentoLoading);
     private destroy$ = new Subject<void>();
     currentUser: User | null = null;
-    isloading = false;
     salaIdAtual: number | undefined = undefined;
     cursoIdAtual: number | undefined = undefined;
     
