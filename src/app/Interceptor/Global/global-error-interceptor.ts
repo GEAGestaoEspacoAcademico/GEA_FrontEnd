@@ -11,8 +11,6 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
-// 1. Remova o @Injectable() e a definição da classe
-// 2. Crie uma 'const' com o tipo HttpInterceptorFn
 export const globalErrorInterceptor: HttpInterceptorFn = (
   request: HttpRequest<unknown>, 
   next: HttpHandlerFn
