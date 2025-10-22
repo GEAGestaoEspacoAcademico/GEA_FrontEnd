@@ -1,7 +1,7 @@
 import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 // Angular Material Imports
@@ -51,6 +51,7 @@ import { Scheduling } from './components/shared/scheduling/scheduling';
 import { NotificationCard } from './components/shared/notification-card/notification-card';
 import { RommInformationComponent } from './components/shared/romm-information-component/romm-information-component';
 import { metaReducers } from './store/meta-reducer';
+import { globalErrorInterceptor } from './Interceptor/Global/global-error-interceptor';
 
 
 @NgModule({
@@ -116,7 +117,9 @@ import { metaReducers } from './store/meta-reducer';
     }),
   ],
   providers: [
-    provideHttpClient()
+    provideHttpClient(
+      withInterceptors([globalErrorInterceptor])
+    )
   ],
   bootstrap: [App]
 })
