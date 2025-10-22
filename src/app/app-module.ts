@@ -1,7 +1,7 @@
 import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 // Angular Material Imports
@@ -29,8 +29,8 @@ import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Layouts
-import { MainLayout } from '../layouts/main-layout/main-layout';
-import { AuthLayout } from '../layouts/auth-layout/auth-layout';
+import { MainLayout } from './layouts/main-layout/main-layout';
+import { AuthLayout } from './layouts/auth-layout/auth-layout';
 
 // Pages
 import { Aulas } from './pages/aulas/aulas';
@@ -51,6 +51,7 @@ import { Scheduling } from './components/shared/scheduling/scheduling';
 import { NotificationCard } from './components/shared/notification-card/notification-card';
 import { RommInformationComponent } from './components/shared/romm-information-component/romm-information-component';
 import { metaReducers } from './store/meta-reducer';
+import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
 
 
 @NgModule({
@@ -116,7 +117,9 @@ import { metaReducers } from './store/meta-reducer';
     }),
   ],
   providers: [
-    provideHttpClient()
+    provideHttpClient(
+      withInterceptors([globalErrorInterceptor])
+    )
   ],
   bootstrap: [App]
 })

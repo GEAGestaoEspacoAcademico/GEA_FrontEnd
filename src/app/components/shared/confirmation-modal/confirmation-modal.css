@@ -1,7 +1,6 @@
 .gea-btn-primary {
   background-color: var(--color-primary-700);
-  height: 36px;
-  padding: 4px 0;
+  padding: 2px;
   border-radius: 10px;
   border: solid 2px var(--color-default-black);
   color: var(--color-default-white);
@@ -9,8 +8,7 @@
 
 .gea-btn-secondary {
   background-color: #d9d9d9;
-  height: 36px;
-  padding: 4px 0;
+  padding: 2px;
   border-radius: 10px;
   border: solid 2px var(--color-default-black);
   color: var(--color-default-black);
@@ -25,7 +23,7 @@
   color: var(--color-default-white);
 }
 
-.header-body {
+.body-modal {
   background-color: #f0f0f0;
   padding: 8px 8px;
 }
@@ -54,8 +52,18 @@
 
 .time-caption {
   display: block;
+  font-size: 14px;
   margin: 0 auto 8px auto;
   font-weight: var(--font-weight-regular);
+}
+
+.time-caption-small {
+  font-size: 12px;
+  font-weight: var(--font-weight-regular);
+}
+
+.feedback-message {
+  font-weight: var(--font-weight-bold);
 }
 
 .hr-lg {
@@ -78,7 +86,7 @@
   border-color: var(--color-default-black);
 }
 
-.detail-button {
+.lg-button {
   width: 120px;
   display: block;
   margin: 0 auto 8px auto;
