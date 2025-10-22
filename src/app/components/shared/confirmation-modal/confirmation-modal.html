@@ -1,20 +1,24 @@
 <ng-template #ConfirmationModal let-modal>
-<div class="modal-geral">
+  <div class="modal-geral">
     <div class="header-modal">
       @if (mode === 'aviso') {
         <mat-icon svgIcon="alert" class="icon-warn"></mat-icon>
         <div class="section-title w-100 text-center">{{ title }}</div>
       }
+      @if (mode === 'feedback') {
+        <mat-icon svgIcon="alert" class="icon-warn"></mat-icon>
+        <div class="section-title w-100 text-center">{{ title }}</div>
+      }
       @if (mode === 'detalhes') {
-        <mat-icon svgIcon="arrow-back" class="icon-arrow" (click)="onModalCancel()"></mat-icon>
+        <mat-icon svgIcon="arrow-back" class="icon-arrow" (click)="onModalClose()"></mat-icon>
         <div class="section-title w-100 text-center">{{ title }}</div>
       }
     </div>
-    <div class="d-flex flex-column header-body">
+    <div class="d-flex flex-column body-modal">
       @if (mode === 'aviso') {
-        <div class="time-caption w-100 m-3">{{ message }}</div>
+        <div class="time-caption text-center m-3">{{ message }}</div>
         <div class="d-flex flex-fill gap-3">
-          <button class="gea-btn-secondary flex-fill" (click)="onModalCancel()">
+          <button class="gea-btn-secondary flex-fill" (click)="onModalClose()">
             {{ cancelText }}
           </button>
           <button class="gea-btn-primary flex-fill" (click)="onModalConfirm()">
@@ -22,19 +26,31 @@
           </button>
         </div>
       }
+      @if (mode === 'feedback') {
+        <div class="time-caption feedback-message text-center m-3">{{ message }}</div>
+        <div class="d-flex">
+          <button
+            class="gea-btn-secondary lg-button"
+            routerLink="{{ routerLink }}"
+            (click)="onModalClose()"
+          >
+            {{ cancelText }}
+          </button>
+        </div>
+      }
       @if (mode === 'detalhes' && detailsData) {
         <div class="d-flex flex-column text-center">
           @for (detalhe of [detailsData]; track $index) {
             <div class="align-items-center">
-              <div class="time-caption">
+              <div class="time-caption time-caption-small">
                 {{ detalhe.nome }}
                 <hr class="hr-lg" />
               </div>
-              <div class="time-caption">
+              <div class="time-caption time-caption-small">
                 {{ detalhe.data }}
                 <hr class="hr-lg" />
               </div>
-              <div class="time-caption">
+              <div class="time-caption time-caption-small">
                 {{ detalhe.horario }}
                 <hr class="hr-lg" />
               </div>
@@ -43,9 +59,9 @@
                 <hr class="hr-sm" />
               </div>
               <div>
-                <div class="time-caption observation-text">Observações</div>
+                <div class="time-caption observation-text time-caption-small">Observações</div>
                 @for (obs of detalhe.observacoes; track $index) {
-                  <div class="time-caption">
+                  <div class="time-caption time-caption-small">
                     <hr class="hr-lg" />
                     {{ obs }}
                   </div>
@@ -54,7 +70,7 @@
             </div>
           }
         </div>
-        <button class="gea-btn-primary detail-button mt-2" (click)="onModalConfirm()">
+        <button class="gea-btn-primary lg-button mt-2" (click)="onModalConfirm()">
           {{ confirmText }}
         </button>
       }

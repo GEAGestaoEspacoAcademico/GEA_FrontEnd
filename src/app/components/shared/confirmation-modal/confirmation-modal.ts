@@ -12,12 +12,13 @@ import type { RoomData } from '../../../models/room.model';
 export class ConfirmationModal {
   private modalService = inject(NgbModal);
 
-  @Input({ required: true }) mode: 'aviso' | 'detalhes' = 'aviso';
+  @Input({ required: true }) mode: 'aviso' | 'detalhes' | 'feedback' = 'aviso';
   @Input({ required: true }) title!: string;
   @Input() message!: string;
   @Input() detailsData!: RoomData;
   @Input() confirmText: string = 'Confirmar';
   @Input() cancelText: string = 'Cancelar';
+  @Input() routerLink: string = ' ';
 
   // eslint-disable-next-line @angular-eslint/no-output-on-prefix
   @Output() onConfirm = new EventEmitter<RoomData>();
@@ -36,7 +37,7 @@ export class ConfirmationModal {
     this.modalService.dismissAll();
   }
 
-  onModalCancel(): void {
+  onModalClose(): void {
     this.onCancel.emit();
     this.modalService.dismissAll();
   }
