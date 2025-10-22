@@ -7,8 +7,8 @@ import { Configuracoes } from './pages/configuracoes/configuracoes';
 import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { EditarAula } from './pages/editar-aula/visualizar-aula';
 import { Login } from './pages/login/login';
-import { MainLayout } from '../layouts/main-layout/main-layout';
-import { AuthLayout } from '../layouts/auth-layout/auth-layout';
+import { MainLayout } from './layouts/main-layout/main-layout';
+import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { professorGuard } from './guards/professor.guard';
 
 const routes: Routes = [

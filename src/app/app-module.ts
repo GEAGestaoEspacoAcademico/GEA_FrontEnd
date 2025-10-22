@@ -29,8 +29,8 @@ import { environment } from '../environments/environment';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // Layouts
-import { MainLayout } from '../layouts/main-layout/main-layout';
-import { AuthLayout } from '../layouts/auth-layout/auth-layout';
+import { MainLayout } from './layouts/main-layout/main-layout';
+import { AuthLayout } from './layouts/auth-layout/auth-layout';
 
 // Pages
 import { Aulas } from './pages/aulas/aulas';
@@ -51,7 +51,7 @@ import { Scheduling } from './components/shared/scheduling/scheduling';
 import { NotificationCard } from './components/shared/notification-card/notification-card';
 import { RommInformationComponent } from './components/shared/romm-information-component/romm-information-component';
 import { metaReducers } from './store/meta-reducer';
-import { globalErrorInterceptor } from './Interceptor/Global/global-error-interceptor';
+import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
 
 
 @NgModule({
