@@ -46,9 +46,9 @@
 
     ngOnInit(): void {
       this.store.select(selectCurrentUser).pipe(
-        takeUntil(this.destroy$) // Garante que a inscrição será finalizada
+        takeUntil(this.destroy$)
       ).subscribe(user => {
-        this.currentUser = user || null; // Armazena o usuário na propriedade
+        this.currentUser = user || null; 
       });
       this.aula$ = this.route.paramMap.pipe(
         map(params => Number(params.get('id'))),
@@ -68,28 +68,34 @@
       );
     }
 
-  private loadDataAndBuildForm(): void {
+private loadDataAndBuildForm(): void {
     if (!this.currentUser || !this.agendamentoAtual) { return; }
+
     forkJoin({
       disciplinas: this.disciplinaService.getDisciplinaProfessor(this.currentUser.id),
       cursos: this.cursoService.getCursos(),
       salas: this.salaService.getSalas()
     }).pipe(
       take(1)
-    ).subscribe(({ disciplinas, cursos, salas }) => {
-      this.cursoIdAtual = cursos.find(c => c.nomeCurso === this.agendamentoAtual?.curso)?.id;
-      this.salaIdAtual = salas.find(s => s.nome === this.agendamentoAtual?.nomeSala)?.id;
-      
-      const disciplinaOptions = disciplinas.map(d => ({ label: d.nome, value: d.id }));
-      const cursoOptions = cursos.map(c => ({ label: c.nomeCurso, value: c.id }));
-      const salaOptions = salas.filter(s => s.disponibilidade === true || s.id === this.salaIdAtual ).map(s => ({ label: s.nome, value: s.id }));
+    ).subscribe({
+      next: ({ disciplinas, cursos, salas }) => {
+        this.cursoIdAtual = cursos.find(c => c.nomeCurso === this.agendamentoAtual?.curso)?.id;
+        this.salaIdAtual = salas.find(s => s.nome === this.agendamentoAtual?.nomeSala)?.id;
+        
+        const disciplinaOptions = disciplinas.map(d => ({ label: d.nome, value: d.id }));
+        const cursoOptions = cursos.map(c => ({ label: c.nomeCurso, value: c.id }));
+        const salaOptions = salas.filter(s => s.disponibilidade === true || s.id === this.salaIdAtual ).map(s => ({ label: s.nome, value: s.id }));
 
-      this.formFields = this.createFormFields(
-        this.agendamentoAtual!,
-        disciplinaOptions,
-        cursoOptions,
-        salaOptions
-      );
+        this.formFields = this.createFormFields(
+          this.agendamentoAtual!,
+          disciplinaOptions,
+          cursoOptions,
+          salaOptions
+        );
+      },
+      error: (err) => {
+        console.error('Falha ao carregar dados do formulário:', err);
+      }
     });
   }
 
