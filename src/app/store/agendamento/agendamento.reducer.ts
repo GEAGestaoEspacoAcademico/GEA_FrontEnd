@@ -54,8 +54,7 @@ export const agendamentoReducer = createReducer(
     error: null,
   })),
 
-  // --- LÓGICA DO UPSERT ---
-  // Quando uma aula individual é carregada com sucesso
+
   on(AgendamentoActions.loadAgendamentoByIdSuccess, (state, { agendamento }): AgendamentoState => {
     const aulaJaExiste = state.agendamentos.some(a => a.id === agendamento.id);
 
@@ -74,30 +73,24 @@ export const agendamentoReducer = createReducer(
     };
   }),
 
-  // Se a busca falhar
   on(AgendamentoActions.loadAgendamentoByIdFailure, (state, { error }): AgendamentoState => ({
     ...state,
     loading: false,
     error: error,
   })),
 
-  // Quando a edição começa, ativamos o estado de carregamento
   on(AgendamentoActions.editAgendamento, (state): AgendamentoState => ({
     ...state,
     loading: true,
     error: null,
   })),
 
-  // Quando a edição é bem-sucedida, atualizamos a lista de aulas
   on(AgendamentoActions.editAgendamentoSuccess, (state, { agendamento }): AgendamentoState => ({
     ...state,
-    // Usa o .map() para criar um novo array. Se o ID da aula no array for o mesmo
-    // da aula que foi editada, ele a substitui. Senão, mantém a aula original.
     agendamentos: state.agendamentos.map(a => a.id === agendamento.id ? agendamento : a),
     loading: false,
   })),
 
-  // Se a edição falhar, armazenamos o erro
   on(AgendamentoActions.editAgendamentoFailure, (state, { error }): AgendamentoState => ({
     ...state,
     loading: false,

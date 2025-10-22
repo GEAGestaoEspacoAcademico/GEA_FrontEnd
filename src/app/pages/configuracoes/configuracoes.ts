@@ -5,7 +5,7 @@ import { AuthActions } from '../../store/auth/auth.actions';
 import { Store } from '@ngrx/store';
 import type { User } from '../../models/user.model';
 import type { Observable } from 'rxjs';
-import { selectCurrentUser } from '../../store/auth/auth.selectors';
+import { selectAuthIsLoading, selectCurrentUser } from '../../store/auth/auth.selectors';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 
 @Component({
@@ -14,12 +14,9 @@ import type { ConfirmationModal } from '../../components/shared/confirmation-mod
   templateUrl: './configuracoes.html',
   styleUrl: './configuracoes.css',
 })
-export class Configuracoes implements OnInit {
-  ngOnInit(): void {
-    this.user$ = this.store.select(selectCurrentUser);
-  }
+export class Configuracoes{
   private store = inject(Store);
-  user$!: Observable<User | null>;
+  user$: Observable<User | null> =this.store.select(selectCurrentUser);
 
   @ViewChild('ConfirmationModal')
   confirmModal!: ConfirmationModal;

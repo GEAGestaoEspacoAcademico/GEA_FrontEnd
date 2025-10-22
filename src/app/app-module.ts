@@ -11,6 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importe aqui
 
 // NGRX Imports
 import { StoreModule } from '@ngrx/store';
@@ -91,6 +92,7 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
     MatInputModule,
     MatChipsModule,
     MatAutocompleteModule,
+    MatProgressSpinnerModule,
     
     // NGRX Setup Simplificado
     StoreModule.forRoot(

@@ -16,6 +16,7 @@
     border-top-left-radius: 35px !important;
     border-top-right-radius: 35px !important;
     box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+    min-height: 350px;
 }
 
 .btn-danger {
