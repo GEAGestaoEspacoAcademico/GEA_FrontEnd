@@ -13,23 +13,23 @@
     <div class="d-flex flex-wrap gap-2 flex-row">
       <app-romm-information-component
         [labData]="roomData[0]"
-        (ConfirmSchedule)="openModal($event)"
+        (ConfirmSchedule)="openInfoModal($event)"
       ></app-romm-information-component>
       <app-romm-information-component
         [labData]="roomData[1]"
-        (ConfirmSchedule)="openModal($event)"
+        (ConfirmSchedule)="openInfoModal($event)"
       ></app-romm-information-component>
       <app-romm-information-component
         [labData]="roomData[2]"
-        (ConfirmSchedule)="openModal($event)"
+        (ConfirmSchedule)="openInfoModal($event)"
       ></app-romm-information-component>
       <app-romm-information-component
         [labData]="roomData[3]"
-        (ConfirmSchedule)="openModal($event)"
+        (ConfirmSchedule)="openInfoModal($event)"
       ></app-romm-information-component>
       <app-romm-information-component
         [labData]="roomData[4]"
-        (ConfirmSchedule)="openModal($event)"
+        (ConfirmSchedule)="openInfoModal($event)"
       ></app-romm-information-component>
     </div>
   </div>
@@ -44,6 +44,16 @@
     mode="detalhes"
     [detailsData]="roomData[currentIndex]"
     title="Detalhes"
+    (onConfirm)="openSucessModal()"
   >
   </app-confirmation-modal>
+
+  <app-confirmation-modal
+    #sucessModal
+    mode="feedback"
+    title="Aviso!"
+    message="Aula agendada com sucesso!"
+    cancelText="Fechar"
+    routerLink="/aulas"
+  ></app-confirmation-modal>
 </div>

@@ -29,7 +29,7 @@ export class Configuracoes implements OnInit {
   }
 
   closeModal() {
-    this.confirmModal.onModalCancel();
+    this.confirmModal.onModalClose();
   }
 
   logout() {
