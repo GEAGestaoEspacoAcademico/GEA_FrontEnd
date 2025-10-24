@@ -3,11 +3,11 @@
 @import './inputs.css';
 
 /*Configuration*/
-*{
+* {
   box-sizing: border-box;
 }
-body { 
-  margin: 0; 
+body {
+  margin: 0;
   background-color: var(--color-surface-base);
 }
 
@@ -15,82 +15,96 @@ main {
   flex: 1;
   overflow-y: auto;
   padding-top: 20px;
-  padding-bottom: 61px; /* mesma altura do footer */
+  padding-bottom: 61px;
   box-sizing: border-box;
 }
 
 /*Design System*/
 
-.highlight-title{
+.highlight-title {
   font-family: var(--font-family-primary);
   font-size: 26px;
   font-weight: var(--font-weight-bold);
 }
 
-.main-title{
+.main-title {
   font-family: var(--font-family-primary);
   font-size: 22px;
   font-weight: var(--font-weight-bold);
 }
 
-.subtitle{
+.subtitle {
   font-family: var(--font-family-primary);
   font-size: 16px;
   font-weight: var(--font-weight-regular);
 }
 
-.section-title{
+.section-title {
   font-family: var(--font-family-primary);
   font-size: 16px;
   font-weight: var(--font-weight-bold);
 }
 
-.captions{
+.captions {
   font-family: var(--font-family-primary);
   font-size: 14px;
   font-weight: var(--font-weight-regular);
 }
 
-.time-caption{
+.time-caption {
   font-family: var(--font-family-primary);
   font-size: 12px;
   font-weight: var(--font-weight-bold);
 }
 
-.tabbar-text{
+.tabbar-text {
   font-family: var(--font-family-primary);
   font-size: 10px;
+}
+
+.mat-mdc-snack-bar-container.toast-success .mat-mdc-snackbar-surface {
+  background-color: var(--color-feedback-success) !important;
+  color: var(--color-default-white) !important;
+  font-family: var(--font-family-primary);
+  --mdc-snackbar-action-color: var(--color-default-white);
+}
+
+.mat-mdc-snack-bar-container.toast-error .mat-mdc-snackbar-surface {
+  background-color: var(--color-feedback-error) !important;
+  color: var(--color-default-white) !important;
+  font-family: var(--font-family-primary);
+  --mdc-snackbar-action-color: var(--color-default-white);
 }
 
 /*Desktop*/
 
 @media (min-width: 768px) {
-  .highlight-title{
+  .highlight-title {
     font-size: 36px;
     font-weight: var(--font-weight-bold);
   }
 
-  .main-title{
+  .main-title {
     font-size: 28px;
     font-weight: var(--font-weight-bold);
   }
 
-  .subtitle{
+  .subtitle {
     font-size: 20px;
     font-weight: var(--font-weight-regular);
   }
 
-  .section-title{
+  .section-title {
     font-size: 16px;
     font-weight: var(--font-weight-bold);
   }
 
-  .captions{
+  .captions {
     font-size: 14px;
     font-weight: var(--font-weight-regular);
   }
 
-  .time-caption{
+  .time-caption {
     font-size: 12px;
     font-weight: var(--font-weight-bold);
   }
