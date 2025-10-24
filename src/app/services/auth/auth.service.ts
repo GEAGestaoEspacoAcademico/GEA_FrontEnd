@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment';
 export class AuthService {
   private http = inject(HttpClient);
   
-  private baseUrl = environment.apiUrl + "auth";
+  private baseUrl = environment.apiUrl + "/auth";
 
   public loginUser(request: UserCredencials): Observable<User> {
     return this.http.post<User>(`${this.baseUrl}/login`, request)
