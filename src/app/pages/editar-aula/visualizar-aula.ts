@@ -13,7 +13,9 @@
   import type { User } from '../../models/user.model';
   import { selectCurrentUser } from '../../store/auth/auth.selectors';
   import { SalaService } from '../../services/salas/sala.service';
-  import type {Option} from '../../components/shared/scheduling/types'
+  import type {Option} from '../../components/shared/scheduling/types';
+  import { FormatUtils } from '../../utils/format.utils';
+
 
   @Component({
     selector: 'app-editar-aula',
@@ -118,14 +120,14 @@ private loadDataAndBuildForm(): void {
         name: 'data',
         label: 'Data',
         type: 'date',
-        defaultValue: this.formatDateForInput(agendamento.dataInicio),
+        defaultValue: FormatUtils.formatDateForInput(agendamento.dataInicio),
         validators: { required: true, errorMessages: { required: 'A data é obrigatória.' } }
       },
       {
         name: 'horario',
         label: 'Horário',
         type: 'select',
-        defaultValue: (`${this.formatarHoraParaDropdown(agendamento.horaInicio)}-${this.formatarHoraParaDropdown(agendamento.horaFim)}`),
+        defaultValue: (`${FormatUtils.formatHour(agendamento.horaInicio)}-${FormatUtils.formatHour(agendamento.horaFim)}`),
         options: [
           {label: '7:40-9:20', value: '7:40-9:20'},
           {label: '9:30-11:10', value: '9:30-11:10'},
@@ -166,29 +168,6 @@ private loadDataAndBuildForm(): void {
     ];
   }
 
-  formatDateForInput(date: string): string {
-    const d = new Date(date);
-    const year = d.getUTCFullYear();
-    const month = (d.getUTCMonth() + 1).toString().padStart(2, '0');
-    const day = d.getUTCDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
-  }
-  private formatarHoraParaDropdown(horaComSegundos: string): string {
-    const partes = horaComSegundos.split(':');
-    const hora = parseInt(partes[0], 10).toString(); 
-    const minutos = partes[1];
-    return `${hora}:${minutos}`;
-}
-
-  formatarHora(date: string): string {
-    const data = new Date(date)
-    const horas = data.getHours().toString();
-    const minutos = data.getMinutes().toString();
-    const horasFormatadas = horas.padStart(2, '0');
-    const minutosFormatados = minutos.padStart(2, '0');
-    return `${horasFormatadas}:${minutosFormatados}`;
-  }
-
   onFormSubmit(formData: Record<string, any>): void {
     if (!this.agendamentoAtual || !this.currentUser) {
       console.error("Dados do agendamento original não encontrados. Não é possível atualizar.");
@@ -202,8 +181,8 @@ private loadDataAndBuildForm(): void {
       dataInicio: formData['data'],
       dataFim: formData['data'],
       diaDaSemana: novoDiaDaSemana,
-      horaInicio: this.formateHours(formData['horario'].split('-')[0]),
-      horaFim: this.formateHours(formData['horario'].split('-')[1]),
+      horaInicio: FormatUtils.normalizeHour(formData['horario'].split('-')[0]),
+      horaFim: FormatUtils.normalizeHour(formData['horario'].split('-')[1]),
       disciplinaId: Number(formData['disciplinaId']),
       salaId: Number(formData["salaId"]),
     };
@@ -227,17 +206,5 @@ private loadDataAndBuildForm(): void {
 
   confirmCancel(): void {
     this.pendingFormData = null;
-  }
-
-  formateHours(horas: string){
-    const [h, m] = horas.split(":")
-    const novaData = new Date()
-    novaData.setHours(Number(h))
-    novaData.setMinutes(Number(m))
-
-    const hora = String(novaData.getHours()).padStart(2, '0');
-    const minutos = String(novaData.getMinutes()).padStart(2, '0');
-
-    return `${hora}:${minutos}`
   }
 }
