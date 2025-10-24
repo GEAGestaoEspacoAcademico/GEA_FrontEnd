@@ -10,7 +10,7 @@ export class NotificationService {
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
 
-  private createConfig(panelClass: string, duration: number = 30000000): MatSnackBarConfig {
+  private createConfig(panelClass: string, duration: number = 4000000): MatSnackBarConfig {
     return {
       duration,
       horizontalPosition: this.horizontalPosition,
