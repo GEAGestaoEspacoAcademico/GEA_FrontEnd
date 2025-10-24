@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
 import type { Agendamento, EditAgendamento } from '../../models/agendamento.model';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgendamentoService {
   private http = inject(HttpClient)
-  private baseUrl = "http://localhost:8080/agendamentos/aulas";
+  private baseUrl = environment.apiUrl + "/agendamentos/aulas";
 
   public getAgendamentoById(id:number): Observable<Agendamento> {
     return this.http.get<Agendamento>(`${this.baseUrl}/${id}`);
