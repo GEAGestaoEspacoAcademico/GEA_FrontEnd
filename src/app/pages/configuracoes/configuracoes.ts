@@ -7,6 +7,7 @@ import type { User } from '../../models/user.model';
 import type { Observable } from 'rxjs';
 import { selectAuthIsLoading, selectCurrentUser } from '../../store/auth/auth.selectors';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
+import { NotificationService } from '../../services/notificacoes/notification-service';
 
 @Component({
   selector: 'app-configuracoes',
@@ -14,9 +15,10 @@ import type { ConfirmationModal } from '../../components/shared/confirmation-mod
   templateUrl: './configuracoes.html',
   styleUrl: './configuracoes.css',
 })
-export class Configuracoes{
+export class Configuracoes {
   private store = inject(Store);
-  user$: Observable<User | null> =this.store.select(selectCurrentUser);
+  user$: Observable<User | null> = this.store.select(selectCurrentUser);
+  private notificationService = inject(NotificationService);
 
   @ViewChild('ConfirmationModal')
   confirmModal!: ConfirmationModal;
@@ -31,6 +33,7 @@ export class Configuracoes{
 
   logout() {
     this.store.dispatch(AuthActions.logout());
+    this.notificationService.showSuccess('Usuario deslogado com sucesso.');
   }
 
   mockTeacher: Teacher = {

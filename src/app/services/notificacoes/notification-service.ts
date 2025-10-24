@@ -10,7 +10,7 @@ export class NotificationService {
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
 
-  private createConfig(panelClass: string, duration: number = 4000000): MatSnackBarConfig {
+  private createConfig(panelClass: string, duration: number): MatSnackBarConfig {
     return {
       duration,
       horizontalPosition: this.horizontalPosition,
@@ -19,12 +19,12 @@ export class NotificationService {
   }
 
   showSuccess(message: string): void {
-    const config = this.createConfig('toast-success');
+    const config = this.createConfig('toast-success', 3000);
     this.snackBar.open(message, 'Fechar', config);
   }
 
   showError(message: string): void {
-    const config = this.createConfig('toast-error');
+    const config = this.createConfig('toast-error', 3000);
     this.snackBar.open(message, 'Fechar', config);
   }
 }
