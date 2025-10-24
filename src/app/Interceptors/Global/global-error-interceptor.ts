@@ -4,24 +4,26 @@ import type {
   HttpEvent,
   HttpErrorResponse,
   HttpInterceptorFn,
-  HttpHandlerFn
+  HttpHandlerFn,
 } from '@angular/common/http';
-import type { Observable} from 'rxjs';
+import type { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { NotificationService } from '../../services/notificacoes/notification-service';
 
 export const globalErrorInterceptor: HttpInterceptorFn = (
-  request: HttpRequest<unknown>, 
-  next: HttpHandlerFn
+  request: HttpRequest<unknown>,
+  next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
   const router = inject(Router);
+  const notificationService = inject(NotificationService);
 
   return next(request).pipe(
     catchError((error: HttpErrorResponse) => {
-      
       console.error('ERRO INTERCEPTADO PELA API:', error);
       let userMessage = 'Algo deu errado. Tente novamente mais tarde.';
+      const showErrorToast = true;
 
       switch (error.status) {
         case 0:
@@ -34,10 +36,11 @@ export const globalErrorInterceptor: HttpInterceptorFn = (
         case 404:
           userMessage = 'Recurso não encontrado (404).';
           break;
-        case 422:
-          { const apiErrorMessage = error.error?.message || 'Os dados enviados são inválidos.';
+        case 422: {
+          const apiErrorMessage = error.error?.message || 'Os dados enviados são inválidos.';
           userMessage = `Erro de validação: ${apiErrorMessage}`;
-          break; }
+          break;
+        }
         case 500:
         case 503:
           userMessage = 'Erro no servidor. Tente novamente mais tarde.';
@@ -46,8 +49,11 @@ export const globalErrorInterceptor: HttpInterceptorFn = (
           userMessage = `Erro inesperado (Código: ${error.status}). Tente novamente.`;
       }
 
-      console.warn(`[FEEDBACK PARA O USUÁRIO]: ${userMessage}`);
+      if (showErrorToast) {
+        notificationService.showError(userMessage);
+      }
+
       return throwError(() => new Error(userMessage));
-    })
+    }),
   );
 };

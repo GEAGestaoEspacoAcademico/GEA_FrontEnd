@@ -4,7 +4,10 @@ import type { Agendamento } from '../../models/agendamento.model';
 import type { Day } from '../../components/shared/day-selector/day-selector';
 import { Router } from '@angular/router';
 import { map, type Observable } from 'rxjs';
-import { selectTodasOsAgendamentos, selectAgendamentoLoading } from '../../store/agendamento/agendamento.selectors';
+import {
+  selectTodasOsAgendamentos,
+  selectAgendamentoLoading,
+} from '../../store/agendamento/agendamento.selectors';
 import { Store } from '@ngrx/store';
 import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
@@ -14,14 +17,15 @@ import { FormatUtils } from '../../utils/format.utils';
   selector: 'app-aulas',
   standalone: false,
   templateUrl: './aulas.html',
-  styleUrl: './aulas.css'
+  styleUrl: './aulas.css',
 })
 export class Aulas implements OnInit {
   private store = inject(Store);
   private router = inject(Router);
+  private notificationService = inject(NotificationService);
 
   private currentDate = new Date();
-  
+
   days: Day[] = [];
   activeDayId!: string;
   monthToDisplay!: string;
@@ -35,7 +39,7 @@ export class Aulas implements OnInit {
   @ViewChild('confirmCancelModal') confirmCancelModal!: ConfirmationModal;
   agendamentoToCancelId: number | null = null;
 
-    abremodal() : void {
+  abremodal(): void {
     this.confirmModal.open();
   }
 
@@ -70,13 +74,15 @@ export class Aulas implements OnInit {
   }
 
   confirmCancel(): void {
-    if (this.agendamentoToCancelId === null) { return; }
+    if (this.agendamentoToCancelId === null) {
+      return;
+    }
     this.store.dispatch(AgendamentoActions.deleteAgendamento({ id: this.agendamentoToCancelId }));
     this.agendamentoToCancelId = null;
-    this.confirmCancelModal.open();
+    this.notificationService.showSuccess('Aula cancelada com sucesso');
   }
 
-  closeModal(){
+  closeModal() {
     this.agendamentoToCancelId = null;
   }
 
@@ -89,22 +95,22 @@ export class Aulas implements OnInit {
   }
   private updateAgendamentosForActivyDay(): void {
     this.agendamentosDoDiaSelecionado$ = this.agendamentos$.pipe(
-      map(agendamentos => {
-        const agendamentosFiltrados = agendamentos.filter(agendamento => {
+      map((agendamentos) => {
+        const agendamentosFiltrados = agendamentos.filter((agendamento) => {
           const isDentroDoIntervalo = this.activeDayId === agendamento.dataInicio;
           return isDentroDoIntervalo;
         });
         return agendamentosFiltrados.sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
-      })
+      }),
     );
   }
-  
+
   private generateDaysForMonth(): void {
     const result: Day[] = [];
     const year = this.currentDate.getFullYear();
     const month = this.currentDate.getMonth();
 
-    this.monthToDisplay = this.currentDate.toLocaleDateString('pt-BR', { month: 'short' }); 
+    this.monthToDisplay = this.currentDate.toLocaleDateString('pt-BR', { month: 'short' });
 
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 

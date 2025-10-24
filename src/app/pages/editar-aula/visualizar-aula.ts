@@ -30,6 +30,7 @@
     private disciplinaService = inject(DisciplinaService)
     private cursoService = inject(CursoService)
     private salaService = inject(SalaService)
+    private notificationService = inject(NotificationService)
     
     @ViewChild('confirmModal') confirmModal!: ConfirmationModal;
     
@@ -188,6 +189,7 @@ private loadDataAndBuildForm(): void {
     };
     this.store.dispatch(AgendamentoActions.editAgendamento({id: this.agendamentoAtual.id, agendamento: agendamentoAtualizado }));
     this.router.navigate(['/aulas']);
+    this.notificationService.showSuccess("Agendamento alterado com sucesso")
   }
 
   onScheduleSubmitAttempt(formData: Record<string, any>): void {
