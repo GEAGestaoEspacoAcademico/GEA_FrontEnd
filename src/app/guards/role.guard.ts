@@ -1,15 +1,17 @@
 // src/app/guards/role.guard.ts
 import { inject } from '@angular/core';
-import { CanActivateFn, Router, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { Router } from '@angular/router';
+import type { CanActivateFn, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectUserCargo } from '../store/auth/auth.selectors';
 import { map, take } from 'rxjs/operators';
+import type { Observable } from 'rxjs';
 import { of } from 'rxjs';
 
 export const RoleGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-): import('rxjs').Observable<boolean | UrlTree> => {
+  _state: RouterStateSnapshot
+): Observable<boolean | UrlTree> => {
   const router = inject(Router);
   const store = inject(Store);
 
