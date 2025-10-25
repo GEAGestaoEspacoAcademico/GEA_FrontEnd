@@ -1,52 +1,40 @@
-import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree,
-  Router
-} from '@angular/router';
+// src/app/guards/role.guard.ts
+import { inject } from '@angular/core';
+import { CanActivateFn, Router, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Observable, of } from 'rxjs';
 import { selectUserCargo } from '../store/auth/auth.selectors';
 import { map, take } from 'rxjs/operators';
+import { of } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class RoleGuard implements CanActivate {
-  constructor(private store: Store, private router: Router) {}
+export const RoleGuard: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+  state: RouterStateSnapshot
+): import('rxjs').Observable<boolean | UrlTree> => {
+  const router = inject(Router);
+  const store = inject(Store);
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean | UrlTree> {
-    const allowedRoles = route.data?.['roles'] as string[] | undefined;
+  const allowedRoles = route.data?.['roles'] as string[] | undefined;
 
-
-    if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
-      return of(true);
-    }
-
-    const normalizedAllowed = allowedRoles.map(r => String(r).toUpperCase());
-
-    return this.store.select(selectUserCargo).pipe(
-      take(1),
-      map((cargoUsuario) => {
-        if (!cargoUsuario) {
-
-          return this.router.createUrlTree(['/login']);
-        }
-
-        const userCargoNormalized = String(cargoUsuario).toUpperCase();
-
-        if (normalizedAllowed.includes(userCargoNormalized)) {
-          return true;
-        }
-
-
-        return this.router.createUrlTree(['/login']);
-      })
-    );
+  if (!Array.isArray(allowedRoles) || allowedRoles.length === 0) {
+    return of(true);
   }
-}
+
+  const normalizedAllowed = allowedRoles.map((r) => String(r).toUpperCase());
+
+  return store.select(selectUserCargo).pipe(
+    take(1),
+    map((cargoUsuario) => {
+      if (!cargoUsuario) {
+        return router.createUrlTree(['/login']);
+      }
+
+      const userCargoNormalized = String(cargoUsuario).toUpperCase();
+
+      if (normalizedAllowed.includes(userCargoNormalized)) {
+        return true;
+      }
+
+      return router.createUrlTree(['/login']);
+    })
+  );
+};
