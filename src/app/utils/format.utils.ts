@@ -15,9 +15,11 @@ export class FormatUtils {
   /**
    * Retorna hora formatada (HH:mm) a partir de string "HH:mm:ss" ou "H:mm".
    */
-  static formatHour(hora: string): string {
-    const [h, m] = hora.split(':');
-    return `${h.padStart(2, '0')}:${m.padStart(2, '0')}`;
+  static formatHour(h: string): string {
+    const partes = h.split(':');
+    const hora = parseInt(partes[0], 10).toString(); 
+    const minutos = partes[1];
+    return `${hora}:${minutos}`;
   }
 
   /**

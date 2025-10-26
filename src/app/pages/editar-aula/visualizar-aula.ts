@@ -63,6 +63,7 @@
                 this.store.dispatch(AgendamentoActions.loadAgendamentoById({ id }));
               }else if(!this.agendamentoAtual){
                 this.agendamentoAtual = aula;
+                console.log(this.agendamentoAtual)
                 this.loadDataAndBuildForm();
               }
             })
@@ -189,6 +190,7 @@ private loadDataAndBuildForm(): void {
     };
     this.store.dispatch(AgendamentoActions.editAgendamento({id: this.agendamentoAtual.id, agendamento: agendamentoAtualizado }));
     this.router.navigate(['/aulas']);
+    console.log("Agendamento salvo: ", agendamentoAtualizado)
     this.notificationService.showSuccess("Agendamento alterado com sucesso")
   }
 
