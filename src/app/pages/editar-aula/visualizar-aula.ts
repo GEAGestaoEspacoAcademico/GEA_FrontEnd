@@ -14,7 +14,7 @@
   import { selectCurrentUser } from '../../store/auth/auth.selectors';
   import { SalaService } from '../../services/salas/sala.service';
   import type {Option} from '../../components/shared/scheduling/types'
-  import { NotificationService } from '../../services/notificacoes/notification-service';
+  import { NotificationService } from '../../services/notificacoes/notification.service';
   import { FormatUtils } from '../../utils/format.utils';
 
   @Component({
