@@ -7,7 +7,7 @@ import type { User } from '../../models/user.model';
 import type { Observable } from 'rxjs';
 import { selectAuthIsLoading, selectCurrentUser } from '../../store/auth/auth.selectors';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import { NotificationService } from '../../services/notificacoes/notification-service';
+import { NotificationService } from '../../services/notificacoes/notification.service';
 
 @Component({
   selector: 'app-configuracoes',

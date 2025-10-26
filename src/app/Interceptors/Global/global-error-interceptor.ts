@@ -10,7 +10,7 @@ import type { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { NotificationService } from '../../services/notificacoes/notification-service';
+import { NotificationService } from '../../services/notificacoes/notification.service';
 
 export const globalErrorInterceptor: HttpInterceptorFn = (
   request: HttpRequest<unknown>,

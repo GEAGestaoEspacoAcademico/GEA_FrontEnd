@@ -11,7 +11,7 @@ import {
 import { Store } from '@ngrx/store';
 import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import { NotificationService } from '../../services/notificacoes/notification-service';
+import { NotificationService } from '../../services/notificacoes/notification.service';
 
 @Component({
   selector: 'app-aulas',

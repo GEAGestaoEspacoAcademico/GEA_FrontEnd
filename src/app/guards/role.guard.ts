@@ -7,6 +7,7 @@ import { selectUserCargo } from '../store/auth/auth.selectors';
 import { map, take } from 'rxjs/operators';
 import type { Observable } from 'rxjs';
 import { of } from 'rxjs';
+import { NotificationService } from '../services/notificacoes/notification.service';
 
 export const RoleGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
@@ -14,6 +15,7 @@ export const RoleGuard: CanActivateFn = (
 ): Observable<boolean | UrlTree> => {
   const router = inject(Router);
   const store = inject(Store);
+  const notificationService = inject(NotificationService)
 
   const allowedRoles = route.data?.['roles'] as string[] | undefined;
 
@@ -27,6 +29,7 @@ export const RoleGuard: CanActivateFn = (
     take(1),
     map((cargoUsuario) => {
       if (!cargoUsuario) {
+        notificationService.showError('Usuário não permitidos')
         return router.createUrlTree(['/login']);
       }
 
@@ -35,7 +38,7 @@ export const RoleGuard: CanActivateFn = (
       if (normalizedAllowed.includes(userCargoNormalized)) {
         return true;
       }
-
+      notificationService.showError('Usuário não permitidos')
       return router.createUrlTree(['/login']);
     })
   );
