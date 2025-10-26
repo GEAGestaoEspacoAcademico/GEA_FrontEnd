@@ -28,12 +28,12 @@
       >
       </app-class-info-card>
 
-      <div
-        *ngIf="!(agendamentosDoDiaSelecionado$ | async)?.length && (loading$ | async) === false"
-        class="text-secondary mt-3"
-      >
-        Sem aulas para este dia.
-      </div>
+      @if (!(agendamentosDoDiaSelecionado$ | async)?.length && (loading$ | async) === false) {
+        <div class="text-secondary mt-3">
+          Sem aulas para este dia.
+        </div>
+      }
+      
     </div>
   </div>
 }
