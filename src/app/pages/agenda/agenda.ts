@@ -71,7 +71,7 @@ export class Agenda {
       type: 'select',
       name: 'horario',
       label: 'Horário',
-      defaultValue: 'Selecione',
+      defaultValue: '07:40-09:20',
       options: [
         { value: '07:40-09:20', label: '07:40 - 09:20' },
         { value: '09:30-11:10', label: '09:30 - 11:10' },
@@ -83,7 +83,7 @@ export class Agenda {
       type: 'select',
       name: 'local',
       label: 'Local',
-      defaultValue: 'Selecione',
+      defaultValue: 'lab',
       options: [
         { value: 'lab', label: 'Laboratórios' },
         { value: 'sala', label: 'Salas de Aula' },
@@ -106,7 +106,7 @@ export class Agenda {
       type: 'select',
       name: 'disciplina',
       label: 'Disciplina',
-      defaultValue: 'Selecione',
+      defaultValue: 'calc1',
       options: [
         { value: 'calc1', label: 'Cálculo I' },
         { value: 'redes', label: 'Redes de Computadores' },
