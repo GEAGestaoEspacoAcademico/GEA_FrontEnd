@@ -10,16 +10,16 @@
 
 @if ((loading$ | async) === false) {
   <div class="container">
-    <ng-container *ngIf="aula$ | async as aula">
-      <app-scheduling 
-          *ngIf="formFields"
+    @if (aula$ | async; as aula) {
+      @if (formFields) {
+        <app-scheduling 
           [fields]="formFields"
           submitButtonText="Salvar Alterações"
           (formSubmit)="onScheduleSubmitAttempt($event)"
           class="d-flex justify-content-center align-items-center"
-          >
-      </app-scheduling>
-    </ng-container>
+        ></app-scheduling>
+      }
+    }
   </div>
 }
 
