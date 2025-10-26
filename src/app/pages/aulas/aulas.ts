@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 import { NotificationService } from '../../services/notificacoes/notification-service';
+import { FormatUtils } from '../../utils/format.utils';
 
 @Component({
   selector: 'app-aulas',
@@ -45,7 +46,7 @@ export class Aulas implements OnInit {
 
   ngOnInit(): void {
     this.store.dispatch(AgendamentoActions.loadAgendamentos());
-    this.activeDayId = this.toId(new Date());
+    this.activeDayId = FormatUtils.toId(new Date());
     this.generateDaysForMonth();
     this.updateAgendamentosForActivyDay();
   }
@@ -114,24 +115,14 @@ export class Aulas implements OnInit {
 
     const daysInMonth = new Date(year, month + 1, 0).getDate();
 
-    const fmtDate = new Intl.DateTimeFormat('pt-BR', { day: '2-digit' });
-    const fmtWeek = new Intl.DateTimeFormat('pt-BR', { weekday: 'short' });
-
     for (let i = 1; i <= daysInMonth; i++) {
       const d = new Date(year, month, i);
       result.push({
-        id: this.toId(d),
-        date: fmtDate.format(d),
-        dayOfWeek: fmtWeek.format(d).toLowerCase().replace('.', ''),
+        id: FormatUtils.toId(d),
+        date: FormatUtils.formatDayLabel(d),
+        dayOfWeek: FormatUtils.formatWeekdayLabel(d),
       });
     }
     this.days = result;
-  }
-
-  private toId(d: Date): string {
-    const y = d.getUTCFullYear();
-    const m = String(d.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(d.getUTCDate()).padStart(2, '0');
-    return `${y}-${m}-${day}`;
   }
 }
