@@ -1,20 +1,91 @@
 .header {
-    background: linear-gradient(to right, rgba(135, 12, 8, 0), #870C08);
-    background-color: var(--color-primary-900) ;
-    padding: 0 var(--spacing-4);
-    height: 74px;
+  background: linear-gradient(to right, rgba(135, 12, 8, 0), #870C08);
+  background-color: var(--color-primary-900);
+  padding: 0 var(--spacing-4);
+  height: 74px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-3, 16px);
 }
 
-.icon-fatec-big{
-    width: 78px;
-    height: 48px;
+.icon-fatec-big {
+  width: 78px;
+  height: 48px;
 }
 
-.icon-notification-medium{
-    width: 26.25px;
-    height: 35px;
+.icon-notification-medium {
+  width: 26.25px;
+  height: 35px;
 }
 
-a{
-    color: var(--color--default-white);
+.header a {
+  color: var(--color-default-white);
+  text-decoration: none;
+}
+
+.header .logo {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav-links {
+  display: none;
+  align-items: center;
+  gap: var(--spacing-4, 16px);
+}
+
+.nav-links .nav-item {
+  color: var(--color-default-white);
+  font-weight: 600;
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: transform 0.2s ease, font-size 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-links .active-link,
+.nav-links .nav-item[aria-current='page'] {
+  color: gray;
+}
+
+.header .notification {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+}
+
+.header a:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.12);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (min-width: 768px) {
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    flex: 1 1 auto;
+  }
+
+  .header .logo {
+    flex: 0 0 auto;
+    margin-right: 0;
+  }
+
+  .header .notification {
+    flex: 0 0 auto;
+    margin-left: 0;
+  }
+
+  .header {
+    justify-content: space-between;
+  }
+
+  .nav-links .nav-item:hover {
+    transform: scale(1.1);
+    opacity: 0.95;
+  }
 }

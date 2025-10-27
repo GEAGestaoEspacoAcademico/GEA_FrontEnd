@@ -1,20 +1,58 @@
-<header class="container-fluid text-white fs-3 d-flex justify-content-between align-items-center header" role="banner">
-  <a class="me-auto p-2" routerLink="/aulas" aria-label="Ir para Aulas">
+<header
+  class="container-fluid text-white fs-3 d-flex justify-content-between align-items-center header"
+  role="banner"
+>
+
+  <a class="logo me-auto p-2" routerLink="/aulas" aria-label="Ir para Aulas">
     <mat-icon svgIcon="icon-fatec" class="icon-fatec-big" aria-hidden="true"></mat-icon>
     <span class="visually-hidden">Fatec — Aulas</span>
   </a>
 
+  <nav class="nav-links" aria-label="Navegação principal">
+    <a
+      routerLink="/aulas"
+      routerLinkActive="active-link"
+      #rlaAulas="routerLinkActive"
+      [attr.aria-current]="rlaAulas.isActive ? 'page' : null"
+      class="nav-item"
+    >
+      Aulas
+    </a>
+
+    <a
+      routerLink="/agenda"
+      routerLinkActive="active-link"
+      #rlaAgenda="routerLinkActive"
+      [attr.aria-current]="rlaAgenda.isActive ? 'page' : null"
+      class="nav-item"
+    >
+      Agendar
+    </a>
+
+    <a
+      routerLink="/configuracoes"
+      routerLinkActive="active-link"
+      #rlaConfig="routerLinkActive"
+      [attr.aria-current]="rlaConfig.isActive ? 'page' : null"
+      class="nav-item"
+    >
+      Configurações
+    </a>
+  </nav>
+
   <a
+    class="notification"
     routerLink="/notificacoes"
     routerLinkActive="active"
     #rla="routerLinkActive"
     aria-label="Ir para Notificações"
-    [attr.aria-current]="rla.isActive ? 'page' : null">
+    [attr.aria-current]="rla.isActive ? 'page' : null"
+  >
     <mat-icon
       [svgIcon]="rla.isActive ? 'notification-fill' : 'notification'"
       class="icon-notification-medium"
-      aria-hidden="true">
-    </mat-icon>
+      aria-hidden="true"
+    ></mat-icon>
     <span class="visually-hidden">Notificações</span>
   </a>
 </header>
