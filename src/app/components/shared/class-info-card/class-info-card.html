@@ -26,23 +26,24 @@
         </p>
       </div>
 
-      <div class="actions d-flex flex-column align-items-end text-end">
-        <button
-          type="button"
-          class="btn btn-link p-0 action-edit"
-          (click)="handleView()"
-          aria-label="Alterar aula {{ classData.id }}">
-          Alterar
-        </button>
-
-        <button
-          type="button"
-          class="btn btn-link p-0 action-cancel"
-          (click)="handleDelete()"
-          aria-label="Cancelar aula {{ classData.id }}">
-          <span class="underline">Cancelar</span>
-        </button>
-      </div>
+      @if (classData.dataInicio > currentDate) {
+        <div class="actions d-flex flex-column align-items-end text-end">
+          <button
+            type="button"
+            class="btn btn-link p-0 action-edit"
+            (click)="handleView()"
+            aria-label="Alterar aula {{ classData.id }}">
+            Alterar
+          </button>
+          <button
+            type="button"
+            class="btn btn-link p-0 action-cancel"
+            (click)="handleDelete()"
+            aria-label="Cancelar aula {{ classData.id }}">
+            <span class="underline">Cancelar</span>
+          </button>
+        </div>
+        }
     </div>
   </div>
 </article>

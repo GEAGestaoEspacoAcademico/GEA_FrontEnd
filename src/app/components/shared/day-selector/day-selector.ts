@@ -1,4 +1,6 @@
+import type { OnInit} from '@angular/core';
 import { Component, ElementRef, EventEmitter, inject, Input, Output } from '@angular/core';
+import { FormatUtils } from '../../../utils/format.utils';
 
 @Component({
   selector: 'app-day-selector',
@@ -6,7 +8,7 @@ import { Component, ElementRef, EventEmitter, inject, Input, Output } from '@ang
   templateUrl: './day-selector.html',
   styleUrl: './day-selector.css'
 })
-export class DaySelector {
+export class DaySelector{
   private el = inject(ElementRef)
   @Input() currentMonthName!: string;
   @Input() days!: Day[];
@@ -16,6 +18,8 @@ export class DaySelector {
 
   showLeftFade = false;
   showRightFade = true;
+  currentDay: string = FormatUtils.toId(new Date());
+  
 
   selectDay(id: string | number): void {
     if(id !== this.activeDayId){

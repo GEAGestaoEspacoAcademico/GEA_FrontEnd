@@ -88,3 +88,7 @@
   width: 8.32px;  /* Mantenha o width desejado */
   height: auto;   /* Deixe o height ser calculado automaticamente */
 }
+
+.disable{
+  background-color: #E6E6E670;
+}

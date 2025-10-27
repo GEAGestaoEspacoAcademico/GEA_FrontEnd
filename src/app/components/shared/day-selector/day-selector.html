@@ -30,7 +30,8 @@
         class="day-item text-center p-2 rounded"
         [ngClass]="{
           'active text-danger fw-bold border border-danger': day.id === activeDayId,
-          'text-secondary': day.id !== activeDayId
+          'text-secondary': day.id !== activeDayId,
+          'disable': day.id < currentDay
         }"
         (click)="selectDay(day.id)"
         [attr.aria-pressed]="day.id === activeDayId"
