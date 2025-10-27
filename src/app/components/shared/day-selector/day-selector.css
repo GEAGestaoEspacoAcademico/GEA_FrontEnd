@@ -38,7 +38,7 @@
 }
 
 .day-item {
-  min-width: 60px;
+  min-width: 6rem;
   transition: all 0.2s ease-in-out;
   background: transparent;
   border: none;
@@ -46,7 +46,7 @@
 
 .day-item:hover {
   background-color: var(--color-default-white);
-  transform: translateY(-2px);
+  transform: translateY(-0.2rem);
   cursor: pointer;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .month-name {
-  margin: 0 16px;
+  margin: 0 1.6rem;
   font-weight: bold;
 }
 
@@ -75,9 +75,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 4px;
+  width: 3.2rem;
+  height: 3.2rem;
+  padding: 0.4rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -85,6 +85,6 @@
 }
 
 .arrow-icon{
-  width: 8.32px;  /* Mantenha o width desejado */
+  width: 8.3rem;  /* Mantenha o width desejado */
   height: auto;   /* Deixe o height ser calculado automaticamente */
 }

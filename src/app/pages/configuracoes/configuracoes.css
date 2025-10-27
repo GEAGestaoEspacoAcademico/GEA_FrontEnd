@@ -1,15 +1,15 @@
 .line {
   background-color: var(--color-neutral-500);
-  height: 2px;
-  width: 15px;
-  border-radius: 1px;
-  margin-top: 3px;
+  height: 0.2rem;
+  width: 1.5rem;
+  border-radius: 0.1rem;
+  margin-top: 0.3rem;
 }
 
 .icon-logout {
-  width: 12px;
-  height: 22px;
-  margin-top: 2px;
+  width: 1.2rem;
+  height: 2.2rem;
+  margin-top: 0.2rem;
 }
 
 a{
@@ -22,7 +22,7 @@ a{
 }
 
 .informations dl dt{
-  font-size: 16px;
+  font-size: 1.6rem;
   font-weight: var(--font-weight-regular);
   font-family: var(--font-family-primary);
 }

@@ -26,7 +26,7 @@
 }
 
 .sub {
-  margin-top: 10px;
+  margin-top: 1rem;
 }
 
 .actions {
@@ -40,7 +40,7 @@
 .action-edit {
   color: var(--color-neutral-100) !important;
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 0.2rem;
   line-height: 1.1;
   padding: 0;
 }
@@ -52,7 +52,7 @@
 }
 .action-cancel .underline {
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 0.2rem;
 }
 
 .btn-link { line-height: 1.1; }

@@ -2,7 +2,7 @@
 .text-neutral-100 { color: var(--color-neutral-100); }
 
 .notification-card {
-  padding: 8px 12px;
+  padding: 0.8rem 1.2rem;
   border-top: 1px solid var(--color-surface-subtle);
   line-height: 1.2;
 }
@@ -15,7 +15,7 @@
 .title-primary {
   color: var(--color-primary-700);
   font-size: 1.125rem;
-  margin-right: 8px;
+  margin-right: 0.8rem;
 }
 
 .date {

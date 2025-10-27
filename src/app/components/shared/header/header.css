@@ -2,22 +2,22 @@
   background: linear-gradient(to right, rgba(135, 12, 8, 0), #870C08);
   background-color: var(--color-primary-900);
   padding: 0 var(--spacing-4);
-  height: 74px;
+  height: 7.4rem;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-3, 16px);
+  gap: var(--spacing-3, 1.6rem);
 }
 
 .icon-fatec-big {
-  width: 78px;
-  height: 48px;
+  width: 7.8rem;
+  height: 4.8rem;
 }
 
 .icon-notification-medium {
-  width: 26.25px;
-  height: 35px;
+  width: 2.625rem;
+  height: 3.5rem;
 }
 
 .header a {
@@ -33,14 +33,14 @@
 .nav-links {
   display: none;
   align-items: center;
-  gap: var(--spacing-4, 16px);
+  gap: var(--spacing-4, 1.6rem);
 }
 
 .nav-links .nav-item {
   color: var(--color-default-white);
   font-weight: 600;
-  padding: 8px 10px;
-  border-radius: 4px;
+  padding: 0.8rem 1rem;
+  border-radius: 0.4rem;
   font-size: 1rem;
   transition: transform 0.2s ease, font-size 0.2s ease, opacity 0.2s ease;
 }
@@ -58,9 +58,9 @@
 }
 
 .header a:focus-visible {
-  outline: 2px solid rgba(255, 255, 255, 0.12);
-  outline-offset: 2px;
-  border-radius: 4px;
+  outline: 0.2rem solid rgba(255, 255, 255, 0.12);
+  outline-offset: 0.2rem;
+  border-radius: 0.4rem;
 }
 
 @media (min-width: 768px) {
