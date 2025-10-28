@@ -7,9 +7,9 @@
 }
 
 .icon-logout {
-  width: 1.2rem;
-  height: 2.2rem;
-  margin-top: 0.2rem;
+  width: 0.75rem;
+  height: 1.375rem;
+  margin-top: 0.125rem;
 }
 
 a{
@@ -22,7 +22,7 @@ a{
 }
 
 .informations dl dt{
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-weight: var(--font-weight-regular);
   font-family: var(--font-family-primary);
 }

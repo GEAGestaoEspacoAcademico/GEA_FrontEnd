@@ -4,7 +4,7 @@
   .title-text {
     position: relative;
     margin-bottom: 0;
-    margin-left: 0.5rem;
+    margin-left: 0.313rem;
     line-height: 1.1;
   }
 
@@ -12,23 +12,23 @@
     display: flex;
     align-items: center;
     width: 100%;
-    height: 0.4rem;
+    height: 0.25rem;
     margin-top: 0;
-    margin-left: 0.5rem;
+    margin-left: 0.313rem;
   }
 
   .line-thick {
     background-color: var(--color-primary-700);
-    height: 0.4rem;
-    width: 6rem;
-    border-radius: 0.2rem;
+    height: 0.25rem;
+    width: 3.75rem;
+    border-radius: 0.125rem;
   }
 
   .line-thin {
     background-color: var(--color-primary-700);
-    height: 0.2rem;
-    width: 8rem;
+    height: 0.125rem;
+    width: 5rem;
     opacity: 0.6;
-    border-radius: 0.1rem;
+    border-radius: 0.063rem;
   }
 }
