@@ -2,15 +2,15 @@
 
 .gea-input-field {
   padding: 0 var(--spacing-11);
-  width: 220px;
+  width: 13.75rem;
 
-  font-size: 20px;
+  font-size: 1.25rem;
   font-family: 'Inter', sans-serif;
   color: var(--color-default-black);
   text-align: center;
   background-color: var(--color-surface-base);
   border: 0.2px solid var(--color-default-black);
-  border-radius: 10px;
+  border-radius: 0.625rem;
 
   overflow: hidden;
   text-overflow: ellipsis;

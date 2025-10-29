@@ -1,36 +1,36 @@
 .generic-form {
-  border-radius: 8px;
+  border-radius: 0.5rem;
   width: 100%; 
-  max-width: 500px;
+  max-width: 31.25rem;
   font-family: Arial, sans-serif;
   overflow: hidden;
 }
 
 .is-last-item {
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
 }
 
 .form-inputs-contain{
   border: .5px .5px 0 .5px solid green;
-  padding-top: 24px;
+  padding-top: 1.5rem;
   background-color: var(--color-primary-700);
 }
 
 .form-group {
   display: grid;
   grid-template-columns: 1fr 2fr; 
-  gap: 16px;
+  gap: 1rem;
   align-items: center;
   background-color: #F0F0F0;
-  padding: 7px;  
+  padding: 0.438rem;  
   border-bottom:  1px solid var(--color-neutral-500);
   border-left: 0.5px solid var(--color-neutral-500);
   border-right: 0.5px solid var(--color-neutral-500);
 
   input, select{
     background-color: var(--color-surface-subtle);
-    padding: 2px;
+    padding: 0.125rem;
   }
 }
 
@@ -42,11 +42,11 @@
 
 .form-control {
   width: 100%;
-  padding: 10px 12px;
+  padding: 0.625rem 0.75rem;
   border: 1px solid var(--color-neutral-900);
-  border-radius: 6px;
+  border-radius: 0.375rem;
   background-color: #fff;
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 /* Para customizar a seta do select */
@@ -54,16 +54,16 @@ select.form-control {
   appearance: none;
   background-image: url("/assets/icons/arrow-down.svg");
   background-repeat: no-repeat;
-  background-position: right 6px center;
-  background-size: 12px;
+  background-position: right 0.375rem center;
+  background-size: 0.75rem;
 }
 
 input[type="date"].form-control{
   appearance: none;
   background-image: url("/assets/icons/calendar.svg");
   background-repeat: no-repeat;
-  background-position: right 6px center;
-  background-size: 12px;
+  background-position: right 0.375rem center;
+  background-size: 0.75rem;
 }
 
 /* Container para os botões de ação */
@@ -78,10 +78,10 @@ input[type="date"].form-control{
 
 /* Estilo base dos botões */
 .form-actions button {
-  padding: 12px;
-  font-size: 16px;
+  padding: 0.75rem;
+  font-size: 1rem;
   font-weight: bold;
-  border-radius: 6px;
+  border-radius: 0.375rem;
   cursor: pointer;
   margin-top: var(--spacing-2);
   border: 1px solid transparent;
@@ -97,7 +97,7 @@ input[type="date"].form-control{
   background-color: var(--color-primary-700);
   color: var(--color-default-white);
   border: none;
-  padding: 0px;
+  padding: 0;
 }
 
 .form-actions button:disabled {
@@ -108,25 +108,25 @@ input[type="date"].form-control{
 .multi-select-container {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .multi-select-input {
   width: 100%;
-  padding: 0px !important;
+  padding: 0 !important;
 }
 
 .multi-select-container {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0.25rem;
   width: 100%;
 }
 
 .field-label {
   font-weight: 500;
   color: #333;
-  font-size: 14px;
+  font-size: 0.875rem;
 }
 
 .chips-box {
@@ -134,10 +134,10 @@ input[type="date"].form-control{
   flex-wrap: wrap;
   flex-direction: column;
   align-items: center;
-  gap: 6px; 
-  border-radius: 6px;
-  padding: 6px;
-  min-height: 45px;
+  gap: 0.375rem; 
+  border-radius: 0.375rem;
+  padding: 0.375rem;
+  min-height: 2.813rem;
 }
 
 .simple-input {
@@ -146,10 +146,10 @@ input[type="date"].form-control{
   min-width: 100px;
   width: 100%;
   flex: 1;
-  font-size: 14px;
-  padding: 7px !important;
+  font-size: 0.875rem;
+  padding: 0.438rem !important;
   border: .5px solid var(--color-default-black);
-  border-radius: 8px;
+  border-radius: 0.5rem;
 }
 
 .simple-input::placeholder {
@@ -158,17 +158,17 @@ input[type="date"].form-control{
 
 
 mat-chip button mat-icon {
-  font-size: 16px;
+  font-size: 1rem;
 }
 
 .chips-box {
-  padding:  7px 0px !important;
-  gap: 0px;
+  padding:  0.438rem 0 !important;
+  gap: 0;
 }
 
 .error-message {
   color: var(--color-feedback-error);
-  font-size: 12px;
+  font-size: 0.75rem;
   margin-top: var(--spacing-1);
   grid-column: 1 / -1;
 
@@ -179,12 +179,12 @@ mat-chip button mat-icon {
 .equipment-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 0.5rem;
 }
 
 .equipment-add-form {
   display: flex;
-  gap: 10px;
+  gap: 0.625rem;
   flex-wrap: wrap;
   align-items: center;
 }
@@ -195,15 +195,15 @@ mat-chip button mat-icon {
 
 .equipment-qty-input {
   flex: 1;
-  max-width: 30px;
+  max-width: 1.875rem;
 }
 
 .add-button {
   background-color: var(--color-primary-700);
   color: white;
   border: none;
-  border-radius: 6px;
-  padding: 8px 12px;
+  border-radius: 0.375rem;
+  padding: 0.5rem 0.75rem;
   cursor: pointer;
 }
 

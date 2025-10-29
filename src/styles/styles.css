@@ -6,6 +6,7 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   margin: 0;
   background-color: var(--color-surface-base);
@@ -14,8 +15,8 @@ body {
 main {
   flex: 1;
   overflow-y: auto;
-  padding-top: 20px;
-  padding-bottom: 61px;
+  padding-top: 1.25rem;
+  padding-bottom: 3.813rem;
   box-sizing: border-box;
 }
 
@@ -23,43 +24,43 @@ main {
 
 .highlight-title {
   font-family: var(--font-family-primary);
-  font-size: 26px;
+  font-size: 1.625rem;
   font-weight: var(--font-weight-bold);
 }
 
 .main-title {
   font-family: var(--font-family-primary);
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: var(--font-weight-bold);
 }
 
 .subtitle {
   font-family: var(--font-family-primary);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: var(--font-weight-regular);
 }
 
 .section-title {
   font-family: var(--font-family-primary);
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: var(--font-weight-bold);
 }
 
 .captions {
   font-family: var(--font-family-primary);
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: var(--font-weight-regular);
 }
 
 .time-caption {
   font-family: var(--font-family-primary);
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: var(--font-weight-bold);
 }
 
 .tabbar-text {
   font-family: var(--font-family-primary);
-  font-size: 10px;
+  font-size: 0.625rem;
 }
 
 .mat-mdc-snack-bar-container.toast-success .mat-mdc-snackbar-surface {
@@ -80,32 +81,32 @@ main {
 
 @media (min-width: 768px) {
   .highlight-title {
-    font-size: 36px;
+    font-size: 2.25rem;
     font-weight: var(--font-weight-bold);
   }
 
   .main-title {
-    font-size: 28px;
+    font-size: 1.75rem;
     font-weight: var(--font-weight-bold);
   }
 
   .subtitle {
-    font-size: 20px;
+    font-size: 1.25rem;
     font-weight: var(--font-weight-regular);
   }
 
   .section-title {
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: var(--font-weight-bold);
   }
 
   .captions {
-    font-size: 14px;
+    font-size: 0.875rem;
     font-weight: var(--font-weight-regular);
   }
 
   .time-caption {
-    font-size: 12px;
+    font-size: 0.75rem;
     font-weight: var(--font-weight-bold);
   }
 }

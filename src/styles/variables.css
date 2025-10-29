@@ -44,22 +44,22 @@
   --font-weight-bold: 700;
 
   /*SPACING*/
-  --spacing-1: 4px;
-  --spacing-2: 8px;
-  --spacing-3: 12px;
-  --spacing-4: 16px;
-  --spacing-5: 24px;
-  --spacing-6: 32px;
-  --spacing-7: 40px;
-  --spacing-8: 48px;
-  --spacing-9: 56px;
-  --spacing-10: 64px;
-  --spacing-11: 72px;
-  --spacing-12: 80px;
-  --spacing-13: 88px;
-  --spacing-14: 96px;
-  --spacing-15: 104px;
-  --spacing-16: 112px;
-  --spacing-17: 120px;
-  --spacing-18: 128px;
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.5rem;
+  --spacing-6: 2rem;
+  --spacing-7: 2.5rem;
+  --spacing-8: 3rem;
+  --spacing-9: 3.5rem;
+  --spacing-10: 4rem;
+  --spacing-11: 4.5rem;
+  --spacing-12: 5rem;
+  --spacing-13: 5.5rem;
+  --spacing-14: 6rem;
+  --spacing-15: 6.5rem;
+  --spacing-16: 7rem;
+  --spacing-17: 7.5rem;
+  --spacing-18: 8rem;
 }

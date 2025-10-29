@@ -5,7 +5,7 @@
     content: '';
     position: absolute;
     top: 0;
-    width: 50px;
+    width: 3.125rem;
     height: 100%;
     background: linear-gradient(to left,  var(--color-surface-base), transparent);
     pointer-events: none;
@@ -38,7 +38,7 @@
 }
 
 .day-item {
-  min-width: 60px;
+  min-width: 3.75rem;
   transition: all 0.2s ease-in-out;
   background: transparent;
   border: none;
@@ -46,7 +46,7 @@
 
 .day-item:hover {
   background-color: var(--color-default-white);
-  transform: translateY(-2px);
+  transform: translateY(-0.125rem);
   cursor: pointer;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .month-name {
-  margin: 0 16px;
+  margin: 0 1rem;
   font-weight: bold;
 }
 
@@ -75,9 +75,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  padding: 4px;
+  width: 1.25rem;
+  height: 1.25rem;
+  padding: 0.25rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -85,7 +85,7 @@
 }
 
 .arrow-icon{
-  width: 8.32px;  /* Mantenha o width desejado */
+  width: 5.188rem;  /* Mantenha o width desejado */
   height: auto;   /* Deixe o height ser calculado automaticamente */
 }
 

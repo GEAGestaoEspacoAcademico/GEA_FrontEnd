@@ -13,10 +13,10 @@
 
 .card-login {
     background-color: #f9f9fb;
-    border-top-left-radius: 35px !important;
-    border-top-right-radius: 35px !important;
+    border-top-left-radius: 2.188rem !important;
+    border-top-right-radius: 2.188rem !important;
     box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
-    min-height: 350px;
+    min-height: 21.875rem;
 }
 
 .btn-danger {
@@ -36,21 +36,21 @@
 }
 
 h1 {
-    font-size: 24px !important;
+    font-size: 1.5rem !important;
     text-shadow: 2px 2px 4px #000000;
 }
 
 h2 {
-    font-size: 100px !important;
+    font-size: 6.25rem !important;
     text-shadow: 4px 4px 6px #000000;
 }
 
 h3 {
-    font-size: 32px !important;
+    font-size: 2rem !important;
 }
 
 .b-line {
-    padding-bottom: 63px;
+    padding-bottom: 3.938rem;
     border-bottom: 1px black solid;
     width: 50%;
     margin: 0 auto;

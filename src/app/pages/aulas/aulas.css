@@ -2,10 +2,10 @@
   justify-content: flex-start !important;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
   scroll-snap-type: x mandatory;
-  scroll-padding-left: 12px;
+  scroll-padding-left: 0.75rem;
   scrollbar-width: none;
   /* Para IE e Edge */
   -ms-overflow-style: none;
