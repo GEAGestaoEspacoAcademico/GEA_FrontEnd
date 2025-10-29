@@ -137,6 +137,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Serviço responsável pelo CRUD e gerenciamento de salas</p>
+
+            </p>
 
 
 
@@ -216,21 +223,24 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="17"
-                                    class="link-to-prism">src/app/services/salas/sala.service.ts:17</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="20"
+                                    class="link-to-prism">src/app/services/salas/sala.service.ts:20</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Busca todas as salas contidas no banco de dados</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="../interfaces/Sala.html" target="_self" >Observable&lt;Sala[]&gt;</a></code>
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>Retorna um observable contendo um array de objetos Sala</p>
+
                             </div>
                 </td>
             </tr>
@@ -261,7 +271,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/services/salas/sala.service.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/services/salas/sala.service.ts:14</a></div>
                         </td>
                     </tr>
 
@@ -287,7 +297,7 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/services/salas/sala.service.ts:11</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/salas/sala.service.ts:13</a></div>
                         </td>
                     </tr>
 
@@ -305,16 +315,19 @@ import { inject, Injectable } from &#x27;@angular/core&#x27;;
 import type { Observable } from &#x27;rxjs&#x27;;
 import type { Sala } from &#x27;../../models/sala.model&#x27;;
 import { environment } from &#x27;../../../environments/environment&#x27;;
-
+/**
+ * Serviço responsável pelo CRUD e gerenciamento de salas
+ */
 @Injectable({
   providedIn: &#x27;root&#x27;
 })
 export class SalaService {
   private http &#x3D; inject(HttpClient)
   private baseUrl &#x3D; environment.apiUrl + &quot;/salas&quot;
+  
   /**
-   * 
-   * @returns 
+   * Busca todas as salas contidas no banco de dados
+   * @returns Retorna um observable contendo um array de objetos Sala
    */
   public getSalas(): Observable&lt;Sala[]&gt;{
     return this.http.get&lt;Sala[]&gt;(this.baseUrl);

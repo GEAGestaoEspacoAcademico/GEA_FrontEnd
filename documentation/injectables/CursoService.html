@@ -141,9 +141,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Serviço para gerenciar operações CRUD relacionados ao curso</p>
-<p>Isso torna o serviço um &#39;singleton&#39; e disponível para injeção
-em qualquer lugar da aplicação</p>
+                <p>Serviço responsável pelo CRUD e gerenciamento de Crusos</p>
 
             </p>
 
@@ -225,15 +223,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/app/services/curso/curso.service.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="21"
+                                    class="link-to-prism">src/app/services/curso/curso.service.ts:21</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Busca todos os cursos cadastrados no bacno de dados</p>
+                        <div class="io-description"><p>Busca todos os Cursos no banco de dados</p>
 </div>
 
                         <div class="io-description">
@@ -241,7 +239,7 @@ em qualquer lugar da aplicação</p>
 
                         </div>
                             <div class="io-description">
-                                <p>Um obsercable contendo um array de objetos Curso</p>
+                                <p>Retorna um observable contendo um array de objetos Curso</p>
 
                             </div>
                 </td>
@@ -273,7 +271,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/services/curso/curso.service.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/services/curso/curso.service.ts:15</a></div>
                         </td>
                     </tr>
 
@@ -299,7 +297,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/services/curso/curso.service.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/curso/curso.service.ts:13</a></div>
                         </td>
                     </tr>
 
@@ -318,11 +316,7 @@ import type { Observable } from &#x27;rxjs&#x27;;
 import type { Curso } from &#x27;../../models/curso.model&#x27;;
 import { environment } from &#x27;../../../environments/environment&#x27;;
 /**
- * Serviço para gerenciar operações CRUD relacionados ao curso
- * 
- * @Injectable({ providedIn: &#x27;root&#x27; })
- * Isso torna o serviço um &#x27;singleton&#x27; e disponível para injeção
- * em qualquer lugar da aplicação
+ * Serviço responsável pelo CRUD e gerenciamento de Crusos
  */
 @Injectable({
   providedIn: &#x27;root&#x27;
@@ -333,8 +327,8 @@ export class CursoService {
   private baseUrl &#x3D; environment.apiUrl + &quot;/cursos&quot;;
 
   /**
-   * Busca todos os cursos cadastrados no bacno de dados
-   * @returns Um obsercable contendo um array de objetos Curso
+   * Busca todos os Cursos no banco de dados
+   * @returns Retorna um observable contendo um array de objetos Curso
    */
   public getCursos(): Observable&lt;Curso[]&gt;{
     return this.http.get&lt;Curso[]&gt;(this.baseUrl);

@@ -141,9 +141,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Serviço para gerenciar operações CRUD relacionados ao agendamento</p>
-<p>Isso torna o serviço um &#39;singleton&#39; e disponível para injeção
-em qualquer lugar da aplicação</p>
+                <p>Serviço responsável pelo CRUD e gerenciamento de Agendamentos</p>
 
             </p>
 
@@ -237,15 +235,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="43"
-                                    class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:43</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="40"
+                                    class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:40</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Exclui um agendamento pelo Id</p>
+                        <div class="io-description"><p>Deleta um agendamento do banco de dados através do ID</p>
 </div>
 
                             <div class="io-description">
@@ -273,7 +271,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>o Id númerico do Agendamento</p>
+                                                    <p>Id número do agendamento</p>
 
                                             </td>
                                         </tr>
@@ -285,7 +283,7 @@ em qualquer lugar da aplicação</p>
 
                         </div>
                             <div class="io-description">
-                                <p>um Observable vazio, que completa quando a exclusão é bem-sucedida</p>
+                                <p>Retorna um observable contendo nada</p>
 
                             </div>
                 </td>
@@ -314,8 +312,8 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="52"
-                                    class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:52</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="51"
+                                    class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:51</a></div>
                         </td>
                     </tr>
 
@@ -348,7 +346,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>O id número do Agendamento</p>
+                                                    <p>Id numérico do Agendamento</p>
 
                                             </td>
                                         </tr>
@@ -364,7 +362,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>O objeto EditAgendamento contendo os dados atualizados</p>
+                                                    <p>Objeto do Tipo EditAgendamento contendo os novos dados do agendamento</p>
 
                                             </td>
                                         </tr>
@@ -376,7 +374,7 @@ em qualquer lugar da aplicação</p>
 
                         </div>
                             <div class="io-description">
-                                <p>um Observable contendo o objeto Agendamentoa após a atualização</p>
+                                <p>Retorna um observable contendo o objeto Agendamento atualizado</p>
 
                             </div>
                 </td>
@@ -405,15 +403,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="22"
+                                    class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:22</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Busca um agendamento pelo seu ID</p>
+                        <div class="io-description"><p>Busca um agendamento especifico através de seu ID</p>
 </div>
 
                             <div class="io-description">
@@ -441,7 +439,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>o Id numérico do agendamento a ser buscado</p>
+                                                    <p>Id númerico do agendamento</p>
 
                                             </td>
                                         </tr>
@@ -453,7 +451,7 @@ em qualquer lugar da aplicação</p>
 
                         </div>
                             <div class="io-description">
-                                <p>um Observable contendo o objeto Agendamento encontrado</p>
+                                <p>Um observable que contem o objeto Agendamento especificado pelo id</p>
 
                             </div>
                 </td>
@@ -482,15 +480,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="34"
-                                    class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:34</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="31"
+                                    class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:31</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Busca todos os agendamento associados a um professor especifico</p>
+                        <div class="io-description"><p>Busca todos os agendamentos por um professor</p>
 </div>
 
                             <div class="io-description">
@@ -518,7 +516,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>o Id número do professor</p>
+                                                    <p>Id número do professor</p>
 
                                             </td>
                                         </tr>
@@ -530,7 +528,7 @@ em qualquer lugar da aplicação</p>
 
                         </div>
                             <div class="io-description">
-                                <p>um Obsercable cotendo um array de objetos Agendamento</p>
+                                <p>Retorna um observable que contém um array de objetos Agendamento</p>
 
                             </div>
                 </td>
@@ -562,7 +560,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:15</a></div>
                         </td>
                     </tr>
 
@@ -588,7 +586,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/services/agendamentos/agendamento.service.ts:14</a></div>
                         </td>
                     </tr>
 
@@ -606,12 +604,9 @@ import { inject, Injectable } from &#x27;@angular/core&#x27;;
 import type { Observable } from &#x27;rxjs&#x27;;
 import type { Agendamento, EditAgendamento } from &#x27;../../models/agendamento.model&#x27;;
 import { environment } from &#x27;../../../environments/environment&#x27;;
+
 /**
- * Serviço para gerenciar operações CRUD relacionados ao agendamento
- * 
- * @Injectable({ providedIn: &#x27;root&#x27; })
- * Isso torna o serviço um &#x27;singleton&#x27; e disponível para injeção
- * em qualquer lugar da aplicação
+ * Serviço responsável pelo CRUD e gerenciamento de Agendamentos
  */
 @Injectable({
   providedIn: &#x27;root&#x27;
@@ -621,37 +616,39 @@ export class AgendamentoService {
   private baseUrl &#x3D; environment.apiUrl + &quot;/agendamentos/aulas&quot;;
 
   /**
-   * Busca um agendamento pelo seu ID
-   * @param id o Id numérico do agendamento a ser buscado
-   * @returns um Observable contendo o objeto Agendamento encontrado
+   * Busca um agendamento especifico através de seu ID
+   * @param id Id númerico do agendamento
+   * @returns Um observable que contem o objeto Agendamento especificado pelo id
    */
   public getAgendamentoById(id:number): Observable&lt;Agendamento&gt; {
     return this.http.get&lt;Agendamento&gt;(&#x60;${this.baseUrl}/${id}&#x60;);
   }
 
   /**
-   * Busca todos os agendamento associados a um professor especifico
-   * @param id o Id número do professor
-   * @returns um Obsercable cotendo um array de objetos Agendamento
+   * Busca todos os agendamentos por um professor
+   * @param id Id número do professor
+   * @returns Retorna um observable que contém um array de objetos Agendamento 
    */
   public getAgendamentosProfessor(id:number): Observable&lt;Agendamento[]&gt; {
     return this.http.get&lt;Agendamento[]&gt;(&#x60;${this.baseUrl}/professor/${id}&#x60;);
   }
 
   /**
-   * Exclui um agendamento pelo Id
-   * @param id o Id númerico do Agendamento
-   * @returns um Observable vazio, que completa quando a exclusão é bem-sucedida
+   * Deleta um agendamento do banco de dados através do ID
+   * @param id Id número do agendamento
+   * @returns Retorna um observable contendo nada
    */
   public deleteAgendamento(id: number): Observable&lt;void&gt;{
     return this.http.delete&lt;void&gt;(&#x60;${this.baseUrl}/${id}&#x60;)
   }
-  /**
-   * 
-   * @param id O id número do Agendamento
-   * @param agendamento O objeto EditAgendamento contendo os dados atualizados
-   * @returns um Observable contendo o objeto Agendamentoa após a atualização
-   */
+
+
+/**
+ * 
+ * @param id Id numérico do Agendamento
+ * @param agendamento Objeto do Tipo EditAgendamento contendo os novos dados do agendamento
+ * @returns Retorna um observable contendo o objeto Agendamento atualizado
+ */
   public editAgendamento(id:number, agendamento: EditAgendamento): Observable&lt;Agendamento&gt;{
     return this.http.put&lt;Agendamento&gt;(&#x60;${this.baseUrl}/${id}&#x60;, agendamento)
   }

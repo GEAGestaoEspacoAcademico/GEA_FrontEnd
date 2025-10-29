@@ -141,9 +141,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Serviço para gerenciar operações CRUD relacionados à disciplina</p>
-<p>Isso torna o serviço um &#39;singleton&#39; e disponível para injeção
-em qualquer lugar da aplicação</p>
+                <p>Serviço responsável pelo CRUD e gerenciamento de Disciplina</p>
 
             </p>
 
@@ -229,15 +227,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="34"
-                                    class="link-to-prism">src/app/services/disciplina/disciplina.service.ts:34</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="30"
+                                    class="link-to-prism">src/app/services/disciplina/disciplina.service.ts:30</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Busca as disciplinas associadas a um único professor</p>
+                        <div class="io-description"><p>Pega todas as disciplinas em que um professor está relacionado</p>
 </div>
 
                             <div class="io-description">
@@ -265,7 +263,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>Id número do proefssor</p>
+                                                    <p>Id númerico do Professor</p>
 
                                             </td>
                                         </tr>
@@ -277,7 +275,7 @@ em qualquer lugar da aplicação</p>
 
                         </div>
                             <div class="io-description">
-                                <p>Retorna um observable contendo array de objetos Disciplina</p>
+                                <p>Retorna um observable contendo um array de objetos Disciplina relacionadas ao professor</p>
 
                             </div>
                 </td>
@@ -306,15 +304,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/app/services/disciplina/disciplina.service.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="21"
+                                    class="link-to-prism">src/app/services/disciplina/disciplina.service.ts:21</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Busca todas as disciplinas cadastradas no banco de dados</p>
+                        <div class="io-description"><p>Busca todas as disciplinas contidas no banco de dados</p>
 </div>
 
                         <div class="io-description">
@@ -354,7 +352,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/services/disciplina/disciplina.service.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/services/disciplina/disciplina.service.ts:15</a></div>
                         </td>
                     </tr>
 
@@ -380,7 +378,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/services/disciplina/disciplina.service.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/disciplina/disciplina.service.ts:13</a></div>
                         </td>
                     </tr>
 
@@ -399,11 +397,7 @@ import type { Observable } from &#x27;rxjs&#x27;;
 import type { Disciplina } from &#x27;../../models/disciplina.model&#x27;;
 import { environment } from &#x27;../../../environments/environment&#x27;;
 /**
- * Serviço para gerenciar operações CRUD relacionados à disciplina
- * 
- * @Injectable({ providedIn: &#x27;root&#x27; })
- * Isso torna o serviço um &#x27;singleton&#x27; e disponível para injeção
- * em qualquer lugar da aplicação
+ * Serviço responsável pelo CRUD e gerenciamento de Disciplina
  */
 @Injectable({
   providedIn: &#x27;root&#x27;
@@ -414,7 +408,7 @@ export class DisciplinaService {
   private baseUrl &#x3D; environment.apiUrl + &quot;/disciplinas&quot;;
 
   /**
-   * Busca todas as disciplinas cadastradas no banco de dados
+   * Busca todas as disciplinas contidas no banco de dados
    * @returns Retorna um observable contendo um array de objetos Disciplina
    */
   public getDisciplinas(): Observable&lt;Disciplina[]&gt;{
@@ -422,9 +416,9 @@ export class DisciplinaService {
   }
 
   /**
-   * Busca as disciplinas associadas a um único professor
-   * @param idProfessor Id número do proefssor
-   * @returns Retorna um observable contendo array de objetos Disciplina
+   * Pega todas as disciplinas em que um professor está relacionado
+   * @param idProfessor Id númerico do Professor
+   * @returns Retorna um observable contendo um array de objetos Disciplina relacionadas ao professor
    */
   public getDisciplinaProfessor(idProfessor: number): Observable&lt;Disciplina[]&gt;{
     return this.http.get&lt;Disciplina[]&gt;(&#x60;${this.baseUrl}/professor/${idProfessor}&#x60;);

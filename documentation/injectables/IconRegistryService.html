@@ -141,9 +141,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Serviço para gerenciar os icones do projeto</p>
-<p>Isso torna o serviço um &#39;singleton&#39; e disponível para injeção
-em qualquer lugar da aplicação</p>
+                <p>Serviço responsável pelo gerenciamento de icones da aplicação</p>
 
             </p>
 
@@ -232,15 +230,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="50"
-                                    class="link-to-prism">src/app/services/iconService/icon-registry.ts:50</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="45"
+                                    class="link-to-prism">src/app/services/iconService/icon-registry.ts:45</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Registra um único icone no projeto</p>
+                        <div class="io-description"><p>Insere um novo icone no projeto</p>
 </div>
 
                             <div class="io-description">
@@ -268,7 +266,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>Nome do icone a ser cadastrado</p>
+                                                    <p>Nome do icone</p>
 
                                             </td>
                                         </tr>
@@ -284,7 +282,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>Nome do arquivo do icone a ser cadastrado</p>
+                                                    <p>Nome do arquivo do icone</p>
 
                                             </td>
                                         </tr>
@@ -322,15 +320,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="23"
-                                    class="link-to-prism">src/app/services/iconService/icon-registry.ts:23</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="19"
+                                    class="link-to-prism">src/app/services/iconService/icon-registry.ts:19</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Faz o registro de todos os icones do projeto.</p>
+                        <div class="io-description"><p>Faz a inserção de todos os icones no projeto</p>
 </div>
 
                         <div class="io-description">
@@ -366,7 +364,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/services/iconService/icon-registry.ts:18</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/services/iconService/icon-registry.ts:14</a></div>
                         </td>
                     </tr>
 
@@ -398,7 +396,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/services/iconService/icon-registry.ts:16</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/services/iconService/icon-registry.ts:12</a></div>
                         </td>
                     </tr>
 
@@ -424,7 +422,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/services/iconService/icon-registry.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/iconService/icon-registry.ts:13</a></div>
                         </td>
                     </tr>
 
@@ -441,11 +439,7 @@ em qualquer lugar da aplicação</p>
 import { MatIconRegistry } from &#x27;@angular/material/icon&#x27;;
 import { DomSanitizer } from &#x27;@angular/platform-browser&#x27;;
 /**
- * Serviço para gerenciar os icones do projeto
- * 
- * @Injectable({ providedIn: &#x27;root&#x27; })
- * Isso torna o serviço um &#x27;singleton&#x27; e disponível para injeção
- * em qualquer lugar da aplicação
+ * Serviço responsável pelo gerenciamento de icones da aplicação
  */
 @Injectable({
   providedIn: &#x27;root&#x27;
@@ -456,7 +450,7 @@ export class IconRegistryService {
   private domSanitizer &#x3D; inject(DomSanitizer);
 
   /**
-   * Faz o registro de todos os icones do projeto. 
+   * Faz a inserção de todos os icones no projeto
    */
   registerIcons(): void {
     this.addIcon(&#x27;ads-icon&#x27;, &#x27;ads-icon.svg&#x27;);
@@ -479,11 +473,10 @@ export class IconRegistryService {
     this.addIcon(&#x27;arrow-previus&#x27;, &#x27;arrow-previus.svg&#x27;);
     this.addIcon(&#x27;details-arrow&#x27;, &#x27;details-arrow.svg&#x27;)
   }
-
   /**
-   * Registra um único icone no projeto
-   * @param iconName Nome do icone a ser cadastrado
-   * @param fileName Nome do arquivo do icone a ser cadastrado
+   * Insere um novo icone no projeto
+   * @param iconName Nome do icone
+   * @param fileName Nome do arquivo do icone
    */
   private addIcon(iconName: string, fileName: string): void {
     this.matIconRegistry.addSvgIcon(

@@ -141,9 +141,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Serviço para a autenticação do usuário</p>
-<p>Isso torna o serviço um &#39;singleton&#39; e disponível para injeção
-em qualquer lugar da aplicação</p>
+                <p>Serviço responsável pelas ações de autenticação do usuário</p>
 
             </p>
 
@@ -225,15 +223,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="28"
-                                    class="link-to-prism">src/app/services/auth/auth.service.ts:28</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="22"
+                                    class="link-to-prism">src/app/services/auth/auth.service.ts:22</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Faz a autenticação do usuário através de suas credenciais</p>
+                        <div class="io-description"><p>Realiza o login do usuário</p>
 </div>
 
                             <div class="io-description">
@@ -261,7 +259,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>Um objeto UserCredencials, contendo as credenciais do usuário</p>
+                                                    <p>Objeto do tipo UserCredencials, contendo as credencias do usuário</p>
 
                                             </td>
                                         </tr>
@@ -273,7 +271,7 @@ em qualquer lugar da aplicação</p>
 
                         </div>
                             <div class="io-description">
-                                <p>Um observable contendo as informações do usuário, caso login seja terminado com sucesso</p>
+                                <p>Retorna um observable cotendo o objeto User</p>
 
                             </div>
                 </td>
@@ -305,7 +303,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/services/auth/auth.service.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/services/auth/auth.service.ts:16</a></div>
                         </td>
                     </tr>
 
@@ -331,7 +329,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/services/auth/auth.service.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/services/auth/auth.service.ts:14</a></div>
                         </td>
                     </tr>
 
@@ -350,13 +348,8 @@ import type { Observable } from &#x27;rxjs&#x27;;
 import type { User } from &#x27;../../models/user.model&#x27;;
 import type { UserCredencials } from &#x27;../../types/auth.type&#x27;;
 import { environment } from &#x27;../../../environments/environment&#x27;;
-
 /**
- * Serviço para a autenticação do usuário
- * 
- * @Injectable({ providedIn: &#x27;root&#x27; })
- * Isso torna o serviço um &#x27;singleton&#x27; e disponível para injeção
- * em qualquer lugar da aplicação
+ * Serviço responsável pelas ações de autenticação do usuário
  */
 @Injectable({
   providedIn: &#x27;root&#x27;
@@ -365,11 +358,10 @@ export class AuthService {
   private http &#x3D; inject(HttpClient);
   
   private baseUrl &#x3D; environment.apiUrl + &quot;/auth&quot;;
-
   /**
-   * Faz a autenticação do usuário através de suas credenciais
-   * @param request Um objeto UserCredencials, contendo as credenciais do usuário
-   * @returns Um observable contendo as informações do usuário, caso login seja terminado com sucesso
+   * Realiza o login do usuário
+   * @param request Objeto do tipo UserCredencials, contendo as credencias do usuário
+   * @returns Retorna um observable cotendo o objeto User
    */
   public loginUser(request: UserCredencials): Observable&lt;User&gt; {
     return this.http.post&lt;User&gt;(&#x60;${this.baseUrl}/login&#x60;, request)

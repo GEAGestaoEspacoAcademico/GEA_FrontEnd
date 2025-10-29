@@ -141,9 +141,7 @@
                 <h3>Description</h3>
             </p>
             <p class="comment">
-                <p>Serviço para gerenciar as notificacoes (toasts) gerados</p>
-<p>Isso torna o serviço um &#39;singleton&#39; e disponível para injeção
-em qualquer lugar da aplicação</p>
+                <p>Serviço responsável pelo gerenciamento das noticações to tipo snackbar da aplicação</p>
 
             </p>
 
@@ -230,15 +228,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/app/services/notificacoes/notification.service.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="21"
+                                    class="link-to-prism">src/app/services/notificacoes/notification.service.ts:21</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Cria a cofiguração de uma forma genérica do toast</p>
+                        <div class="io-description"><p>Cria uma conofiguração para o snackbar</p>
 </div>
 
                             <div class="io-description">
@@ -266,7 +264,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>Classe a ser vinculada ao toast</p>
+                                                    <p>Classe associada ao snackbar</p>
 
                                             </td>
                                         </tr>
@@ -282,7 +280,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>Duração em milesegundos do toast</p>
+                                                    <p>Duração em milisegundos do snackbar</p>
 
                                             </td>
                                         </tr>
@@ -294,7 +292,7 @@ em qualquer lugar da aplicação</p>
 
                         </div>
                             <div class="io-description">
-                                <p>Retorna as configuraç~eos do toast</p>
+                                <p>Retorna a configuração do snackbar</p>
 
                             </div>
                 </td>
@@ -321,15 +319,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="46"
-                                    class="link-to-prism">src/app/services/notificacoes/notification.service.ts:46</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="42"
+                                    class="link-to-prism">src/app/services/notificacoes/notification.service.ts:42</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Exibe um toast de erro</p>
+                        <div class="io-description"><p>Mostra o snackbar do tipo erro</p>
 </div>
 
                             <div class="io-description">
@@ -357,7 +355,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>Mensagem a ser exibida</p>
+                                                    <p>Menssagem a ser exibido</p>
 
                                             </td>
                                         </tr>
@@ -395,15 +393,15 @@ em qualquer lugar da aplicação</p>
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="37"
-                                    class="link-to-prism">src/app/services/notificacoes/notification.service.ts:37</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="33"
+                                    class="link-to-prism">src/app/services/notificacoes/notification.service.ts:33</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
-                        <div class="io-description"><p>Exibe um toast de sucesso</p>
+                        <div class="io-description"><p>Mostra o snackbar do tipo sucesso</p>
 </div>
 
                             <div class="io-description">
@@ -431,7 +429,7 @@ em qualquer lugar da aplicação</p>
 
 
                                             <td>
-                                                    <p>Mensagem a ser exibida</p>
+                                                    <p>Menssagem a aser exibida</p>
 
                                             </td>
                                         </tr>
@@ -479,7 +477,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/services/notificacoes/notification.service.ts:17</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/services/notificacoes/notification.service.ts:13</a></div>
                         </td>
                     </tr>
 
@@ -505,7 +503,7 @@ em qualquer lugar da aplicação</p>
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/services/notificacoes/notification.service.ts:15</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/services/notificacoes/notification.service.ts:11</a></div>
                         </td>
                     </tr>
 
@@ -522,11 +520,7 @@ em qualquer lugar da aplicação</p>
 import type { MatSnackBarHorizontalPosition, MatSnackBarConfig } from &#x27;@angular/material/snack-bar&#x27;;
 import { MatSnackBar } from &#x27;@angular/material/snack-bar&#x27;;
 /**
- * Serviço para gerenciar as notificacoes (toasts) gerados
- * 
- * @Injectable({ providedIn: &#x27;root&#x27; })
- * Isso torna o serviço um &#x27;singleton&#x27; e disponível para injeção
- * em qualquer lugar da aplicação
+ * Serviço responsável pelo gerenciamento das noticações to tipo snackbar da aplicação
  */
 @Injectable({
   providedIn: &#x27;root&#x27;,
@@ -537,10 +531,10 @@ export class NotificationService {
   horizontalPosition: MatSnackBarHorizontalPosition &#x3D; &#x27;center&#x27;;
 
   /**
-   * Cria a cofiguração de uma forma genérica do toast
-   * @param panelClass Classe a ser vinculada ao toast
-   * @param duration Duração em milesegundos do toast
-   * @returns Retorna as configuraç~eos do toast
+   * Cria uma conofiguração para o snackbar
+   * @param panelClass Classe associada ao snackbar
+   * @param duration Duração em milisegundos do snackbar
+   * @returns Retorna a configuração do snackbar
    */
   private createConfig(panelClass: string, duration: number): MatSnackBarConfig {
     return {
@@ -551,8 +545,8 @@ export class NotificationService {
   }
 
   /**
-   * Exibe um toast de sucesso
-   * @param message Mensagem a ser exibida
+   * Mostra o snackbar do tipo sucesso
+   * @param message Menssagem a aser exibida
    */
   showSuccess(message: string): void {
     const config &#x3D; this.createConfig(&#x27;toast-success&#x27;, 3000);
@@ -560,8 +554,8 @@ export class NotificationService {
   }
 
   /**
-   * Exibe um toast de erro
-   * @param message Mensagem a ser exibida
+   * Mostra o snackbar do tipo erro
+   * @param message Menssagem a ser exibido
    */
   showError(message: string): void {
     const config &#x3D; this.createConfig(&#x27;toast-error&#x27;, 3000);
