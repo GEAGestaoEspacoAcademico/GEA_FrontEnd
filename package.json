@@ -49,6 +49,7 @@
     "@angular/cli": "^20.3.3",
     "@angular/compiler-cli": "^20.3.3",
     "@angular/localize": "^20.3.3",
+    "@compodoc/compodoc": "^1.1.31",
     "@types/jasmine": "~5.1.0",
     "angular-eslint": "20.3.0",
     "eslint": "^9.35.0",
