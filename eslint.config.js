@@ -3,6 +3,7 @@ const eslint = require("@eslint/js");
 const tseslint = require("typescript-eslint");
 const angular = require("angular-eslint");
 const prettier = require("eslint-config-prettier");
+const jdoc = require('eslint-plugin-jsdoc');
 
 module.exports = tseslint.config(
   {
@@ -12,7 +13,8 @@ module.exports = tseslint.config(
       ...tseslint.configs.recommended,
       ...tseslint.configs.stylistic,
       ...angular.configs.tsRecommended,
-      prettier
+      prettier,
+      jdoc.configs["flat/recommended-typescript"]
     ],
     processor: angular.processInlineTemplates,
     rules: {
@@ -46,7 +48,20 @@ module.exports = tseslint.config(
       "eqeqeq": ["error", "always"], // força uso de ===
       "curly": "error",
       "@angular-eslint/prefer-standalone": "off",
-      "@typescript-eslint/no-inferrable-types": "off"
+      "@typescript-eslint/no-inferrable-types": "off",
+
+      //JDoc
+      "jsdoc/require-jsdoc": ["warn", {
+      "publicOnly": true,
+      "require": {
+        "FunctionDeclaration": false,
+        "ClassDeclaration": false,
+        "ArrowFunctionExpression": false,
+        "FunctionExpression": false,
+
+        "MethodDefinition": false
+      }
+    }]
     },
   },
   {

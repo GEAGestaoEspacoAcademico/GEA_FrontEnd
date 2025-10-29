@@ -1,0 +1,1102 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>agenda-salas-fatec-front-end documentation</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+	   <link rel="stylesheet" href="../styles/style.css">
+        <link rel="stylesheet" href="../styles/dark.css">
+    </head>
+    <body>
+          <script>
+               // Blocking script to avoid flickering dark mode
+               // Dark mode toggle button
+               var useDark = window.matchMedia('(prefers-color-scheme: dark)');
+               var darkModeState = useDark.matches;
+               var $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               var $darkModeToggles = document.querySelectorAll('.dark-mode-switch');
+               var darkModeStateLocal = localStorage.getItem('compodoc_darkmode-state');
+
+               function checkToggle(check) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].checked = check;
+                    }
+               }
+
+               function toggleDarkMode(state) {
+                    if (window.localStorage) {
+                         localStorage.setItem('compodoc_darkmode-state', state);
+                    }
+
+                    checkToggle(state);
+
+                    const hasClass = document.body.classList.contains('dark');
+
+                    if (state) {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.add('dark');
+                         }
+                         if (!hasClass) {
+                              document.body.classList.add('dark');
+                         }
+                    } else {
+                         for (var i = 0; i < $darkModeToggles.length; i++) {
+                              $darkModeToggles[i].classList.remove('dark');
+                         }
+                         if (hasClass) {
+                              document.body.classList.remove('dark');
+                         }
+                    }
+               }
+
+               useDark.addEventListener('change', function (evt) {
+                    toggleDarkMode(evt.matches);
+               });
+               if (darkModeStateLocal) {
+                    darkModeState = darkModeStateLocal === 'true';
+               }
+               toggleDarkMode(darkModeState);
+          </script>
+          <script>
+              // --- Iframe navigation tracking for Template Playground ---
+              function sendCurrentUrlToParent() {
+                  if (window.parent && window.parent !== window) {
+                      window.parent.postMessage({
+                          type: 'compodoc-iframe-navigate',
+                          url: window.location.pathname + window.location.hash
+                      }, '*');
+                  }
+              }
+              window.addEventListener('hashchange', sendCurrentUrlToParent, false);
+              window.addEventListener('popstate', sendCurrentUrlToParent, false);
+              window.addEventListener('DOMContentLoaded', sendCurrentUrlToParent, false);
+          </script>
+
+        <div class="navbar navbar-default navbar-fixed-top d-md-none p-0">
+               <div class="d-flex">
+                    <a href="../" class="navbar-brand">agenda-salas-fatec-front-end documentation</a>
+                    <button type="button" class="btn btn-default btn-menu ion-ios-menu" id="btn-menu"></button>
+               </div>
+        </div>
+
+        <div class="xs-menu menu" id="mobile-menu">
+                <div id="book-search-input" role="search"><input type="text" placeholder="Type to search"></div>            <compodoc-menu></compodoc-menu>
+        </div>
+
+        <div class="container-fluid main">
+           <div class="row main">
+               <div class="d-none d-md-block menu">
+                   <compodoc-menu mode="normal"></compodoc-menu>
+               </div>
+               <!-- START CONTENT -->
+               <div class="content component">
+                   <div class="content-data">
+
+
+
+
+
+
+
+
+<ol class="breadcrumb">
+  <li class="breadcrumb-item">Components</li>
+  <li class="breadcrumb-item"
+  >
+  Agenda</li>
+</ol>
+
+<ul class="nav nav-tabs" role="tablist">
+        <li class="nav-item">
+            <a href="#info" class="nav-link active"
+                role="tab" id="info-tab" data-bs-toggle="tab" data-link="info">Info</a>
+        </li>
+        <li class="nav-item">
+            <a href="#source" class="nav-link"
+                role="tab" id="source-tab" data-bs-toggle="tab" data-link="source">Source</a>
+        </li>
+        <li class="nav-item">
+            <a href="#templateData" class="nav-link"
+                role="tab" id="templateData-tab" data-bs-toggle="tab" data-link="template">Template</a>
+        </li>
+        <li class="nav-item">
+            <a href="#tree" class="nav-link"
+                role="tab" id="tree-tab" data-bs-toggle="tab" data-link="dom-tree">DOM Tree</a>
+        </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade active in" id="info"><p class="comment">
+    <h3>File</h3>
+</p>
+<p class="comment">
+    <code>src/app/pages/agenda/agenda.ts</code>
+</p>
+
+
+
+
+
+
+<section data-compodoc="block-metadata">
+    <h3>Metadata</h3>
+    <table class="table table-sm table-hover metadata">
+        <tbody>
+
+
+
+
+
+
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">selector</td>
+                <td class="col-md-9"><code>app-agenda</code></td>
+            </tr>
+
+
+
+
+
+
+            <tr>
+                <td class="col-md-3">templateUrl</td>
+                <td class="col-md-9"><code>./agenda.html</code></td>
+            </tr>
+
+
+
+            <tr>
+                <td class="col-md-3">styleUrl</td>
+                <td class="col-md-9"><code>./agenda.css</code></td>
+            </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+    <section data-compodoc="block-index">
+    <h3 id="index">Index</h3>
+    <table class="table table-sm table-bordered index-table">
+        <tbody>
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Properties</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#classInfoModal" >classInfoModal</a>
+                            </li>
+                            <li>
+                                <a href="#currentIndex" >currentIndex</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#fields" >fields</a>
+                            </li>
+                            <li>
+                                <a href="#roomData" >roomData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier">Public</span>
+                                <a href="#submittedData" >submittedData</a>
+                            </li>
+                            <li>
+                                    <span class="modifier"></span>
+                                <a href="#sucessModal" >sucessModal</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="col-md-4">
+                        <h6><b>Methods</b></h6>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <ul class="index-list">
+                            <li>
+                                <a href="#handleFormSubmit" >handleFormSubmit</a>
+                            </li>
+                            <li>
+                                <a href="#openInfoModal" >openInfoModal</a>
+                            </li>
+                            <li>
+                                <a href="#openSucessModal" >openSucessModal</a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+
+
+
+
+
+        </tbody>
+    </table>
+</section>
+
+
+
+
+
+
+    <section data-compodoc="block-methods">
+    
+    <h3 id="methods">
+        Methods
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="handleFormSubmit"></a>
+                    <span class="name">
+                        <span ><b>handleFormSubmit</b></span>
+                        <a href="#handleFormSubmit"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>handleFormSubmit(formData: <a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank">any</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="141"
+                                    class="link-to-prism">src/app/pages/agenda/agenda.ts:141</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>formData</td>
+                                            <td>
+                                                            <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openInfoModal"></a>
+                    <span class="name">
+                        <span ><b>openInfoModal</b></span>
+                        <a href="#openInfoModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openInfoModal(id: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="145"
+                                    class="link-to-prism">src/app/pages/agenda/agenda.ts:145</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                            <div class="io-description">
+                                <b>Parameters :</b>
+                                
+                                <table class="params">
+                                    <thead>
+                                        <tr>
+                                            <td>Name</td>
+                                                <td>Type</td>
+                                            <td>Optional</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                                <td>id</td>
+                                            <td>
+                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+                                            </td>
+
+                                            <td>
+                                                    No
+                                            </td>
+
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                            <div class="io-description">
+                                
+                            </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="openSucessModal"></a>
+                    <span class="name">
+                        <span ><b>openSucessModal</b></span>
+                        <a href="#openSucessModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="col-md-4">
+<code>openSucessModal()</code>
+                </td>
+            </tr>
+
+
+                    <tr>
+                        <td class="col-md-4">
+                            <div class="io-line">Defined in <a href="" data-line="150"
+                                    class="link-to-prism">src/app/pages/agenda/agenda.ts:150</a></div>
+                        </td>
+                    </tr>
+
+
+            <tr>
+                <td class="col-md-4">
+
+                        <div class="io-description">
+                            <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
+
+                        </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+    <section data-compodoc="block-properties">
+    
+    <h3 id="inputs">
+        Properties
+    </h3>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="classInfoModal"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>classInfoModal</b></span>
+                        <a href="#classInfoModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/ConfirmationModal.html" target="_self" >ConfirmationModal</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;classInfoModal&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/pages/agenda/agenda.ts:14</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="currentIndex"></a>
+                    <span class="name">
+                        <span ><b>currentIndex</b></span>
+                        <a href="#currentIndex"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank" >number</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/pages/agenda/agenda.ts:16</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="fields"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>fields</b></span>
+                        <a href="#fields"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/Field.html" target="_self" >Field[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {
+      type: &#x27;date&#x27;,
+      name: &#x27;data&#x27;,
+      label: &#x27;Data&#x27;,
+      defaultValue: new Date().toISOString().split(&#x27;T&#x27;)[0],
+      validators: {
+        required: true,
+        errorMessages: { required: &#x27;A data é obrigatória.&#x27; },
+      },
+    },
+    {
+      type: &#x27;select&#x27;,
+      name: &#x27;horario&#x27;,
+      label: &#x27;Horário&#x27;,
+      defaultValue: &#x27;07:40-09:20&#x27;,
+      options: [
+        { value: &#x27;07:40-09:20&#x27;, label: &#x27;07:40 - 09:20&#x27; },
+        { value: &#x27;09:30-11:10&#x27;, label: &#x27;09:30 - 11:10&#x27; },
+        { value: &#x27;11:20-13:00&#x27;, label: &#x27;11:20 - 13:00&#x27; },
+        { value: &#x27;19:00-22:30&#x27;, label: &#x27;19:00 - 22:30&#x27; },
+      ],
+    },
+    {
+      type: &#x27;select&#x27;,
+      name: &#x27;local&#x27;,
+      label: &#x27;Local&#x27;,
+      defaultValue: &#x27;lab&#x27;,
+      options: [
+        { value: &#x27;lab&#x27;, label: &#x27;Laboratórios&#x27; },
+        { value: &#x27;sala&#x27;, label: &#x27;Salas de Aula&#x27; },
+        { value: &#x27;audit&#x27;, label: &#x27;Auditório&#x27; },
+      ],
+    },
+    {
+      type: &#x27;select&#x27;,
+      name: &#x27;capacidade&#x27;,
+      label: &#x27;Capacidade&#x27;,
+      defaultValue: &#x27;10-20&#x27;,
+      options: [
+        { value: &#x27;10-20&#x27;, label: &#x27;10 - 20 alunos&#x27; },
+        { value: &#x27;20-30&#x27;, label: &#x27;20 - 30 alunos&#x27; },
+        { value: &#x27;30-40&#x27;, label: &#x27;30 - 40 alunos&#x27; },
+        { value: &#x27;40+&#x27;, label: &#x27;Mais de 40 alunos&#x27; },
+      ],
+    },
+    {
+      type: &#x27;select&#x27;,
+      name: &#x27;disciplina&#x27;,
+      label: &#x27;Disciplina&#x27;,
+      defaultValue: &#x27;calc1&#x27;,
+      options: [
+        { value: &#x27;calc1&#x27;, label: &#x27;Cálculo I&#x27; },
+        { value: &#x27;redes&#x27;, label: &#x27;Redes de Computadores&#x27; },
+        { value: &#x27;ia&#x27;, label: &#x27;Inteligência Artificial&#x27; },
+        { value: &#x27;ed&#x27;, label: &#x27;Estrutura de Dados&#x27; },
+      ],
+    },
+    {
+      type: &#x27;equipment-select&#x27;,
+      name: &#x27;equipamentos&#x27;,
+      label: &#x27;Equipamento&#x27;,
+      options: [
+        { value: &#x27;proj&#x27;, label: &#x27;Projetor Multimídia&#x27; },
+        { value: &#x27;pc&#x27;, label: &#x27;Computador Desktop&#x27; },
+        { value: &#x27;lousa&#x27;, label: &#x27;Lousa Digital&#x27; },
+        { value: &#x27;mic&#x27;, label: &#x27;Microfone&#x27; },
+      ],
+    },
+    {
+      type: &#x27;multi-select&#x27;,
+      name: &#x27;softwares&#x27;,
+      label: &#x27;Softwares&#x27;,
+      options: [
+        { value: &#x27;netbeans&#x27;, label: &#x27;NetBeans&#x27; },
+        { value: &#x27;sqlserver&#x27;, label: &#x27;SQL Server&#x27; },
+        { value: &#x27;vscode&#x27;, label: &#x27;VS Code&#x27; },
+        { value: &#x27;brmodelo&#x27;, label: &#x27;BrModelo&#x27; },
+        { value: &#x27;photoshop&#x27;, label: &#x27;Photoshop&#x27; },
+      ],
+    },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/pages/agenda/agenda.ts:59</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="roomData"></a>
+                    <span class="name">
+                        <span ><b>roomData</b></span>
+                        <a href="#roomData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../interfaces/RoomData.html" target="_self" >RoomData[]</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Default value : </i><code>[
+    {
+      id: 1,
+      nome: &#x27;Sala 01&#x27;,
+      data: &#x27;2025-10-20&#x27;,
+      horario: &#x27;10:00 - 11:00&#x27;,
+      capacidade: &#x27;12 pessoas&#x27;,
+      observacoes: [&#x27;Possui projetor&#x27;, &#x27;Quadro branco disponível&#x27;],
+    },
+    {
+      id: 2,
+      nome: &#x27;Laboratório 2&#x27;,
+      data: &#x27;2025-10-21&#x27;,
+      horario: &#x27;14:00 - 16:30&#x27;,
+      capacidade: &#x27;50 pessoas&#x27;,
+      observacoes: [&#x27;Necessário microfone&#x27;, &#x27;Sistema de som integrado&#x27;],
+    },
+    {
+      id: 3,
+      nome: &#x27;Sala 9&#x27;,
+      data: &#x27;2025-10-20&#x27;,
+      horario: &#x27;09:00 - 10:30&#x27;,
+      capacidade: &#x27;8 pessoas&#x27;,
+      observacoes: [&#x27;Pufes e área de descanso&#x27;, &#x27;Muitos post-its&#x27;],
+    },
+    {
+      id: 4,
+      nome: &#x27;Auditório&#x27;,
+      data: &#x27;2025-10-22&#x27;,
+      horario: &#x27;08:00 - 12:00&#x27;,
+      capacidade: &#x27;150 pessoas&#x27;,
+      observacoes: [&#x27;Palco elevado&#x27;, &#x27;Equipamento de tradução simultânea (solicitar)&#x27;],
+    },
+    {
+      id: 5,
+      nome: &#x27;Laboratório 4&#x27;,
+      data: &#x27;2025-10-20&#x27;,
+      horario: &#x27;15:00 - 15:30&#x27;,
+      capacidade: &#x27;4 pessoas&#x27;,
+      observacoes: [&#x27;Ambiente silencioso&#x27;, &#x27;Água disponível&#x27;],
+    },
+  ]</code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/pages/agenda/agenda.ts:17</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="submittedData"></a>
+                    <span class="name">
+                            <span class="modifier">Public</span>
+                        <span ><b>submittedData</b></span>
+                        <a href="#submittedData"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >any</a></code>
+
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/pages/agenda/agenda.ts:13</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+    <table class="table table-sm table-bordered">
+        <tbody>
+            <tr>
+                <td class="col-md-4">
+                    <a name="sucessModal"></a>
+                    <span class="name">
+                            <span class="modifier"></span>
+                        <span ><b>sucessModal</b></span>
+                        <a href="#sucessModal"><span class="icon ion-ios-link"></span></a>
+                    </span>
+                </td>
+            </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <i>Type : </i>        <code><a href="../components/ConfirmationModal.html" target="_self" >ConfirmationModal</a></code>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <b>Decorators : </b>
+                        <br />
+                        <code>
+                            @ViewChild(&#x27;sucessModal&#x27;)<br />
+                        </code>
+                    </td>
+                </tr>
+                    <tr>
+                        <td class="col-md-4">
+                                <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/pages/agenda/agenda.ts:15</a></div>
+                        </td>
+                    </tr>
+
+
+        </tbody>
+    </table>
+</section>
+
+</div>
+
+
+    <div class="tab-pane fade  tab-source-code" id="source">
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import type { Field } from &#x27;../../components/shared/scheduling/types&#x27;;
+import { Component, ViewChild } from &#x27;@angular/core&#x27;;
+import type { ConfirmationModal } from &#x27;../../components/shared/confirmation-modal/confirmation-modal&#x27;;
+import type { RoomData } from &#x27;../../models/room.model&#x27;;
+
+@Component({
+  selector: &#x27;app-agenda&#x27;,
+  standalone: false,
+  templateUrl: &#x27;./agenda.html&#x27;,
+  styleUrl: &#x27;./agenda.css&#x27;,
+})
+export class Agenda {
+  public submittedData: any;
+  @ViewChild(&#x27;classInfoModal&#x27;) classInfoModal!: ConfirmationModal;
+  @ViewChild(&#x27;sucessModal&#x27;) sucessModal!: ConfirmationModal;
+  currentIndex!: number;
+  roomData: RoomData[] &#x3D; [
+    {
+      id: 1,
+      nome: &#x27;Sala 01&#x27;,
+      data: &#x27;2025-10-20&#x27;,
+      horario: &#x27;10:00 - 11:00&#x27;,
+      capacidade: &#x27;12 pessoas&#x27;,
+      observacoes: [&#x27;Possui projetor&#x27;, &#x27;Quadro branco disponível&#x27;],
+    },
+    {
+      id: 2,
+      nome: &#x27;Laboratório 2&#x27;,
+      data: &#x27;2025-10-21&#x27;,
+      horario: &#x27;14:00 - 16:30&#x27;,
+      capacidade: &#x27;50 pessoas&#x27;,
+      observacoes: [&#x27;Necessário microfone&#x27;, &#x27;Sistema de som integrado&#x27;],
+    },
+    {
+      id: 3,
+      nome: &#x27;Sala 9&#x27;,
+      data: &#x27;2025-10-20&#x27;,
+      horario: &#x27;09:00 - 10:30&#x27;,
+      capacidade: &#x27;8 pessoas&#x27;,
+      observacoes: [&#x27;Pufes e área de descanso&#x27;, &#x27;Muitos post-its&#x27;],
+    },
+    {
+      id: 4,
+      nome: &#x27;Auditório&#x27;,
+      data: &#x27;2025-10-22&#x27;,
+      horario: &#x27;08:00 - 12:00&#x27;,
+      capacidade: &#x27;150 pessoas&#x27;,
+      observacoes: [&#x27;Palco elevado&#x27;, &#x27;Equipamento de tradução simultânea (solicitar)&#x27;],
+    },
+    {
+      id: 5,
+      nome: &#x27;Laboratório 4&#x27;,
+      data: &#x27;2025-10-20&#x27;,
+      horario: &#x27;15:00 - 15:30&#x27;,
+      capacidade: &#x27;4 pessoas&#x27;,
+      observacoes: [&#x27;Ambiente silencioso&#x27;, &#x27;Água disponível&#x27;],
+    },
+  ];
+  public fields: Field[] &#x3D; [
+    {
+      type: &#x27;date&#x27;,
+      name: &#x27;data&#x27;,
+      label: &#x27;Data&#x27;,
+      defaultValue: new Date().toISOString().split(&#x27;T&#x27;)[0],
+      validators: {
+        required: true,
+        errorMessages: { required: &#x27;A data é obrigatória.&#x27; },
+      },
+    },
+    {
+      type: &#x27;select&#x27;,
+      name: &#x27;horario&#x27;,
+      label: &#x27;Horário&#x27;,
+      defaultValue: &#x27;07:40-09:20&#x27;,
+      options: [
+        { value: &#x27;07:40-09:20&#x27;, label: &#x27;07:40 - 09:20&#x27; },
+        { value: &#x27;09:30-11:10&#x27;, label: &#x27;09:30 - 11:10&#x27; },
+        { value: &#x27;11:20-13:00&#x27;, label: &#x27;11:20 - 13:00&#x27; },
+        { value: &#x27;19:00-22:30&#x27;, label: &#x27;19:00 - 22:30&#x27; },
+      ],
+    },
+    {
+      type: &#x27;select&#x27;,
+      name: &#x27;local&#x27;,
+      label: &#x27;Local&#x27;,
+      defaultValue: &#x27;lab&#x27;,
+      options: [
+        { value: &#x27;lab&#x27;, label: &#x27;Laboratórios&#x27; },
+        { value: &#x27;sala&#x27;, label: &#x27;Salas de Aula&#x27; },
+        { value: &#x27;audit&#x27;, label: &#x27;Auditório&#x27; },
+      ],
+    },
+    {
+      type: &#x27;select&#x27;,
+      name: &#x27;capacidade&#x27;,
+      label: &#x27;Capacidade&#x27;,
+      defaultValue: &#x27;10-20&#x27;,
+      options: [
+        { value: &#x27;10-20&#x27;, label: &#x27;10 - 20 alunos&#x27; },
+        { value: &#x27;20-30&#x27;, label: &#x27;20 - 30 alunos&#x27; },
+        { value: &#x27;30-40&#x27;, label: &#x27;30 - 40 alunos&#x27; },
+        { value: &#x27;40+&#x27;, label: &#x27;Mais de 40 alunos&#x27; },
+      ],
+    },
+    {
+      type: &#x27;select&#x27;,
+      name: &#x27;disciplina&#x27;,
+      label: &#x27;Disciplina&#x27;,
+      defaultValue: &#x27;calc1&#x27;,
+      options: [
+        { value: &#x27;calc1&#x27;, label: &#x27;Cálculo I&#x27; },
+        { value: &#x27;redes&#x27;, label: &#x27;Redes de Computadores&#x27; },
+        { value: &#x27;ia&#x27;, label: &#x27;Inteligência Artificial&#x27; },
+        { value: &#x27;ed&#x27;, label: &#x27;Estrutura de Dados&#x27; },
+      ],
+    },
+    {
+      type: &#x27;equipment-select&#x27;,
+      name: &#x27;equipamentos&#x27;,
+      label: &#x27;Equipamento&#x27;,
+      options: [
+        { value: &#x27;proj&#x27;, label: &#x27;Projetor Multimídia&#x27; },
+        { value: &#x27;pc&#x27;, label: &#x27;Computador Desktop&#x27; },
+        { value: &#x27;lousa&#x27;, label: &#x27;Lousa Digital&#x27; },
+        { value: &#x27;mic&#x27;, label: &#x27;Microfone&#x27; },
+      ],
+    },
+    {
+      type: &#x27;multi-select&#x27;,
+      name: &#x27;softwares&#x27;,
+      label: &#x27;Softwares&#x27;,
+      options: [
+        { value: &#x27;netbeans&#x27;, label: &#x27;NetBeans&#x27; },
+        { value: &#x27;sqlserver&#x27;, label: &#x27;SQL Server&#x27; },
+        { value: &#x27;vscode&#x27;, label: &#x27;VS Code&#x27; },
+        { value: &#x27;brmodelo&#x27;, label: &#x27;BrModelo&#x27; },
+        { value: &#x27;photoshop&#x27;, label: &#x27;Photoshop&#x27; },
+      ],
+    },
+  ];
+  handleFormSubmit(formData: any): void {
+    this.submittedData &#x3D; formData;
+  }
+
+  openInfoModal(id: number) {
+    this.currentIndex &#x3D; id - 1;
+    this.classInfoModal.open();
+  }
+
+  openSucessModal() {
+    this.classInfoModal.onModalClose();
+    setTimeout(() &#x3D;&gt; {
+      this.sucessModal.open();
+    }, 50);
+  }
+}
+</code></pre>
+    </div>
+
+    <div class="tab-pane fade " id="templateData">
+        <pre class="line-numbers"><code class="language-html">&lt;div class&#x3D;&quot;d-flex flex-column gap-4&quot;&gt;
+  &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+    &lt;app-title-highligh class&#x3D;&quot;mt-2&quot; title&#x3D;&quot;Agendar&quot;&gt;&lt;/app-title-highligh&gt;
+    &lt;app-scheduling
+      [fields]&#x3D;&quot;fields&quot;
+      submitButtonText&#x3D;&quot;Buscar&quot;
+      (formSubmit)&#x3D;&quot;handleFormSubmit($event)&quot;
+    &gt;&lt;/app-scheduling&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+    &lt;app-title-highligh class&#x3D;&quot;mt-2&quot; title&#x3D;&quot;Baseado no seu perfil&quot;&gt;&lt;/app-title-highligh&gt;
+    &lt;div class&#x3D;&quot;d-flex flex-wrap gap-2 flex-row&quot;&gt;
+      &lt;app-romm-information-component
+        [labData]&#x3D;&quot;roomData[0]&quot;
+        (ConfirmSchedule)&#x3D;&quot;openInfoModal($event)&quot;
+      &gt;&lt;/app-romm-information-component&gt;
+      &lt;app-romm-information-component
+        [labData]&#x3D;&quot;roomData[1]&quot;
+        (ConfirmSchedule)&#x3D;&quot;openInfoModal($event)&quot;
+      &gt;&lt;/app-romm-information-component&gt;
+      &lt;app-romm-information-component
+        [labData]&#x3D;&quot;roomData[2]&quot;
+        (ConfirmSchedule)&#x3D;&quot;openInfoModal($event)&quot;
+      &gt;&lt;/app-romm-information-component&gt;
+      &lt;app-romm-information-component
+        [labData]&#x3D;&quot;roomData[3]&quot;
+        (ConfirmSchedule)&#x3D;&quot;openInfoModal($event)&quot;
+      &gt;&lt;/app-romm-information-component&gt;
+      &lt;app-romm-information-component
+        [labData]&#x3D;&quot;roomData[4]&quot;
+        (ConfirmSchedule)&#x3D;&quot;openInfoModal($event)&quot;
+      &gt;&lt;/app-romm-information-component&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class&#x3D;&quot;container-fluid&quot;&gt;
+    &lt;app-title-highligh class&#x3D;&quot;mt-2&quot; title&#x3D;&quot;Outras Opções&quot;&gt;&lt;/app-title-highligh&gt;
+    &lt;p&gt;Não há outras opções neste momento.&lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;app-confirmation-modal
+    #classInfoModal
+    mode&#x3D;&quot;detalhes&quot;
+    [detailsData]&#x3D;&quot;roomData[currentIndex]&quot;
+    title&#x3D;&quot;Detalhes&quot;
+    (onConfirm)&#x3D;&quot;openSucessModal()&quot;
+  &gt;
+  &lt;/app-confirmation-modal&gt;
+
+  &lt;app-confirmation-modal
+    #sucessModal
+    mode&#x3D;&quot;feedback&quot;
+    title&#x3D;&quot;Aviso!&quot;
+    message&#x3D;&quot;Aula agendada com sucesso!&quot;
+    cancelText&#x3D;&quot;Fechar&quot;
+    routerLink&#x3D;&quot;/aulas&quot;
+  &gt;&lt;/app-confirmation-modal&gt;
+&lt;/div&gt;
+</code></pre>
+    </div>
+
+
+    <div class="tab-pane fade " id="tree">
+        <div id="tree-container"></div>
+        <div class="tree-legend">
+            <div class="title">
+                <b>Legend</b>
+            </div>
+            <div>
+                <div class="color htmlelement"></div><span>Html element</span>
+            </div>
+            <div>
+                <div class="color component"></div><span>Component</span>
+            </div>
+            <div>
+                <div class="color directive"></div><span>Html element with directive</span>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+<script src="../js/libs/vis-network.min.js"></script>
+<script src="../js/libs/htmlparser.js"></script>
+<script src="../js/libs/deep-iterator.js"></script>
+<script>
+        var COMPONENT_TEMPLATE = '<div><div class="d-flex flex-column gap-4">  <div class="container-fluid">    <app-title-highligh class="mt-2" title="Agendar"></app-title-highligh>    <app-scheduling      [fields]="fields"      submitButtonText="Buscar"      (formSubmit)="handleFormSubmit($event)"    ></app-scheduling>  </div>  <div class="container-fluid">    <app-title-highligh class="mt-2" title="Baseado no seu perfil"></app-title-highligh>    <div class="d-flex flex-wrap gap-2 flex-row">      <app-romm-information-component        [labData]="roomData[0]"        (ConfirmSchedule)="openInfoModal($event)"      ></app-romm-information-component>      <app-romm-information-component        [labData]="roomData[1]"        (ConfirmSchedule)="openInfoModal($event)"      ></app-romm-information-component>      <app-romm-information-component        [labData]="roomData[2]"        (ConfirmSchedule)="openInfoModal($event)"      ></app-romm-information-component>      <app-romm-information-component        [labData]="roomData[3]"        (ConfirmSchedule)="openInfoModal($event)"      ></app-romm-information-component>      <app-romm-information-component        [labData]="roomData[4]"        (ConfirmSchedule)="openInfoModal($event)"      ></app-romm-information-component>    </div>  </div>  <div class="container-fluid">    <app-title-highligh class="mt-2" title="Outras Opções"></app-title-highligh>    <p>Não há outras opções neste momento.</p>  </div>  <app-confirmation-modal    #classInfoModal    mode="detalhes"    [detailsData]="roomData[currentIndex]"    title="Detalhes"    (onConfirm)="openSucessModal()"  >  </app-confirmation-modal>  <app-confirmation-modal    #sucessModal    mode="feedback"    title="Aviso!"    message="Aula agendada com sucesso!"    cancelText="Fechar"    routerLink="/aulas"  ></app-confirmation-modal></div></div>'
+    var COMPONENTS = [{'name': 'Agenda', 'selector': 'app-agenda'},{'name': 'App', 'selector': 'app-root'},{'name': 'Aulas', 'selector': 'app-aulas'},{'name': 'AuthLayout', 'selector': 'app-auth-layout'},{'name': 'ClassInfoCard', 'selector': 'app-class-info-card'},{'name': 'Configuracoes', 'selector': 'app-configuracoes'},{'name': 'ConfirmationModal', 'selector': 'app-confirmation-modal'},{'name': 'DaySelector', 'selector': 'app-day-selector'},{'name': 'EditarAula', 'selector': 'app-editar-aula'},{'name': 'Header', 'selector': 'app-header'},{'name': 'Login', 'selector': 'app-login'},{'name': 'MainLayout', 'selector': 'app-main-layout'},{'name': 'Notificacoes', 'selector': 'app-notificacoes'},{'name': 'NotificationCard', 'selector': 'app-notification-card'},{'name': 'RommInformationComponent', 'selector': 'app-romm-information-component'},{'name': 'Scheduling', 'selector': 'app-scheduling'},{'name': 'TabBar', 'selector': 'app-tab-bar'},{'name': 'TemplatePlaygroundComponent', 'selector': 'template-playground-root'},{'name': 'TitleHighligh', 'selector': 'app-title-highligh'}];
+    var DIRECTIVES = [];
+    var ACTUAL_COMPONENT = {'name': 'Agenda'};
+</script>
+<script src="../js/tree.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                   </div><div class="search-results">
+    <div class="has-results">
+        <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+        <ul class="search-results-list"></ul>
+    </div>
+    <div class="no-results">
+        <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+    </div>
+</div>
+</div>
+               <!-- END CONTENT -->
+           </div>
+       </div>
+
+          <label class="dark-mode-switch">
+               <input type="checkbox">
+               <span class="slider">
+                    <svg class="slider-icon" viewBox="0 0 24 24" fill="none" height="20" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" width="20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+                    </svg>
+               </span>
+          </label>
+
+       <script>
+            var COMPODOC_CURRENT_PAGE_DEPTH = 1;
+            var COMPODOC_CURRENT_PAGE_CONTEXT = 'component';
+            var COMPODOC_CURRENT_PAGE_URL = 'Agenda.html';
+            var MAX_SEARCH_RESULTS = 15;
+       </script>
+
+       <script>
+               $darkModeToggleSwitchers = document.querySelectorAll('.dark-mode-switch input');
+               checkToggle(darkModeState);
+               if ($darkModeToggleSwitchers.length > 0) {
+                    for (var i = 0; i < $darkModeToggleSwitchers.length; i++) {
+                         $darkModeToggleSwitchers[i].addEventListener('change', function (event) {
+                              darkModeState = !darkModeState;
+                              toggleDarkMode(darkModeState);
+                         });
+                    }
+               }
+          </script>
+
+       <script src="../js/libs/custom-elements.min.js"></script>
+       <script src="../js/libs/lit-html.js"></script>
+
+       <script src="../js/menu-wc.js" defer></script>
+       <script nomodule src="../js/menu-wc_es5.js" defer></script>
+
+       <script src="../js/libs/bootstrap-native.js"></script>
+
+       <script src="../js/libs/es6-shim.min.js"></script>
+       <script src="../js/libs/EventDispatcher.js"></script>
+       <script src="../js/libs/promise.min.js"></script>
+
+       <script src="../js/compodoc.js"></script>
+
+       <script src="../js/tabs.js"></script>
+       <script src="../js/menu.js"></script>
+       <script src="../js/libs/clipboard.min.js"></script>
+       <script src="../js/libs/prism.js"></script>
+       <script src="../js/sourceCode.js"></script>
+          <script src="../js/search/search.js"></script>
+          <script src="../js/search/lunr.min.js"></script>
+          <script src="../js/search/search-lunr.js"></script>
+          <script src="../js/search/search_index.js"></script>
+       <script src="../js/lazy-load-graphs.js"></script>
+
+
+    </body>
+</html>

@@ -2,7 +2,9 @@
 import { inject, Injectable } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-
+/**
+ * Serviço responsável pelo gerenciamento de icones da aplicação
+ */
 @Injectable({
   providedIn: 'root'
 })
@@ -11,6 +13,9 @@ export class IconRegistryService {
   private matIconRegistry = inject(MatIconRegistry);
   private domSanitizer = inject(DomSanitizer);
 
+  /**
+   * Faz a inserção de todos os icones no projeto
+   */
   registerIcons(): void {
     this.addIcon('ads-icon', 'ads-icon.svg');
     this.addIcon('alert', 'alert.svg');
@@ -32,7 +37,11 @@ export class IconRegistryService {
     this.addIcon('arrow-previus', 'arrow-previus.svg');
     this.addIcon('details-arrow', 'details-arrow.svg')
   }
-
+  /**
+   * Insere um novo icone no projeto
+   * @param iconName Nome do icone
+   * @param fileName Nome do arquivo do icone
+   */
   private addIcon(iconName: string, fileName: string): void {
     this.matIconRegistry.addSvgIcon(
       iconName,
