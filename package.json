@@ -8,7 +8,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "doc": "npx compodoc -p tsconfig.json -s"
   },
   "prettier": {
     "printWidth": 100,
