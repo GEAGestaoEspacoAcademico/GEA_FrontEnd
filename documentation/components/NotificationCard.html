@@ -138,6 +138,25 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Componente de card para exibir uma
+única notificação em uma lista.</p>
+<p>Este é um &quot;Dumb Component&quot;, otimizado com
+<code>ChangeDetectionStrategy.OnPush</code>. Ele não possui lógica
+interna e apenas exibe os dados recebidos via @Input.</p>
+<p>&lt;app-notification-card
+[source]=&quot;notificacao.origem&quot;
+[title]=&quot;notificacao.titulo&quot;
+[date]=&quot;notificacao.dataEnvio&quot;
+[snippet]=&quot;notificacao.resumo&quot;</p>
+<blockquote>
+</app-notification-card>
+</blockquote>
+
+    </p>
 
 
 
@@ -248,9 +267,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/components/shared/notification-card/notification-card.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="39" class="link-to-prism">src/app/components/shared/notification-card/notification-card.ts:39</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>A data e hora em que a notificação foi enviada.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -269,9 +294,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/components/shared/notification-card/notification-card.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="42" class="link-to-prism">src/app/components/shared/notification-card/notification-card.ts:42</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Um breve resumo ou trecho da mensagem da notificação.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -290,9 +321,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="11" class="link-to-prism">src/app/components/shared/notification-card/notification-card.ts:11</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/components/shared/notification-card/notification-card.ts:33</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>A origem da notificação (ex: &quot;Biblioteca&quot;, &quot;Sistema Acadêmico&quot;).</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -311,9 +348,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/components/shared/notification-card/notification-card.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="36" class="link-to-prism">src/app/components/shared/notification-card/notification-card.ts:36</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>O título principal da notificação.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -328,17 +371,45 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectionStrategy, Component, Input } from &#x27;@angular/core&#x27;;
 
+/**
+ * Componente de card para exibir uma
+ * única notificação em uma lista.
+ *
+ * Este é um &quot;Dumb Component&quot;, otimizado com
+ * &#x60;ChangeDetectionStrategy.OnPush&#x60;. Ele não possui lógica
+ * interna e apenas exibe os dados recebidos via @Input.
+ *
+ * @usage
+ * &lt;app-notification-card
+ * [source]&#x3D;&quot;notificacao.origem&quot;
+ * [title]&#x3D;&quot;notificacao.titulo&quot;
+ * [date]&#x3D;&quot;notificacao.dataEnvio&quot;
+ * [snippet]&#x3D;&quot;notificacao.resumo&quot;
+ * &gt;&lt;/app-notification-card&gt;
+ */
 @Component({
   selector: &#x27;app-notification-card&#x27;,
   standalone: false,
   templateUrl: &#x27;./notification-card.html&#x27;,
   styleUrl: &#x27;./notification-card.css&#x27;,
+  /**
+   * OnPush: O componente só será verificado
+   * quando suas propriedades @Input mudarem,
+   * melhorando a performance.
+   */
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationCard {
+  /** A origem da notificação (ex: &quot;Biblioteca&quot;, &quot;Sistema Acadêmico&quot;). */
   @Input() source!: string;
+
+  /** O título principal da notificação. */
   @Input() title!: string;
+
+  /** A data e hora em que a notificação foi enviada. */
   @Input() date!: Date | string;
+
+  /** Um breve resumo ou trecho da mensagem da notificação. */
   @Input() snippet!: string;
 }</code></pre>
     </div>

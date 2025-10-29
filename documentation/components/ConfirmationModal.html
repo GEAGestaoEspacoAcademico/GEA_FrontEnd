@@ -138,6 +138,42 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Componente de modal genérico e reutilizável para confirmação,
+exibição de detalhes ou feedback.</p>
+<p>Este componente NÃO se abre sozinho. O componente pai precisa
+obter uma referência a ele (usando @ViewChild) e chamar
+o método público <code>open()</code> para exibi-lo.</p>
+<p>// ----- No template do componente PAI -----
+&lt;app-confirmation-modal
+#meuModalAviso
+mode=&quot;aviso&quot;
+title=&quot;Confirmar Ação&quot;
+message=&quot;Você tem certeza que deseja fazer isso?&quot;
+confirmText=&quot;Sim, tenho certeza&quot;
+(onConfirm)=&quot;fazerAcao()&quot;
+(onCancel)=&quot;fecharModal()&quot;</p>
+<blockquote>
+</app-confirmation-modal>
+</blockquote>
+<p>// ----- No TS do componente PAI -----
+import { ViewChild } from &#39;@angular/core&#39;;
+import { ConfirmationModal } from &#39;...&#39;;</p>
+<p>public solicitarConfirmacao(): void {
+// Abre o modal
+this.modalAviso.open();
+}</p>
+<p>public fazerAcao(): void {
+console.log(&#39;Ação confirmada!&#39;);
+}</p>
+<p>public fecharModal(): void {
+console.log(&#39;Modal cancelado.&#39;);
+}</p>
+
+    </p>
 
 
 
@@ -221,12 +257,15 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#onModalClose" >onModalClose</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#onModalConfirm" >onModalConfirm</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#open" >open</a>
                             </li>
                         </ul>
@@ -275,10 +314,10 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                <a href="#onCancel" >onCancel</a>
+                                <a href="#oncancel" >oncancel</a>
                             </li>
                             <li>
-                                <a href="#onConfirm" >onConfirm</a>
+                                <a href="#onconfirm" >onconfirm</a>
                             </li>
                         </ul>
                     </td>
@@ -314,9 +353,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="76" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:76</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>(Opcional) Texto customizado para o botão de cancelar/fechar (default: &#39;Cancelar&#39;).</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -340,9 +385,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:19</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="73" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:73</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>(Opcional) Texto customizado para o botão de confirmação (default: &#39;Confirmar&#39;).</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -361,9 +412,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:18</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="70" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:70</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>(Opcional) Os dados da sala para serem exibidos no modo &#39;detalhes&#39;.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -382,9 +439,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:17</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="67" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:67</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>(Opcional) A mensagem principal a ser exibida no corpo do modal (modos &#39;aviso&#39; e &#39;feedback&#39;).</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -413,9 +476,20 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="61" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:61</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Define o modo de operação do modal.</p>
+<ul>
+<li><code>aviso</code>: Mostra mensagem, botões de confirmar/cancelar.</li>
+<li><code>detalhes</code>: Mostra os dados de <code>detailsData</code>.</li>
+<li><code>feedback</code>: Mostra apenas uma mensagem e um botão</li>
+</ul>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -439,9 +513,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:21</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="79" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:79</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>(Opcional) Um link de roteador (routerLink) para ser usado por um botão no template.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -465,9 +545,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:16</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="64" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:64</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>O texto a ser exibido no cabeçalho (header) do modal.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -477,8 +563,8 @@
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="onCancel"></a>
-                        <b>onCancel</b>
+                        <a name="oncancel"></a>
+                        <b>oncancel</b>
                     </td>
                 </tr>
                 <tr>
@@ -489,17 +575,23 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="26" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:26</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="88" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:88</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Evento emitido quando o usuário clica em &#39;Cancelar&#39; ou fecha o modal.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
             <tbody>
                 <tr>
                     <td class="col-md-4">
-                        <a name="onConfirm"></a>
-                        <b>onConfirm</b>
+                        <a name="onconfirm"></a>
+                        <b>onconfirm</b>
                     </td>
                 </tr>
                 <tr>
@@ -510,9 +602,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:24</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="85" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:85</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Evento emitido quando o usuário clica no botão de confirmação.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -529,6 +627,7 @@
                 <td class="col-md-4">
                     <a name="onModalClose"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>onModalClose</b></span>
                         <a href="#onModalClose"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -536,21 +635,25 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>onModalClose()</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onModalClose()</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="40"
-                                    class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:40</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="121"
+                                    class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:121</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Método interno (chamado pelo template) ao clicar em &#39;Cancelar&#39; ou fechar.
+Emite o evento &#39;onCancel&#39; e fecha todos os modais.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -566,6 +669,7 @@
                 <td class="col-md-4">
                     <a name="onModalConfirm"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>onModalConfirm</b></span>
                         <a href="#onModalConfirm"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -573,21 +677,25 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>onModalConfirm()</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onModalConfirm()</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="35"
-                                    class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:35</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="112"
+                                    class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:112</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Método interno (chamado pelo template) ao clicar em &#39;Confirmar&#39;.
+Emite o evento &#39;onConfirm&#39; e fecha todos os modais.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -603,6 +711,7 @@
                 <td class="col-md-4">
                     <a name="open"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>open</b></span>
                         <a href="#open"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -610,26 +719,33 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>open()</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>open()</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="31"
-                                    class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:31</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="100"
+                                    class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:100</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Método PÚBLICO. Deve ser chamado pelo componente pai para abrir o modal.</p>
+<b>Example :</b><div><pre class="line-numbers"><code class="language-html">// No componente pai:
+this.meuModal.open();</code></pre></div></div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
 
                         </div>
+                            <div class="io-description">
+                                
+                            </div>
                 </td>
             </tr>
         </tbody>
@@ -659,10 +775,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:13</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:53</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Serviço do Ng-Bootstrap para controlar a instância do modal.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -695,10 +817,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="92" class="link-to-prism">src/app/components/shared/confirmation-modal/confirmation-modal.ts:92</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Referência interna ao <ng-template> que define o modal no HTML.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -713,6 +841,45 @@ import { Component, EventEmitter, inject, Input, Output, ViewChild } from &#x27;
 import { NgbModal } from &#x27;@ng-bootstrap/ng-bootstrap&#x27;;
 import type { RoomData } from &#x27;../../../models/room.model&#x27;;
 
+/**
+ * Componente de modal genérico e reutilizável para confirmação,
+ * exibição de detalhes ou feedback.
+ *
+ * Este componente NÃO se abre sozinho. O componente pai precisa
+ * obter uma referência a ele (usando @ViewChild) e chamar
+ * o método público &#x60;open()&#x60; para exibi-lo.
+ *
+ * @usage
+ * // ----- No template do componente PAI -----
+ * &lt;app-confirmation-modal
+ * #meuModalAviso
+ * mode&#x3D;&quot;aviso&quot;
+ * title&#x3D;&quot;Confirmar Ação&quot;
+ * message&#x3D;&quot;Você tem certeza que deseja fazer isso?&quot;
+ * confirmText&#x3D;&quot;Sim, tenho certeza&quot;
+ * (onConfirm)&#x3D;&quot;fazerAcao()&quot;
+ * (onCancel)&#x3D;&quot;fecharModal()&quot;
+ * &gt;&lt;/app-confirmation-modal&gt;
+ *
+ * // ----- No TS do componente PAI -----
+ * import { ViewChild } from &#x27;@angular/core&#x27;;
+ * import { ConfirmationModal } from &#x27;...&#x27;;
+ *
+ * @ViewChild(&#x27;meuModalAviso&#x27;) modalAviso!: ConfirmationModal;
+ *
+ * public solicitarConfirmacao(): void {
+ * // Abre o modal
+ * this.modalAviso.open();
+ * }
+ *
+ * public fazerAcao(): void {
+ * console.log(&#x27;Ação confirmada!&#x27;);
+ * }
+ *
+ * public fecharModal(): void {
+ * console.log(&#x27;Modal cancelado.&#x27;);
+ * }
+ */
 @Component({
   selector: &#x27;app-confirmation-modal&#x27;,
   standalone: false,
@@ -720,39 +887,80 @@ import type { RoomData } from &#x27;../../../models/room.model&#x27;;
   styleUrl: &#x27;./confirmation-modal.css&#x27;,
 })
 export class ConfirmationModal {
+  /** Serviço do Ng-Bootstrap para controlar a instância do modal. */
   private modalService &#x3D; inject(NgbModal);
 
+  /**
+   * Define o modo de operação do modal.
+   * - &#x60;aviso&#x60;: Mostra mensagem, botões de confirmar/cancelar.
+   * - &#x60;detalhes&#x60;: Mostra os dados de &#x60;detailsData&#x60;.
+   * - &#x60;feedback&#x60;: Mostra apenas uma mensagem e um botão
+   */
   @Input({ required: true }) mode: &#x27;aviso&#x27; | &#x27;detalhes&#x27; | &#x27;feedback&#x27; &#x3D; &#x27;aviso&#x27;;
+
+  /** O texto a ser exibido no cabeçalho (header) do modal. */
   @Input({ required: true }) title!: string;
+
+  /** (Opcional) A mensagem principal a ser exibida no corpo do modal (modos &#x27;aviso&#x27; e &#x27;feedback&#x27;). */
   @Input() message!: string;
+
+  /** (Opcional) Os dados da sala para serem exibidos no modo &#x27;detalhes&#x27;. */
   @Input() detailsData!: RoomData;
+
+  /** (Opcional) Texto customizado para o botão de confirmação (default: &#x27;Confirmar&#x27;). */
   @Input() confirmText: string &#x3D; &#x27;Confirmar&#x27;;
+
+  /** (Opcional) Texto customizado para o botão de cancelar/fechar (default: &#x27;Cancelar&#x27;). */
   @Input() cancelText: string &#x3D; &#x27;Cancelar&#x27;;
+
+  /** (Opcional) Um link de roteador (routerLink) para ser usado por um botão no template. */
   @Input() routerLink: string &#x3D; &#x27; &#x27;;
 
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() onConfirm &#x3D; new EventEmitter&lt;RoomData&gt;();
-  // eslint-disable-next-line @angular-eslint/no-output-on-prefix
-  @Output() onCancel &#x3D; new EventEmitter&lt;void&gt;();
+  /**
+   * Evento emitido quando o usuário clica no botão de confirmação.
+   *
+   */
+  @Output() onconfirm &#x3D; new EventEmitter&lt;void&gt;();
 
+  /** Evento emitido quando o usuário clica em &#x27;Cancelar&#x27; ou fecha o modal. */
+  @Output() oncancel &#x3D; new EventEmitter&lt;void&gt;();
+
+  /** Referência interna ao &lt;ng-template&gt; que define o modal no HTML. */
   @ViewChild(&#x27;ConfirmationModal&#x27;)
   modalTemplate!: TemplateRef&lt;ConfirmationModal&gt;;
 
-  open() {
-    this.modalService.open(this.modalTemplate, { backdrop: &#x27;static&#x27;, centered: true, size: &#x27;sm&#x27; });
+  /**
+   * Método PÚBLICO. Deve ser chamado pelo componente pai para abrir o modal.
+   * @example
+   * // No componente pai:
+   * this.meuModal.open();
+   */
+  public open(): void {
+    this.modalService.open(this.modalTemplate, {
+      backdrop: &#x27;static&#x27;,
+      centered: true,
+      size: &#x27;sm&#x27;,
+    });
   }
 
-  onModalConfirm(): void {
-    this.onConfirm.emit();
+  /**
+   * Método interno (chamado pelo template) ao clicar em &#x27;Confirmar&#x27;.
+   * Emite o evento &#x27;onConfirm&#x27; e fecha todos os modais.
+   */
+  public onModalConfirm(): void {
+    this.onconfirm.emit();
     this.modalService.dismissAll();
   }
 
-  onModalClose(): void {
-    this.onCancel.emit();
+  /**
+   * Método interno (chamado pelo template) ao clicar em &#x27;Cancelar&#x27; ou fechar.
+   * Emite o evento &#x27;onCancel&#x27; e fecha todos os modais.
+   */
+  public onModalClose(): void {
+    this.oncancel.emit();
     this.modalService.dismissAll();
   }
-}
-</code></pre>
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">

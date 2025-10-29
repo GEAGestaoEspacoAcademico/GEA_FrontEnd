@@ -144,6 +144,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Define a estrutura de dados completo de uma Disciplina</p>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -230,6 +237,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Nome do Curso em que a disciplina é ministrada (ex: &quot;Análise e Desenvolvimento de Sistemas&quot;)</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -263,6 +276,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Identificador único da Disciplina</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -296,6 +315,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Nome da disciplina  (ex: &quot;Calculo 1&quot;)</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -329,6 +354,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Nome do professor que ministra a Disciplina  (ex: &quot;Cláudio&quot;)</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -362,6 +393,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Disciplina relacionado à Disciplina(ex: &quot;2025.2&quot;)</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -370,10 +407,15 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface Disciplina{
+  /** Identificador único da Disciplina */
   id: number,
+  /** Nome da disciplina  (ex: &quot;Calculo 1&quot;) */
   nome: string,
+  /** Disciplina relacionado à Disciplina(ex: &quot;2025.2&quot;)*/
   semestre: string,
+  /** Nome do professor que ministra a Disciplina  (ex: &quot;Cláudio&quot;)*/
   professor: string,
+  /** Nome do Curso em que a disciplina é ministrada (ex: &quot;Análise e Desenvolvimento de Sistemas&quot;)*/
   curso: string
 }</code></pre>
     </div>

@@ -138,6 +138,16 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Componente de apresentação (dumb component) reutilizável.
+Exibe uma string de título com um estilo de &quot;destaque&quot;
+pré-definido no CSS.</p>
+<p>&lt;app-title-highlight [title]=&quot;&#39;Minha Seção de Destaque&#39;&quot;&gt;</app-title-highlight></p>
+
+    </p>
 
 
 
@@ -147,6 +157,10 @@
     <table class="table table-sm table-hover metadata">
         <tbody>
 
+            <tr>
+                <td class="col-md-3">changeDetection</td>
+                <td class="col-md-9"><code>ChangeDetectionStrategy.OnPush</code></td>
+            </tr>
 
 
 
@@ -240,9 +254,16 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="10" class="link-to-prism">src/app/components/shared/title-highligh/title-highligh.ts:10</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/components/shared/title-highligh/title-highligh.ts:28</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>O texto (string) que será exibido como o título principal.
+Este @Input é obrigatório.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -255,18 +276,35 @@
 
 
     <div class="tab-pane fade  tab-source-code" id="source">
-        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, Input } from &#x27;@angular/core&#x27;;
+        <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { ChangeDetectionStrategy, Component, Input } from &#x27;@angular/core&#x27;;
 
+/**
+ * Componente de apresentação (dumb component) reutilizável.
+ * Exibe uma string de título com um estilo de &quot;destaque&quot;
+ * pré-definido no CSS.
+ *
+ * @usage
+ * &lt;app-title-highlight [title]&#x3D;&quot;&#x27;Minha Seção de Destaque&#x27;&quot;&gt;&lt;/app-title-highlight&gt;
+ */
 @Component({
   selector: &#x27;app-title-highligh&#x27;,
   standalone: false,
   templateUrl: &#x27;./title-highligh.html&#x27;,
-  styleUrl: &#x27;./title-highligh.css&#x27;
+  styleUrl: &#x27;./title-highligh.css&#x27;,
+  /**
+   * (Opcional, mas recomendado)
+   * OnPush: O componente só será verificado (e re-renderizado)
+   * quando sua propriedade @Input &#x27;title&#x27; mudar.
+   */
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TitleHighligh {
+  /**
+   * O texto (string) que será exibido como o título principal.
+   * Este @Input é obrigatório.
+   */
   @Input ({required: true}) title!: string;
-}
-</code></pre>
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">

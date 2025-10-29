@@ -144,6 +144,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Define a estrutura de dados completo de uma Sala</p>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -224,6 +231,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Capacidade que a sala possui (ex: 40)</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -257,6 +270,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Status da sala, se esta disponível ou não (ex: false)</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -290,6 +309,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>identificador único da sala</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -323,6 +348,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Nome da sala (ex: Sala 5, Sala 7)</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -331,9 +362,13 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface Sala{
+  /** identificador único da sala */
   id: number,
+  /** Nome da sala (ex: Sala 5, Sala 7) */
   nome: string,
+  /** Capacidade que a sala possui (ex: 40) */
   capacidade: number,
+  /** Status da sala, se esta disponível ou não (ex: false) */
   disponibilidade: boolean
 }</code></pre>
     </div>

@@ -144,6 +144,13 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Define a estrutura de dados completo do usuário</p>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -218,6 +225,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Cargo do usuário, para autenticações (ex: &quot;PROFESSOR&quot;)</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -251,6 +264,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Identificador único do usuário</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -284,6 +303,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Nome do usuário logado (ex: &quot;Isaque&quot;)</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -292,10 +317,13 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface User{
-    id: number,
-    nome: string,
-    cargo: string
-  }
+  /** Identificador único do usuário */
+  id: number,
+  /** Nome do usuário logado (ex: &quot;Isaque&quot;) */
+  nome: string,
+  /** Cargo do usuário, para autenticações (ex: &quot;PROFESSOR&quot;) */
+  cargo: string
+}
 </code></pre>
     </div>
 </div>

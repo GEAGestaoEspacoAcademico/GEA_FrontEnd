@@ -138,6 +138,21 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Componente de apresentação (dumb component) responsável por
+exibir as informações de uma sala (RoomData) e fornecer
+um gatilho para confirmar um agendamento.</p>
+<p>&lt;app-romm-information-component
+[labData]=&quot;dadosDaMinhaSala&quot;
+(ConfirmSchedule)=&quot;onConfirmar($event)&quot;</p>
+<blockquote>
+</app-romm-information-component>
+</blockquote>
+
+    </p>
 
 
 
@@ -202,6 +217,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#execute" >execute</a>
                             </li>
                         </ul>
@@ -263,9 +279,16 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/components/shared/romm-information-component/romm-information-component.ts:12</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/components/shared/romm-information-component/romm-information-component.ts:27</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Os dados da sala/laboratório (RoomData) que serão
+exibidos neste componente.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -287,9 +310,16 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/components/shared/romm-information-component/romm-information-component.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="33" class="link-to-prism">src/app/components/shared/romm-information-component/romm-information-component.ts:33</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Evento emitido quando o usuário executa a ação de confirmação
+Emite o ID (número) da sala.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -306,6 +336,7 @@
                 <td class="col-md-4">
                     <a name="execute"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>execute</b></span>
                         <a href="#execute"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -313,21 +344,25 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>execute()</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>execute()</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="15"
-                                    class="link-to-prism">src/app/components/shared/romm-information-component/romm-information-component.ts:15</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="39"
+                                    class="link-to-prism">src/app/components/shared/romm-information-component/romm-information-component.ts:39</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Método público, destinado a ser chamado pelo template (ex: (click)),
+que dispara o evento &#39;ConfirmSchedule&#39; com o ID da sala.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -344,9 +379,20 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import { Component, EventEmitter, Input, Output } from &#x27;@angular/core&#x27;;
- 
+
 import type { RoomData } from &#x27;../../../models/room.model&#x27;;
 
+/**
+ * Componente de apresentação (dumb component) responsável por
+ * exibir as informações de uma sala (RoomData) e fornecer
+ * um gatilho para confirmar um agendamento.
+ *
+ * @usage
+ * &lt;app-romm-information-component
+ * [labData]&#x3D;&quot;dadosDaMinhaSala&quot;
+ * (ConfirmSchedule)&#x3D;&quot;onConfirmar($event)&quot;
+ * &gt;&lt;/app-romm-information-component&gt;
+ */
 @Component({
   selector: &#x27;app-romm-information-component&#x27;,
   standalone: false,
@@ -354,14 +400,26 @@ import type { RoomData } from &#x27;../../../models/room.model&#x27;;
   styleUrl: &#x27;./romm-information-component.css&#x27;
 })
 export class RommInformationComponent {
+  /**
+   * Os dados da sala/laboratório (RoomData) que serão
+   * exibidos neste componente.
+   */
   @Input() labData!: RoomData;
+
+  /**
+   * Evento emitido quando o usuário executa a ação de confirmação
+   * Emite o ID (número) da sala.
+   */
   @Output() ConfirmSchedule &#x3D; new EventEmitter&lt;number&gt;();
 
-  execute(){
+  /**
+   * Método público, destinado a ser chamado pelo template (ex: (click)),
+   * que dispara o evento &#x27;ConfirmSchedule&#x27; com o ID da sala.
+   */
+  public execute(): void {
     this.ConfirmSchedule.emit(this.labData.id);
   }
-}
-</code></pre>
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">

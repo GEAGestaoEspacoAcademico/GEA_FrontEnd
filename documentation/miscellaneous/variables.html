@@ -737,6 +737,17 @@
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Interceptor HTTP funcional (<code>HttpInterceptorFn</code>) para
+tratamento global de erros.</p>
+<p>Este interceptor captura <em>todas</em> as respostas de erro HTTP
+(HttpErrorResponse) da aplicação, exibe uma notificação amigável
+para o usuário (via NotificationService) e, em casos específicos
+(como 403), redireciona para a tela de login.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -935,7 +946,7 @@
 ): Observable&lt;boolean | UrlTree&gt; &#x3D;&gt; {
   const router &#x3D; inject(Router);
   const store &#x3D; inject(Store);
-  const notificationService &#x3D; inject(NotificationService)
+  const notificationService &#x3D; inject(NotificationService);
 
   const allowedRoles &#x3D; route.data?.[&#x27;roles&#x27;] as string[] | undefined;
 
@@ -949,7 +960,7 @@
     take(1),
     map((cargoUsuario) &#x3D;&gt; {
       if (!cargoUsuario) {
-        notificationService.showError(&#x27;Usuário não permitidos&#x27;)
+        notificationService.showError(&#x27;Usuário não permitidos&#x27;);
         return router.createUrlTree([&#x27;/login&#x27;]);
       }
 
@@ -958,7 +969,8 @@
       if (normalizedAllowed.includes(userCargoNormalized)) {
         return true;
       }
-      notificationService.showError(&#x27;Usuário não permitidos&#x27;)
+
+      notificationService.showError(&#x27;Usuário não permitido&#x27;);
       return router.createUrlTree([&#x27;/login&#x27;]);
     })
   );
@@ -966,6 +978,16 @@
                     </td>
                 </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Guarda de rota funcional (<code>CanActivateFn</code>) que verifica se o usuário
+autenticado possui um cargo (role) permitido para acessar a rota.</p>
+<p>Ele lê o cargo do usuário a partir do NgRx Store (<code>selectUserCargo</code>)
+e o compara com um array de &#39;roles&#39; (cargos) fornecido no
+<code>data</code> da rota.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>

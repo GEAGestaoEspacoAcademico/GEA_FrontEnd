@@ -138,6 +138,24 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Componente de formulário dinâmico e reutilizável.
+Gera um FormGroup complexo com base na configuração [fields] recebida.
+Gerencia internamente FormArrays (para &#39;equipment-select&#39;) e
+autocompletes (para &#39;multi-select&#39; e &#39;equipment-select&#39;).</p>
+<p>&lt;app-scheduling
+[fields]=&quot;configuracaoDosCampos&quot;
+submitButtonText=&quot;Agendar&quot;
+[cancelButtonText]=&quot;&#39;Voltar&#39;&quot;
+(formSubmit)=&quot;onAgendamentoSubmit($event)&quot;</p>
+<blockquote>
+</app-scheduling>
+</blockquote>
+
+    </p>
 
 
     <p class="comment">
@@ -207,6 +225,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#equipmentAddForm" >equipmentAddForm</a>
                             </li>
                             <li>
@@ -214,15 +233,19 @@
                                 <a href="#fb" >fb</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#filteredEquipments" >filteredEquipments</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#filteredOptions" >filteredOptions</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#form" >form</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#softwareCtrl" >softwareCtrl</a>
                             </li>
                         </ul>
@@ -238,10 +261,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
-                                    <span class="modifier">Private</span>
-                                <a href="#_filter" >_filter</a>
-                            </li>
-                            <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#addEquipment" >addEquipment</a>
                             </li>
                             <li>
@@ -249,24 +269,30 @@
                                 <a href="#buildValidators" >buildValidators</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#displayEquipment" >displayEquipment</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#getEquipmentControls" >getEquipmentControls</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#getOptionLabel" >getOptionLabel</a>
                             </li>
                             <li>
                                 <a href="#ngOnInit" >ngOnInit</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#onChipRemoved" >onChipRemoved</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#onSubmit" >onSubmit</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#removeEquipment" >removeEquipment</a>
                             </li>
                             <li>
@@ -274,6 +300,7 @@
                                 <a href="#setupAutocomplete" >setupAutocomplete</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#softwareSelected" >softwareSelected</a>
                             </li>
                         </ul>
@@ -333,10 +360,17 @@
                 </tr>
                         <tr>
                             <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:59</a></div>
                             </td>
                         </tr>
 
+                <tr>
+                    <td class="col-md-4">
+                            <div class="io-description"><p>Inicializa os shells vazios do FormGroup para evitar
+erros de template antes do ngOnInit.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -359,9 +393,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:19</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="41" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:41</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>(Opcional) Texto do botão de cancelamento. Se indefinido, o botão não é exibido.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -385,9 +425,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:17</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="35" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:35</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>A configuração (array de Field) que define a estrutura do formulário.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -411,9 +457,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="18" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:18</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="38" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:38</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>O texto a ser exibido no botão principal de submit.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -435,9 +487,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="20" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:20</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:44</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emitido quando o formulário é válido e submetido. Emite o valor completo (form.value).</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -452,89 +510,9 @@
         <tbody>
             <tr>
                 <td class="col-md-4">
-                    <a name="_filter"></a>
-                    <span class="name">
-                            <span class="modifier">Private</span>
-                        <span ><b>_filter</b></span>
-                        <a href="#_filter"><span class="icon ion-ios-link"></span></a>
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td class="col-md-4">
-                        <span class="modifier-icon icon ion-ios-reset"></span>
-                    <code>_filter(value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>, options: <a href="../interfaces/Option.html" target="_self">Option[] | undefined</a>)</code>
-                </td>
-            </tr>
-
-
-                    <tr>
-                        <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="123"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:123</a></div>
-                        </td>
-                    </tr>
-
-
-            <tr>
-                <td class="col-md-4">
-
-                            <div class="io-description">
-                                <b>Parameters :</b>
-                                
-                                <table class="params">
-                                    <thead>
-                                        <tr>
-                                            <td>Name</td>
-                                                <td>Type</td>
-                                            <td>Optional</td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                                <td>value</td>
-                                            <td>
-                                                            <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                        <tr>
-                                                <td>options</td>
-                                            <td>
-                                                            <code><a href="../interfaces/Option.html" target="_self" >Option[] | undefined</a></code>
-                                            </td>
-
-                                            <td>
-                                                    No
-                                            </td>
-
-
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        <div class="io-description">
-                            <b>Returns : </b>        <code><a href="../interfaces/Option.html" target="_self" >Option[]</a></code>
-
-                        </div>
-                            <div class="io-description">
-                                
-                            </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <table class="table table-sm table-bordered">
-        <tbody>
-            <tr>
-                <td class="col-md-4">
                     <a name="addEquipment"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>addEquipment</b></span>
                         <a href="#addEquipment"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -542,21 +520,25 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>addEquipment(field: <a href="../interfaces/Field.html" target="_self">Field</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>addEquipment(field: <a href="../interfaces/Field.html" target="_self">Field</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="75"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:75</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="130"
+                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:130</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Público - Template) Adiciona um item de equipamento ao FormArray.
+Pega os valores do &#39;equipmentAddForm&#39; e os insere no &#39;form&#39; principal.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -567,6 +549,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -581,6 +564,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O objeto Field correspondente ao &#39;equipment-select&#39;.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -618,14 +605,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="100"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:100</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="174"
+                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:174</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Privado) Constrói um array de ValidatorFn com base na configuração de um Field.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -636,6 +625,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -650,6 +640,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O objeto de configuração de validadores (required, minLength, etc.).</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -659,7 +653,8 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>Um array de ValidatorFn para o FormControl.</p>
+
                             </div>
                 </td>
             </tr>
@@ -671,6 +666,7 @@
                 <td class="col-md-4">
                     <a name="displayEquipment"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>displayEquipment</b></span>
                         <a href="#displayEquipment"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -678,21 +674,25 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>displayEquipment(option: <a href="../interfaces/Option.html" target="_self">Option</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>displayEquipment(option: <a href="../interfaces/Option.html" target="_self">Option</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="96"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:96</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="165"
+                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:165</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Público - Template) Usado pelo [displayWith] do MatAutocomplete.
+Garante que o input mostre o &#39;label&#39; da Opção, e não o objeto [object Object].</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -703,6 +703,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -717,6 +718,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O objeto Option.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -726,7 +731,8 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>O &#39;label&#39; da opção ou uma string vazia.</p>
+
                             </div>
                 </td>
             </tr>
@@ -738,6 +744,7 @@
                 <td class="col-md-4">
                     <a name="getEquipmentControls"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>getEquipmentControls</b></span>
                         <a href="#getEquipmentControls"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -745,21 +752,25 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>getEquipmentControls(fieldName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getEquipmentControls(fieldName: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="70"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:70</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="120"
+                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:120</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Público - Template) Retorna os controles de um FormArray pelo nome do campo.
+Usado no template para iterar sobre os equipamentos adicionados.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -770,6 +781,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -784,6 +796,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O nome do campo (field.name) que é um FormArray.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -793,7 +809,8 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>Um array de AbstractControl (os FormGroups de equipamento).</p>
+
                             </div>
                 </td>
             </tr>
@@ -805,6 +822,7 @@
                 <td class="col-md-4">
                     <a name="getOptionLabel"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>getOptionLabel</b></span>
                         <a href="#getOptionLabel"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -812,21 +830,25 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>getOptionLabel(options: <a href="../interfaces/Option.html" target="_self">Option[] | undefined</a>, value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>getOptionLabel(options: <a href="../interfaces/Option.html" target="_self">Option[] | undefined</a>, value: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="153"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:153</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="235"
+                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:235</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Público - Template) Busca o &#39;label&#39; de uma opção com base em seu &#39;value&#39;.
+Usado para exibir os &#39;chips&#39; do multi-select de software.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -837,6 +859,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -851,6 +874,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>A lista completa de opções do campo.</p>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>value</td>
@@ -863,6 +890,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O valor (ID) da opção.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -872,7 +903,8 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>O &#39;label&#39; correspondente ou uma string vazia.</p>
+
                             </div>
                 </td>
             </tr>
@@ -898,14 +930,17 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="40"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:40</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="77"
+                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:77</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Gancho de ciclo de vida. Constrói o FormGroup principal com base no @Input() fields.
+Configura os validadores e inicializa os FormArrays e Observables de autocomplete.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -921,6 +956,7 @@
                 <td class="col-md-4">
                     <a name="onChipRemoved"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>onChipRemoved</b></span>
                         <a href="#onChipRemoved"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -928,21 +964,25 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>onChipRemoved(field: <a href="../interfaces/Field.html" target="_self">Field</a>, valueToRemove: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onChipRemoved(field: <a href="../interfaces/Field.html" target="_self">Field</a>, valueToRemove: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank">string</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="160"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:160</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="249"
+                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:249</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Público - Template) Chamado quando um &#39;chip&#39; de software é removido.
+Remove o valor correspondente do array de valores do FormControl.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -953,6 +993,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -967,6 +1008,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O Field correspondente.</p>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>valueToRemove</td>
@@ -979,6 +1024,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O valor a ser removido.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1000,6 +1049,7 @@
                 <td class="col-md-4">
                     <a name="onSubmit"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>onSubmit</b></span>
                         <a href="#onSubmit"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1007,21 +1057,26 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>onSubmit()</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onSubmit()</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="146"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:146</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="220"
+                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:220</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Público - Template) Manipulador do evento (ngSubmit) do formulário.
+Se o &#39;form&#39; for válido, emite o evento &#39;formSubmit&#39;.
+Caso contrário, loga um erro no console.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -1037,6 +1092,7 @@
                 <td class="col-md-4">
                     <a name="removeEquipment"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>removeEquipment</b></span>
                         <a href="#removeEquipment"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1044,21 +1100,24 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>removeEquipment(field: <a href="../interfaces/Field.html" target="_self">Field</a>, index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>removeEquipment(field: <a href="../interfaces/Field.html" target="_self">Field</a>, index: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/number" target="_blank">number</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="91"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:91</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="154"
+                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:154</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Público - Template) Remove um item de equipamento de um FormArray pelo índice.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1069,6 +1128,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1083,6 +1143,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O objeto Field (para encontrar o FormArray pelo nome).</p>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>index</td>
@@ -1095,6 +1159,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O índice do item a ser removido.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1132,14 +1200,16 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="61"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:61</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="104"
+                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:104</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Privado) Configura um pipe RxJS para um FormControl de autocomplete.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1150,6 +1220,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1164,6 +1235,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O FormControl do campo de input.</p>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>options</td>
@@ -1176,6 +1251,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>A lista completa de opções para filtrar.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1185,7 +1264,8 @@
 
                         </div>
                             <div class="io-description">
-                                
+                                <p>Um Observable&lt;Option[]&gt; com as opções filtradas.</p>
+
                             </div>
                 </td>
             </tr>
@@ -1197,6 +1277,7 @@
                 <td class="col-md-4">
                     <a name="softwareSelected"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>softwareSelected</b></span>
                         <a href="#softwareSelected"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1204,21 +1285,25 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>softwareSelected(event: MatAutocompleteSelectedEvent, field: <a href="../interfaces/Field.html" target="_self">Field</a>)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>softwareSelected(event: MatAutocompleteSelectedEvent, field: <a href="../interfaces/Field.html" target="_self">Field</a>)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="129"
-                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:129</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="200"
+                                    class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:200</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Público - Template) Chamado pelo (optionSelected) do autocomplete de software.
+Adiciona o valor selecionado ao array de valores do FormControl (multi-select).</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -1229,6 +1314,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1243,6 +1329,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O evento MatAutocompleteSelectedEvent.</p>
+
+                                            </td>
                                         </tr>
                                         <tr>
                                                 <td>field</td>
@@ -1255,6 +1345,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O Field correspondente ao &#39;multi-select&#39;.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -1282,6 +1376,7 @@
                 <td class="col-md-4">
                     <a name="equipmentAddForm"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>equipmentAddForm</b></span>
                         <a href="#equipmentAddForm"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1295,10 +1390,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="25" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:25</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:50</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>FormGroup auxiliar para o mini-formulário de &quot;Adicionar Equipamento&quot;.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1321,10 +1422,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="32" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:32</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Referência injetada ao FormBuilder para criação de formulários.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1334,6 +1441,7 @@
                 <td class="col-md-4">
                     <a name="filteredEquipments"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>filteredEquipments</b></span>
                         <a href="#filteredEquipments"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1347,10 +1455,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="29" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:29</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:59</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Observable (stream) de opções filtradas para o autocomplete de &quot;Equipamentos&quot;.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1360,6 +1474,7 @@
                 <td class="col-md-4">
                     <a name="filteredOptions"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>filteredOptions</b></span>
                         <a href="#filteredOptions"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1373,10 +1488,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="28" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:28</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:56</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Observable (stream) de opções filtradas para o autocomplete de &quot;Softwares&quot;.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1386,6 +1507,7 @@
                 <td class="col-md-4">
                     <a name="form"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>form</b></span>
                         <a href="#form"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1399,10 +1521,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="24" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:24</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:47</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>O FormGroup principal, construído dinamicamente no ngOnInit.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1412,6 +1540,7 @@
                 <td class="col-md-4">
                     <a name="softwareCtrl"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>softwareCtrl</b></span>
                         <a href="#softwareCtrl"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -1424,10 +1553,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="27" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:27</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/components/shared/scheduling/scheduling.ts:53</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>FormControl para o campo de input de autocomplete de &quot;Softwares&quot; (multi-select).</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -1439,13 +1574,27 @@
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">import type { OnInit } from &#x27;@angular/core&#x27;;
 import { Component, EventEmitter, inject, Input, Output } from &#x27;@angular/core&#x27;;
-import type { FormArray, FormGroup, ValidatorFn} from &#x27;@angular/forms&#x27;;
-import { FormBuilder, Validators} from &#x27;@angular/forms&#x27;;
+import type { FormArray, FormGroup, ValidatorFn } from &#x27;@angular/forms&#x27;;
+import { FormBuilder, Validators } from &#x27;@angular/forms&#x27;;
 import { FormControl } from &#x27;@angular/forms&#x27;;
 import type { Field, Option } from &#x27;./types&#x27;;
 import { map, startWith, type Observable } from &#x27;rxjs&#x27;;
 import type { MatAutocompleteSelectedEvent } from &#x27;@angular/material/autocomplete&#x27;;
 
+/**
+ * Componente de formulário dinâmico e reutilizável.
+ * Gera um FormGroup complexo com base na configuração [fields] recebida.
+ * Gerencia internamente FormArrays (para &#x27;equipment-select&#x27;) e
+ * autocompletes (para &#x27;multi-select&#x27; e &#x27;equipment-select&#x27;).
+ *
+ * @usage
+ * &lt;app-scheduling
+ * [fields]&#x3D;&quot;configuracaoDosCampos&quot;
+ * submitButtonText&#x3D;&quot;Agendar&quot;
+ * [cancelButtonText]&#x3D;&quot;&#x27;Voltar&#x27;&quot;
+ * (formSubmit)&#x3D;&quot;onAgendamentoSubmit($event)&quot;
+ * &gt;&lt;/app-scheduling&gt;
+ */
 @Component({
   selector: &#x27;app-scheduling&#x27;,
   standalone: false,
@@ -1453,21 +1602,40 @@ import type { MatAutocompleteSelectedEvent } from &#x27;@angular/material/autoco
   styleUrl: &#x27;./scheduling.css&#x27;
 })
 export class Scheduling implements OnInit {
-  @Input() fields: Field[] &#x3D; [];
-  @Input() submitButtonText: string &#x3D; &quot;Salvar&quot;;
-  @Input() cancelButtonText: string | undefined;
-  @Output() formSubmit &#x3D; new EventEmitter&lt;Record&lt;string, any&gt;&gt;();
-
+  /** Referência injetada ao FormBuilder para criação de formulários. */
   private fb &#x3D; inject(FormBuilder);
 
-  form: FormGroup;
-  equipmentAddForm: FormGroup;
+  /** A configuração (array de Field) que define a estrutura do formulário. */
+  @Input() fields: Field[] &#x3D; [];
 
-  softwareCtrl &#x3D; new FormControl(&#x27;&#x27;);
-  filteredOptions: Observable&lt;Option[]&gt; | undefined;
-  filteredEquipments: Observable&lt;Option[]&gt; | undefined;
+  /** O texto a ser exibido no botão principal de submit. */
+  @Input() submitButtonText: string &#x3D; &quot;Salvar&quot;;
 
-  
+  /** (Opcional) Texto do botão de cancelamento. Se indefinido, o botão não é exibido. */
+  @Input() cancelButtonText: string | undefined;
+
+  /** Emitido quando o formulário é válido e submetido. Emite o valor completo (form.value). */
+  @Output() formSubmit &#x3D; new EventEmitter&lt;Record&lt;string, any&gt;&gt;();
+
+  /** O FormGroup principal, construído dinamicamente no ngOnInit. */
+  public form: FormGroup;
+
+  /** FormGroup auxiliar para o mini-formulário de &quot;Adicionar Equipamento&quot;. */
+  public equipmentAddForm: FormGroup;
+
+  /** FormControl para o campo de input de autocomplete de &quot;Softwares&quot; (multi-select). */
+  public softwareCtrl &#x3D; new FormControl(&#x27;&#x27;);
+
+  /** Observable (stream) de opções filtradas para o autocomplete de &quot;Softwares&quot;. */
+  public filteredOptions: Observable&lt;Option[]&gt; | undefined;
+
+  /** Observable (stream) de opções filtradas para o autocomplete de &quot;Equipamentos&quot;. */
+  public filteredEquipments: Observable&lt;Option[]&gt; | undefined;
+
+  /**
+   * Inicializa os shells vazios do FormGroup para evitar
+   * erros de template antes do ngOnInit.
+   */
   constructor() {
     this.form &#x3D; this.fb.group({});
     this.equipmentAddForm &#x3D; this.fb.group({
@@ -1476,7 +1644,11 @@ export class Scheduling implements OnInit {
     });
   }
 
-ngOnInit(): void {
+  /**
+   * Gancho de ciclo de vida. Constrói o FormGroup principal com base no @Input() fields.
+   * Configura os validadores e inicializa os FormArrays e Observables de autocomplete.
+   */
+  ngOnInit(): void {
     const controls: Record&lt;string, any&gt; &#x3D; {};
     this.fields.forEach(field &#x3D;&gt; {
       const validators &#x3D; this.buildValidators(field.validators);
@@ -1497,6 +1669,12 @@ ngOnInit(): void {
     this.filteredEquipments &#x3D; this.setupAutocomplete(this.equipmentAddForm.get(&#x27;equipment&#x27;) as FormControl, equipmentField?.options);
   }
 
+  /**
+   * (Privado) Configura um pipe RxJS para um FormControl de autocomplete.
+   * @param control O FormControl do campo de input.
+   * @param options A lista completa de opções para filtrar.
+   * @returns Um Observable&lt;Option[]&gt; com as opções filtradas.
+   */
   private setupAutocomplete(control: FormControl, options: Option[] | undefined): Observable&lt;Option[]&gt; {
     return control.valueChanges.pipe(
       startWith(&#x27;&#x27;),
@@ -1506,12 +1684,24 @@ ngOnInit(): void {
       })
     );
   }
-  getEquipmentControls(fieldName: string): any[] {
+
+  /**
+   * (Público - Template) Retorna os controles de um FormArray pelo nome do campo.
+   * Usado no template para iterar sobre os equipamentos adicionados.
+   * @param fieldName O nome do campo (field.name) que é um FormArray.
+   * @returns Um array de AbstractControl (os FormGroups de equipamento).
+   */
+  public getEquipmentControls(fieldName: string): any[] {
     const control &#x3D; this.form.get(fieldName) as FormArray;
     return control ? control.controls : [];
-    }
+  }
 
-  addEquipment(field: Field): void {
+  /**
+   * (Público - Template) Adiciona um item de equipamento ao FormArray.
+   * Pega os valores do &#x27;equipmentAddForm&#x27; e os insere no &#x27;form&#x27; principal.
+   * @param field O objeto Field correspondente ao &#x27;equipment-select&#x27;.
+   */
+  public addEquipment(field: Field): void {
     if (this.equipmentAddForm.invalid) { return; }
 
     const equipmentArray &#x3D; this.form.get(field.name) as FormArray;
@@ -1524,25 +1714,42 @@ ngOnInit(): void {
     }));
 
     this.equipmentAddForm.reset({ equipment: null, quantity: 1 });
-    (document.getElementById(&#x27;equipment-input&#x27;) as HTMLInputElement).value &#x3D; &#x27;&#x27;;
+    const equipmentInput &#x3D; document.getElementById(&#x27;equipment-input&#x27;) as HTMLInputElement;
+    if (equipmentInput) {
+      equipmentInput.value &#x3D; &#x27;&#x27;;
+    }
   }
 
-  removeEquipment(field: Field, index: number): void {
+  /**
+   * (Público - Template) Remove um item de equipamento de um FormArray pelo índice.
+   * @param field O objeto Field (para encontrar o FormArray pelo nome).
+   * @param index O índice do item a ser removido.
+   */
+  public removeEquipment(field: Field, index: number): void {
     const equipmentArray &#x3D; this.form.get(field.name) as FormArray;
     equipmentArray.removeAt(index);
   }
 
-  displayEquipment(option: Option): string {
+  /**
+   * (Público - Template) Usado pelo [displayWith] do MatAutocomplete.
+   * Garante que o input mostre o &#x27;label&#x27; da Opção, e não o objeto [object Object].
+   * @param option O objeto Option.
+   * @returns O &#x27;label&#x27; da opção ou uma string vazia.
+   */
+  public displayEquipment(option: Option): string {
     return option &amp;&amp; option.label ? option.label : &#x27;&#x27;;
   }
 
+  /**
+   * (Privado) Constrói um array de ValidatorFn com base na configuração de um Field.
+   * @param validatorsConfig O objeto de configuração de validadores (required, minLength, etc.).
+   * @returns Um array de ValidatorFn para o FormControl.
+   */
   private buildValidators(validatorsConfig: Field[&#x27;validators&#x27;]): ValidatorFn[] {
     if (!validatorsConfig) {
       return [];
     }
-
     const validators: ValidatorFn[] &#x3D; [];
-
     if (validatorsConfig.required) {
       validators.push(Validators.required);
     }
@@ -1555,17 +1762,16 @@ ngOnInit(): void {
     if (validatorsConfig.pattern) {
       validators.push(Validators.pattern(validatorsConfig.pattern));
     }
-
     return validators;
   }
 
-  private _filter(value: string, options: Option[] | undefined): Option[] {
-    if (!options) {return [];}
-    const filterValue &#x3D; value.toLowerCase();
-    return options.filter(option &#x3D;&gt; option.label.toLowerCase().includes(filterValue));
-  }
-
-  softwareSelected(event: MatAutocompleteSelectedEvent, field: Field): void {
+  /**
+   * (Público - Template) Chamado pelo (optionSelected) do autocomplete de software.
+   * Adiciona o valor selecionado ao array de valores do FormControl (multi-select).
+   * @param event O evento MatAutocompleteSelectedEvent.
+   * @param field O Field correspondente ao &#x27;multi-select&#x27;.
+   */
+  public softwareSelected(event: MatAutocompleteSelectedEvent, field: Field): void {
     const control &#x3D; this.form.get(field.name);
     if (control) {
       const currentValues: string[] &#x3D; control.value || [];
@@ -1580,34 +1786,49 @@ ngOnInit(): void {
     }
   }
 
-  
-
-  onSubmit(): void {
+  /**
+   * (Público - Template) Manipulador do evento (ngSubmit) do formulário.
+   * Se o &#x27;form&#x27; for válido, emite o evento &#x27;formSubmit&#x27;.
+   * Caso contrário, loga um erro no console.
+   */
+  public onSubmit(): void {
     if (this.form.valid) {
       this.formSubmit.emit(this.form.value);
     } else {
-      console.error(&quot;Formulário inválido!&quot;);
+      console.error(&quot;Formulário inválido!&quot;, this.form.value);
     }
   }
-  getOptionLabel(options: Option[] | undefined, value: string): string {
+
+  /**
+   * (Público - Template) Busca o &#x27;label&#x27; de uma opção com base em seu &#x27;value&#x27;.
+   * Usado para exibir os &#x27;chips&#x27; do multi-select de software.
+   * @param options A lista completa de opções do campo.
+   * @param value O valor (ID) da opção.
+   * @returns O &#x27;label&#x27; correspondente ou uma string vazia.
+   */
+  public getOptionLabel(options: Option[] | undefined, value: string): string {
     if (!options) {
       return &#x27;&#x27;;
     }
     const option &#x3D; options.find(opt &#x3D;&gt; opt.value &#x3D;&#x3D;&#x3D; value);
     return option ? option.label : &#x27;&#x27;;
   }
-  onChipRemoved(field: Field, valueToRemove: string): void {
+
+  /**
+   * (Público - Template) Chamado quando um &#x27;chip&#x27; de software é removido.
+   * Remove o valor correspondente do array de valores do FormControl.
+   * @param field O Field correspondente.
+   * @param valueToRemove O valor a ser removido.
+   */
+  public onChipRemoved(field: Field, valueToRemove: string): void {
     const control &#x3D; this.form.get(field.name);
     if (control) {
       const currentValues: string[] &#x3D; control.value || [];
-      
       const newValues &#x3D; currentValues.filter(value &#x3D;&gt; value !&#x3D;&#x3D; valueToRemove);
-
       control.setValue(newValues);
     }
   }
-}
-</code></pre>
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">

@@ -144,6 +144,14 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Define a estrutura de dados para um único dia
+a ser exibido no seletor.</p>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -218,6 +226,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>O número do dia do mês (ex: &quot;29&quot;).</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -251,6 +265,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>A abreviação do dia da semana (ex: &quot;QUA&quot;).</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -284,6 +304,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Um ID único para o dia (ex: &quot;2025-10-29&quot;).</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -295,39 +321,103 @@
 import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from &#x27;@angular/core&#x27;;
 import { FormatUtils } from &#x27;../../../utils/format.utils&#x27;;
 
+/**
+ * Define a estrutura de dados para um único dia
+ * a ser exibido no seletor.
+ */
+export interface Day {
+  /** Um ID único para o dia (ex: &quot;2025-10-29&quot;). */
+  id: string;
+  /** O número do dia do mês (ex: &quot;29&quot;). */
+  date: string;
+  /** A abreviação do dia da semana (ex: &quot;QUA&quot;). */
+  dayOfWeek: string;
+}
+
+/**
+ * Componente de UI para exibir um seletor de dias horizontal
+ * e rolável.
+ *
+ * Exibe os dias de um mês, permite a navegação entre meses
+ * e a seleção de um dia específico. Controla fades
+ * (gradientes) nas laterais para indicar a
+ * possibilidade de rolagem.
+ *
+ * @usage
+ * &lt;app-day-selector
+ * [currentMonthName]&#x3D;&quot;&#x27;Outubro&#x27;&quot;
+ * [days]&#x3D;&quot;listaDeDias&quot;
+ * [activeDayId]&#x3D;&quot;diaAtivoId&quot;
+ * (monthChange)&#x3D;&quot;onMudarMes($event)&quot;
+ * (dayChange)&#x3D;&quot;onMudarDia($event)&quot;
+ * &gt;&lt;/app-day-selector&gt;
+ */
 @Component({
   selector: &#x27;app-day-selector&#x27;,
   standalone: false,
   templateUrl: &#x27;./day-selector.html&#x27;,
   styleUrl: &#x27;./day-selector.css&#x27;
 })
-export class DaySelector implements AfterViewInit{
-  private el &#x3D; inject(ElementRef)
+export class DaySelector implements AfterViewInit {
+  /** Referência ao elemento host do componente injetado. */
+  private el &#x3D; inject(ElementRef);
+
+  /** O nome do mês atual a ser exibido (ex: &quot;Outubro&quot;). */
   @Input() currentMonthName!: string;
+
+  /** O array de objetos Day a ser renderizado no seletor. */
   @Input() days!: Day[];
+
+  /** O ID do dia que deve ser marcado como &#x27;ativo&#x27;. */
   @Input() activeDayId!: string | number;
+
+  /** Emitido quando o usuário clica nas setas &quot;anterior&quot; ou &quot;próximo&quot;. Emite a direção. */
   @Output() monthChange &#x3D; new EventEmitter&lt;&#x27;previous&#x27; | &#x27;next&#x27;&gt;();
+
+  /** Emitido quando o usuário clica em um dia. Emite o ID do dia selecionado. */
   @Output() dayChange &#x3D; new EventEmitter&lt;string | number&gt;();
 
+  /** Referência ao container rolável de dias no template. */
   @ViewChild(&#x27;daySelector&#x27;) daySelectorRef!: ElementRef&lt;HTMLElement&gt;;
 
-  showLeftFade &#x3D; false;
-  showRightFade &#x3D; true;
-  currentDay: string &#x3D; FormatUtils.toId(new Date());
-  
+  /** Flag booleana para controlar a exibição do gradiente esquerdo (fade). */
+  public showLeftFade &#x3D; false;
+
+  /** Flag booleana para controlar a exibição do gradiente direito (fade). */
+  public showRightFade &#x3D; true;
+
+  /** Armazena o ID formatado do dia atual (hoje), usado para o scroll inicial. */
+  public currentDay: string &#x3D; FormatUtils.toId(new Date());
+
+  /**
+   * Gancho de ciclo de vida. Chamado após a view ser inicializada.
+   * Usa um setTimeout para garantir que o DOM esteja renderizado antes de
+   * rolar para o dia de hoje e verificar o estado inicial do scroll.
+   */
   ngAfterViewInit(): void {
+    // setTimeout(..., 0) espera o próximo ciclo de detecção de
+    // mudanças para garantir que o &#x27;daySelectorRef&#x27; esteja disponível.
     setTimeout(() &#x3D;&gt; {
       this.scrollToToday();
-      this.checkScroll(); 
+      this.checkScroll();
     }, 0);
   }
 
+  /**
+   * (Privado) Encontra o dia ativo no container e rola suavemente
+   * para centralizá-lo na tela.
+   *
+   *  Isso só acontece se o dia ativo (&#x60;activeDayId&#x60;) for
+   * também o dia de hoje (&#x60;currentDay&#x60;).
+   */
   private scrollToToday(): void {
     const container &#x3D; this.daySelectorRef?.nativeElement;
     if (!container) {
       return;
     }
+    
     const activeElement &#x3D; container.querySelector(&#x27;.day-item.active&#x27;) as HTMLElement;
+    
     if (activeElement &amp;&amp; this.activeDayId &#x3D;&#x3D;&#x3D; this.currentDay) {
       activeElement.scrollIntoView({
         behavior: &#x27;smooth&#x27;,
@@ -337,23 +427,45 @@ export class DaySelector implements AfterViewInit{
     }
   }
 
-  selectDay(id: string | number): void {
-    if(id !&#x3D;&#x3D; this.activeDayId){
+  /**
+   * (Público - Template) Chamado quando um dia é clicado.
+   * Emite o evento &#x27;dayChange&#x27; se o dia clicado não for
+   * o dia que já está ativo.
+   * @param id O ID do dia que foi clicado.
+   */
+  public selectDay(id: string | number): void {
+    if (id !&#x3D;&#x3D; this.activeDayId) {
       this.dayChange.emit(id);
     }
   }
-  
-  navigateMonth(direction: &#x27;previous&#x27; | &#x27;next&#x27;): void {
+
+  /**
+   * (Público - Template) Chamado pelos botões de navegação de mês.
+   * Emite o evento &#x27;monthChange&#x27; com a direção (&#x27;previous&#x27; ou &#x27;next&#x27;).
+   * @param direction A direção da navegação.
+   */
+  public navigateMonth(direction: &#x27;previous&#x27; | &#x27;next&#x27;): void {
     this.monthChange.emit(direction);
   }
 
-  onScroll(event: Event): void {
+  /**
+   * (Público - Template) Manipulador de evento de rolagem (scroll) do container.
+   * Chama checkScroll() para atualizar os fades laterais.
+   * @param event O evento de scroll do DOM.
+   */
+  public onScroll(event: Event): void {
     this.checkScroll(event.target as HTMLElement);
   }
-    private checkScroll(element?: HTMLElement): void {
-    const el &#x3D; element || this.el.nativeElement.querySelector(&#x27;.day-selector&#x27;);
 
-    if (!el) {return;}
+  /**
+   * (Privado) Verifica a posição do scroll no container para determinar
+   * se os fades (esquerdo/direito) devem ser exibidos.
+   * @param element Opcional. O elemento HTML que está rolando.
+   * Se não for fornecido, busca o elemento no DOM.
+   */
+  private checkScroll(element?: HTMLElement): void {
+    const el &#x3D; element || this.el.nativeElement.querySelector(&#x27;.day-selector&#x27;);
+    if (!el) { return; }
 
     const scrollLeft &#x3D; el.scrollLeft;
     const scrollWidth &#x3D; el.scrollWidth;
@@ -362,14 +474,7 @@ export class DaySelector implements AfterViewInit{
     this.showLeftFade &#x3D; scrollLeft &gt; tolerance;
     this.showRightFade &#x3D; scrollLeft + clientWidth &lt; scrollWidth - tolerance;
   }
-}
-
-export interface Day {
-  id: string;
-  date: string;
-  dayOfWeek: string;
-}
-</code></pre>
+}</code></pre>
     </div>
 </div>
 

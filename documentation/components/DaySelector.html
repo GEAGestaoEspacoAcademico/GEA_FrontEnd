@@ -138,6 +138,27 @@
 </p>
 
 
+    <p class="comment">
+        <h3>Description</h3>
+    </p>
+    <p class="comment">
+        <p>Componente de UI para exibir um seletor de dias horizontal
+e rolável.</p>
+<p>Exibe os dias de um mês, permite a navegação entre meses
+e a seleção de um dia específico. Controla fades
+(gradientes) nas laterais para indicar a
+possibilidade de rolagem.</p>
+<p>&lt;app-day-selector
+[currentMonthName]=&quot;&#39;Outubro&#39;&quot;
+[days]=&quot;listaDeDias&quot;
+[activeDayId]=&quot;diaAtivoId&quot;
+(monthChange)=&quot;onMudarMes($event)&quot;
+(dayChange)=&quot;onMudarDia($event)&quot;</p>
+<blockquote>
+</app-day-selector>
+</blockquote>
+
+    </p>
 
 
     <p class="comment">
@@ -207,6 +228,7 @@
                     <td class="col-md-4">
                         <ul class="index-list">
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#currentDay" >currentDay</a>
                             </li>
                             <li>
@@ -218,9 +240,11 @@
                                 <a href="#el" >el</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#showLeftFade" >showLeftFade</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#showRightFade" >showRightFade</a>
                             </li>
                         </ul>
@@ -240,12 +264,14 @@
                                 <a href="#checkScroll" >checkScroll</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#navigateMonth" >navigateMonth</a>
                             </li>
                             <li>
                                 <a href="#ngAfterViewInit" >ngAfterViewInit</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#onScroll" >onScroll</a>
                             </li>
                             <li>
@@ -253,6 +279,7 @@
                                 <a href="#scrollToToday" >scrollToToday</a>
                             </li>
                             <li>
+                                    <span class="modifier">Public</span>
                                 <a href="#selectDay" >selectDay</a>
                             </li>
                         </ul>
@@ -323,9 +350,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="15" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:15</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="53" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:53</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>O ID do dia que deve ser marcado como &#39;ativo&#39;.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -344,9 +377,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="13" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:13</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="47" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:47</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>O nome do mês atual a ser exibido (ex: &quot;Outubro&quot;).</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -365,9 +404,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="14" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:14</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="50" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:50</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>O array de objetos Day a ser renderizado no seletor.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -389,9 +434,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="17" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:17</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="59" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:59</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emitido quando o usuário clica em um dia. Emite o ID do dia selecionado.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
         <table class="table table-sm table-bordered">
@@ -410,9 +461,15 @@
                 </tr>
                         <tr>
                             <td class="col-md-2" colspan="2">
-                                    <div class="io-line">Defined in <a href="" data-line="16" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:16</a></div>
+                                    <div class="io-line">Defined in <a href="" data-line="56" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:56</a></div>
                             </td>
                         </tr>
+                <tr>
+                    <td class="col-md-4">
+                        <div class="io-description"><p>Emitido quando o usuário clica nas setas &quot;anterior&quot; ou &quot;próximo&quot;. Emite a direção.</p>
+</div>
+                    </td>
+                </tr>
             </tbody>
         </table>
 </section>
@@ -445,14 +502,18 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="60"
-                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:60</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="147"
+                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:147</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Privado) Verifica a posição do scroll no container para determinar
+se os fades (esquerdo/direito) devem ser exibidos.
+Se não for fornecido, busca o elemento no DOM.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -463,6 +524,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -477,6 +539,11 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>Opcional. O elemento HTML que está rolando.
+Se não for fornecido, busca o elemento no DOM.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -498,6 +565,7 @@
                 <td class="col-md-4">
                     <a name="navigateMonth"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>navigateMonth</b></span>
                         <a href="#navigateMonth"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -505,21 +573,25 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>navigateMonth(direction: "previous" | "next")</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>navigateMonth(direction: "previous" | "next")</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="53"
-                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:53</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="128"
+                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:128</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Público - Template) Chamado pelos botões de navegação de mês.
+Emite o evento &#39;monthChange&#39; com a direção (&#39;previous&#39; ou &#39;next&#39;).</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -530,6 +602,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -544,6 +617,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>A direção da navegação.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -579,14 +656,18 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="25"
-                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:25</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="78"
+                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:78</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>Gancho de ciclo de vida. Chamado após a view ser inicializada.
+Usa um setTimeout para garantir que o DOM esteja renderizado antes de
+rolar para o dia de hoje e verificar o estado inicial do scroll.</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -602,6 +683,7 @@
                 <td class="col-md-4">
                     <a name="onScroll"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>onScroll</b></span>
                         <a href="#onScroll"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -609,21 +691,25 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>onScroll(event: Event)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>onScroll(event: Event)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="57"
-                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:57</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="137"
+                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:137</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Público - Template) Manipulador de evento de rolagem (scroll) do container.
+Chama checkScroll() para atualizar os fades laterais.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -634,6 +720,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -648,6 +735,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O evento de scroll do DOM.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -685,14 +776,19 @@
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="32"
-                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:32</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="94"
+                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:94</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Privado) Encontra o dia ativo no container e rola suavemente
+para centralizá-lo na tela.</p>
+<p> Isso só acontece se o dia ativo (<code>activeDayId</code>) for
+também o dia de hoje (<code>currentDay</code>).</p>
+</div>
 
                         <div class="io-description">
                             <b>Returns : </b>        <code><a href="https://www.typescriptlang.org/docs/handbook/basic-types.html" target="_blank" >void</a></code>
@@ -708,6 +804,7 @@
                 <td class="col-md-4">
                     <a name="selectDay"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>selectDay</b></span>
                         <a href="#selectDay"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -715,21 +812,26 @@
             </tr>
             <tr>
                 <td class="col-md-4">
-<code>selectDay(id: string | number)</code>
+                        <span class="modifier-icon icon ion-ios-reset"></span>
+                    <code>selectDay(id: string | number)</code>
                 </td>
             </tr>
 
 
                     <tr>
                         <td class="col-md-4">
-                            <div class="io-line">Defined in <a href="" data-line="47"
-                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:47</a></div>
+                            <div class="io-line">Defined in <a href="" data-line="117"
+                                    class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:117</a></div>
                         </td>
                     </tr>
 
 
             <tr>
                 <td class="col-md-4">
+                        <div class="io-description"><p>(Público - Template) Chamado quando um dia é clicado.
+Emite o evento &#39;dayChange&#39; se o dia clicado não for
+o dia que já está ativo.</p>
+</div>
 
                             <div class="io-description">
                                 <b>Parameters :</b>
@@ -740,6 +842,7 @@
                                             <td>Name</td>
                                                 <td>Type</td>
                                             <td>Optional</td>
+                                                <td>Description</td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -754,6 +857,10 @@
                                             </td>
 
 
+                                            <td>
+                                                    <p>O ID do dia que foi clicado.</p>
+
+                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -781,6 +888,7 @@
                 <td class="col-md-4">
                     <a name="currentDay"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>currentDay</b></span>
                         <a href="#currentDay"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -799,10 +907,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="23" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:23</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="71" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:71</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Armazena o ID formatado do dia atual (hoje), usado para o scroll inicial.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -835,10 +949,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="19" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:19</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="62" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:62</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Referência ao container rolável de dias no template.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -861,10 +981,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="12" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:12</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="44" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:44</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Referência ao elemento host do componente injetado.</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -874,6 +1000,7 @@
                 <td class="col-md-4">
                     <a name="showLeftFade"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>showLeftFade</b></span>
                         <a href="#showLeftFade"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -886,10 +1013,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="21" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:21</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="65" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:65</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flag booleana para controlar a exibição do gradiente esquerdo (fade).</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -899,6 +1032,7 @@
                 <td class="col-md-4">
                     <a name="showRightFade"></a>
                     <span class="name">
+                            <span class="modifier">Public</span>
                         <span ><b>showRightFade</b></span>
                         <a href="#showRightFade"><span class="icon ion-ios-link"></span></a>
                     </span>
@@ -911,10 +1045,16 @@
                 </tr>
                     <tr>
                         <td class="col-md-4">
-                                <div class="io-line">Defined in <a href="" data-line="22" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:22</a></div>
+                                <div class="io-line">Defined in <a href="" data-line="68" class="link-to-prism">src/app/components/shared/day-selector/day-selector.ts:68</a></div>
                         </td>
                     </tr>
 
+            <tr>
+                <td class="col-md-4">
+                    <div class="io-description"><p>Flag booleana para controlar a exibição do gradiente direito (fade).</p>
+</div>
+                </td>
+            </tr>
 
         </tbody>
     </table>
@@ -928,39 +1068,103 @@
 import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from &#x27;@angular/core&#x27;;
 import { FormatUtils } from &#x27;../../../utils/format.utils&#x27;;
 
+/**
+ * Define a estrutura de dados para um único dia
+ * a ser exibido no seletor.
+ */
+export interface Day {
+  /** Um ID único para o dia (ex: &quot;2025-10-29&quot;). */
+  id: string;
+  /** O número do dia do mês (ex: &quot;29&quot;). */
+  date: string;
+  /** A abreviação do dia da semana (ex: &quot;QUA&quot;). */
+  dayOfWeek: string;
+}
+
+/**
+ * Componente de UI para exibir um seletor de dias horizontal
+ * e rolável.
+ *
+ * Exibe os dias de um mês, permite a navegação entre meses
+ * e a seleção de um dia específico. Controla fades
+ * (gradientes) nas laterais para indicar a
+ * possibilidade de rolagem.
+ *
+ * @usage
+ * &lt;app-day-selector
+ * [currentMonthName]&#x3D;&quot;&#x27;Outubro&#x27;&quot;
+ * [days]&#x3D;&quot;listaDeDias&quot;
+ * [activeDayId]&#x3D;&quot;diaAtivoId&quot;
+ * (monthChange)&#x3D;&quot;onMudarMes($event)&quot;
+ * (dayChange)&#x3D;&quot;onMudarDia($event)&quot;
+ * &gt;&lt;/app-day-selector&gt;
+ */
 @Component({
   selector: &#x27;app-day-selector&#x27;,
   standalone: false,
   templateUrl: &#x27;./day-selector.html&#x27;,
   styleUrl: &#x27;./day-selector.css&#x27;
 })
-export class DaySelector implements AfterViewInit{
-  private el &#x3D; inject(ElementRef)
+export class DaySelector implements AfterViewInit {
+  /** Referência ao elemento host do componente injetado. */
+  private el &#x3D; inject(ElementRef);
+
+  /** O nome do mês atual a ser exibido (ex: &quot;Outubro&quot;). */
   @Input() currentMonthName!: string;
+
+  /** O array de objetos Day a ser renderizado no seletor. */
   @Input() days!: Day[];
+
+  /** O ID do dia que deve ser marcado como &#x27;ativo&#x27;. */
   @Input() activeDayId!: string | number;
+
+  /** Emitido quando o usuário clica nas setas &quot;anterior&quot; ou &quot;próximo&quot;. Emite a direção. */
   @Output() monthChange &#x3D; new EventEmitter&lt;&#x27;previous&#x27; | &#x27;next&#x27;&gt;();
+
+  /** Emitido quando o usuário clica em um dia. Emite o ID do dia selecionado. */
   @Output() dayChange &#x3D; new EventEmitter&lt;string | number&gt;();
 
+  /** Referência ao container rolável de dias no template. */
   @ViewChild(&#x27;daySelector&#x27;) daySelectorRef!: ElementRef&lt;HTMLElement&gt;;
 
-  showLeftFade &#x3D; false;
-  showRightFade &#x3D; true;
-  currentDay: string &#x3D; FormatUtils.toId(new Date());
-  
+  /** Flag booleana para controlar a exibição do gradiente esquerdo (fade). */
+  public showLeftFade &#x3D; false;
+
+  /** Flag booleana para controlar a exibição do gradiente direito (fade). */
+  public showRightFade &#x3D; true;
+
+  /** Armazena o ID formatado do dia atual (hoje), usado para o scroll inicial. */
+  public currentDay: string &#x3D; FormatUtils.toId(new Date());
+
+  /**
+   * Gancho de ciclo de vida. Chamado após a view ser inicializada.
+   * Usa um setTimeout para garantir que o DOM esteja renderizado antes de
+   * rolar para o dia de hoje e verificar o estado inicial do scroll.
+   */
   ngAfterViewInit(): void {
+    // setTimeout(..., 0) espera o próximo ciclo de detecção de
+    // mudanças para garantir que o &#x27;daySelectorRef&#x27; esteja disponível.
     setTimeout(() &#x3D;&gt; {
       this.scrollToToday();
-      this.checkScroll(); 
+      this.checkScroll();
     }, 0);
   }
 
+  /**
+   * (Privado) Encontra o dia ativo no container e rola suavemente
+   * para centralizá-lo na tela.
+   *
+   *  Isso só acontece se o dia ativo (&#x60;activeDayId&#x60;) for
+   * também o dia de hoje (&#x60;currentDay&#x60;).
+   */
   private scrollToToday(): void {
     const container &#x3D; this.daySelectorRef?.nativeElement;
     if (!container) {
       return;
     }
+    
     const activeElement &#x3D; container.querySelector(&#x27;.day-item.active&#x27;) as HTMLElement;
+    
     if (activeElement &amp;&amp; this.activeDayId &#x3D;&#x3D;&#x3D; this.currentDay) {
       activeElement.scrollIntoView({
         behavior: &#x27;smooth&#x27;,
@@ -970,23 +1174,45 @@ export class DaySelector implements AfterViewInit{
     }
   }
 
-  selectDay(id: string | number): void {
-    if(id !&#x3D;&#x3D; this.activeDayId){
+  /**
+   * (Público - Template) Chamado quando um dia é clicado.
+   * Emite o evento &#x27;dayChange&#x27; se o dia clicado não for
+   * o dia que já está ativo.
+   * @param id O ID do dia que foi clicado.
+   */
+  public selectDay(id: string | number): void {
+    if (id !&#x3D;&#x3D; this.activeDayId) {
       this.dayChange.emit(id);
     }
   }
-  
-  navigateMonth(direction: &#x27;previous&#x27; | &#x27;next&#x27;): void {
+
+  /**
+   * (Público - Template) Chamado pelos botões de navegação de mês.
+   * Emite o evento &#x27;monthChange&#x27; com a direção (&#x27;previous&#x27; ou &#x27;next&#x27;).
+   * @param direction A direção da navegação.
+   */
+  public navigateMonth(direction: &#x27;previous&#x27; | &#x27;next&#x27;): void {
     this.monthChange.emit(direction);
   }
 
-  onScroll(event: Event): void {
+  /**
+   * (Público - Template) Manipulador de evento de rolagem (scroll) do container.
+   * Chama checkScroll() para atualizar os fades laterais.
+   * @param event O evento de scroll do DOM.
+   */
+  public onScroll(event: Event): void {
     this.checkScroll(event.target as HTMLElement);
   }
-    private checkScroll(element?: HTMLElement): void {
-    const el &#x3D; element || this.el.nativeElement.querySelector(&#x27;.day-selector&#x27;);
 
-    if (!el) {return;}
+  /**
+   * (Privado) Verifica a posição do scroll no container para determinar
+   * se os fades (esquerdo/direito) devem ser exibidos.
+   * @param element Opcional. O elemento HTML que está rolando.
+   * Se não for fornecido, busca o elemento no DOM.
+   */
+  private checkScroll(element?: HTMLElement): void {
+    const el &#x3D; element || this.el.nativeElement.querySelector(&#x27;.day-selector&#x27;);
+    if (!el) { return; }
 
     const scrollLeft &#x3D; el.scrollLeft;
     const scrollWidth &#x3D; el.scrollWidth;
@@ -995,14 +1221,7 @@ export class DaySelector implements AfterViewInit{
     this.showLeftFade &#x3D; scrollLeft &gt; tolerance;
     this.showRightFade &#x3D; scrollLeft + clientWidth &lt; scrollWidth - tolerance;
   }
-}
-
-export interface Day {
-  id: string;
-  date: string;
-  dayOfWeek: string;
-}
-</code></pre>
+}</code></pre>
     </div>
 
     <div class="tab-pane fade " id="templateData">

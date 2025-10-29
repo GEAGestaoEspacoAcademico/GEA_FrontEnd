@@ -144,6 +144,14 @@
         </p>
 
 
+            <p class="comment">
+                <h3>Description</h3>
+            </p>
+            <p class="comment">
+                <p>Define a estrutura de dados para criar ou editar um Agendamento
+(geralmente usado para envio de dados à API - DTO).</p>
+
+            </p>
 
 
         <section data-compodoc="block-index">
@@ -225,7 +233,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>dataFim:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>dataFim:     <code>Date | string</code>
 </code>
                                     </td>
                                 </tr>
@@ -233,7 +241,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>    <code>Date | string</code>
 
                                         </td>
                                     </tr>
@@ -242,6 +250,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Data em que a aula irá acabar.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -258,7 +272,7 @@
                                 </tr>
                                 <tr>
                                     <td class="col-md-4">
-                                        <code>dataInicio:         <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                        <code>dataInicio:     <code>Date | string</code>
 </code>
                                     </td>
                                 </tr>
@@ -266,7 +280,7 @@
 
                                     <tr>
                                         <td class="col-md-4">
-                                            <i>Type : </i>        <code><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/string" target="_blank" >string</a></code>
+                                            <i>Type : </i>    <code>Date | string</code>
 
                                         </td>
                                     </tr>
@@ -275,6 +289,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Data em que a aula irá começar.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -308,6 +328,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Dia da semana em que a aula irá ocorrer.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -341,6 +367,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>ID número da disciplina associada ao agendamento.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -374,6 +406,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Horário de fim que a aula irá ocorrer (ex: &quot;11:30&quot;).</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -407,6 +445,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>Horário de início que a aula irá ocorrer (ex: &quot;08:00&quot;).</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <table class="table table-sm table-bordered">
@@ -440,6 +484,12 @@
 
 
 
+                            <tr>
+                                <td class="col-md-4">
+                                    <div class="io-description"><p>ID único da sala.</p>
+</div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -448,51 +498,74 @@
 
     <div class="tab-pane fade  tab-source-code" id="source">
         <pre class="line-numbers compodoc-sourcecode"><code class="language-typescript">export interface Agendamento {
-    /**Identificador único do agendamento */
-    id: 0,
-    /* Nome do usuário que fez a ação no agendamento */
-    nomeUsuario: string,
-    /* Nome da sala em que o agendamento está atrelado */
-    nomeSala: string,
-    /*Id número da disciplina associada ao agendamento */
-    disciplinaId: 0,
-    /*Nome da disciplina associada ao agendamento */
-    nomeDisciplina: string,
-    /*Semestre relacionado ao agendamento */
-    semestre: string,
-    /*Nome do curso do agendamento */
-    curso: string,
-    /*Nome do professor que realizará o agendamento */
-    nomeProfessor: string,
-    /*Data em que a aula irá começar */
-    dataInicio: string,
-    /*Data em que a aula irá acabar */
-    dataFim: string,
-    /*Dia da semana em que a aula irá ocorrer */
-    diaDaSemana: string,
-    /*Horario de Inicio que a aula irá ocorrer */
-    horaInicio: string,
-    /*Horario de fim que a aula irá ocorrer */
-    horaFim: string,
-    /*Tipos do agendamento */
-    tipo: string
+  /** Identificador único do agendamento. */
+  id: number;
+
+  /** Nome do usuário que fez a última ação no agendamento. */
+  nomeUsuario: string;
+
+  /** Nome da sala em que o agendamento está atrelado. */
+  nomeSala: string;
+
+  /** ID numérico da disciplina associada ao agendamento. */
+  disciplinaId: number;
+
+  /** Nome da disciplina associada ao agendamento. */
+  nomeDisciplina: string;
+
+  /** Semestre relacionado ao agendamento (ex: &quot;2025.2&quot;). */
+  semestre: string;
+
+  /** Nome do curso do agendamento. */
+  curso: string;
+
+  /** Nome do professor que realizará o agendamento. */
+  nomeProfessor: string;
+
+  /** Data e hora em que a aula irá começar. (Recomendado usar Date). */
+  dataInicio: Date | string; // Usar Date é melhor, mas string (ISO) é aceitável
+
+  /** Data e hora em que a aula irá acabar. (Recomendado usar Date). */
+  dataFim: Date | string;
+
+  /** Dia da semana em que a aula irá ocorrer. */
+  diaDaSemana: string; // Usando o Union Type
+
+  /** Horário de início que a aula irá ocorrer (ex: &quot;08:00&quot;). */
+  horaInicio: string;
+
+  /** Horário de fim que a aula irá ocorrer (ex: &quot;11:30&quot;). */
+  horaFim: string;
+
+  /** Tipo do agendamento (ex: Aula, Evento). */
+  tipo: string; // Usando o Enum
 }
 
-export interface EditAgendamento{
-  /* Id único da sala */
-  salaId: number,
-  /*Id número da disciplina associada ao agendamento */
-  disciplinaId: number,
-  /*Data em que a aula irá começar */
-  dataInicio: string,
-  /*Data em que a aula irá acabar */
-  dataFim: string,
-  /*Dia da semana em que a aula irá ocorrer */
-  diaDaSemana: string,
-  /*Horario de Inicio que a aula irá ocorrer */
-  horaInicio: string,
-  /*Horario de fim que a aula irá ocorrer */
-  horaFim: string,
+/**
+ * Define a estrutura de dados para criar ou editar um Agendamento
+ * (geralmente usado para envio de dados à API - DTO).
+ */
+export interface EditAgendamento {
+  /** ID único da sala. */
+  salaId: number;
+
+  /** ID número da disciplina associada ao agendamento. */
+  disciplinaId: number;
+
+  /** Data em que a aula irá começar. */
+  dataInicio: Date | string;
+
+  /** Data em que a aula irá acabar. */
+  dataFim: Date | string;
+
+  /** Dia da semana em que a aula irá ocorrer. */
+  diaDaSemana: string;
+
+  /** Horário de início que a aula irá ocorrer (ex: &quot;08:00&quot;). */
+  horaInicio: string;
+
+  /** Horário de fim que a aula irá ocorrer (ex: &quot;11:30&quot;). */
+  horaFim: string;
 }</code></pre>
     </div>
 </div>
