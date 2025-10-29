@@ -1,7 +1,7 @@
 .line {
   background-color: var(--color-neutral-500);
-  height: 0.2rem;
-  width: 1.5rem;
+  height: 0.125rem;
+  width: 0.938rem;
   border-radius: 0.1rem;
   margin-top: 0.3rem;
 }
