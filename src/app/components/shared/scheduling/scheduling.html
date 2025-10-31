@@ -2,7 +2,12 @@
   <div class="form-inputs-contain"></div>
   @for (field of fields; track field.name; let isLast = $last) {
     <div class="form-group" [class.is-last-item]="isLast">
-      <label [for]="field.name">{{ field.label }}</label>
+      <label class="d-flex aligm-items-center gap-1" [for]="field.name">{{ field.label }} 
+        @if(field.validators?.required){
+          <span class="required">*</span>
+        }
+      </label>
+        
 
       @switch (field.type) {
 
