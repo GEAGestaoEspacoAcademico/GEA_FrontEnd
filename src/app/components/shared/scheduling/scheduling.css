@@ -211,3 +211,9 @@ mat-chip button mat-icon {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+.required{
+  color: var(--color-feedback-error);
+  font-size: 1.2rem;
+  font-weight: bold;
+}

@@ -69,6 +69,23 @@ export class Agenda {
     },
     {
       type: 'select',
+      name: 'qtd aulas',
+      label: 'Qtd de aulas',
+      options: [
+        {value: '1', label: '1 Aulas'},
+        {value: '2', label: '2 Aulas'},
+        {value: '3', label: '3 Aulas'},
+        {value: '4', label: '4 Aulas'},
+        {value: '5', label: '5 Aulas'},
+        {value: '6', label: '6 Aulas'},
+      ],
+      validators: {
+        required: true,
+        errorMessages: {required: 'A quantidade de aulas é obrigatória'}
+      }
+    },
+    {
+      type: 'select',
       name: 'horario',
       label: 'Horário',
       defaultValue: '07:40-09:20',
@@ -78,6 +95,40 @@ export class Agenda {
         { value: '11:20-13:00', label: '11:20 - 13:00' },
         { value: '19:00-22:30', label: '19:00 - 22:30' },
       ],
+      validators: {
+        required: true,
+        errorMessages: {required: 'A quantidade de aulas é obrigatória'}
+      }
+    },
+    {
+      type: 'select',
+      name: 'curso',
+      label: 'Curso',
+      options: [
+        { value: 'ADS', label: 'Análise e Desenvolvimento de sistemas' },
+        { value: 'GTI', label: 'Gestão da Informação' },
+        { value: 'MECA', label: 'Mecatrônica' },
+      ],
+      validators: {
+        required: true,
+        errorMessages: {required: 'A quantidade de aulas é obrigatória'}
+      }
+    },
+    {
+      type: 'select',
+      name: 'disciplina',
+      label: 'Disciplina',
+      defaultValue: 'calc1',
+      options: [
+        { value: 'calc1', label: 'Cálculo I' },
+        { value: 'redes', label: 'Redes de Computadores' },
+        { value: 'ia', label: 'Inteligência Artificial' },
+        { value: 'ed', label: 'Estrutura de Dados' },
+      ],
+      validators: {
+        required: true,
+        errorMessages: {required: 'A quantidade de aulas é obrigatória'}
+      }
     },
     {
       type: 'select',
@@ -90,6 +141,7 @@ export class Agenda {
         { value: 'audit', label: 'Auditório' },
       ],
     },
+    
     {
       type: 'select',
       name: 'capacidade',
@@ -103,18 +155,6 @@ export class Agenda {
       ],
     },
     {
-      type: 'select',
-      name: 'disciplina',
-      label: 'Disciplina',
-      defaultValue: 'calc1',
-      options: [
-        { value: 'calc1', label: 'Cálculo I' },
-        { value: 'redes', label: 'Redes de Computadores' },
-        { value: 'ia', label: 'Inteligência Artificial' },
-        { value: 'ed', label: 'Estrutura de Dados' },
-      ],
-    },
-    {
       type: 'equipment-select',
       name: 'equipamentos',
       label: 'Equipamento',
@@ -124,19 +164,11 @@ export class Agenda {
         { value: 'lousa', label: 'Lousa Digital' },
         { value: 'mic', label: 'Microfone' },
       ],
-    },
-    {
-      type: 'multi-select',
-      name: 'softwares',
-      label: 'Softwares',
-      options: [
-        { value: 'netbeans', label: 'NetBeans' },
-        { value: 'sqlserver', label: 'SQL Server' },
-        { value: 'vscode', label: 'VS Code' },
-        { value: 'brmodelo', label: 'BrModelo' },
-        { value: 'photoshop', label: 'Photoshop' },
-      ],
-    },
+      validators: {
+        required: true,
+        errorMessages: {required: 'A quantidade de aulas é obrigatória'}
+      }
+    }
   ];
   handleFormSubmit(formData: any): void {
     this.submittedData = formData;
