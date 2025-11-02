@@ -27,8 +27,4 @@ export class DisciplinaService {
    * @param idProfessor Id númerico do Professor
    * @returns Retorna um observable contendo um array de objetos Disciplina relacionadas ao professor
    */
-  public getDisciplinaProfessor(idProfessor: number): Observable<Disciplina[]>{
-    return this.http.get<Disciplina[]>(`${this.baseUrl}/professor/${idProfessor}`);
-  }
-
 }
