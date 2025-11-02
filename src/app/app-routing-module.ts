@@ -21,7 +21,7 @@ const routes: Routes = [
       { path: 'agenda', component: Agenda },
       { path: 'aulas', component: Aulas },
       { path: 'configuracoes', component: Configuracoes },
-      {path: 'aulas/alterar/:id', component: EditarAula},
+      { path: 'aulas/alterar/:id', component: EditarAula},
       { path: 'notificacoes', component: Notificacoes },
       { path: '', redirectTo: '/login', pathMatch: 'full' }
     ]

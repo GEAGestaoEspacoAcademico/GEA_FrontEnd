@@ -86,7 +86,7 @@ private loadDataAndBuildForm(): void {
         this.cursoIdAtual = cursos.find(c => c.nomeCurso === this.agendamentoAtual?.curso)?.id;
         this.salaIdAtual = salas.find(s => s.nome === this.agendamentoAtual?.nomeSala)?.id;
         
-        const disciplinaOptions = disciplinas.map(d => ({ label: d.nome, value: d.id }));
+        const disciplinaOptions = disciplinas.map(d => ({ label: d.nomeDisciplina, value: d.idDisciplina }));
         const cursoOptions = cursos.map(c => ({ label: c.nomeCurso, value: c.id }));
         const salaOptions = salas.filter(s => s.disponibilidade === true || s.id === this.salaIdAtual ).map(s => ({ label: s.nome, value: s.id }));
 

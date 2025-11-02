@@ -28,23 +28,25 @@
       }
     </div>
 
-    <dt>Disciplinas:</dt>
-    <dd>
-      <ul>
-        @for (disciplina of mockTeacher.disciplinas; track $index) {
-          <li>{{ disciplina }}</li>
-        }
-      </ul>
-    </dd>
-
-    <dt>Cursos e semestres:</dt>
-    <dd>
-      <ul>
-        @for (curso of mockTeacher.cursos; track $index) {
-          <li>{{ curso.curso }} - {{ curso.semestre }} - {{ curso.disciplina }}</li>
-        }
-      </ul>
-    </dd>
+    @if (disciplinas$ | async; as disciplinas) {
+      <dt>Disciplinas:</dt>
+      <dd>
+        <ul>
+          @for (disciplina of disciplinas; track $index) {
+            <li>{{ disciplina.nomeDisciplina }}</li>
+          }
+        </ul>
+      </dd>
+      
+      <dt>Cursos e semestres:</dt>
+      <dd>
+        <ul>
+          @for (disciplina of disciplinas; track $index) {
+            <li>{{ disciplina.nomeCurso }} - {{ disciplina.semestre }} - {{ disciplina.nomeDisciplina }}</li>
+          }
+        </ul>
+      </dd>
+    }
   </dl>
 
   <app-confirmation-modal
@@ -54,6 +56,6 @@
     message="Você tem certeza que deseja sair da sua conta?"
     confirmText="Confirmar"
     cancelText="Cancelar"
-    (onConfirm)="logout()"
+    (onconfirm)="logout()"
   ></app-confirmation-modal>
 </div>
