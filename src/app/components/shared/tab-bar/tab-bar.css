@@ -35,3 +35,8 @@
 .footer-item.active {
   color: var(--color-primary-700);
 }
+@media (min-width: 768px) {
+  :host {
+    display: none;
+  }
+}
