@@ -35,7 +35,11 @@ export class IconRegistryService {
     this.addIcon('logout', 'logout.svg');
     this.addIcon('arrow-back', 'arrow-back.svg');
     this.addIcon('arrow-previus', 'arrow-previus.svg');
-    this.addIcon('details-arrow', 'details-arrow.svg')
+    this.addIcon('details-arrow', 'details-arrow.svg');
+    this.addIcon('add-circle', 'add-circle.svg');
+    this.addIcon('computer', 'computer.svg');
+    this.addIcon('home', 'home.svg');
+    this.addIcon('tada', 'tada.svg')
   }
   /**
    * Insere um novo icone no projeto
