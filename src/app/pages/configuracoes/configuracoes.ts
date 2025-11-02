@@ -30,7 +30,7 @@ export class Configuracoes implements OnInit{
       filter(professor => professor !== null),
       map(professor => professor.id),
       switchMap(professorId => {
-        return this.professorService.getDisciplinasPorId(professorId)
+        return this.professorService.getDisciplinasDoProfessor(professorId)
       })
     )
   }

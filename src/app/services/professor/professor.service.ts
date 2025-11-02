@@ -12,7 +12,7 @@ export class ProfessorService {
   
   private baseUrl = environment.apiUrl + "/professores";
 
-  public getDisciplinasPorId(idProfessor: number): Observable<Disciplina[]>{
+  public getDisciplinasDoProfessor(idProfessor: number): Observable<Disciplina[]>{
     return this.http.get<Disciplina[]>(`${this.baseUrl}/${idProfessor}/disciplinas`);
   }
 }
