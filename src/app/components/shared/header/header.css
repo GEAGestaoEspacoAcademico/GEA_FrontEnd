@@ -1,5 +1,5 @@
 .header {
-  background: linear-gradient(to right, rgba(135, 12, 8, 0), #870C08);
+  background: linear-gradient(to right, rgba(135, 12, 8, 0), #870c08);
   background-color: var(--color-primary-900);
   padding: 0 var(--spacing-4);
   height: 4.625rem;
@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-3, 1rem);
+  gap: var(--spacing-3, 10rem);
 }
 
 .icon-fatec-big {
@@ -42,7 +42,10 @@
   padding: 0.5rem 0.625rem;
   border-radius: 0.25rem;
   font-size: 0.9rem;
-  transition: transform 0.2s ease, font-size 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    font-size 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .nav-links .active-link,
