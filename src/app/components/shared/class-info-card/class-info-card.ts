@@ -59,8 +59,6 @@ export class ClassInfoCard {
   /**
    * Manipulador do clique no botão "Alterar".
    * Emite o evento 'alterar' com o ID do agendamento.
-   * (Método renomeado de handleView para handleAlterar para
-   * corresponder ao nome do @Output)
    */
   public handleAlterar(): void {
     this.alterar.emit(this.agendamentoData.id);

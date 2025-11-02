@@ -1,12 +1,15 @@
+import type { OnInit} from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import type { Teacher } from '../../models/teacher.model';
 import { AuthActions } from '../../store/auth/auth.actions';
 import { Store } from '@ngrx/store';
 import type { User } from '../../models/user.model';
-import type { Observable } from 'rxjs';
+import { filter, map, switchMap, type Observable } from 'rxjs';
 import { selectCurrentUser } from '../../store/auth/auth.selectors';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 import { NotificationService } from '../../services/notificacoes/notification.service';
+import { ProfessorService } from '../../services/professor/professor.service';
+import type { Disciplina } from '../../models/disciplina.model';
 
 @Component({
   selector: 'app-configuracoes',
@@ -14,10 +17,23 @@ import { NotificationService } from '../../services/notificacoes/notification.se
   templateUrl: './configuracoes.html',
   styleUrl: './configuracoes.css',
 })
-export class Configuracoes {
+export class Configuracoes implements OnInit{
   private store = inject(Store);
-  user$: Observable<User | null> = this.store.select(selectCurrentUser);
   private notificationService = inject(NotificationService);
+  private professorService = inject(ProfessorService)
+  
+  user$: Observable<User | null> = this.store.select(selectCurrentUser);
+  disciplinas$!: Observable<Disciplina[]>;
+
+  ngOnInit(): void {
+    this.disciplinas$ = this.user$.pipe(
+      filter(professor => professor !== null),
+      map(professor => professor.id),
+      switchMap(professorId => {
+        return this.professorService.getDisciplinasPorId(professorId)
+      })
+    )
+  }
 
   @ViewChild('ConfirmationModal')
   confirmModal!: ConfirmationModal;
@@ -26,39 +42,8 @@ export class Configuracoes {
     this.confirmModal.open();
   }
 
-  closeModal() {
-    this.confirmModal.onModalClose();
-  }
-
   logout() {
     this.store.dispatch(AuthActions.logout());
     this.notificationService.showSuccess('Usuario deslogado com sucesso.');
   }
-
-  mockTeacher: Teacher = {
-    nome: 'Prof. Dr. Lorem Ipsum',
-    disciplinas: ['Cálculo 1', 'Cálculo 2', 'Álgebra Linear'],
-    cursos: [
-      {
-        semestre: '1º semestre',
-        curso: 'Engenharia Mecatrônica',
-        disciplina: 'Cálculo 1',
-      },
-      {
-        semestre: '2º semestre',
-        curso: 'Análise e Desenvolvimento de Sistemas (ADS)',
-        disciplina: 'Cálculo 1',
-      },
-      {
-        semestre: '2º semestre',
-        curso: 'Engenharia de Software',
-        disciplina: 'Álgebra Linear',
-      },
-      {
-        semestre: '3º semestre',
-        curso: 'Engenharia Mecatrônica',
-        disciplina: 'Cálculo 2',
-      },
-    ],
-  };
 }

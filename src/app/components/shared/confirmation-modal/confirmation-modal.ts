@@ -10,7 +10,6 @@ import type { RoomData } from '../../../models/room.model';
  * Este componente NÃO se abre sozinho. O componente pai precisa
  * obter uma referência a ele (usando @ViewChild) e chamar
  * o método público `open()` para exibi-lo.
- *
  * @usage
  * // ----- No template do componente PAI -----
  * <app-confirmation-modal
@@ -26,7 +25,6 @@ import type { RoomData } from '../../../models/room.model';
  * // ----- No TS do componente PAI -----
  * import { ViewChild } from '@angular/core';
  * import { ConfirmationModal } from '...';
- *
  * @ViewChild('meuModalAviso') modalAviso!: ConfirmationModal;
  *
  * public solicitarConfirmacao(): void {
