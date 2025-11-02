@@ -16,6 +16,7 @@
   import type {Option} from '../../components/shared/scheduling/types'
   import { NotificationService } from '../../services/notificacoes/notification.service';
   import { FormatUtils } from '../../utils/format.utils';
+import { ProfessorService } from '../../services/professor/professor.service';
 
   @Component({
     selector: 'app-editar-aula',
@@ -27,7 +28,7 @@
     private route = inject(ActivatedRoute)
     private router = inject(Router)
     private store = inject(Store)
-    private disciplinaService = inject(DisciplinaService)
+    private professorService = inject(ProfessorService)
     private cursoService = inject(CursoService)
     private salaService = inject(SalaService)
     private notificationService = inject(NotificationService)
@@ -63,7 +64,6 @@
                 this.store.dispatch(AgendamentoActions.loadAgendamentoById({ id }));
               }else if(!this.agendamentoAtual){
                 this.agendamentoAtual = aula;
-                console.log(this.agendamentoAtual)
                 this.loadDataAndBuildForm();
               }
             })
@@ -76,7 +76,7 @@ private loadDataAndBuildForm(): void {
     if (!this.currentUser || !this.agendamentoAtual) { return; }
 
     forkJoin({
-      disciplinas: this.disciplinaService.getDisciplinaProfessor(this.currentUser.id),
+      disciplinas: this.professorService.getDisciplinasDoProfessor(this.currentUser.id),
       cursos: this.cursoService.getCursos(),
       salas: this.salaService.getSalas()
     }).pipe(
