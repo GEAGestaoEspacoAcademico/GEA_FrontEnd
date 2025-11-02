@@ -1,57 +1,56 @@
 .header {
-    background-image:
-        url("../../../assets/images/loginBackground.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    flex-shrink: 0;
+  background-image: url('../../../assets/images/loginBackground.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex-shrink: 0;
 }
-.login-page{
-    background-image: linear-gradient(to bottom, #870C08 0%, #210302 100%);
-    justify-content: space-between;
+.login-page {
+  background-image: linear-gradient(to bottom, #870c08 0%, #210302 100%);
+  justify-content: space-between;
 }
 
 .card-login {
-    background-color: #f9f9fb;
-    border-top-left-radius: 2.188rem !important;
-    border-top-right-radius: 2.188rem !important;
-    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
-    min-height: 21.875rem;
+  background-color: #f9f9fb;
+  border-top-left-radius: 2.188rem !important;
+  border-top-right-radius: 2.188rem !important;
+  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
+  min-height: 21.875rem;
 }
 
 .btn-danger {
-    background-color: var(--color-primary-700) !important;
+  background-color: var(--color-primary-700) !important;
 }
 
 .btn-danger:active {
-    background-color: #600806 !important;
+  background-color: #600806 !important;
 }
 
 .btn-danger:hover {
-    background-color: #AD0F0A !important;
+  background-color: #ad0f0a !important;
 }
 
 .form-control {
-    border-color: #870C08 !important;
+  border-color: #870c08 !important;
 }
 
 h1 {
-    font-size: 1.5rem !important;
-    text-shadow: 2px 2px 4px #000000;
+  font-size: 1.5rem !important;
+  text-shadow: 2px 2px 4px #000000;
 }
 
 h2 {
-    font-size: 6.25rem !important;
-    text-shadow: 4px 4px 6px #000000;
+  font-size: 6.25rem !important;
+  text-shadow: 4px 4px 6px #000000;
 }
 
 h3 {
-    font-size: 2rem !important;
+  font-size: 2rem !important;
 }
 
 .b-line {
-    padding-bottom: 3.938rem;
-    border-bottom: 1px black solid;
-    width: 50%;
-    margin: 0 auto;
+  padding-bottom: var(--spacing-4);
+  border-bottom: 1px black solid;
+  width: 50%;
+  margin: 0 auto;
 }
