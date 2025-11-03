@@ -44,7 +44,7 @@ import { Login } from './pages/login/login';
 // Shared Components
 import { DaySelector } from './components/shared/day-selector/day-selector';
 import { Header } from './components/shared/header/header';
-import { TitleHighligh } from './components/shared/title-highligh/title-highligh';
+import { TitleHighlight } from './components/shared/title-highlight/title-highlight';
 import { ClassInfoCard } from './components/shared/class-info-card/class-info-card';
 import { TabBar } from './components/shared/tab-bar/tab-bar';
 import { ConfirmationModal } from './components/shared/confirmation-modal/confirmation-modal';
@@ -72,7 +72,7 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
     ClassInfoCard,
     DaySelector,
     Header,
-    TitleHighligh,
+    TitleHighlight,
     TabBar,
     ConfirmationModal,
     Scheduling,

@@ -14,7 +14,7 @@
   import { selectCurrentUser } from '../../store/auth/auth.selectors';
   import { SalaService } from '../../services/salas/sala.service';
   import type {Option} from '../../components/shared/scheduling/types'
-  import { NotificationService } from '../../services/notificacoes/notification.service';
+  import { SnackBarService } from '../../services/snackbar/snackbar.service';
   import { FormatUtils } from '../../utils/format.utils';
 import { ProfessorService } from '../../services/professor/professor.service';
 
@@ -31,7 +31,7 @@ import { ProfessorService } from '../../services/professor/professor.service';
     private professorService = inject(ProfessorService)
     private cursoService = inject(CursoService)
     private salaService = inject(SalaService)
-    private notificationService = inject(NotificationService)
+    private notificationService = inject(SnackBarService)
     
     @ViewChild('confirmModal') confirmModal!: ConfirmationModal;
     

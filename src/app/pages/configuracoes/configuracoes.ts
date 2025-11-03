@@ -7,7 +7,7 @@ import type { User } from '../../models/user.model';
 import { filter, map, switchMap, type Observable } from 'rxjs';
 import { selectCurrentUser } from '../../store/auth/auth.selectors';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import { NotificationService } from '../../services/notificacoes/notification.service';
+import { SnackBarService } from '../../services/snackbar/snackbar.service';
 import { ProfessorService } from '../../services/professor/professor.service';
 import type { Disciplina } from '../../models/disciplina.model';
 
@@ -19,7 +19,7 @@ import type { Disciplina } from '../../models/disciplina.model';
 })
 export class Configuracoes implements OnInit{
   private store = inject(Store);
-  private notificationService = inject(NotificationService);
+  private notificationService = inject(SnackBarService);
   private professorService = inject(ProfessorService)
   
   user$: Observable<User | null> = this.store.select(selectCurrentUser);

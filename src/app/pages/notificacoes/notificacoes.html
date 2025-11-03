@@ -1,10 +1,8 @@
-<div class="notification-container">
-  <app-title-highligh title="Notificações"></app-title-highligh>
-  <app-notification-card
-    *ngFor="let notificacao of notificacoes"
-    [source]="notificacao.source"
-    [title]="notificacao.title"
-    [date]="notificacao.date"
-    [snippet]="notificacao.snippet"
-  ></app-notification-card>
-</div>
+<app-title-highlightt title="Notificações"></app-title-highlightt>
+<app-notification-card
+  *ngFor="let notificacao of notificacoes"
+  [source]="notificacao.source"
+  [title]="notificacao.title"
+  [date]="notificacao.date"
+  [snippet]="notificacao.snippet"
+></app-notification-card>
