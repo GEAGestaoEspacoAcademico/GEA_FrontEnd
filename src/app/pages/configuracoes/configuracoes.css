@@ -12,23 +12,34 @@
   margin-top: 0.125rem;
 }
 
-a{
+a {
   color: var(--color-neutral-900);
   text-decoration: none;
 }
 
-.informations{
+.informations {
   color: var(--color-neutral-900);
 }
 
-.informations dl dt{
+.informations dl dt {
   font-size: 1rem;
   font-weight: var(--font-weight-regular);
   font-family: var(--font-family-primary);
 }
 
-
-ul{
+ul {
   list-style: none;
   padding-left: 0;
+}
+
+@media (min-width: 768px) {
+  .config-container {
+    padding-left: 1.688rem;
+    padding-right: 1.688rem;
+  }
+}
+
+.content {
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
