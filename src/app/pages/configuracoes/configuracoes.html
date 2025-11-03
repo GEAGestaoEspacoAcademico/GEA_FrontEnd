@@ -35,21 +35,18 @@
           @for (disciplina of disciplinas; track $index) {
             <li>{{ disciplina.nomeDisciplina }}</li>
           }
-        </ul>
-      </dd>
-      
-      <dt>Cursos e semestres:</dt>
+        </ul> </dd> <dt>Cursos e semestres:</dt>
       <dd>
         <ul>
           @for (disciplina of disciplinas; track $index) {
-            <li>{{ disciplina.nomeCurso }} - {{ disciplina.semestre }} - {{ disciplina.nomeDisciplina }}</li>
+            <li>
+              {{ disciplina.nomeCurso }} - {{ disciplina.semestre }} -
+              {{ disciplina.nomeDisciplina }}
+            </li>
           }
         </ul>
       </dd>
-    }
-  </dl>
-
-  <app-confirmation-modal
+    } </dl> <app-confirmation-modal
     #ConfirmationModal
     mode="aviso"
     title="Aviso!"

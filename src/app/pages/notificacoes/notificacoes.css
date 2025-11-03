@@ -1,0 +1,6 @@
+@media (min-width: 768px) {
+  .notification-container {
+    padding-left: 4.5rem;
+    padding-right: 4.5rem;
+  }
+}
