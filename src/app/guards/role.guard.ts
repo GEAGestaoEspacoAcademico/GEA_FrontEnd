@@ -7,7 +7,7 @@ import { selectUserCargo } from '../store/auth/auth.selectors';
 import { map, take } from 'rxjs/operators';
 import type { Observable } from 'rxjs';
 import { of } from 'rxjs';
-import { NotificationService } from '../services/notificacoes/notification.service';
+import { SnackBarService } from '../services/snackbar/snackbar.service';
 
 /**
  * Guarda de rota funcional (`CanActivateFn`) que verifica se o usuário
@@ -40,7 +40,7 @@ export const RoleGuard: CanActivateFn = (
 ): Observable<boolean | UrlTree> => {
   const router = inject(Router);
   const store = inject(Store);
-  const notificationService = inject(NotificationService);
+  const notificationService = inject(SnackBarService);
 
   const allowedRoles = route.data?.['roles'] as string[] | undefined;
 

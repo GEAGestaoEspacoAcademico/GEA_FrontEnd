@@ -11,7 +11,7 @@ import {
 import { Store } from '@ngrx/store';
 import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import { NotificationService } from '../../services/notificacoes/notification.service';
+import { SnackBarService } from '../../services/snackbar/snackbar.service';
 import { FormatUtils } from '../../utils/format.utils';
 
 @Component({
@@ -23,7 +23,7 @@ import { FormatUtils } from '../../utils/format.utils';
 export class Aulas implements OnInit {
   private store = inject(Store);
   private router = inject(Router);
-  private notificationService = inject(NotificationService);
+  private notificationService = inject(SnackBarService);
 
   private currentDate = new Date();
 

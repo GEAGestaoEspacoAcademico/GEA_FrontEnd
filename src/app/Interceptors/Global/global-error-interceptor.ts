@@ -10,7 +10,7 @@ import type { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { NotificationService } from '../../services/notificacoes/notification.service';
+import { SnackBarService } from '../../services/snackbar/snackbar.service';
 
 /**
  * Interceptor HTTP funcional (`HttpInterceptorFn`) para
@@ -40,7 +40,7 @@ export const globalErrorInterceptor: HttpInterceptorFn = (
   next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> => {
   const router = inject(Router);
-  const notificationService = inject(NotificationService);
+  const notificationService = inject(SnackBarService);
 
   return next(request).pipe(
     catchError((error: HttpErrorResponse) => {

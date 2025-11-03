@@ -4,6 +4,7 @@
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
+  "gcm_send_id": "103953800507",
   "icons": [
     {
       "src": "icons/icon-72x72.png",
