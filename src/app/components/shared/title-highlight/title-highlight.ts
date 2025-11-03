@@ -4,15 +4,14 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
  * Componente de apresentação (dumb component) reutilizável.
  * Exibe uma string de título com um estilo de "destaque"
  * pré-definido no CSS.
- *
  * @usage
- * <app-title-highlight [title]="'Minha Seção de Destaque'"></app-title-highlight>
+ * <app-title-highlighttt [title]="'Minha Seção de Destaque'"></app-title-highlighttt>
  */
 @Component({
-  selector: 'app-title-highligh',
+  selector: 'app-title-highlightt',
   standalone: false,
-  templateUrl: './title-highligh.html',
-  styleUrl: './title-highligh.css',
+  templateUrl: './title-highlight.html',
+  styleUrl: './title-highlight.css',
   /**
    * (Opcional, mas recomendado)
    * OnPush: O componente só será verificado (e re-renderizado)
@@ -20,7 +19,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
    */
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TitleHighligh {
+export class TitleHighlight {
   /**
    * O texto (string) que será exibido como o título principal.
    * Este @Input é obrigatório.
