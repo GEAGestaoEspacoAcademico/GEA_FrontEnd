@@ -78,7 +78,6 @@ export class ConfirmationModal {
 
   /**
    * Evento emitido quando o usuário clica no botão de confirmação.
-   *
    */
   @Output() onconfirm = new EventEmitter<void>();
 
@@ -91,9 +90,7 @@ export class ConfirmationModal {
 
   /**
    * Método PÚBLICO. Deve ser chamado pelo componente pai para abrir o modal.
-   * @example
-   * // No componente pai:
-   * this.meuModal.open();
+   * @returns {void}
    */
   public open(): void {
     this.modalService.open(this.modalTemplate, {
@@ -104,8 +101,9 @@ export class ConfirmationModal {
   }
 
   /**
-   * Método interno (chamado pelo template) ao clicar em 'Confirmar'.
-   * Emite o evento 'onConfirm' e fecha todos os modais.
+   * Chamado pelo template ao confirmar.
+   * Emite o evento e fecha o modal.
+   * @returns {void}
    */
   public onModalConfirm(): void {
     this.onconfirm.emit();
@@ -113,8 +111,9 @@ export class ConfirmationModal {
   }
 
   /**
-   * Método interno (chamado pelo template) ao clicar em 'Cancelar' ou fechar.
-   * Emite o evento 'onCancel' e fecha todos os modais.
+   * Chamado pelo template ao cancelar/fechar.
+   * Emite o evento e fecha o modal.
+   * @returns {void}
    */
   public onModalClose(): void {
     this.oncancel.emit();
@@ -128,19 +127,25 @@ export class ConfirmationModal {
    * - Retorna null se não foi possível inferir.
    */
   get qtdAulas(): number | null {
-    if (!this.detailsData) return null;
+    if (!this.detailsData) {
+      return null;
+    }
 
-    const obs = this.detailsData.observacoes ?? [];
+    const obs: string[] = this.detailsData.observacoes ?? [];
     for (const o of obs) {
       const m = /(\d+)\s*(?:aulas?|aula|qty|qtd)/i.exec(o);
       if (m && m[1]) {
         const n = Number(m[1]);
-        if (!Number.isNaN(n)) return n;
+        if (!Number.isNaN(n)) {
+          return n;
+        }
       }
       const m2 = /(?:qtd[:\s]*|aulas?[:\s]*)(\d+)/i.exec(o);
       if (m2 && m2[1]) {
         const n2 = Number(m2[1]);
-        if (!Number.isNaN(n2)) return n2;
+        if (!Number.isNaN(n2)) {
+          return n2;
+        }
       }
     }
 
@@ -160,13 +165,14 @@ export class ConfirmationModal {
   /**
    * Retorna uma lista de equipamentos extraída das observações.
    * Heurística:
-   * - Procura por linhas que mencionem palavras-chave típicas de equipamento (projetor, quadro, quadro, microfone, som, etc).
-   * - Se não houver, tenta extrair itens separados por vírgula na observação principal.
+   * - Procura por linhas que mencionem palavras-chave típicas de equipamento.
    */
   get equipamentos(): string[] {
-    if (!this.detailsData) return [];
+    if (!this.detailsData) {
+      return [];
+    }
 
-    const obs = this.detailsData.observacoes ?? [];
+    const obs: string[] = this.detailsData.observacoes ?? [];
     const keywords = [
       'projetor', 'projetor multimídia', 'projeção', 'quadro branco', 'quadro',
       'microfone', 'som', 'caixas', 'caixa de som', 'tv', 'televisão',
@@ -174,7 +180,7 @@ export class ConfirmationModal {
       'cadeiras', 'mesas', 'bancadas', 'tomada', 'equipamento'
     ];
 
-    const found: Set<string> = new Set();
+    const found: Set<string> = new Set<string>();
 
     for (const o of obs) {
       const lower = o.toLowerCase();
@@ -197,9 +203,13 @@ export class ConfirmationModal {
         if (o.includes(',')) {
           const candidates = o.split(',').map(s => s.trim()).filter(Boolean);
           for (const c of candidates) {
-            if (c.length > 2 && c.length < 100) found.add(c);
+            if (c.length > 2 && c.length < 100) {
+              found.add(c);
+            }
           }
-          if (found.size > 0) break;
+          if (found.size > 0) {
+            break;
+          }
         }
       }
     }
@@ -211,9 +221,11 @@ export class ConfirmationModal {
    * Observações complementares (que não foram classificadas como equipamentos).
    */
   get observacoesComplementares(): string[] {
-    if (!this.detailsData) return [];
+    if (!this.detailsData) {
+      return [];
+    }
 
-    const obs = this.detailsData.observacoes ?? [];
+    const obs: string[] = this.detailsData.observacoes ?? [];
     const equipSet = new Set(this.equipamentos.map(e => e.toLowerCase()));
     const rest: string[] = [];
 
@@ -231,10 +243,12 @@ export class ConfirmationModal {
    * Monta um array de pares label/value para facilitar a renderização no template
    * modo 'detalhes'. O template pode iterar sobre detailsPairs para exibir linhas.
    */
-  get detailsPairs(): { label: string; value: string | number | string[] | null }[] {
-    if (!this.detailsData) return [];
+  get detailsPairs(): Array<{ label: string; value: string | number | string[] | null }>  {
+    if (!this.detailsData) {
+      return [];
+    }
 
-    const pairs: { label: string; value: string | number | string[] | null }[] = [];
+    const pairs: Array<{ label: string; value: string | number | string[] | null }> = [];
 
     pairs.push({ label: 'Nome', value: this.detailsData.nome ?? '' });
     pairs.push({ label: 'Data', value: this.detailsData.data ?? '' });
@@ -242,13 +256,18 @@ export class ConfirmationModal {
     pairs.push({ label: 'Capacidade', value: this.detailsData.capacidade ?? '' });
 
     const qtd = this.qtdAulas;
-    if (qtd !== null) pairs.push({ label: 'Qtd aulas', value: qtd });
-
+    if (qtd !== null) {
+      pairs.push({ label: 'Qtd aulas', value: qtd });
+    }
     const eqs = this.equipamentos;
-    if (eqs.length) pairs.push({ label: 'Equipamentos', value: eqs });
+    if (eqs.length) {
+      pairs.push({ label: 'Equipamentos', value: eqs });
+    }
 
     const obs = this.observacoesComplementares;
-    if (obs.length) pairs.push({ label: 'Observações', value: obs });
+    if (obs.length) {
+      pairs.push({ label: 'Observações', value: obs });
+    }
 
     return pairs;
   }
