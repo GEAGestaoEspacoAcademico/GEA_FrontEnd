@@ -57,33 +57,8 @@
   font-weight: var(--font-weight-regular);
 }
 
-.time-caption-small {
-  font-size: 0.75rem;
-  font-weight: var(--font-weight-regular);
-}
-
 .feedback-message {
   font-weight: var(--font-weight-bold);
-}
-
-.hr-lg {
-  width: 9.375rem;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: var(--spacing-1);
-  margin-bottom: var(--spacing-1);
-  border-width: 2px;
-  border-color: var(--color-default-black);
-}
-
-.hr-sm {
-  width: 2.313rem;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: var(--spacing-2);
-  margin-bottom: var(--spacing-2);
-  border-width: 2px;
-  border-color: var(--color-default-black);
 }
 
 .lg-button {
