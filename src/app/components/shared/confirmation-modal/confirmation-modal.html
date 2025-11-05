@@ -1,7 +1,7 @@
 <ng-template #ConfirmationModal let-modal>
   <div class="modal-geral">
     <div class="header-modal">
-
+      
       @if (mode === 'aviso') {
         <mat-icon svgIcon="alert" class="icon-warn"></mat-icon>
         <div class="section-title w-100 text-center">{{ title }}</div>
@@ -44,54 +44,38 @@
         </div>
       }
 
-  @if (mode === 'detalhes' && detailsData) {
-  <dl>
-    <dt>Local:</dt>
-    <dd>{{ detailsData.nome }}</dd>
+      @if (mode === 'detalhes' && detailsData) {
+        <div class="details-list-container">
+          <dl class="details-list">
 
-    <dt>Data:</dt>
-    <dd>{{ detailsData.data }}</dd>
+            <dt>Local:</dt>
+            <dd>{{ detailsData.nome }}</dd>
 
-    <dt>QTD aulas:</dt>
-    <dd>{{ qtdAulas ?? 'N/A' }}</dd>
+            <dt>Data:</dt>
+            <dd>{{ detailsData.data | date: 'dd/MM/yyyy' }}</dd> 
+            
+            <dt>Qtd aulas:</dt>
+            <dd>{{ qtdAulas }}</dd>
 
-    <dt>Horário:</dt>
-    <dd>{{ detailsData.horario }}</dd>
+            <dt>Horário:</dt>
+            <dd>{{ detailsData.horario }}</dd>
 
-    <dt>Capacidade:</dt>
-    <dd>{{ detailsData.capacidade }}</dd>
+            <dt>Capacidade:</dt>
+            <dd>{{ detailsData.capacidade }}</dd>
 
-    <dt>Equipamentos:</dt>
-    <dd>
-      @if (equipamentos.length > 0) {
-        <ul>
-          @for (equip of equipamentos; track $index) {
-            <li>{{ equip }}</li>
-          }
-        </ul>
-      } @else {
-        N/A
-      }
-    </dd>
+            <dt class="border border-0">Equipamentos:</dt>
+            <dd class="border border-0">{{ equipamentosString || 'N/A' }}</dd>
 
-    <dt class="observation-text">Observações:</dt>
-    <dd>
-      @if (observacoesComplementares.length > 0) {
-        <ul>
-          @for (obs of observacoesComplementares; track $index) {
-            <li>{{ obs }}</li>
-          }
-        </ul>
-      } @else {
-        N/A
-      }
-    </dd>
-  </dl>
+            <dt class="observation-text text-center">Observações</dt> 
+            <dd>{{ observacoesString || 'N/A' }}</dd>
+
+          </dl>
+        </div>
 
         <button class="gea-btn-primary lg-button mt-2" (click)="onModalConfirm()">
           {{ confirmText }}
         </button>
       }
-    </div>
+      </div>
   </div>
 </ng-template>

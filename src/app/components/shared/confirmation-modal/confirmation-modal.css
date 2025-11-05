@@ -1,73 +1,147 @@
 .gea-btn-primary {
-  background-color: var(--color-primary-700);
-  padding: var(--spacing-1);
-  border-radius: 0.625rem;
-  border: solid 2px var(--color-default-black);
-  color: var(--color-default-white);
+	background-color: var(--color-primary-700);
+	padding: var(--spacing-1);
+	border-radius: 0.625rem;
+	border: solid 2px var(--color-default-black);
+	color: var(--color-default-white);
 }
 
 .gea-btn-secondary {
-  background-color: #d9d9d9;
-  padding: var(--spacing-1);
-  border-radius: 0.625rem;
-  border: solid 2px var(--color-default-black);
-  color: var(--color-default-black);
+	background-color: #d9d9d9;
+	padding: var(--spacing-1);
+	border-radius: 0.625rem;
+	border: solid 2px var(--color-default-black);
+	color: var(--color-default-black);
 }
 
 .header-modal {
-  background-color: var(--color-primary-700);
-  border-radius: 0 0 0.375rem 0.375rem;
-  padding: var(--spacing-2);
-  border-bottom: solid 1px var(--color-default-black);
-  display: flex;
-  color: var(--color-default-white);
+	background-color: var(--color-primary-700);
+	border-radius: 0 0 0.375rem 0.375rem;
+	padding: var(--spacing-2);
+	border-bottom: solid 1px var(--color-default-black);
+	display: flex;
+	color: var(--color-default-white);
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
 .body-modal {
-  background-color: #f0f0f0;
-  padding: var(--spacing-2);
+	background-color: #f0f0f0;
+	padding: var(--spacing-2);
 }
 
 .modal-geral {
-  border: solid 2px var(--color-default-black);
-  border-radius: 0.375rem;
-  overflow: hidden;
+	border: solid 2px var(--color-default-black);
+	border-radius: 0.375rem;
+	overflow: hidden;
 }
 
 .icon-warn {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--color-default-white);
+	width: 1.5rem;
+	height: 1.5rem;
+	color: var(--color-default-white);
 }
 
 .icon-arrow {
-  width: 1.5rem;
-  height: 1.5rem;
-  color: var(--color-default-white);
+	width: 1.5rem;
+	height: 1.5rem;
+	color: var(--color-default-white);
+  position: absolute;
+  left: var(--spacing-2);
+  cursor: pointer;
+}
+
+.observation-text {
+	color: var(--color-primary-700);
+}
+
+.time-caption {
+	display: block;
+	font-size: 0.875rem;
+	margin: 0 auto var(--spacing-2) auto;
+	font-weight: var(--font-weight-regular);
+}
+
+.feedback-message {
+	font-weight: var(--font-weight-bold);
+}
+
+.lg-button {
+	width: 7.5rem;
+	display: block;
+	margin: 0 auto;
+  margin-top: var(--spacing-2);
+}
+
+.section-title {
+	margin-top: 0.125rem;
+  text-align: center;
+  flex-grow: 1;
+}
+
+.details-list-container {
+  padding: 0 1.5rem ;
+}
+
+.details-list {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: var(--spacing-0-5) var(--spacing-2);
+	margin-top: var(--spacing-2);
+}
+
+.details-list dt {
+	text-align: left;
+	padding-right: var(--spacing-1);
+  border-bottom: 1px solid var(--color-default-black);
+  padding-bottom: var(--spacing-1);
+  margin-bottom: var(--spacing-1);
+}
+
+.details-list dd {
+	text-align: right;
+	margin-left: 0;
+	font-weight: var(--font-weight-regular);
+	word-break: break-word;
+  border-bottom: 1px solid var(--color-default-black);
+  padding-bottom: var(--spacing-1);
+  margin-bottom: var(--spacing-1);
+}
+
+.details-list dt:last-of-type,
+.details-list dd:last-of-type {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
 }
 
 .observation-text {
   color: var(--color-primary-700);
-}
-
-.time-caption {
-  display: block;
-  font-size: 0.875rem;
-  margin: 0 auto var(--spacing-2) auto;
+  grid-column: 1 / -1;
+  text-align: center;
   font-weight: var(--font-weight-regular);
+  margin-top: var(--spacing-2);
+  position: relative;
+  padding-top: var(--spacing-2);
 }
 
-.feedback-message {
-  font-weight: var(--font-weight-bold);
+.observation-text::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  border-top: 1px solid var(--color-default-black);
 }
 
-.lg-button {
-  width: 7.5rem;
-  display: block;
-  margin: 0 auto var(--spacing-2) auto;
+.details-list dd:last-of-type {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: var(--spacing-0-5);
 }
 
-.section-title {
-  margin-top: 0.125rem;
-  margin-right: var(--spacing-3);
+.body-modal > .gea-btn-primary.lg-button {
+  margin-top: var(--spacing-3);
 }

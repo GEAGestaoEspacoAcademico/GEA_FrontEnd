@@ -121,160 +121,29 @@ export class ConfirmationModal {
   }
 
   /**
-   * Quantidade de aulas inferida a partir de detailsData.
-   * - Tenta encontrar "X aulas" nas observações.
-   * - Se não encontrar, tenta inferir a partir do campo `horario` contando ranges.
-   * - Retorna null se não foi possível inferir.
+   * Obtém a quantidade de aulas.
    */
-  get qtdAulas(): number | null {
-    if (!this.detailsData) {
-      return null;
-    }
+  public readonly qtdAulas = 2;
 
-    const obs: string[] = this.detailsData.observacoes ?? [];
-    for (const o of obs) {
-      const m = /(\d+)\s*(?:aulas?|aula|qty|qtd)/i.exec(o);
-      if (m && m[1]) {
-        const n = Number(m[1]);
-        if (!Number.isNaN(n)) {
-          return n;
-        }
-      }
-      const m2 = /(?:qtd[:\s]*|aulas?[:\s]*)(\d+)/i.exec(o);
-      if (m2 && m2[1]) {
-        const n2 = Number(m2[1]);
-        if (!Number.isNaN(n2)) {
-          return n2;
-        }
-      }
+  /**
+   * Obtém a string de equipamentos (Equipamentos:).
+   * A informação é extraída do primeiro item do array 'observacoes'.
+   */
+  public get equipamentosString(): string {
+    if (this.detailsData && this.detailsData.observacoes && this.detailsData.observacoes.length > 0) {
+      return this.detailsData.observacoes[0] || 'N/A';
     }
-
-    if (this.detailsData.horario) {
-      const horario = String(this.detailsData.horario);
-      const segments = horario.split(/[,;/]+/).map(s => s.trim()).filter(Boolean);
-      if (segments.length > 1) {
-        return segments.length;
-      }
-      if (segments.length === 1) {
-        return 1;
-      }
-    }
-    return null;
+    return 'N/A';
   }
 
   /**
-   * Retorna uma lista de equipamentos extraída das observações.
-   * Heurística:
-   * - Procura por linhas que mencionem palavras-chave típicas de equipamento.
+   * Obtém a string de observações (Observações:).
+   * A informação é extraída do segundo item do array 'observacoes'.
    */
-  get equipamentos(): string[] {
-    if (!this.detailsData) {
-      return [];
+  public get observacoesString(): string {
+    if (this.detailsData && this.detailsData.observacoes && this.detailsData.observacoes.length > 1) {
+      return this.detailsData.observacoes[1] || 'N/A';
     }
-
-    const obs: string[] = this.detailsData.observacoes ?? [];
-    const keywords = [
-      'projetor', 'projetor multimídia', 'projeção', 'quadro branco', 'quadro',
-      'microfone', 'som', 'caixas', 'caixa de som', 'tv', 'televisão',
-      'monitor', 'computador', 'pc', 'notebook', 'câmera', 'webcam',
-      'cadeiras', 'mesas', 'bancadas', 'tomada', 'equipamento'
-    ];
-
-    const found: Set<string> = new Set<string>();
-
-    for (const o of obs) {
-      const lower = o.toLowerCase();
-      for (const kw of keywords) {
-        if (lower.includes(kw)) {
-          const partsAfterColon = o.split(/[:\-–—]/);
-          const relevant = partsAfterColon.length > 1 ? partsAfterColon.slice(1).join(':') : o;
-          const candidates = relevant.split(',').map(s => s.trim()).filter(Boolean);
-          for (const c of candidates) {
-            const short = c.length > 0 ? c : o;
-            found.add(short);
-          }
-          break;
-        }
-      }
-    }
-
-    if (found.size === 0 && obs.length > 0) {
-      for (const o of obs) {
-        if (o.includes(',')) {
-          const candidates = o.split(',').map(s => s.trim()).filter(Boolean);
-          for (const c of candidates) {
-            if (c.length > 2 && c.length < 100) {
-              found.add(c);
-            }
-          }
-          if (found.size > 0) {
-            break;
-          }
-        }
-      }
-    }
-
-    return Array.from(found).map(s => this.capitalizeEquipmentLabel(s));
-  }
-
-  /**
-   * Observações complementares (que não foram classificadas como equipamentos).
-   */
-  get observacoesComplementares(): string[] {
-    if (!this.detailsData) {
-      return [];
-    }
-
-    const obs: string[] = this.detailsData.observacoes ?? [];
-    const equipSet = new Set(this.equipamentos.map(e => e.toLowerCase()));
-    const rest: string[] = [];
-
-    for (const o of obs) {
-      const normalized = o.trim();
-      const containsEquipment = Array.from(equipSet).some(eq => normalized.toLowerCase().includes(eq));
-      if (!containsEquipment) {
-        rest.push(normalized);
-      }
-    }
-    return rest;
-  }
-
-  /**
-   * Monta um array de pares label/value para facilitar a renderização no template
-   * modo 'detalhes'. O template pode iterar sobre detailsPairs para exibir linhas.
-   */
-  get detailsPairs(): Array<{ label: string; value: string | number | string[] | null }>  {
-    if (!this.detailsData) {
-      return [];
-    }
-
-    const pairs: Array<{ label: string; value: string | number | string[] | null }> = [];
-
-    pairs.push({ label: 'Nome', value: this.detailsData.nome ?? '' });
-    pairs.push({ label: 'Data', value: this.detailsData.data ?? '' });
-    pairs.push({ label: 'Horário', value: this.detailsData.horario ?? '' });
-    pairs.push({ label: 'Capacidade', value: this.detailsData.capacidade ?? '' });
-
-    const qtd = this.qtdAulas;
-    if (qtd !== null) {
-      pairs.push({ label: 'Qtd aulas', value: qtd });
-    }
-    const eqs = this.equipamentos;
-    if (eqs.length) {
-      pairs.push({ label: 'Equipamentos', value: eqs });
-    }
-
-    const obs = this.observacoesComplementares;
-    if (obs.length) {
-      pairs.push({ label: 'Observações', value: obs });
-    }
-
-    return pairs;
-  }
-
-  private capitalizeEquipmentLabel(s: string): string {
-    const trimmed = s.trim();
-    const cleaned = trimmed.replace(/\.$/, '');
-    return cleaned.split(/\s+/).map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+    return 'N/A';
   }
 }
