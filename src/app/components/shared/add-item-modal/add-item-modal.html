@@ -1,1 +1,23 @@
-<p>add-item-modal works!</p>
+<ng-template #itemModal let-modal>
+  <div class="modal-body">
+    <form [formGroup]="novoItem" class="w-100">
+      <div class="row g-2 justify-content-center mb-3">
+        <div class="col-8">
+          <input type="text" class="gea-input-field" placeholder="{{ nameLabel }}" />
+        </div>
+        <div class="col-3">
+          <input type="number" class="gea-input-field" placeholder="Qtd" />
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-danger d-flex align-items-center justify-content-center mx-auto"
+      >
+        <i class="bi bi-plus-circle me-2"></i> Adicionar Equipamento
+      </button>
+    </form>
+  </div>
+</ng-template>
+
+<button (click)="open()">Abrir modal</button>

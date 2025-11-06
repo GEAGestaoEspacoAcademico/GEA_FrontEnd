@@ -1,0 +1,6 @@
+.gea-input-field {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  margin-right: var(--spacing-5);
+  margin-bottom: var(--spacing-6);
+}
