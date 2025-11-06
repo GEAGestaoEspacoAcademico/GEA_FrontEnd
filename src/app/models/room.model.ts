@@ -5,4 +5,6 @@ export interface RoomData {
   horario: string;
   capacidade: string;
   observacoes: string[];
+  equipamentos: string[];
+  qtdAulas: number;
 }
