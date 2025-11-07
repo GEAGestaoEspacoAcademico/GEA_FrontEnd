@@ -9,6 +9,10 @@
 .login-page {
   background-image: linear-gradient(to bottom, #870c08 0%, #210302 100%);
   justify-content: space-between;
+
+  img{
+    padding-left: var(--spacing-4);
+  }
 }
 
 .card-login {
@@ -16,7 +20,14 @@
   border-top-left-radius: 2.188rem !important;
   border-top-right-radius: 2.188rem !important;
   box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
-  min-height: 21.875rem;
+  min-height: 28.875rem;
+
+  .card-body{
+             padding: var(--spacing-8) /*top*/ 
+             var(--spacing-9) /*right*/ 
+             var(--spacing-8) /*bottom*/ 
+             var(--spacing-9) /*left*/ !important;
+  }
 }
 
 .btn-danger {
@@ -38,6 +49,7 @@
 h1 {
   font-size: 1.5rem !important;
   text-shadow: 2px 2px 4px #000000;
+  text-align: center;
 }
 
 h2 {
@@ -46,7 +58,8 @@ h2 {
 }
 
 h3 {
-  font-size: 2rem !important;
+  font-size: 2.6rem !important;
+  margin-top: -1rem !important;
 }
 
 .b-line {
@@ -66,6 +79,10 @@ h3 {
 
 .mobile-title {
   display: block;
+}
+
+.mobile-header{
+  margin-top: var(--spacing-12);
 }
 
 @media (min-width: 768px) {
@@ -105,7 +122,7 @@ h3 {
     width: 60%;
 
     .card-body {
-      width: 50%;
+      min-width: 50%;
       margin-right: auto;
       margin-left: auto;
     }
