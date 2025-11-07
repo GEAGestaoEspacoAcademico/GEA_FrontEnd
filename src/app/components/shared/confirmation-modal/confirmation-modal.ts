@@ -1,7 +1,10 @@
 import type { TemplateRef } from '@angular/core';
 import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import type { RoomData } from '../../../models/room.model';
+import type { Sala } from '../../../models/sala.model';
+import { SalaService } from '../../../services/salas/sala.service';
+import type { AgendarForm } from '../../../types/agendar';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 
 /**
  * Componente de modal genérico e reutilizável para confirmação,
@@ -46,10 +49,12 @@ import type { RoomData } from '../../../models/room.model';
   templateUrl: './confirmation-modal.html',
   styleUrl: './confirmation-modal.css',
 })
-export class ConfirmationModal {
+export class ConfirmationModal{
   /** Serviço do Ng-Bootstrap para controlar a instância do modal. */
   private modalService = inject(NgbModal);
-
+  private salaService = inject(SalaService);
+  private snackbarService = inject(SnackBarService)
+  
   /**
    * Define o modo de operação do modal.
    * - `aviso`: Mostra mensagem, botões de confirmar/cancelar.
@@ -58,36 +63,38 @@ export class ConfirmationModal {
    */
   @Input({ required: true }) mode: 'aviso' | 'detalhes' | 'feedback' = 'aviso';
 
-  /** O texto a ser exibido no cabeçalho (header) do modal. */
+ /** O texto a ser exibido no cabeçalho (header) do modal. */
   @Input({ required: true }) title!: string;
 
-  /** (Opcional) A mensagem principal a ser exibida no corpo do modal (modos 'aviso' e 'feedback'). */
+ /** (Opcional) A mensagem principal a ser exibida no corpo do modal (modos 'aviso' e 'feedback'). */
   @Input() message!: string;
 
-  /** (Opcional) Os dados da sala para serem exibidos no modo 'detalhes'. */
-  @Input() detailsData!: RoomData;
+ /** (Opcional) Os dados da sala para serem exibidos no modo 'detalhes'. */
+  @Input() salaRecomendadaId!: number;
 
-  /** (Opcional) Texto customizado para o botão de confirmação (default: 'Confirmar'). */
+ /** (Opcional) Texto customizado para o botão de confirmação (default: 'Confirmar'). */
   @Input() confirmText: string = 'Confirmar';
 
   /** (Opcional) Texto customizado para o botão de cancelar/fechar (default: 'Cancelar'). */
   @Input() cancelText: string = 'Cancelar';
-
+  
   /** (Opcional) Um link de roteador (routerLink) para ser usado por um botão no template. */
   @Input() routerLink: string = ' ';
-
+  
+  @Input() formData!: AgendarForm;
   /**
    * Evento emitido quando o usuário clica no botão de confirmação.
    *
    */
   @Output() onconfirm = new EventEmitter<void>();
 
-  /** Evento emitido quando o usuário clica em 'Cancelar' ou fecha o modal. */
+ /** Evento emitido quando o usuário clica em 'Cancelar' ou fecha o modal. */
   @Output() oncancel = new EventEmitter<void>();
 
-  /** Referência interna ao <ng-template> que define o modal no HTML. */
+ /** Referência interna ao <ng-template> que define o modal no HTML. */
   @ViewChild('ConfirmationModal')
   modalTemplate!: TemplateRef<ConfirmationModal>;
+  detalhesSala: Sala | undefined;
 
   /**
    * Método PÚBLICO. Deve ser chamado pelo componente pai para abrir o modal.
@@ -96,6 +103,25 @@ export class ConfirmationModal {
    * this.meuModal.open();
    */
   public open(): void {
+    if (this.mode === 'detalhes') {
+      if (this.salaRecomendadaId) {
+        this.salaService.getSalaId(this.salaRecomendadaId).subscribe({
+          next: s => {
+            this.detalhesSala = s;
+            this.abrirInstaciaModal();
+          },
+          error: e => this.snackbarService.showError(e.message || 'Erro ao buscar detalhes de sala')
+        });
+      } else {
+        console.error("Modal 'detalhes' foi aberto sem um 'salaRecomendadaId'.");
+      }
+    } 
+    else {
+      this.abrirInstaciaModal();
+    }
+  }
+
+  private abrirInstaciaModal() {
     this.modalService.open(this.modalTemplate, {
       backdrop: 'static',
       centered: true,

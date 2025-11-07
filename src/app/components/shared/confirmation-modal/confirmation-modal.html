@@ -38,37 +38,33 @@
           </button>
         </div>
       }
-      @if (mode === 'detalhes' && detailsData) {
+      @if (mode === 'detalhes' && detalhesSala) {
         <div class="d-flex flex-column text-center">
-          @for (detalhe of [detailsData]; track $index) {
             <div class="align-items-center">
               <div class="time-caption time-caption-small">
-                {{ detalhe.nome }}
+                {{ detalhesSala.nome }}
                 <hr class="hr-lg" />
               </div>
               <div class="time-caption time-caption-small">
-                {{ detalhe.data }}
+                {{ formData.data }}
                 <hr class="hr-lg" />
               </div>
               <div class="time-caption time-caption-small">
-                {{ detalhe.horario }}
+                {{ formData.janelaHorarioId }}
                 <hr class="hr-lg" />
               </div>
               <div class="time-caption time-caption-small">
-                {{ detalhe.capacidade }}
+                {{ formData.capacidade }}
                 <hr class="hr-sm" />
               </div>
               <div>
                 <div class="time-caption observation-text time-caption-small">Observações</div>
-                @for (obs of detalhe.observacoes; track $index) {
                   <div class="time-caption time-caption-small">
                     <hr class="hr-lg" />
-                    {{ obs }}
+                    {{ detalhesSala.observacoes }}
                   </div>
-                }
               </div>
             </div>
-          }
         </div>
         <button class="gea-btn-primary lg-button mt-2" (click)="onModalConfirm()">
           {{ confirmText }}
