@@ -215,7 +215,7 @@ agendarAula() {
     switchMap(userId => {
       const corpoCriarAgendamento: CriarAgendamento = {
         usuarioId: userId,
-        salaId: Number(this.submittedData.localId),
+        salaId: Number(this.idSalaRecomendadaAtual),
         disciplinaId: Number(this.submittedData.disciplinaId),
         dataInicio: this.submittedData.data,
         dataFim: this.submittedData.data,
