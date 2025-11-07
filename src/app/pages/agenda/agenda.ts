@@ -181,7 +181,6 @@ export class Agenda implements OnInit{
     }
   }
 
-  currentIndex!: number;
   handleFormSubmit(formData: any): void {
     this.submittedData = formData;
     this.criarRequisicaoParaRecomendacao(formData)
