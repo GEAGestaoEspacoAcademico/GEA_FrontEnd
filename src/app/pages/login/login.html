@@ -1,14 +1,16 @@
 <div class="login-page d-flex flex-column min-vh-100">
 
     <div class="header flex-grow-1 text-white pb-5">
-        <img src="fatec-logo.png" alt="">
+        <img src="fatec-logo.png" class="logo-fatec" alt="">
         <div class="text-center mt-5">
-            <h1 class="fw-bold">Seja bem-vindo ao<br>Gestor de Espaços Acadêmicos</h1>
-            <h2 class="fw-bold mt-4">GEA</h2>
+            <h1 class="fw-bold mobile-title">Seja bem-vindo ao<br>Gestor de Espaços Acadêmicos</h1>
+            <h2 class="fw-bold mt-4 mobile-title">GEA</h2>
         </div>
     </div>
 
     <div class="card rounded-top-5 border-0 card-login">
+        <h1 class="desktop-title">Seja bem vindo ao <br><span>GEA - Gestor de Espaços Acadêmicos</span></h1>
+
         @if (loading$ | async) {
             <div class="d-flex justify-content-center align-items-center mt-4">
                 <mat-spinner diameter="50"></mat-spinner>
@@ -18,7 +20,7 @@
             <div class="card-body pb-4">
                 <h3 class="fw-bold mb-5 ml" style="color: #600806;">Login</h3>
     
-                <form [formGroup]="loginForm">
+                <form [formGroup]="loginForm" class="form">
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="userInput" formControlName="user" placeholder="">
                         <label for="userInput">E-mail</label>
@@ -73,7 +75,7 @@
                     </div>
     
                     <!-- Após feito, adicionar o routerLink para a pagina de recuperação de senha -->
-                    <a href="#" class="text-muted small d-block text-start mb-3">Esqueceu a senha?</a>
+                    <a href="#" class="text-muted small d-block text-start mb-3 mobile-forget">Esqueceu a senha?</a>
                     
                     @if (loginForm.invalid) {
                         <div class="text-danger mt-1 small">
@@ -90,6 +92,7 @@
                     <button class="btn btn-danger w-100 fw-bold py-2" (click)="onSubmit()">Entrar</button>
                     <div class="b-line"></div>
                 </form>
+                <div><a href="#" class="text-muted small d-block text-start mb-3 desktop-forget">Esqueceu a senha?</a></div>
             </div>
         }
     </div>

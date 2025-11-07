@@ -5,6 +5,7 @@
   background-repeat: no-repeat;
   flex-shrink: 0;
 }
+
 .login-page {
   background-image: linear-gradient(to bottom, #870c08 0%, #210302 100%);
   justify-content: space-between;
@@ -53,4 +54,98 @@ h3 {
   border-bottom: 1px black solid;
   width: 50%;
   margin: 0 auto;
+}
+
+.desktop-title {
+  display: none;
+}
+
+.desktop-forget {
+  display: none !important;
+}
+
+.mobile-title {
+  display: block;
+}
+
+@media (min-width: 768px) {
+
+  .mobile-title {
+    display: none !important;
+  }
+
+  .mobile-forget {
+    display: none !important;
+  }
+
+  .ml {
+    display: none !important;
+  }
+
+  .b-line {
+    display: none !important;
+  }
+
+  .desktop-forget {
+    display: block !important;
+    color: var(--color-primary-300) !important;
+  }
+
+  .header {
+    width: 30% !important;
+    margin-left: auto;
+  }
+
+  .card {
+    width: fit-content;
+    margin-right: auto;
+
+    border-radius: 0% !important;
+
+    width: 60%;
+
+    .card-body {
+      width: 50%;
+      margin-right: auto;
+      margin-left: auto;
+    }
+  }
+
+  .login-page {
+    background-image: linear-gradient(to bottom, #870c08 0%, #210302 100%);
+    flex-direction: row-reverse !important;
+  }
+
+  .desktop-title {
+    display: block;
+
+    span {
+      color: var(--color-primary-500);
+    }
+
+    margin-top: 10%;
+    margin-bottom: 5%;
+  }
+
+  form {
+    margin-bottom: 5%;
+  }
+
+  h1 {
+    font-size: 2rem !important;
+    text-shadow: 0px var(--color-default-black);
+
+    text-align: center;
+  }
+
+  .logo-fatec {
+    display: block;
+    margin: auto;
+    width: 35%;
+    margin-top: var(--spacing-6);
+  }
+
+  .btn-danger{
+    margin-top: var(--spacing-5);
+  }
 }
