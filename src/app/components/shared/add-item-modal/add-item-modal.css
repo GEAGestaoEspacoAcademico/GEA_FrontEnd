@@ -3,4 +3,19 @@
   padding: 0.5rem 1rem;
   margin-right: var(--spacing-5);
   margin-bottom: var(--spacing-6);
+  font-size: 20px;
+}
+
+.body-modal {
+  padding-top: 4.375rem;
+  padding-bottom: 3.5rem;
+  box-shadow: 0 0 0.5rem 0 var(--color-default-black);
+}
+
+.gea-btn-primary {
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-feedback-error);
+  color: var(--color-default-white);
 }

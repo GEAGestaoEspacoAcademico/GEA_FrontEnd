@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-item-modal',
@@ -17,17 +17,14 @@ import { ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
   styleUrl: './add-item-modal.css',
 })
 export class AddItemModal {
-  //Injeta o ngbModal para controle do modal.
   private itemModal = inject(NgbModal);
 
-  //Titulo de dentro do botão.
   @Input() title!: string;
-  //Placeholder do input.
+
   @Input() nameLabel!: string;
-  //Controla a visibilidade do campo Qtd, falso para software e true
-  //para equipamentos.
+
   @Input() showQuantityField: boolean = false;
-  //Emite o item adicionado e sua quantidade.
+
   @Output() itemAdd = new EventEmitter<{ name: string; quantity: number | null }>();
 
   @ViewChild('itemModal')
@@ -35,13 +32,19 @@ export class AddItemModal {
 
   public open(): void {
     this.itemModal.open(this.modalTemplate, {
-      backdrop: 'static',
       centered: true,
+      size: 'lg',
     });
   }
 
   novoItem = new FormGroup({
-    name: new FormControl(''),
-    quantity: new FormControl(null),
+    name: new FormControl('', Validators.required),
+    quantity: new FormControl(),
   });
+
+  onSubmit() {
+    this.itemAdd.emit();
+    this.itemModal.dismissAll();
+    this.novoItem.reset();
+  }
 }
