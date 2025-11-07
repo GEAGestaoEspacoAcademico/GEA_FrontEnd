@@ -6,10 +6,10 @@ export interface AgendarForm{
   disciplinaId: string,
   localId: string,
   capacidade: string,
-  recursos: recusoOption[]
+  recursos: recursoOption[]
 }
 
-interface recusoOption {
+interface recursoOption {
   id: number,
   label: string,
   quantity: number
