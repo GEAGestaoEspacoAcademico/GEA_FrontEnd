@@ -39,15 +39,12 @@
 }
 
 <app-confirmation-modal
-  #confirmModal
-  [mode]="'aviso'"
-  [title]="'Confirmar Cancelamento'"
-  [message]="
-    'Você tem certeza que deseja cancelar este agendamento? Esta ação não pode ser desfeita.'
-  "
-  [confirmText]="'Confirmar'"
-  [cancelText]="'Cacelar'"
-  (onConfirm)="confirmCancel()"
-  (onCancel)="closeCancelModal()"
->
-</app-confirmation-modal>
+  #confirmCancelModel
+  mode="aviso"
+  title="Confirmar Cancelamento"
+  message="Você tem certeza que deseja cancelar este agendamento? Esta ação não pode ser desfeita."
+  confirmText="Confirmar"
+  cancelText="Cancelar"
+  (onconfirm)="confirmCancel()"
+  (oncancel)="closeCancelModal()"
+></app-confirmation-modal>

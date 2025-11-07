@@ -3,6 +3,7 @@ export class FormatUtils {
   /**
    * Converte string de data (ex: "2025-03-15T00:00:00Z") para formato yyyy-MM-dd
    * usado em inputs <input type="date">.
+   * @param date
    */
   static formatDateForInput(date: string | Date): string {
     const d = new Date(date);
@@ -14,6 +15,7 @@ export class FormatUtils {
 
   /**
    * Retorna hora formatada (HH:mm) a partir de string "HH:mm:ss" ou "H:mm".
+   * @param h
    */
   static formatHour(h: string): string {
     const partes = h.split(':');
@@ -24,6 +26,7 @@ export class FormatUtils {
 
   /**
    * Normaliza hora para padrão HH:mm (mantém consistência nos dados de backend).
+   * @param horas
    */
   static normalizeHour(horas: string): string {
     const [h, m] = horas.split(':');
@@ -38,6 +41,8 @@ export class FormatUtils {
 
   /**
    * Formata data no padrão YYYY-MM-DD (ex: usada para IDs únicos no componente de calendário).
+   * @param date
+   * @returns retorna a data no formato yyyy-mm-dddd
    */
   static toId(date: Date): string {
     const y = date.getUTCFullYear();
@@ -48,6 +53,8 @@ export class FormatUtils {
 
   /**
    * Retorna o dia do mês (ex: "05").
+   * @param date
+   * @returns retorna o dia do mês
    */
   static formatDayLabel(date: Date): string {
     return new Intl.DateTimeFormat('pt-BR', { day: '2-digit' }).format(date);
@@ -55,11 +62,18 @@ export class FormatUtils {
 
   /**
    * Retorna o nome do dia da semana abreviado (ex: "seg", "ter", "qua").
+   * @param date
+   * @returns retorna o dia da semana formato com o nome curto
    */
   static formatWeekdayLabel(date: Date): string {
     return new Intl.DateTimeFormat('pt-BR', { weekday: 'short' })
       .format(date)
       .toLowerCase()
       .replace('.', '');
+  }
+
+  static colocarSegundos(horario: string): string{
+    horario = this.normalizeHour(horario)
+    return `${horario}:00`
   }
 }
