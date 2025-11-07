@@ -42,7 +42,7 @@ export class FormatUtils {
   /**
    * Formata data no padrão YYYY-MM-DD (ex: usada para IDs únicos no componente de calendário).
    * @param date
-   * @returns retorna a data no formato yyyy-mm-dddd
+   * @returns retorna a data no formato yyyy-mm-dd
    */
   static toId(date: Date): string {
     const y = date.getUTCFullYear();
