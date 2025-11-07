@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
 import type { Agendamento, EditAgendamento } from '../../models/agendamento.model';
 import { environment } from '../../../environments/environment';
+import type { CriarAgendamento } from '../../types/agendar';
 
 /**
  * Serviço responsável pelo CRUD e gerenciamento de Agendamentos
@@ -50,6 +51,10 @@ export class AgendamentoService {
  */
   public editAgendamento(id:number, agendamento: EditAgendamento): Observable<Agendamento>{
     return this.http.put<Agendamento>(`${this.baseUrl}/${id}`, agendamento)
+  }
+
+  public criarAgendamento(agendamento: CriarAgendamento): Observable<Agendamento>{
+    return this.http.post<Agendamento>(this.baseUrl, agendamento)
   }
 
 }
