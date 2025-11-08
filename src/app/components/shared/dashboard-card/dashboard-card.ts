@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input} from '@angular/core';
+import type { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-card',
@@ -18,9 +19,6 @@ export class DashboardCard implements OnInit {
   @Input() titleTada: string = 'Agendar Evento';
 
   @Input() routerLink!: any[];
-
-  constructor() { }
-
   ngOnInit(): void {
     if (!this.iconName || !this.title || !this.iconNameCalendar) {
         console.warn('DashboardCardComponent: iconName e title devem ser fornecidos.');
