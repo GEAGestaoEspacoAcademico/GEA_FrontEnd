@@ -1,1 +1,20 @@
-<p>dashboard-card works!</p>
+<a class="dashboard-card" [routerLink]="routerLink">
+  <mat-icon class="card-icon" [svgIcon]="iconName"></mat-icon>
+  <span class="card-title">{{ title }}</span>
+</a>
+
+<a class="dashboard-card" [routerLink]="routerLink">
+  <mat-icon class="card-icon" [svgIcon]="iconNameCalendar"></mat-icon>
+  <span class="card-title">{{ titleCalendar }}</span>
+</a>
+
+<a class="dashboard-card" [routerLink]="routerLink">
+  <mat-icon class="card-icon" [svgIcon]="iconNameComputer"></mat-icon>
+  <span class="card-title">{{ titleComputer }}</span>
+</a>
+
+<a class="dashboard-card" [routerLink]="routerLink">
+  <mat-icon class="card-icon" [svgIcon]="iconNameTada"></mat-icon>
+  <span class="card-title">{{ titleTada }}</span>
+</a>
+
