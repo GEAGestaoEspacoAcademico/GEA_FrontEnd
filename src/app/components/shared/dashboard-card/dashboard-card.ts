@@ -12,7 +12,7 @@ export class DashboardCard implements OnInit {
   @Input() iconNameComputer: string = 'computer';
   @Input() iconNameTada: string = 'tada';
 
-  @Input() title: string = 'Visualizar Espaço Academico';
+  @Input() title: string = 'Visualizar Espaço';
   @Input() titleCalendar: string = 'Agendar Aulas';
   @Input() titleComputer: string = 'Cadastrar Laboratorio';
   @Input() titleTada: string = 'Agendar Evento';
