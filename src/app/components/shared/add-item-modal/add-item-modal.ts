@@ -26,7 +26,7 @@ export class AddItemModal {
   public open(): void {
     this.itemModal.open(this.modalTemplate, {
       centered: true,
-      size: 'lg',
+      windowClass: 'custom-modal',
     });
   }
 

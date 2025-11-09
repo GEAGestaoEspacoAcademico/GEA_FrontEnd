@@ -1,21 +1,47 @@
 .gea-input-field {
   width: 100%;
-  padding: 0.5rem 1rem;
+  padding: var(--spacing-2) var(--spacing-4);
   margin-right: var(--spacing-5);
   margin-bottom: var(--spacing-6);
   font-size: 20px;
+  border: 0.2px solid var(--color-default-black);
+  text-align: center;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  &:not(:placeholder-shown) {
+    text-align: start;
+  }
 }
 
 .body-modal {
   padding-top: 4.375rem;
-  padding-bottom: 3.5rem;
+  padding-bottom: var(--spacing-9);
   box-shadow: 0 0 0.5rem 0 var(--color-default-black);
 }
 
 .gea-btn-primary {
   border: none;
-  padding: 1rem 2rem;
+  padding: var(--spacing-3) var(--spacing-6);
   border-radius: 0.5rem;
   background-color: var(--color-feedback-error);
   color: var(--color-default-white);
+}
+
+.plus-icon {
+  color: var(--color-default-white);
+  margin-right: var(--spacing-2);
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-bottom: var(--spacing-1);
+}
+
+::ng-deep .modal.custom-modal .modal-dialog {
+  max-width: 37.813rem;
 }
