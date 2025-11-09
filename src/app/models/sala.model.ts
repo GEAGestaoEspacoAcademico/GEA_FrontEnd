@@ -8,6 +8,12 @@ export interface Sala{
   nome: string,
   /** Capacidade que a sala possui (ex: 40) */
   capacidade: number,
+
+  piso: number,
   /** Status da sala, se esta disponível ou não (ex: false) */
   disponibilidade: boolean
+
+  tipoSala: string,
+
+  observacoes: string
 }

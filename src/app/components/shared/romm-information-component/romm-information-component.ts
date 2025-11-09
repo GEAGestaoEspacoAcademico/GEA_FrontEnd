@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import type { RoomData } from '../../../models/room.model';
+import type { SalasRecomendadas } from '../../../types/recomendacao';
 
 /**
  * Componente de apresentação (dumb component) responsável por
  * exibir as informações de uma sala (RoomData) e fornecer
  * um gatilho para confirmar um agendamento.
- *
  * @usage
  * <app-romm-information-component
  * [labData]="dadosDaMinhaSala"
@@ -24,7 +23,7 @@ export class RommInformationComponent {
    * Os dados da sala/laboratório (RoomData) que serão
    * exibidos neste componente.
    */
-  @Input() labData!: RoomData;
+  @Input() labData!: SalasRecomendadas;
 
   /**
    * Evento emitido quando o usuário executa a ação de confirmação

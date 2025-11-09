@@ -27,3 +27,8 @@ export const selectUserCargo = createSelector(
   selectCurrentUser,
   (user) => user?.cargo
 );
+
+export const selectUserId = createSelector(
+  selectCurrentUser,
+  (user) => user?.id
+)

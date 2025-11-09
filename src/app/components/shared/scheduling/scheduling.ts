@@ -12,7 +12,6 @@ import type { MatAutocompleteSelectedEvent } from '@angular/material/autocomplet
  * Gera um FormGroup complexo com base na configuração [fields] recebida.
  * Gerencia internamente FormArrays (para 'equipment-select') e
  * autocompletes (para 'multi-select' e 'equipment-select').
- *
  * @usage
  * <app-scheduling
  * [fields]="configuracaoDosCampos"

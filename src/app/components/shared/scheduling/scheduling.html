@@ -37,7 +37,7 @@
             [formControlName]="field.name" 
             class="form-control captions">
             <option [value]="">{{ field.placeholder || 'Selecione...' }}</option>
-            @for (option of field.options; track option.value) {
+            @for (option of field.options; track $index) {
               <option [value]="option.value">{{ option.label }}</option>
             }
           </select>
@@ -122,7 +122,7 @@
       @case ('equipment-select') {
         <div class="equipment-container">
           <div class="chips-box">
-            <mat-chip-grid>
+            <mat-chip-grid #equipamentChipGrid>
               @for (control of getEquipmentControls(field.name); track $index) {
                 <mat-chip (removed)="removeEquipment(field, $index)">
                   {{ control.value.label }} (Qtd: {{ control.value.quantity }})
@@ -141,6 +141,7 @@
               placeholder="Adicionar equipamento"
               matInput
               formControlName="equipment"
+              [matChipInputFor]="equipamentChipGrid"
               [matAutocomplete]="equipmentAuto"
               class="simple-input equipment-name-input" />
             <mat-autocomplete #equipmentAuto="matAutocomplete" [displayWith]="displayEquipment">

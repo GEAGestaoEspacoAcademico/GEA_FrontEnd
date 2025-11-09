@@ -43,33 +43,33 @@
           </button>
         </div>
       }
-
-      @if (mode === 'detalhes' && detailsData) {
-        <div class="details-list-container">
-          <dl class="details-list">
-
-            <dt class="fw-bold">Local:</dt>
-            <dd>{{ detailsData.nome }}</dd>
-
-            <dt class="fw-bold">Data:</dt>
-            <dd>{{ detailsData.data | date: 'dd/MM/yyyy' }}</dd> 
-            
-            <dt class="fw-bold">Qtd aulas:</dt>
-            <dd>{{ detailsData.qtdAulas }}</dd>
-
-            <dt class="fw-bold">Horário:</dt>
-            <dd>{{ detailsData.horario }}</dd>
-
-            <dt class="fw-bold">Capacidade:</dt>
-            <dd>{{ detailsData.capacidade }}</dd>
-
-            <dt class="border border-0 fw-bold">Equipamentos:</dt>
-            <dd class="border border-0">{{ detailsData.equipamentos }}</dd>
-
-            <dt class="observation-text text-center">Observações</dt> 
-            <dd>{{ detailsData.observacoes }}</dd>
-
-          </dl>
+      @if (mode === 'detalhes' && detalhesSala) {
+        <div class="d-flex flex-column text-center">
+            <div class="align-items-center">
+              <div class="time-caption time-caption-small">
+                {{ detalhesSala.nome }}
+                <hr class="hr-lg" />
+              </div>
+              <div class="time-caption time-caption-small">
+                {{ formData.data }}
+                <hr class="hr-lg" />
+              </div>
+              <div class="time-caption time-caption-small">
+                {{ formData.janelaHorarioId }}
+                <hr class="hr-lg" />
+              </div>
+              <div class="time-caption time-caption-small">
+                {{ formData.capacidade }}
+                <hr class="hr-sm" />
+              </div>
+              <div>
+                <div class="time-caption observation-text time-caption-small">Observações</div>
+                  <div class="time-caption time-caption-small">
+                    <hr class="hr-lg" />
+                    {{ detalhesSala.observacoes }}
+                  </div>
+              </div>
+            </div>
         </div>
 
         <button class="gea-btn-primary lg-button mt-2" (click)="onModalConfirm()">

@@ -36,13 +36,8 @@ export class Aulas implements OnInit {
 
   agendamentosDoDiaSelecionado$!: Observable<Agendamento[]>;
 
-  @ViewChild('confirmModal') confirmModal!: ConfirmationModal;
-  @ViewChild('confirmCancelModal') confirmCancelModal!: ConfirmationModal;
+  @ViewChild('confirmCancelModel') confirmModal!: ConfirmationModal;
   agendamentoToCancelId: number | null = null;
-
-  abremodal(): void {
-    this.confirmModal.open();
-  }
 
   ngOnInit(): void {
     this.store.dispatch(AgendamentoActions.loadAgendamentos());
@@ -67,11 +62,7 @@ export class Aulas implements OnInit {
 
   requestCancelConfirmation(id: number): void {
     this.agendamentoToCancelId = id;
-    if (this.confirmModal?.open) {
-      this.confirmModal.open();
-    } else {
-      setTimeout(() => this.confirmModal?.open(), 50);
-    }
+    this.confirmModal.open()
   }
 
   confirmCancel(): void {

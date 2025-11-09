@@ -1,59 +1,55 @@
 <div class="d-flex flex-column gap-4">
-  <div class="container-fluid">
-    <app-title-highlightt class="mt-2" title="Agendar"></app-title-highlightt>
-    <app-scheduling
-      [fields]="fields"
-      submitButtonText="Buscar"
-      (formSubmit)="handleFormSubmit($event)"
-    ></app-scheduling>
-  </div>
-
-  <div class="container-fluid">
-    <app-title-highlightt class="mt-2" title="Baseado no seu perfil"></app-title-highlightt>
-    <div class="d-flex flex-wrap gap-2 flex-row">
-      <app-romm-information-component
-        [labData]="roomData[0]"
-        (ConfirmSchedule)="openInfoModal($event)"
-      ></app-romm-information-component>
-      <app-romm-information-component
-        [labData]="roomData[1]"
-        (ConfirmSchedule)="openInfoModal($event)"
-      ></app-romm-information-component>
-      <app-romm-information-component
-        [labData]="roomData[2]"
-        (ConfirmSchedule)="openInfoModal($event)"
-      ></app-romm-information-component>
-      <app-romm-information-component
-        [labData]="roomData[3]"
-        (ConfirmSchedule)="openInfoModal($event)"
-      ></app-romm-information-component>
-      <app-romm-information-component
-        [labData]="roomData[4]"
-        (ConfirmSchedule)="openInfoModal($event)"
-      ></app-romm-information-component>
+  <app-title-highlightt class="mt-2" title="Agendar"></app-title-highlightt>
+  @if (isloading) {
+    <div class="d-flex justify-content-center align-items-center mt-4">
+      <mat-spinner diameter="50"></mat-spinner>
     </div>
-  </div>
+  }@else {
+    @if (formFields) {
+      <div class="container-fluid">
+        <app-scheduling
+          [fields]="formFields"
+          submitButtonText="Buscar"
+          (formSubmit)="handleFormSubmit($event)"
+        ></app-scheduling>
+      </div>
+    }
+  }
 
-  <div class="container-fluid">
-    <app-title-highlightt class="mt-2" title="Outras Opções"></app-title-highlightt>
-    <p>Não há outras opções neste momento.</p>
-  </div>
+  @if (isRecomendacaoLoading) {
+    <div class="d-flex justify-content-center align-items-center mt-4">
+      <mat-spinner diameter="50"></mat-spinner>
+    </div>
+  }@else{
+    @if (salasRecomendadas.length > 0) {
+      <div class="container-fluid">
+        <app-title-highlightt class="mt-2" title="Baseado no seu perfil"></app-title-highlightt>
+        <div class="d-flex flex-wrap gap-2 flex-row">
+          @for (sala of salasRecomendadas; track sala.id) {
+            <app-romm-information-component
+              [labData]="sala"
+              (ConfirmSchedule)="openInfoModal($event)"
+            ></app-romm-information-component>
+          }
+        </div>
+      </div>
+    
+      <div class="container-fluid">
+        <app-title-highlightt class="mt-2" title="Outras Opções"></app-title-highlightt>
+        <p>Não há outras opções neste momento.</p>
+      </div>
+    }@else if(requisicaoRecomendacao){
+      <p>Nenhuma sala encontrada com os requisitos solicitados.</p>
+    }
+  }
 
   <app-confirmation-modal
     #classInfoModal
     mode="detalhes"
-    [detailsData]="roomData[currentIndex]"
+    [salaRecomendadaId]="idSalaRecomendadaAtual"
+    [formData]="submittedData"
     title="Detalhes"
-    (onConfirm)="openSucessModal()"
+    (onconfirm)="agendarAula()"
   >
   </app-confirmation-modal>
-
-  <app-confirmation-modal
-    #sucessModal
-    mode="feedback"
-    title="Aviso!"
-    message="Aula agendada com sucesso!"
-    cancelText="Fechar"
-    routerLink="/aulas"
-  ></app-confirmation-modal>
 </div>
