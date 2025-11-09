@@ -7,7 +7,20 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--spacing-3, 10rem);
+  gap: var(--spacing-3, 1rem);
+}
+
+.header-dynamic-content {
+  display: flex;
+  align-items: center;
+  flex: 1 1 auto;
+  min-width: 0;
+  gap: var(--spacing-3, 1rem);
+}
+
+.header .logo,
+.header .header-right-icons {
+  flex: 0 0 auto;
 }
 
 .icon-fatec-big {
@@ -15,25 +28,19 @@
   height: 3rem;
 }
 
-.icon-notification-medium {
-  width: 1.641rem;
-  height: 2.188rem;
-}
-
-.header a {
-  color: var(--color-default-white);
-  text-decoration: none;
-}
-
-.header .logo {
-  display: inline-flex;
+.header-center-content {
+  flex: 1 1 0;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  min-width: 0;
+  gap: var(--spacing-3, 1rem);
 }
 
 .nav-links {
   display: none;
-  align-items: center;
   gap: var(--spacing-4, 1rem);
+  align-items: center;
 }
 
 .nav-links .nav-item {
@@ -42,53 +49,124 @@
   padding: 0.5rem 0.625rem;
   border-radius: 0.25rem;
   font-size: 0.9rem;
-  transition:
-    transform 0.2s ease,
-    font-size 0.2s ease,
-    opacity 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.nav-links .active-link,
-.nav-links .nav-item[aria-current='page'] {
-  color: gray;
+.page-title {
+  display: none;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-default-white);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 var(--spacing-2);
+  line-height: 1;
+  max-width: 60ch;
 }
 
-.header .notification {
+.header-right-icons {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+}
+
+.icon-notification-medium,
+.icon-logout-medium {
+  width: 1.641rem;
+  height: 2.188rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.header a,
+.header button {
+  color: var(--color-default-white);
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.header .logo,
+.header .notification,
+.header .logout-button {
+  flex: 0 0 auto;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   padding: 0.313rem;
 }
 
-.header a:focus-visible {
+.logout-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  color: var(--color-default-white);
+}
+
+.header a:focus-visible,
+.header button:focus-visible,
+.logout-button:focus-visible {
   outline: 0.125rem solid rgba(255, 255, 255, 0.12);
   outline-offset: 0.125rem;
   border-radius: 0.25rem;
 }
 
+.nav-links .active-link,
+.nav-links .nav-item[aria-current='page'] {
+  color: var(--color-neutral-300);
+  font-weight: 700;
+}
+
 @media (min-width: 768px) {
-  .nav-links {
-    display: flex;
-    justify-content: center;
-    flex: 1 1 auto;
-  }
-
-  .header .logo {
-    flex: 0 0 auto;
-    margin-right: 0;
-  }
-
-  .header .notification {
-    flex: 0 0 auto;
-    margin-left: 0;
-  }
-
   .header {
     justify-content: space-between;
   }
 
+  .header-center-content {
+    flex: 1 1 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-links {
+    display: flex;
+  }
+
+  .page-title {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-default-white);
+    margin: 0 auto;
+  }
+
   .nav-links .nav-item:hover {
-    transform: scale(1.1);
+    transform: scale(1.05);
     opacity: 0.95;
+  }
+}
+
+@media (max-width: 767px) {
+  .page-title {
+    display: block;
+    font-size: 1.125rem;
+  }
+
+  .nav-links {
+    display: none;
+  }
+
+  .header-right-icons {
+    gap: 0.5rem;
   }
 }
