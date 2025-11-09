@@ -1,30 +1,26 @@
 <ng-template #itemModal let-modal>
   <div class="body-modal">
-    <form [formGroup]="novoItem" class="w-100" (ngSubmit)="onSubmit()">
-      <div class="row gap-2 justify-content-center">
-        <div class="col-8">
-          <input
-            type="text"
-            class="gea-input-field"
-            placeholder="{{ nameLabel }}"
-            formControlName="name"
-            name="name"
-          />
-        </div>
+    <form [formGroup]="novoItem" class="" (ngSubmit)="onSubmit()">
+      <div class="d-flex justify-content-center align-items-center w-100">
+        <input
+          type="text"
+          class="gea-input-field flex-grow-1"
+          placeholder="{{ nameLabel }}"
+          formControlName="name"
+          name="name"
+        />
         @if (showQuantityField) {
-          <div class="col-2">
-            <input
-              type="number"
-              class="gea-input-field"
-              placeholder="Qtd"
-              formControlName="quantity"
-            />
-          </div>
+          <input
+            type="number"
+            class="gea-input-field gea-input-field-small"
+            placeholder="Qtd"
+            formControlName="quantity"
+          />
         }
       </div>
       <button
         type="submit"
-        class="gea-btn-primary d-flex align-items-center justify-content-center mx-auto"
+        class="gea-btn-primary d-flex align-items-center justify-content-start mx-auto"
         [disabled]="novoItem.invalid"
       >
         <mat-icon svgIcon="add-circle" class="plus-icon align-items-center"></mat-icon>{{ title }}

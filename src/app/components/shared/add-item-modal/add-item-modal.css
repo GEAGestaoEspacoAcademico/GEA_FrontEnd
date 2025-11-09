@@ -1,7 +1,7 @@
 .gea-input-field {
-  width: 100%;
-  padding: var(--spacing-2) var(--spacing-4);
+  width: 90%;
   margin-right: var(--spacing-5);
+  padding: var(--spacing-2);
   margin-bottom: var(--spacing-6);
   font-size: 20px;
   border: 0.2px solid var(--color-default-black);
@@ -20,9 +20,12 @@
   }
 }
 
+.gea-input-field-small {
+  width: 20%;
+}
+
 .body-modal {
-  padding-top: 4.375rem;
-  padding-bottom: var(--spacing-9);
+  padding: 4.375rem var(--spacing-13) var(--spacing-9) 2.875rem;
   box-shadow: 0 0 0.5rem 0 var(--color-default-black);
 }
 
@@ -32,6 +35,7 @@
   border-radius: 0.5rem;
   background-color: var(--color-feedback-error);
   color: var(--color-default-white);
+  width: 21.766rem;
 }
 
 .plus-icon {
