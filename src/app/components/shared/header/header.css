@@ -64,7 +64,7 @@
   text-overflow: ellipsis;
   padding: 0 var(--spacing-2);
   line-height: 1;
-  max-width: 60ch;
+  max-width: 30rem;
 }
 
 .header-right-icons {
