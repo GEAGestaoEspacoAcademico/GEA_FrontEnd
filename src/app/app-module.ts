@@ -53,6 +53,7 @@ import { NotificationCard } from './components/shared/notification-card/notifica
 import { RommInformationComponent } from './components/shared/romm-information-component/romm-information-component';
 import { metaReducers } from './store/meta-reducer';
 import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
+import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
     NotificationCard,
     MainLayout,
     AuthLayout,
-    RommInformationComponent
+    RommInformationComponent,
+    AddItemModal
   ],
   imports: [
     BrowserModule,
