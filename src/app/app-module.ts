@@ -54,6 +54,7 @@ import { RommInformationComponent } from './components/shared/romm-information-c
 import { metaReducers } from './store/meta-reducer';
 import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
+import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 
 
 @NgModule({
@@ -81,7 +82,8 @@ import { DashboardCard } from './components/shared/dashboard-card/dashboard-card
     MainLayout,
     AuthLayout,
     RommInformationComponent,
-    DashboardCard
+    DashboardCard,
+    AddItemModal
   ],
   imports: [
     BrowserModule,
