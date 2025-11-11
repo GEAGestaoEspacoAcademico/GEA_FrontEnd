@@ -16,7 +16,6 @@ import { SnackBarService } from '../services/snackbar/snackbar.service';
  * Ele lê o cargo do usuário a partir do NgRx Store (`selectUserCargo`)
  * e o compara com um array de 'roles' (cargos) fornecido no
  * `data` da rota.
- *
  * @usage
  * // No seu app-routing.module.ts ou similar:
  * {
@@ -27,8 +26,8 @@ import { SnackBarService } from '../services/snackbar/snackbar.service';
  *  roles: ['ADMIN', 'SUPERVISOR'] // <-- Como é configurado
  *  }
  * }
- *
  * @param route A snapshot da rota atual. Usado para extrair o array `data['roles']`.
+ * @param _state
  * @returns Um `Observable<boolean | UrlTree>`.
  * - `true` se o usuário tiver a permissão.
  * - `UrlTree` (redirecionando para '/login') se o usuário não tiver
