@@ -13,6 +13,7 @@ import { AgendamentoActions } from '../../store/agendamento/agendamento.actions'
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
 import { FormatUtils } from '../../utils/format.utils';
+import type { AddItemModal } from '../../components/shared/add-item-modal/add-item-modal';
 
 @Component({
   selector: 'app-aulas',
