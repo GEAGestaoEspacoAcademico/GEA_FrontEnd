@@ -20,7 +20,6 @@ import { SnackBarService } from '../../services/snackbar/snackbar.service';
  * (HttpErrorResponse) da aplicação, exibe uma notificação amigável
  * para o usuário (via NotificationService) e, em casos específicos
  * (como 403), redireciona para a tela de login.
- *
  * @usage
  * // Para registrá-lo globalmente, adicione-o aos providers
  * // no seu `app.config.ts`:
@@ -30,7 +29,6 @@ import { SnackBarService } from '../../services/snackbar/snackbar.service';
  * provideHttpClient(withInterceptors([globalErrorInterceptor])) // <-- Registra aqui
  * ]
  * };
- *
  * @param request A requisição HTTP original que está sendo interceptada.
  * @param next O próximo manipulador (handler) na cadeia de interceptores.
  * @returns Um Observable<HttpEvent<unknown>>.
@@ -66,7 +64,7 @@ export const globalErrorInterceptor: HttpInterceptorFn = (
         }
         case 500:
         case 503:
-          userMessage = 'Erro no servidor. Tente novamente mais tarde.';
+          userMessage = error.error.message || 'Erro no servidor. Tente novamente mais tarde.';
           break;
         default:
           userMessage = `Erro inesperado (Código: ${error.status}). Tente novamente.`;
