@@ -44,9 +44,10 @@ export class Login implements OnInit{
     }
 
     const userCredencials: UserCredencials = {
-      login: username,
-      senha: password
+      usuarioLogin: username,
+      usuarioSenha: password
     }
+    
     this.store.dispatch(AuthActions.login({ userCredencials }));
   }
 

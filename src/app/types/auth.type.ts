@@ -1,4 +1,4 @@
 export interface UserCredencials {
-  login: string,
-  senha: string
+  usuarioLogin: string,
+  usuarioSenha: string
 }

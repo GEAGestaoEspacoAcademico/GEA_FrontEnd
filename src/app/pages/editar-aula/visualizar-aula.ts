@@ -76,7 +76,7 @@ private loadDataAndBuildForm(): void {
     if (!this.currentUser || !this.agendamentoAtual) { return; }
 
     forkJoin({
-      disciplinas: this.professorService.getDisciplinasDoProfessor(this.currentUser.id),
+      disciplinas: this.professorService.getDisciplinasDoProfessor(this.currentUser.usuarioId),
       cursos: this.cursoService.getCursos(),
       salas: this.salaService.getSalas()
     }).pipe(

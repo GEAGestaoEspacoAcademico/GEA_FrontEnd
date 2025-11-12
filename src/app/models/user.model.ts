@@ -3,9 +3,9 @@
  */
 export interface User{
   /** Identificador único do usuário */
-  id: number,
+  usuarioId: number,
   /** Nome do usuário logado (ex: "Isaque") */
-  nome: string,
+  usuarioNome: string,
   /** Cargo do usuário, para autenticações (ex: "PROFESSOR") */
-  cargo: string
+  usuarioCargo: string
 }
