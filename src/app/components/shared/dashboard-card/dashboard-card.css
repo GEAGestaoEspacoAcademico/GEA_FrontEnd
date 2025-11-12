@@ -1,29 +1,30 @@
 .dashboard-card {
-
-  display:inline-flex;
-  flex-direction: column; 
-  align-items: center; 
+  width: 15rem;
+  height: 15rem;
+  background-color: #bbc4c8; 
+  border-radius: 0.5rem; 
+  color: black; 
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  text-align: center;
-  background-color: #BBC4C8; 
-  color: #f0f0f0; 
-  border-radius: 8px; 
-  width: 90px; 
-  height: 150px; 
-  padding: 15px;
-  cursor: pointer;
+  align-items: center;
   text-decoration: none;
-  transition: background-color 0.2s, transform 0.1s;
 }
 
 .dashboard-card:hover {
-  background-color: #666666; 
-  transform: translateY(-1px); 
+  background-color: #acb9be;
 }
 
-.dashboard-title {
-  font-size: 14px;
+.card-icon {
+  color: black;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 0.5rem; 
+}
+
+.card-title {
+  font-size: 1.5rem;
   font-weight: 500;
-  line-height: 1.2;
-  word-break: break-word; 
+  color: #333; 
+  text-align: center; 
 }
