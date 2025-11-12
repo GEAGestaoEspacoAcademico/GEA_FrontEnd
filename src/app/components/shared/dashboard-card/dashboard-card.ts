@@ -14,7 +14,7 @@ export class DashboardCard implements OnInit {
   @Input() title: string = '';
  
 
-  @Input() routerLink!: any[];
+  @Input() routerLink!: string | any[];
   
   ngOnInit(): void {
     if (!this.iconName || !this.title) {
