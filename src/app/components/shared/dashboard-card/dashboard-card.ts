@@ -8,19 +8,16 @@ import type { OnInit } from '@angular/core';
   styleUrl: './dashboard-card.css'
 })
 export class DashboardCard implements OnInit {
-  @Input() iconName: string = 'home';
-  @Input() iconNameCalendar: string = 'calendar';
-  @Input() iconNameComputer: string = 'computer';
-  @Input() iconNameTada: string = 'tada';
+  @Input() iconName: string = '';
+  
 
-  @Input() title: string = 'Visualizar Espaço';
-  @Input() titleCalendar: string = 'Agendar Aulas';
-  @Input() titleComputer: string = 'Cadastrar Laboratorio';
-  @Input() titleTada: string = 'Agendar Evento';
+  @Input() title: string = '';
+ 
 
   @Input() routerLink!: any[];
+  
   ngOnInit(): void {
-    if (!this.iconName || !this.title || !this.iconNameCalendar) {
+    if (!this.iconName || !this.title) {
         console.warn('DashboardCardComponent: iconName e title devem ser fornecidos.');
     }
   }
