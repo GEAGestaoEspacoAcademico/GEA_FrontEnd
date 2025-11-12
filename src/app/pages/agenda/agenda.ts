@@ -103,6 +103,7 @@ export class Agenda implements OnInit{
           name: 'data',
           label: 'Data',
           type: 'date',
+          defaultValue: FormatUtils.formatDateForInput(new Date()),
           validators: { required: true, errorMessages: { required: 'A data é obrigatória.' } }
         },
         {

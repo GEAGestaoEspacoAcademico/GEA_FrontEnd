@@ -27,7 +27,7 @@ export class AgendamentoEffects {
         return user !== null;
       }),
       mergeMap(([_, user]) => {
-        const userId = user!.id;
+        const userId = user!.usuarioId;
         return this.agendamentoService.getAgendamentosProfessor(userId).pipe(
           map(agendamentos => {
             return AgendamentoActions.loadAgendamentosSuccess({ agendamentos })}),

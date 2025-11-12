@@ -25,10 +25,10 @@ export const selectAuthIsLoading = createSelector(
 
 export const selectUserCargo = createSelector(
   selectCurrentUser,
-  (user) => user?.cargo
+  (user) => user?.usuarioCargo
 );
 
 export const selectUserId = createSelector(
   selectCurrentUser,
-  (user) => user?.id
+  (user) => user?.usuarioId
 )

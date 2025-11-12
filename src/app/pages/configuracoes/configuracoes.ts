@@ -28,7 +28,7 @@ export class Configuracoes implements OnInit{
   ngOnInit(): void {
     this.disciplinas$ = this.user$.pipe(
       filter(professor => professor !== null),
-      map(professor => professor.id),
+      map(professor => professor.usuarioId),
       switchMap(professorId => {
         return this.professorService.getDisciplinasDoProfessor(professorId)
       })
