@@ -11,7 +11,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importe aqui
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 // NGRX Imports
 import { StoreModule } from '@ngrx/store';
@@ -54,6 +56,7 @@ import { RommInformationComponent } from './components/shared/romm-information-c
 import { metaReducers } from './store/meta-reducer';
 import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
+import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
 
 
 @NgModule({
@@ -81,7 +84,8 @@ import { AddItemModal } from './components/shared/add-item-modal/add-item-modal'
     MainLayout,
     AuthLayout,
     RommInformationComponent,
-    AddItemModal
+    AddItemModal,
+    MultiDateSelector
   ],
   imports: [
     BrowserModule,
@@ -95,7 +99,8 @@ import { AddItemModal } from './components/shared/add-item-modal/add-item-modal'
     MatChipsModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
-    
+    MatDatepickerModule,
+    MatNativeDateModule,
     // NGRX Setup Simplificado
     StoreModule.forRoot(
       {
