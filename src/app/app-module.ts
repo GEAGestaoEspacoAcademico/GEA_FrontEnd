@@ -55,6 +55,7 @@ import { NotificationCard } from './components/shared/notification-card/notifica
 import { RommInformationComponent } from './components/shared/romm-information-component/romm-information-component';
 import { metaReducers } from './store/meta-reducer';
 import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
+import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
 
@@ -85,7 +86,8 @@ import { MultiDateSelector } from './components/shared/multi-date-selector/multi
     AuthLayout,
     RommInformationComponent,
     AddItemModal,
-    MultiDateSelector
+    MultiDateSelector,
+    DashboardCard
   ],
   imports: [
     BrowserModule,
