@@ -11,7 +11,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importe aqui
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 // NGRX Imports
 import { StoreModule } from '@ngrx/store';
@@ -53,7 +55,9 @@ import { NotificationCard } from './components/shared/notification-card/notifica
 import { RommInformationComponent } from './components/shared/romm-information-component/romm-information-component';
 import { metaReducers } from './store/meta-reducer';
 import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
+import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
+import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
 
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
@@ -86,7 +90,9 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
     RommInformationComponent,
     AddItemModal,
     // AD Components
-    SpaceManagementTable
+    SpaceManagementTable,
+    MultiDateSelector,
+    DashboardCard
   ],
   imports: [
     BrowserModule,
@@ -101,7 +107,8 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
     MatChipsModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
-    
+    MatDatepickerModule,
+    MatNativeDateModule,
     // NGRX Setup Simplificado
     StoreModule.forRoot(
       {

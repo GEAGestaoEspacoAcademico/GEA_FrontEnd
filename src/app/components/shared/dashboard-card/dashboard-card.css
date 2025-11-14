@@ -1,0 +1,30 @@
+.dashboard-card {
+  width: 15rem;
+  height: 15rem;
+  background-color: var(--color-surface-disabled); 
+  border-radius: 0.5rem; 
+  color: black; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+}
+
+.dashboard-card:hover {
+  background-color: #acb9be;
+}
+
+.card-icon {
+  color: black;
+  width: 4rem;
+  height: 4rem;
+  margin-bottom: 0.5rem; 
+}
+
+.card-title {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #333; 
+  text-align: center; 
+}
