@@ -3,8 +3,8 @@ import { inject } from '@angular/core';
 import { Router } from '@angular/router';
 import type { CanActivateFn, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectUserCargo } from '../store/auth/auth.selectors';
-import { map, take } from 'rxjs/operators';
+import { selectAuthState, selectUserCargo } from '../store/auth/auth.selectors';
+import { filter, map, take } from 'rxjs/operators';
 import type { Observable } from 'rxjs';
 import { of } from 'rxjs';
 import { SnackBarService } from '../services/snackbar/snackbar.service';
@@ -16,7 +16,6 @@ import { SnackBarService } from '../services/snackbar/snackbar.service';
  * Ele lê o cargo do usuário a partir do NgRx Store (`selectUserCargo`)
  * e o compara com um array de 'roles' (cargos) fornecido no
  * `data` da rota.
- *
  * @usage
  * // No seu app-routing.module.ts ou similar:
  * {
@@ -27,8 +26,8 @@ import { SnackBarService } from '../services/snackbar/snackbar.service';
  *  roles: ['ADMIN', 'SUPERVISOR'] // <-- Como é configurado
  *  }
  * }
- *
  * @param route A snapshot da rota atual. Usado para extrair o array `data['roles']`.
+ * @param _state
  * @returns Um `Observable<boolean | UrlTree>`.
  * - `true` se o usuário tiver a permissão.
  * - `UrlTree` (redirecionando para '/login') se o usuário não tiver
@@ -40,7 +39,7 @@ export const RoleGuard: CanActivateFn = (
 ): Observable<boolean | UrlTree> => {
   const router = inject(Router);
   const store = inject(Store);
-  const notificationService = inject(SnackBarService);
+  const snackbarService = inject(SnackBarService);
 
   const allowedRoles = route.data?.['roles'] as string[] | undefined;
 
@@ -50,11 +49,14 @@ export const RoleGuard: CanActivateFn = (
 
   const normalizedAllowed = allowedRoles.map((r) => String(r).toUpperCase());
 
-  return store.select(selectUserCargo).pipe(
+  return store.select(selectAuthState).pipe(
+    filter(authState => authState.isLoading === false),
     take(1),
-    map((cargoUsuario) => {
+    map((authState) => {
+      const cargoUsuario = authState.user?.usuarioCargo
+      console.log("Cargo do usuário (após loading): " + cargoUsuario);
       if (!cargoUsuario) {
-        notificationService.showError('Usuário não permitidos');
+        snackbarService.showError('Usuário não permitidos');
         return router.createUrlTree(['/login']);
       }
 
@@ -64,7 +66,7 @@ export const RoleGuard: CanActivateFn = (
         return true;
       }
 
-      notificationService.showError('Usuário não permitido');
+      snackbarService.showError('Usuário não permitido');
       return router.createUrlTree(['/login']);
     })
   );

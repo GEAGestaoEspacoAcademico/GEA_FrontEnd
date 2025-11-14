@@ -3,11 +3,12 @@ import type { OnInit} from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 import { SalaService } from '../../services/salas/sala.service';
+import type { Observable} from 'rxjs';
 import { filter, forkJoin, switchMap, take } from 'rxjs';
 import { ProfessorService } from '../../services/professor/professor.service';
 import type { Option } from '../../components/shared/scheduling/types';
 import { Store } from '@ngrx/store';
-import { selectUserId } from '../../store/auth/auth.selectors';
+import { selectUserCargo, selectUserId } from '../../store/auth/auth.selectors';
 import type { RecomendacaoRequest, SalasRecomendadas } from '../../types/recomendacao';
 import { RecursoService } from '../../services/recurso/recurso.service';
 import type { AgendarForm, CriarAgendamento } from '../../types/agendar';
@@ -16,6 +17,7 @@ import { JanelasHorarioService } from '../../services/janelas-horario/janelas-ho
 import { FormatUtils } from '../../utils/format.utils';
 import { AgendamentoService } from '../../services/agendamentos/agendamento.service';
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
+import { Data } from '@angular/router';
 
 @Component({
   selector: 'app-agenda',
@@ -35,6 +37,8 @@ export class Agenda implements OnInit{
   
   @ViewChild('sucessModal') sucessModal!: ConfirmationModal;
   @ViewChild('classInfoModal') classInfoModal!: ConfirmationModal;
+
+  cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
   
   requisicaoRecomendacao!: RecomendacaoRequest
   isloading: boolean = false;
@@ -103,6 +107,7 @@ export class Agenda implements OnInit{
           name: 'data',
           label: 'Data',
           type: 'date',
+          defaultValue: FormatUtils.formatDateForInput(new Date()),
           validators: { required: true, errorMessages: { required: 'A data é obrigatória.' } }
         },
         {
