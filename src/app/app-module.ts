@@ -87,7 +87,7 @@ import { MultiDateSelector } from './components/shared/multi-date-selector/multi
     MainLayout,
     AuthLayout,
     RommInformationComponent,
-    SmartSchedulingForm
+    SmartSchedulingForm,
     AddItemModal,
     MultiDateSelector,
     DashboardCard

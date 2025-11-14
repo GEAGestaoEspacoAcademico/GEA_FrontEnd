@@ -1,11 +1,11 @@
 import type { OnInit } from '@angular/core';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import {FormBuilder, FormGroup}  from '@angular/forms';
+import { FormBuilder, type FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-smart-scheduling-form',
-  standalone: false, 
+  standalone: false,
   templateUrl: './smart-scheduling-form.html',
   styleUrl: './smart-scheduling-form.css'
 })
@@ -64,7 +64,7 @@ export class SmartSchedulingForm implements OnInit {
       inicio: ['', Validators.required],
       fim: ['', Validators.required],
       // Campo booleano para indicar se a configuração se aplica a todos os horários (presumivelmente).
-      todosHorarios: [false] 
+      todosHorarios: [false]
     });
   }
 
@@ -83,7 +83,10 @@ export class SmartSchedulingForm implements OnInit {
 
     // Emite o evento com os dados de agendamento.
     this.scheduleSubmit.emit(payload);
-    this.aulaForm.reset(); // Limpa o formulário após a submissão.
+
+    setTimeout(() => {
+      this.aulaForm.reset();
+    }, 2000);
   }
 
   // --- Lógica de Adicionar Configuração para Agendamento em Lote (Evento) ---
@@ -127,7 +130,7 @@ export class SmartSchedulingForm implements OnInit {
     // Verifica se o lote está vazio.
     if (this.eventBatch.length === 0) { return };
     // Verifica se o número de itens no lote corresponde ao número de datas (lógica de validação do batch).
-    if (this.eventBatch.length !== this.dateArray.length) { return }; 
+    if (this.eventBatch.length !== this.dateArray.length) { return };
 
     // Emite o array completo de agendamentos em lote.
     this.batchSubmit.emit(this.eventBatch);
