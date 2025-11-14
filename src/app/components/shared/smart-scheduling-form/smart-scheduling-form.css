@@ -1,0 +1,24 @@
+.form {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 16px;
+}
+
+mat-chip {
+    margin: 2px;
+}
+
+.btn-primary {
+    background-color: var(--color-primary-100);
+    color: var(--color-surface-base);
+}
+
+.btn-secundary{
+    background-color: var(--color-neutral-300);
+    color: var(--color-surface-base);
+}
+
+.btn-primary:active {
+    background-color: var(--color-primary-500);
+    color: var(--color-surface-base);
+}

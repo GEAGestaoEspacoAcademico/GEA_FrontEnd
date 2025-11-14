@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importe aqui
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 // NGRX Imports
 import { StoreModule } from '@ngrx/store';
@@ -53,6 +54,7 @@ import { NotificationCard } from './components/shared/notification-card/notifica
 import { RommInformationComponent } from './components/shared/romm-information-component/romm-information-component';
 import { metaReducers } from './store/meta-reducer';
 import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
+import { SmartSchedulingForm } from './components/shared/smart-scheduling-form/smart-scheduling-form';
 
 
 @NgModule({
@@ -79,7 +81,8 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
     NotificationCard,
     MainLayout,
     AuthLayout,
-    RommInformationComponent
+    RommInformationComponent,
+    SmartSchedulingForm
   ],
   imports: [
     BrowserModule,
@@ -93,6 +96,7 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
     MatChipsModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    MatCheckboxModule,
     
     // NGRX Setup Simplificado
     StoreModule.forRoot(

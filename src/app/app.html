@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+
+
+<app-smart-scheduling-form
+  [mode]="'aula'"
+  [singleDate]="dataEscolhida"
+  (scheduleSubmit)="agendarAula($event)">
+</app-smart-scheduling-form>
