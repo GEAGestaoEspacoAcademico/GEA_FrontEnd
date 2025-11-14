@@ -58,6 +58,7 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
+import { ScheduleDayModalComponent } from './components/shared/schedule-day-modal-component/schedule-day-modal-component';
 
 
 @NgModule({
@@ -87,7 +88,8 @@ import { MultiDateSelector } from './components/shared/multi-date-selector/multi
     RommInformationComponent,
     AddItemModal,
     MultiDateSelector,
-    DashboardCard
+    DashboardCard,
+    ScheduleDayModalComponent
   ],
   imports: [
     BrowserModule,
