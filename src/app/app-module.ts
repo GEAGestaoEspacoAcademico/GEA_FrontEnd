@@ -58,8 +58,7 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
-import { ScheduleDayModalComponent } from './components/shared/schedule-day-modal-component/schedule-day-modal-component';
-
+import { ScheduleDayModal } from './components/shared/schedule-day-modal/schedule-day-modal';
 
 @NgModule({
   declarations: [
@@ -89,7 +88,7 @@ import { ScheduleDayModalComponent } from './components/shared/schedule-day-moda
     AddItemModal,
     MultiDateSelector,
     DashboardCard,
-    ScheduleDayModalComponent
+    ScheduleDayModal,
   ],
   imports: [
     BrowserModule,
@@ -112,28 +111,24 @@ import { ScheduleDayModalComponent } from './components/shared/schedule-day-moda
         [AGENDAMENTO_FEATURE_KEY]: agendamentoReducer,
       },
       {
-        metaReducers
-      }
+        metaReducers,
+      },
     ),
     EffectsModule.forRoot([AuthEffects, AgendamentoEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-      logOnly: !isDevMode(), 
+      logOnly: !isDevMode(),
       autoPause: true,
-      trace: false, 
+      trace: false,
       traceLimit: 75,
     }),
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [
-    provideHttpClient(
-      withInterceptors([globalErrorInterceptor])
-    )
-  ],
-  bootstrap: [App]
+  providers: [provideHttpClient(withInterceptors([globalErrorInterceptor]))],
+  bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}
