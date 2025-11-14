@@ -5,17 +5,65 @@
 }
 
 mat-chip {
-    margin: 2px;
+    vertical-align: middle;
+}
+
+mat-icon {
+    vertical-align: middle;
+}
+
+.aula-form {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    margin-left: auto;
+}
+
+.agenda-form {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    margin-left: auto;
+}
+
+.border-card {
+    border: 1px solid var(--color-neutral-300);
+    border-radius: 8px;
+    padding: 16px;
+
+    width: fit-content;
+    margin-top: var(--spacing-4);
+    margin-left: 1.5%;
+}
+
+h3 {
+    margin-top: var(--spacing-4);
 }
 
 .btn-primary {
     background-color: var(--color-primary-100);
     color: var(--color-surface-base);
+
+    margin-left: 3.5rem;
 }
 
-.btn-secundary{
+.btn-aula {
+    background-color: var(--color-primary-100);
+    color: var(--color-surface-base);
+}
+
+.btn-secundary {
     background-color: var(--color-neutral-300);
     color: var(--color-surface-base);
+
+
+
+    margin-top: var(--spacing-4);
+}
+
+.button-container {
+    text-align: center;
+    width: fit-content;
 }
 
 .btn-primary:active {

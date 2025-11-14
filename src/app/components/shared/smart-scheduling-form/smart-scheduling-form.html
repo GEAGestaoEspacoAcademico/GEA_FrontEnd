@@ -1,5 +1,5 @@
 @if (mode === "aula") {
-<div class="d-flex justify-content-center align-itens-center">
+<div class="d-flex justify-content-center align-itens-center aula-form">
     <form [formGroup]="aulaForm" class="form">
 
         <div class="row g-3">
@@ -42,7 +42,7 @@
             </div>
 
             <div class="col-12 mt-3" style="width: fit-content; margin-left: auto; margin-right: auto;">
-                <button mat-raised-button class="btn btn-primary" (click)="submitAula()" [disabled]="aulaForm.invalid">
+                <button mat-raised-button class="btn btn-aula" (click)="submitAula()" [disabled]="aulaForm.invalid">
                     Agendar
                 </button>
             </div>
@@ -53,7 +53,7 @@
 
 
 @if (mode === "evento") {
-<div class="d-flex justify-content-center align-itens-center">
+<div class="row flex-column agenda-form">
     <form [formGroup]="eventoForm" class="form">
         <div class="row g-3">
             <div class="col-6">
@@ -77,7 +77,8 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Início</mat-label>
                     <mat-select formControlName="inicio">
-                        <mat-option *ngFor="let h of ['07:40','10:00','13:00','15:00']" [value]="h">{{ h }}</mat-option>
+                        <mat-option *ngFor="let h of ['07:40','10:00','13:00','15:00']" [value]="h">{{ h
+                            }}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -86,13 +87,14 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Fim</mat-label>
                     <mat-select formControlName="fim">
-                        <mat-option *ngFor="let h of ['10:00','12:00','15:00','17:00']" [value]="h">{{ h }}</mat-option>
+                        <mat-option *ngFor="let h of ['10:00','12:00','15:00','17:00']" [value]="h">{{ h
+                            }}</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
 
             <div class="col-6">
-                <mat-checkbox formControlName="todosHorarios" class="w-100">
+                <mat-checkbox formControlName="todosHorarios">
                     Todos os horários
                 </mat-checkbox>
             </div>
@@ -105,26 +107,31 @@
             </div>
         </div>
     </form>
-
-    <div class="container">
-    <h3 style="margin-top:20px">Dias Agendados</h3>
-
-    <ul class="list-group">
-        <li class="list-group-item">
-                <mat-chip-set>
-        <mat-chip *ngFor="let ev of eventBatch; let i = index" selectable="false" removable="true">
-            {{ ev.date | date:'dd/MM/yyyy' }} — {{ ev.nomeEvento }}
-            <mat-icon (click)="removeBatchItem(i)" style="cursor:pointer">close</mat-icon>
-        </mat-chip>
-    </mat-chip-set>
-        </li>
-    </ul>
-
-    <button mat-raised-button class="btn btn-secundary" style="margin-top:20px" (click)="submitBatch()"
-        [disabled]="eventBatch.length !== dateArray.length">
-        Agendar
-    </button>
 </div>
+
+<div class="d-flex flex-column text-center">
+    <div class="border-card">
+        <h3>Dias Agendados</h3>
+
+        <ul class="list-group">
+            <li class="list-group-item" style="border: none;">
+                @for (ev of eventBatch; track ev; let i = $index) {
+                <mat-chip selectable="false" removable="true">
+                    {{ ev.date | date:'dd/MM/yyyy' }} — {{ ev.nomeEvento }}
+                    <mat-icon (click)="removeBatchItem(i)" style="cursor:pointer">close</mat-icon>
+                </mat-chip>
+                }
+
+            </li>
+        </ul>
+
+        <button mat-raised-button class="btn btn-secundary" (click)="submitBatch()"
+            [disabled]="eventBatch.length !== dateArray.length">
+            Agendar
+        </button>
+    </div>
+
+
 </div>
 
 
