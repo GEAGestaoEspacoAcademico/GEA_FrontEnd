@@ -1,6 +1,6 @@
 import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -55,6 +55,9 @@ import { metaReducers } from './store/meta-reducer';
 import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 
+// AD Components
+import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
+
 
 @NgModule({
   declarations: [
@@ -81,10 +84,13 @@ import { AddItemModal } from './components/shared/add-item-modal/add-item-modal'
     MainLayout,
     AuthLayout,
     RommInformationComponent,
-    AddItemModal
+    AddItemModal,
+    // AD Components
+    SpaceManagementTable
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     NgbModule,
