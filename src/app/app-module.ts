@@ -1,6 +1,6 @@
 import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -59,6 +59,9 @@ import { DashboardCard } from './components/shared/dashboard-card/dashboard-card
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
 
+// AD Components
+import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
+
 
 @NgModule({
   declarations: [
@@ -86,11 +89,14 @@ import { MultiDateSelector } from './components/shared/multi-date-selector/multi
     AuthLayout,
     RommInformationComponent,
     AddItemModal,
+    // AD Components
+    SpaceManagementTable,
     MultiDateSelector,
     DashboardCard
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
     NgbModule,

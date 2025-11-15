@@ -15,5 +15,7 @@ export interface Sala{
 
   tipoSala: string,
 
+  materias: string[],
+
   observacoes: string
 }

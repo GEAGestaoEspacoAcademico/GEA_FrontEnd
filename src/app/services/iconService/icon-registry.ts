@@ -39,7 +39,12 @@ export class IconRegistryService {
     this.addIcon('add-circle', 'add-circle.svg');
     this.addIcon('computer', 'computer.svg');
     this.addIcon('home', 'home.svg');
-    this.addIcon('tada', 'tada.svg')
+    this.addIcon('tada', 'tada.svg');
+    this.addIcon('filter', 'funnel.svg');
+    this.addIcon('edit', 'pencil.svg');
+    this.addIcon('delete', 'trash.svg');
+    this.addIcon('search', 'search.svg');
+ 
   }
   /**
    * Insere um novo icone no projeto
