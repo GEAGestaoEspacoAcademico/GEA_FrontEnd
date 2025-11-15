@@ -1,0 +1,22 @@
+<section class="space-management-container">
+  <app-space-management-table
+    [data]="displayedSalas"
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (searchChange)="onSearch($event)"
+    (pageChange)="onPageChange($event)"
+    (editSala)="onEditSala($event)"
+    (deleteSala)="openDeleteModal($event)">
+  </app-space-management-table>
+</section>
+
+<app-confirmation-modal
+  #confirmDeleteModal
+  mode="aviso"
+  title="Confirmar Delete"
+  message="Você tem certeza que deseja deletar esta sala? Esta ação não pode ser desfeita."
+  confirmText="Confirmar"
+  cancelText="Cancelar"
+  (onconfirm)="confirmDelete()"
+  (oncancel)="closeModal()"
+></app-confirmation-modal>

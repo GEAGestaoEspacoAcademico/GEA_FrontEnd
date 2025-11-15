@@ -1,6 +1,5 @@
 import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -14,6 +13,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // NGRX Imports
 import { StoreModule } from '@ngrx/store';
@@ -58,6 +58,9 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
+import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
+import { SpaceManagement } from './pages/space-management/space-management';
+
 
 
 @NgModule({
@@ -73,6 +76,7 @@ import { MultiDateSelector } from './components/shared/multi-date-selector/multi
     Notificacoes,
     EditarAula,
     Login,
+    SpaceManagement,
     // Shared Components
     ClassInfoCard,
     DaySelector,
@@ -87,12 +91,14 @@ import { MultiDateSelector } from './components/shared/multi-date-selector/multi
     RommInformationComponent,
     AddItemModal,
     MultiDateSelector,
-    DashboardCard
+    DashboardCard,
+    SpaceManagementTable,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
+    AppRoutingModule,
     NgbModule,
     MatIconModule,
     MatFormFieldModule,
