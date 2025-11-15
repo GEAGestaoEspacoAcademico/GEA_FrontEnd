@@ -1,0 +1,166 @@
+.field-label {
+    font-weight: 500;
+    color: #333;
+    font-size: 0.875rem;
+    display: block; 
+    margin-bottom: 0.25rem; 
+}
+
+.simple-input {
+    border: 0.5px solid var(--color-default-black);
+    border-radius: 0.5rem;
+    outline: none;
+    width: 100%; 
+    font-size: 0.875rem;
+    padding: 0.438rem;
+    background-color: var(--color-surface-subtle);
+    box-sizing: border-box; 
+}
+
+.simple-input::placeholder {
+    color: #999;
+}
+
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; 
+    padding: 1rem; 
+    max-width: 1200px; 
+    margin: 0 auto; 
+}
+
+
+.line-3-cols, .line-2-cols {
+    display: grid;
+    grid-template-columns: 1fr; 
+    gap: 1.5rem; 
+    width: 100%;
+    padding: 0; 
+}
+
+
+.line-3-cols > div:nth-child(1),
+.line-3-cols > div:nth-child(2),
+.line-3-cols > div:nth-child(3) {
+    margin-right: 0; 
+}
+
+.line-3-cols > div:nth-child(2) select {
+    width: 100%; 
+}
+
+
+#observacoes {
+    width: 100%; 
+    min-height: 100px; 
+    resize: none; 
+}
+
+.chips-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start; 
+    gap: 0.4rem;
+    min-height: 3rem;
+    padding: 0.4rem;
+    border: 1px solid var(--color-default-black);
+    border-radius: 0.5rem;
+    background-color: var(--color-surface-subtle);
+}
+
+mat-chip {
+    display: flex;
+    align-items: center;
+    background-color: #b71c1c !important; 
+    color: white !important;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    padding-right: 0.3rem;
+    height: 32px; 
+}
+
+mat-chip button[mat-icon-button] {
+    color: white !important;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    background-color: #b71c1c;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.4rem 1rem;
+    margin-top: 0.6rem;
+    cursor: pointer;
+    transition: 0.2s;
+    line-height: normal; 
+}
+
+.add-btn:hover {
+    background-color: #8a1313;
+}
+
+.add-btn mat-icon {
+    font-size: 1.1rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem; 
+}
+
+.form-buttons .add-btn {
+    margin-top: 0;
+    min-width: 120px; 
+}
+
+.form-buttons .add-btn.cancelar-btn {
+    background-color: white; 
+    border: 1px solid #b71c1c; 
+    color: #b71c1c; 
+}
+
+
+@media (min-width: 768px) {
+    .line-2-cols {
+        grid-template-columns: 1fr 2fr; 
+        gap: 70px; 
+        padding: 0.438rem;
+    }
+    .line-3-cols {
+        grid-template-columns: 2fr 1fr 1fr; 
+        gap: 1.5rem; 
+        padding: 0.438rem 0;
+    }
+    .line-3-cols > div:nth-child(1) {
+        margin-right: 0; 
+    }
+    .line-3-cols > div:nth-child(2) {
+        margin-right: 0;
+    }
+    .form-group {
+        padding: 1rem 45px 1rem 45px; 
+    }
+}
+
+@media (max-width: 500px) {
+    .form-buttons {
+        flex-direction: column;
+    }
+}
+

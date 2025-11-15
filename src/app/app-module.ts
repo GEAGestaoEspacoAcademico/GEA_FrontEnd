@@ -55,6 +55,7 @@ import { metaReducers } from './store/meta-reducer';
 import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
+import { SpaceRegistrationForm } from './components/AD/space-registration-form/space-registration-form';
 
 
 @NgModule({
@@ -83,7 +84,8 @@ import { AddItemModal } from './components/shared/add-item-modal/add-item-modal'
     AuthLayout,
     RommInformationComponent,
     DashboardCard,
-    AddItemModal
+    AddItemModal,
+    SpaceRegistrationForm
   ],
   imports: [
     BrowserModule,
