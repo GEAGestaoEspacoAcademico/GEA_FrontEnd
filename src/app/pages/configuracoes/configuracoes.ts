@@ -10,6 +10,7 @@ import type { ConfirmationModal } from '../../components/shared/confirmation-mod
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
 import { ProfessorService } from '../../services/professor/professor.service';
 import type { Disciplina } from '../../models/disciplina.model';
+import type { Sala } from '../../models/sala.model';
 
 @Component({
   selector: 'app-configuracoes',
@@ -21,7 +22,9 @@ export class Configuracoes implements OnInit{
   private store = inject(Store);
   private notificationService = inject(SnackBarService);
   private professorService = inject(ProfessorService)
-  
+  currentPage: number = 0;
+  totalPages: number = 5
+
   user$: Observable<User | null> = this.store.select(selectCurrentUser);
   disciplinas$!: Observable<Disciplina[]>;
 

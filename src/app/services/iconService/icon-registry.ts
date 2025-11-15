@@ -44,6 +44,7 @@ export class IconRegistryService {
     this.addIcon('edit', 'pencil.svg');
     this.addIcon('delete', 'trash.svg');
     this.addIcon('search', 'search.svg');
+ 
   }
   /**
    * Insere um novo icone no projeto

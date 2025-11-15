@@ -1,5 +1,6 @@
 import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -62,6 +63,9 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
 import { SpaceManagement } from './pages/space-management/space-management';
 
 
+// AD Components
+import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
+
 
 @NgModule({
   declarations: [
@@ -90,6 +94,8 @@ import { SpaceManagement } from './pages/space-management/space-management';
     AuthLayout,
     RommInformationComponent,
     AddItemModal,
+    // AD Components
+    SpaceManagementTable,
     MultiDateSelector,
     DashboardCard,
     SpaceManagementTable,
@@ -97,6 +103,7 @@ import { SpaceManagement } from './pages/space-management/space-management';
   imports: [
     BrowserModule,
     FormsModule,
+    AppRoutingModule,
     ReactiveFormsModule,
     AppRoutingModule,
     NgbModule,
