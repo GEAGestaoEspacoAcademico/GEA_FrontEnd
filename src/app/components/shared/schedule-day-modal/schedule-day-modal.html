@@ -1,1 +1,26 @@
-<p>schedule-day-modal-component works!</p>
+<ng-template #ScheduleDayModal>
+  <div class="modal-header main-title">
+    <h3 class="text-center w-100">Horario do dia 14/11/2025</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row align-items-center mb-2">
+      <div class="col-3 text-center modal-horarios">7:40 - 9:20</div>
+      <div class="col-9">
+        <div class="d-flex justify-content-between align-items-center p-3 modal-card">
+          <div>Eletrônica Industrial</div>
+          <div>Lab. Eletrônica</div>
+          <div>
+            <mat-icon svgIcon="pencil" class="icon"></mat-icon
+            ><mat-icon svgIcon="trash" class="icon"></mat-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="gea-btn gea-btn-primary mx-auto" (click)="modalClose()">
+      <div class="d-flex align-items-center justify-content-center">OK</div>
+    </button>
+  </div>
+</ng-template>

@@ -18,14 +18,19 @@ export class ScheduleDayModal {
   private modalService = inject(NgbModal);
   private agendamentoService = inject(AgendamentoService);
 
-  @ViewChild('modalTemplate')
+  @ViewChild('ScheduleDayModal')
   modalTemplate!: TemplateRef<ScheduleDayModal>;
 
-  private abrirModal() {
+  public abrirModal() {
     this.modalService.open(this.modalTemplate, {
       backdrop: 'static',
       centered: true,
-      size: 'sm',
+      windowClass: 'custom-modal',
     });
+  }
+
+  modalClose() {
+    this.modalService.dismissAll();
+    this.closeModal.emit();
   }
 }

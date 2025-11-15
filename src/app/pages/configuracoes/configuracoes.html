@@ -35,7 +35,9 @@
           @for (disciplina of disciplinas; track $index) {
             <li>{{ disciplina.nomeDisciplina }}</li>
           }
-        </ul> </dd> <dt>Cursos e semestres:</dt>
+        </ul>
+      </dd>
+      <dt>Cursos e semestres:</dt>
       <dd>
         <ul>
           @for (disciplina of disciplinas; track $index) {
@@ -46,7 +48,9 @@
           }
         </ul>
       </dd>
-    } </dl> <app-confirmation-modal
+    }
+  </dl>
+  <app-confirmation-modal
     #ConfirmationModal
     mode="aviso"
     title="Aviso!"
@@ -56,3 +60,7 @@
     (onconfirm)="logout()"
   ></app-confirmation-modal>
 </div>
+
+<app-schedule-day-modal #ScheduleDayModal></app-schedule-day-modal>
+
+<button (click)="abrirModal()">Abrir Modal</button>

@@ -1,4 +1,4 @@
-import type { OnInit} from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import type { Teacher } from '../../models/teacher.model';
 import { AuthActions } from '../../store/auth/auth.actions';
@@ -10,6 +10,7 @@ import type { ConfirmationModal } from '../../components/shared/confirmation-mod
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
 import { ProfessorService } from '../../services/professor/professor.service';
 import type { Disciplina } from '../../models/disciplina.model';
+import type { ScheduleDayModal } from '../../components/shared/schedule-day-modal/schedule-day-modal';
 
 @Component({
   selector: 'app-configuracoes',
@@ -17,22 +18,22 @@ import type { Disciplina } from '../../models/disciplina.model';
   templateUrl: './configuracoes.html',
   styleUrl: './configuracoes.css',
 })
-export class Configuracoes implements OnInit{
+export class Configuracoes implements OnInit {
   private store = inject(Store);
   private notificationService = inject(SnackBarService);
-  private professorService = inject(ProfessorService)
-  
+  private professorService = inject(ProfessorService);
+
   user$: Observable<User | null> = this.store.select(selectCurrentUser);
   disciplinas$!: Observable<Disciplina[]>;
 
   ngOnInit(): void {
     this.disciplinas$ = this.user$.pipe(
-      filter(professor => professor !== null),
-      map(professor => professor.usuarioId),
-      switchMap(professorId => {
-        return this.professorService.getDisciplinasDoProfessor(professorId)
-      })
-    )
+      filter((professor) => professor !== null),
+      map((professor) => professor.usuarioId),
+      switchMap((professorId) => {
+        return this.professorService.getDisciplinasDoProfessor(professorId);
+      }),
+    );
   }
 
   @ViewChild('ConfirmationModal')
@@ -45,5 +46,12 @@ export class Configuracoes implements OnInit{
   logout() {
     this.store.dispatch(AuthActions.logout());
     this.notificationService.showSuccess('Usuario deslogado com sucesso.');
+  }
+
+  @ViewChild('ScheduleDayModal')
+  ScheduleDayModal!: ScheduleDayModal;
+
+  abrirModal() {
+    this.ScheduleDayModal.abrirModal();
   }
 }
