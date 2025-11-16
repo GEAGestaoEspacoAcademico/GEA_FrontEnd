@@ -16,7 +16,7 @@ export class AgendamentoService {
   private baseUrl = environment.apiUrl + '/agendamentos/aulas';
 
   public getAgendamentoPorDia(data: string): Observable<AgendamentoData[]> {
-    return this.http.get<AgendamentoData[]>(`${'http://localhost:8080/agendamentos'}/${data}`);
+    return this.http.get<AgendamentoData[]>(`${environment.apiUrl}/agendamentos/${data}`);
   }
 
   /**

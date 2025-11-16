@@ -56,4 +56,8 @@
   width: 1.5rem;
   height: 1.625rem;
   margin-right: 1.25rem;
+  &:hover{
+    cursor: pointer;
+  }
 }
+

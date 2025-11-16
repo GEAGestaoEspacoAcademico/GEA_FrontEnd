@@ -3,6 +3,7 @@ import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angu
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AgendamentoService } from '../../../services/agendamentos/agendamento.service';
 import type { AgendamentoData, SlotHorario } from '../../../models/agendamento.model';
+import { FormatUtils } from '../../../utils/format.utils';
 
 @Component({
   selector: 'app-schedule-day-modal',
@@ -11,12 +12,12 @@ import type { AgendamentoData, SlotHorario } from '../../../models/agendamento.m
   styleUrl: './schedule-day-modal.css',
 })
 export class ScheduleDayModal {
-  @Input() selectedDate!: Date;
   @Output() closeModal = new EventEmitter<void>();
   @Output() editAgendamento = new EventEmitter<number>();
   @Output() deleteAgendamento = new EventEmitter<number>();
   loading = false;
-
+  selectedDate!: Date;
+  
   @ViewChild('ScheduleDayModal')
   modalTemplate!: TemplateRef<ScheduleDayModal>;
 
@@ -25,11 +26,7 @@ export class ScheduleDayModal {
 
   buscarAgendamentos(): void {
     this.loading = true;
-    const d = new Date(this.selectedDate);
-    const year = d.getFullYear();
-    const month = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    const dataFormatada = `${year}-${month}-${day}`;
+    const dataFormatada = FormatUtils.formatDateForInput(new Date(this.selectedDate));
 
     this.agendamentoService.getAgendamentoPorDia(dataFormatada).subscribe({
       next: (dados: AgendamentoData[]) => {
@@ -61,7 +58,8 @@ export class ScheduleDayModal {
     });
   }
 
-  public abrirModal() {
+  public abrirModal(data: Date) {
+    this.selectedDate = data;
     this.buscarAgendamentos();
     this.modalService.open(this.modalTemplate, {
       backdrop: 'static',
