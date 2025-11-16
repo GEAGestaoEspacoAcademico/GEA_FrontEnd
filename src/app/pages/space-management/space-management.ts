@@ -22,7 +22,7 @@ export class SpaceManagement implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
   searchTerm: string = '';
-  pageSize: number = 10;
+  pageSize: number = 7;
 
   
 

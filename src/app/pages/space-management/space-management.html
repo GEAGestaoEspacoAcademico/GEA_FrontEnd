@@ -1,4 +1,5 @@
-<section class="space-management-container">
+<div class="space-management-container">
+  <h2 class="main-title">List de espaços Acadêmicos</h2>
   <app-space-management-table
     [data]="displayedSalas"
     [currentPage]="currentPage"
@@ -6,9 +7,12 @@
     (searchChange)="onSearch($event)"
     (pageChange)="onPageChange($event)"
     (editSala)="onEditSala($event)"
-    (deleteSala)="openDeleteModal($event)">
+    (deleteSala)="openDeleteModal($event)"
+    class="w-100"
+    >
   </app-space-management-table>
-</section>
+</div>
+
 
 <app-confirmation-modal
   #confirmDeleteModal
