@@ -1,26 +1,48 @@
 <ng-template #ScheduleDayModal>
   <div class="modal-header main-title">
-    <h3 class="text-center w-100">Horario do dia 14/11/2025</h3>
-  </div>
-  <div class="modal-body">
-    <div class="row align-items-center mb-2">
-      <div class="col-3 text-center modal-horarios">7:40 - 9:20</div>
-      <div class="col-9">
-        <div class="d-flex justify-content-between align-items-center p-3 modal-card">
-          <div>Eletrônica Industrial</div>
-          <div>Lab. Eletrônica</div>
-          <div>
-            <mat-icon svgIcon="pencil" class="icon"></mat-icon
-            ><mat-icon svgIcon="trash" class="icon"></mat-icon>
-          </div>
-        </div>
-      </div>
-    </div>
+    <h3 class="text-center w-100">Horario do dia: {{ selectedDate | date: 'yyyy-MM-dd' }}</h3>
   </div>
 
-  <div class="modal-footer">
-    <button class="gea-btn gea-btn-primary mx-auto" (click)="modalClose()">
-      <div class="d-flex align-items-center justify-content-center">OK</div>
-    </button>
+  <div class="modal-body">
+    @if (loading) {
+      <div class="text-center my-4"><mat-spinner diameter="50"></mat-spinner></div>
+    }
+
+    @if (!loading) {
+      @for (h of horarios; track h.horarioComparacao) {
+        <div class="row align-items-center mb-2">
+          <div class="col-3 text-center modal-horarios">{{ h.horarioExibicao }}</div>
+
+          <div class="col-9">
+            <div class="d-flex justify-content-between align-items-center modal-card">
+              @if (h.agendamento) {
+                <div>{{ h.agendamento.disciplinaNome }}</div>
+                <div>{{ h.agendamento.sala.salaNome }}</div>
+
+                <div>
+                  <mat-icon
+                    svgIcon="pencil"
+                    class="icon"
+                    (click)="AgendamentoEdit(h.agendamento.agendamentoId)"
+                  ></mat-icon>
+                  <mat-icon
+                    svgIcon="trash"
+                    class="icon"
+                    (click)="AgendamentoDelete(h.agendamento.agendamentoId)"
+                  ></mat-icon>
+                </div>
+              } @else {
+                <div class="modal-card"></div>
+              }
+            </div>
+          </div>
+        </div>
+      }
+    }
+    <div class="modal-footer">
+      <button class="gea-btn gea-btn-primary mx-auto" (click)="modalClose()">
+        <div class="d-flex align-items-center justify-content-center">OK</div>
+      </button>
+    </div>
   </div>
 </ng-template>

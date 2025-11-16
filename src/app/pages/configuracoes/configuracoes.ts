@@ -10,7 +10,6 @@ import type { ConfirmationModal } from '../../components/shared/confirmation-mod
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
 import { ProfessorService } from '../../services/professor/professor.service';
 import type { Disciplina } from '../../models/disciplina.model';
-import type { ScheduleDayModal } from '../../components/shared/schedule-day-modal/schedule-day-modal';
 
 @Component({
   selector: 'app-configuracoes',
@@ -46,12 +45,5 @@ export class Configuracoes implements OnInit {
   logout() {
     this.store.dispatch(AuthActions.logout());
     this.notificationService.showSuccess('Usuario deslogado com sucesso.');
-  }
-
-  @ViewChild('ScheduleDayModal')
-  ScheduleDayModal!: ScheduleDayModal;
-
-  abrirModal() {
-    this.ScheduleDayModal.abrirModal();
   }
 }
