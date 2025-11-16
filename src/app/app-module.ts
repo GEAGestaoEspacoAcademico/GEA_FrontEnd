@@ -64,6 +64,7 @@ import { SpaceManagement } from './pages/space-management/space-management';
 
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
+import { Home } from './pages/AD/home/home';
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
     DashboardCard,
     ScheduleDayModal,
     SpaceManagementTable,
+    Home,
   ],
   imports: [
     BrowserModule,
