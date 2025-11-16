@@ -83,11 +83,11 @@ private loadDataAndBuildForm(): void {
       take(1)
     ).subscribe({
       next: ({ disciplinas, cursos, salas }) => {
-        this.cursoIdAtual = cursos.find(c => c.nomeCurso === this.agendamentoAtual?.curso)?.id;
+        this.cursoIdAtual = cursos.find(c => c.cursoNome === this.agendamentoAtual?.curso)?.cursoId;
         this.salaIdAtual = salas.find(s => s.nome === this.agendamentoAtual?.nomeSala)?.id;
         
         const disciplinaOptions = disciplinas.map(d => ({ label: d.nomeDisciplina, value: d.idDisciplina }));
-        const cursoOptions = cursos.map(c => ({ label: c.nomeCurso, value: c.id }));
+        const cursoOptions = cursos.map(c => ({ label: c.cursoNome, value: c.cursoId }));
         const salaOptions = salas.filter(s => s.disponibilidade === true || s.id === this.salaIdAtual ).map(s => ({ label: s.nome, value: s.id }));
 
         this.formFields = this.createFormFields(

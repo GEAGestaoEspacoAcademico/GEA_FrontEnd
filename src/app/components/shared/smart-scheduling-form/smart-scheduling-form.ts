@@ -2,6 +2,10 @@ import type { OnInit } from '@angular/core';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormBuilder, type FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
+import { JanelasHorarioService } from '../../../services/janelas-horario/janelas-horario.service';
+import type { JanelaHorario } from '../../../models/janelasHorario.model';
+import { CursoService } from '../../../services/curso/curso.service';
+import type { Curso } from '../../../models/curso.model';
 
 @Component({
   selector: 'app-smart-scheduling-form',
@@ -12,10 +16,30 @@ import { Validators } from '@angular/forms';
 export class SmartSchedulingForm implements OnInit {
 
   // --- Propriedades de Entrada (Inputs) ---
-  // Define o modo de operação do formulário: 'aula' para agendamento individual, 'evento' para agendamento em lote.
+  private _singleDate: Date | null = null; // Propriedade interna para armazenar o valor
+  horarios: string[] = [];
+  cursos: Curso[] = [];
+
+  // 💡 NOVO: Setter para detectar mudanças na data e chamar o carregamento dos horários
+  @Input()
+  set singleDate(date: Date | null) {
+    this._singleDate = date;
+    console.log(`[SmartSchedulingForm] Data recebida: ${date}`);
+
+    if (this._singleDate) {
+      this.getHorariosDisponiveis(this._singleDate);
+    } else {
+      if (this.aulaForm) {
+        this.horarios = [];
+        this.aulaForm.get('horario')?.setValue('');
+      }
+    }
+  }
+
+  get singleDate(): Date | null {
+    return this._singleDate;
+  }
   @Input() mode: 'aula' | 'evento' = 'aula';
-  // Recebe uma única data para agendamento no modo 'aula'. O '!' indica que será inicializada externamente.
-  @Input() singleDate!: Date;
   // Recebe um array de datas para agendamento em lote no modo 'evento'.
   @Input() dateArray: Date[] = [];
 
@@ -30,6 +54,8 @@ export class SmartSchedulingForm implements OnInit {
   // Injeta o serviço FormBuilder para construir e gerenciar os objetos FormGroup.
   // Esta é a forma preferencial no Angular moderno, atendendo às regras do ESLint como 'prefer-inject'.
   private fb = inject(FormBuilder);
+  private serviceHorario = inject(JanelasHorarioService);
+  private serviceCurso = inject(CursoService);
 
   // --- Propriedades do Formulário ---
   // Objeto FormGroup para o agendamento de aulas (modo 'aula').
@@ -43,8 +69,8 @@ export class SmartSchedulingForm implements OnInit {
   // --- Ciclo de Vida do Componente ---
   // Método chamado após a inicialização das propriedades de Input.
   ngOnInit(): void {
-    console.log(" Input recebido (dateArray):", this.dateArray);
     this.buildForms(); // Chama a função para inicializar os formulários.
+    this.getCursosProfessor();
   }
 
   // --- Lógica de Inicialização dos Formulários ---
@@ -54,7 +80,8 @@ export class SmartSchedulingForm implements OnInit {
       horario: ['', Validators.required], // Campo obrigatório
       local: ['', Validators.required],
       disciplina: ['', Validators.required],
-      solicitante: ['', Validators.required]
+      solicitante: ['', Validators.required],
+      curso: ['', Validators.required]
     });
 
     // Inicializa o formulário de Evento com controles e validadores.
@@ -79,8 +106,6 @@ export class SmartSchedulingForm implements OnInit {
       date: this.singleDate
     };
 
-    console.log(this.aulaForm);
-
     // Emite o evento com os dados de agendamento.
     this.scheduleSubmit.emit(payload);
 
@@ -93,10 +118,6 @@ export class SmartSchedulingForm implements OnInit {
   addEventoConfig() {
     // Verifica se o formulário de evento é inválido.
     if (this.eventoForm.invalid) { return };
-
-    console.log(" EventoForm válido?", this.eventoForm.valid);
-    console.log(" Valores do eventoForm:", this.eventoForm.value);
-    console.log(" dateArray recebido:", this.dateArray);
 
     const config = this.eventoForm.value;
 
@@ -112,9 +133,6 @@ export class SmartSchedulingForm implements OnInit {
         todosHorarios: config.todosHorarios
       });
     });
-
-    console.log(" Evento gerado para push:", this.eventBatch);
-    console.log(this.dateArray);
 
     this.eventoForm.reset(); // Limpa o formulário de configuração para a próxima entrada.
   }
@@ -135,6 +153,47 @@ export class SmartSchedulingForm implements OnInit {
     // Emite o array completo de agendamentos em lote.
     this.batchSubmit.emit(this.eventBatch);
     this.eventoForm.reset(); // Limpa o formulário após a submissão.
+  }
+
+  getHorariosDisponiveis(date: Date): void {
+    // 1. Garante que a data está no formato correto (AAAA-MM-DD)
+    const dataString = date.toISOString().substring(0, 10);
+
+    console.log(dataString);
+
+    this.serviceHorario.getHorariosDisponiveisPorData(dataString).subscribe({
+      next: (janelas: JanelaHorario[]) => {
+        console.log("Horários disponíveis da API: ", janelas);
+        console.log("Entrou em horarios");
+
+        // 2. Mapeia o retorno da API para o formato de string esperado (ex: '07:40 - 9:20')
+        this.horarios = janelas.map(janela => {
+          // Assumindo que: janela.horaInicio é uma string (ex: "07:40:00")
+          const inicioFormatado = janela.horaInicio.substring(0, 5); // Pega "07:40"
+          const fimFormatado = janela.horaFim.substring(0, 5);      // Pega "09:20"
+
+          return `${inicioFormatado} - ${fimFormatado}`;
+        });
+
+        // O Angular atualizará automaticamente o <mat-select> devido à data binding.
+      },
+      error: (err) => {
+        console.error("Erro ao buscar horários", err);
+        this.horarios = []; // Limpa a lista em caso de erro
+      }
+    });
+  }
+
+  getCursosProfessor() {
+    this.serviceCurso.getCursos().subscribe({
+      next: (cursos: Curso[]) => {
+        this.cursos = cursos;
+      },
+      error: (err) => {
+        console.error("Erro ao buscar cursos", err);
+        this.cursos = [];
+      }
+    });
   }
 
 }

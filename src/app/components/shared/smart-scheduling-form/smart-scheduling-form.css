@@ -5,6 +5,8 @@
 }
 
 mat-chip {
+    display: block;
+    margin-bottom: 5px;
     vertical-align: middle;
 }
 

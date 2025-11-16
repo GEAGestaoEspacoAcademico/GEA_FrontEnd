@@ -25,16 +25,27 @@
 
             <div class="col-6">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Horário</mat-label>
-                    <mat-select formControlName="horario">
-                        <mat-option
-                            *ngFor="let h of ['07:40 - 9:20','9:30 - 11:20','11:30 - 13:00','13:20 - 15:00','15:10 - 16:50','17:00 - 18:40','19:00 - 20:40','21:00 - 22:40']"
-                            [value]="h">{{ h }}</mat-option>
+                    <mat-label>Curso</mat-label>
+                    <mat-select formControlName="curso">
+                        @for (c of cursos; track c.cursoId) {
+                        <mat-option [value]="c">{{c.cursoSigla}}</mat-option>
+                        }
                     </mat-select>
                 </mat-form-field>
             </div>
 
             <div class="col-6">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Horário</mat-label>
+                    <mat-select formControlName="horario">
+                        @for (h of horarios; track $index) {
+                        <mat-option [value]="h">{{ h }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="col-12">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Solicitante</mat-label>
                     <input matInput formControlName="solicitante">
@@ -77,8 +88,9 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Início</mat-label>
                     <mat-select formControlName="inicio">
-                        <mat-option *ngFor="let h of ['07:40','10:00','13:00','15:00']" [value]="h">{{ h
-                            }}</mat-option>
+                        @for (h of horarios; track $index) {
+                            <mat-option [value]="h">{{ h }}</mat-option>
+                        }
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -121,7 +133,6 @@
                     <mat-icon (click)="removeBatchItem(i)" style="cursor:pointer">close</mat-icon>
                 </mat-chip>
                 }
-
             </li>
         </ul>
 

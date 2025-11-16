@@ -3,9 +3,11 @@
  */
 export interface Curso{
   /** Identificador único do Curso*/
-  id: number,
+  cursoId: number,
   /** Nom do curso */
-  nomeCurso: string,
+  cursoNome: string,
   /** Nome do coordenador atrelado ao Curso */
-  coodernador: string
+  coodernadorId: string,
+  /** Sigla do nome do curso */
+  cursoSigla: string
 }

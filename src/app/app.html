@@ -1,1 +1,20 @@
-<router-outlet></router-outlet>
+<div class="row">
+
+    <div class="col-6">
+        <app-multi-date-selector (selecaoChange)="onDatasSelecionadas($event)"
+            (doubleClick)="onDataUnicaSelecionada($event)"></app-multi-date-selector>
+    </div>
+
+    <div class="col-6">
+        <app-smart-scheduling-form [mode]="'aula'" [singleDate]="dataEscolhida"
+            (scheduleSubmit)="agendarAula($event)">
+        </app-smart-scheduling-form>
+    </div>
+
+    <div class="col-12">
+        <app-smart-scheduling-form [mode]="'evento'" [dateArray]="datasSelecionadas"
+            (batchSubmit)="agendarEvento($event)">
+        </app-smart-scheduling-form>
+    </div>
+
+</div>
