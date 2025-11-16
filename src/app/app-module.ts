@@ -58,6 +58,7 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
+import { ScheduleDayModal } from './components/shared/schedule-day-modal/schedule-day-modal';
 import { SpaceManagement } from './pages/space-management/space-management';
 
 
@@ -93,9 +94,9 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
     RommInformationComponent,
     AddItemModal,
     // AD Components
-    SpaceManagementTable,
     MultiDateSelector,
     DashboardCard,
+    ScheduleDayModal,
     SpaceManagementTable,
   ],
   imports: [
@@ -121,28 +122,24 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
         [AGENDAMENTO_FEATURE_KEY]: agendamentoReducer,
       },
       {
-        metaReducers
-      }
+        metaReducers,
+      },
     ),
     EffectsModule.forRoot([AuthEffects, AgendamentoEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-      logOnly: !isDevMode(), 
+      logOnly: !isDevMode(),
       autoPause: true,
-      trace: false, 
+      trace: false,
       traceLimit: 75,
     }),
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [
-    provideHttpClient(
-      withInterceptors([globalErrorInterceptor])
-    )
-  ],
-  bootstrap: [App]
+  providers: [provideHttpClient(withInterceptors([globalErrorInterceptor]))],
+  bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}
