@@ -42,6 +42,11 @@ export class IconRegistryService {
     this.addIcon('tada', 'tada.svg');
     this.addIcon('pencil', 'pencil.svg');
     this.addIcon('trash', 'trash.svg');
+    this.addIcon('filter', 'funnel.svg');
+    this.addIcon('edit', 'pencil.svg');
+    this.addIcon('delete', 'trash.svg');
+    this.addIcon('search', 'search.svg');
+ 
   }
   /**
    * Insere um novo icone no projeto
