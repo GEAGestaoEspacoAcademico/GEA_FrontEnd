@@ -1,9 +1,6 @@
 .space-table-container {
-  width: 100%;
-  padding: 1.5rem;
-  background: #ffffff;
+  width: 100%;  
   border-radius: 1rem;
-  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.05);
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
@@ -84,6 +81,7 @@
 .space-table {
   width: 100%;
   border-collapse: collapse;
+  box-shadow: 0 0.25rem 1rem rgba(0, 0, 0, 0.05);
 }
 
 .space-table th {

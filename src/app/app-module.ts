@@ -58,6 +58,8 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
+import { SpaceManagement } from './pages/space-management/space-management';
+
 
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
@@ -76,6 +78,7 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
     Notificacoes,
     EditarAula,
     Login,
+    SpaceManagement,
     // Shared Components
     ClassInfoCard,
     DaySelector,
@@ -92,13 +95,15 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
     // AD Components
     SpaceManagementTable,
     MultiDateSelector,
-    DashboardCard
+    DashboardCard,
+    SpaceManagementTable,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    AppRoutingModule,
     NgbModule,
     MatIconModule,
     MatFormFieldModule,

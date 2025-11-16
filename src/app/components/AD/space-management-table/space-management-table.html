@@ -1,5 +1,5 @@
 <section class="space-table-container" aria-labelledby="espacos-title">
-  <header class="table-header">    
+  <header class="table-header">
     <div class="header-controls">
       <form class="search-bar" role="search" (submit)="$event.preventDefault()">
         <label for="searchInput" class="visually-hidden">Buscar pelo nome</label>
@@ -33,18 +33,18 @@
         </tr>
       </thead>
       <tbody>
-        @for (sala of data; track sala.id) {
+        @for (sala of data; track sala?.salaId ?? sala.salaNome ?? $index) {
           <tr>
-            <td>{{ sala.nome }}</td>
+            <td>{{ sala.salaNome }}</td>
             <td>{{ sala.piso }}</td>
             <td>{{ sala.tipoSala }}</td>
-            <td>{{ sala.materias.join(", ") }}</td>
+            <td>{{ (sala.materias ?? []).join(", ") }}</td>
             <td class="actions">
               <button
                 type="button"
                 class="edit-btn"
                 (click)="onEditSala(sala)"
-                aria-label="Editar {{ sala.nome }}"
+                aria-label="Editar {{ sala.salaNome }}"
                 >
                 <mat-icon svgIcon="edit" aria-hidden="true"></mat-icon>
                 <span class="visually-hidden">Editar</span>
@@ -53,7 +53,7 @@
               type="button"
               class="delete-btn"
               (click)="onDeleteSala(sala)"
-              aria-label="Excluir {{ sala.nome }}"
+              aria-label="Excluir {{ sala.salaNome }}"
               >
                 <mat-icon svgIcon="delete" aria-hidden="true"></mat-icon>
                 <span class="visually-hidden">Excluir</span>
@@ -103,7 +103,5 @@
     >
       &gt;
     </button>
-
-
   </nav>
 </section>
