@@ -3,17 +3,19 @@
  */
 export interface Sala{
   /** identificador único da sala */
-  id: number,
+  salaId: number,
   /** Nome da sala (ex: Sala 5, Sala 7) */
-  nome: string,
+  salaNome: string,
   /** Capacidade que a sala possui (ex: 40) */
   capacidade: number,
 
   piso: number,
   /** Status da sala, se esta disponível ou não (ex: false) */
-  disponibilidade: boolean
+  disponibilidade: boolean,
 
   tipoSala: string,
+
+  materias: string[],
 
   observacoes: string
 }

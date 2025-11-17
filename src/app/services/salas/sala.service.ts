@@ -32,4 +32,8 @@ export class SalaService {
     data.horarios.horaInicio = FormatUtils.colocarSegundos(data.horarios.horaInicio)
     return this.http.post<Recomendacoes[]>(`${this.baseUrl}/recomendacoes`, data)
   }
+
+  deleteSala(id: number) {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
 }

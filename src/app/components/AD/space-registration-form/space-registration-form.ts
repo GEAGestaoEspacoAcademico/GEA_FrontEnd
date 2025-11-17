@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angu
 import type { FormGroup } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import type { AddItemModal } from '../../shared/add-item-modal/add-item-modal';
-import type { Recurso } from '../../../models/Recurso.model';
 import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
 import type { TiposSalas } from '../../../models/tipoSala.mode';
 import type { Equipamento } from '../../../types/equipamento';

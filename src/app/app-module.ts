@@ -1,6 +1,6 @@
 import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -11,7 +11,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importe aqui
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 // NGRX Imports
 import { StoreModule } from '@ngrx/store';
@@ -56,6 +58,12 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 import { SpaceRegistrationForm } from './components/AD/space-registration-form/space-registration-form';
+import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
+import { SpaceManagement } from './pages/space-management/space-management';
+
+
+// AD Components
+import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 
 
 @NgModule({
@@ -71,6 +79,7 @@ import { SpaceRegistrationForm } from './components/AD/space-registration-form/s
     Notificacoes,
     EditarAula,
     Login,
+    SpaceManagement,
     // Shared Components
     ClassInfoCard,
     DaySelector,
@@ -85,12 +94,19 @@ import { SpaceRegistrationForm } from './components/AD/space-registration-form/s
     RommInformationComponent,
     DashboardCard,
     AddItemModal,
+    // AD Components
+    SpaceManagementTable,
+    MultiDateSelector,
+    DashboardCard,
+    SpaceManagementTable,
     SpaceRegistrationForm
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    AppRoutingModule,
     NgbModule,
     MatIconModule,
     MatFormFieldModule,
@@ -99,7 +115,8 @@ import { SpaceRegistrationForm } from './components/AD/space-registration-form/s
     MatChipsModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
-    
+    MatDatepickerModule,
+    MatNativeDateModule,
     // NGRX Setup Simplificado
     StoreModule.forRoot(
       {
