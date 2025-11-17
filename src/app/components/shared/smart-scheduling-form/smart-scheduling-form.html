@@ -7,8 +7,9 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Local</mat-label>
                     <mat-select formControlName="local">
-                        <mat-option value="Sala 1">Sala 1</mat-option>
-                        <mat-option value="Sala 2">Sala 2</mat-option>
+                        @for (s of salas; track s.salaId) {
+                            <mat-option [value]="s">{{s.salaNome}}</mat-option>
+                        }
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -17,13 +18,14 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Disciplina</mat-label>
                     <mat-select formControlName="disciplina">
-                        <mat-option value="POO">POO</mat-option>
-                        <mat-option value="BD">BD</mat-option>
+                        @for (d of disciplinas; track d.disciplinaId) {
+                            <mat-option [value]="d">{{d.disciplinaNome}}</mat-option>
+                        }
                     </mat-select>
                 </mat-form-field>
             </div>
 
-            <div class="col-6">
+            <!-- <div class="col-6">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Curso</mat-label>
                     <mat-select formControlName="curso">
@@ -32,7 +34,7 @@
                         }
                     </mat-select>
                 </mat-form-field>
-            </div>
+            </div> -->
 
             <div class="col-6">
                 <mat-form-field appearance="outline" class="w-100">
@@ -45,7 +47,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-12">
+            <div class="col-6">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Solicitante</mat-label>
                     <input matInput formControlName="solicitante">

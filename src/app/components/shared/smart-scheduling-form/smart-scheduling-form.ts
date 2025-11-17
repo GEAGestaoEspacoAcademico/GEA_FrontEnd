@@ -6,6 +6,10 @@ import { JanelasHorarioService } from '../../../services/janelas-horario/janelas
 import type { JanelaHorario } from '../../../models/janelasHorario.model';
 import { CursoService } from '../../../services/curso/curso.service';
 import type { Curso } from '../../../models/curso.model';
+import type { Sala } from '../../../models/sala.model';
+import type { Disciplina } from '../../../models/disciplina.model';
+import { SalaService } from '../../../services/salas/sala.service';
+import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
 
 @Component({
   selector: 'app-smart-scheduling-form',
@@ -19,12 +23,16 @@ export class SmartSchedulingForm implements OnInit {
   private _singleDate: Date | null = null; // Propriedade interna para armazenar o valor
   horarios: string[] = [];
   cursos: Curso[] = [];
+  salas: Sala[] = [];
+  disciplinas: Disciplina[] = [];
+
+  horariosDisponiveisInicio: string[] = [];
+  horariosDisponiveisFim: string[] = [];
 
   // 💡 NOVO: Setter para detectar mudanças na data e chamar o carregamento dos horários
   @Input()
   set singleDate(date: Date | null) {
     this._singleDate = date;
-    console.log(`[SmartSchedulingForm] Data recebida: ${date}`);
 
     if (this._singleDate) {
       this.getHorariosDisponiveis(this._singleDate);
@@ -56,6 +64,8 @@ export class SmartSchedulingForm implements OnInit {
   private fb = inject(FormBuilder);
   private serviceHorario = inject(JanelasHorarioService);
   private serviceCurso = inject(CursoService);
+  private serviceSala = inject(SalaService);
+  private serviceDisciplina = inject(DisciplinaService);
 
   // --- Propriedades do Formulário ---
   // Objeto FormGroup para o agendamento de aulas (modo 'aula').
@@ -71,6 +81,8 @@ export class SmartSchedulingForm implements OnInit {
   ngOnInit(): void {
     this.buildForms(); // Chama a função para inicializar os formulários.
     this.getCursosProfessor();
+    this.getDisciplinas();
+    this.getSalas();
   }
 
   // --- Lógica de Inicialização dos Formulários ---
@@ -80,8 +92,7 @@ export class SmartSchedulingForm implements OnInit {
       horario: ['', Validators.required], // Campo obrigatório
       local: ['', Validators.required],
       disciplina: ['', Validators.required],
-      solicitante: ['', Validators.required],
-      curso: ['', Validators.required]
+      solicitante: ['', Validators.required]
     });
 
     // Inicializa o formulário de Evento com controles e validadores.
@@ -159,27 +170,29 @@ export class SmartSchedulingForm implements OnInit {
     // 1. Garante que a data está no formato correto (AAAA-MM-DD)
     const dataString = date.toISOString().substring(0, 10);
 
-    console.log(dataString);
-
     this.serviceHorario.getHorariosDisponiveisPorData(dataString).subscribe({
       next: (janelas: JanelaHorario[]) => {
-        console.log("Horários disponíveis da API: ", janelas);
-        console.log("Entrou em horarios");
-
         // 2. Mapeia o retorno da API para o formato de string esperado (ex: '07:40 - 9:20')
         this.horarios = janelas.map(janela => {
           // Assumindo que: janela.horaInicio é uma string (ex: "07:40:00")
           const inicioFormatado = janela.horaInicio.substring(0, 5); // Pega "07:40"
           const fimFormatado = janela.horaFim.substring(0, 5);      // Pega "09:20"
-
           return `${inicioFormatado} - ${fimFormatado}`;
         });
 
-        // O Angular atualizará automaticamente o <mat-select> devido à data binding.
+        this.horariosDisponiveisInicio = janelas.map(janela =>
+          janela.horaInicio.substring(0, 5)
+        );
+
+        this.horariosDisponiveisFim = janelas.map(janela =>
+          janela.horaFim.substring(0, 5)
+        );
       },
       error: (err) => {
         console.error("Erro ao buscar horários", err);
         this.horarios = []; // Limpa a lista em caso de erro
+        this.horariosDisponiveisInicio = [];
+        this.horariosDisponiveisFim = [];
       }
     });
   }
@@ -192,6 +205,30 @@ export class SmartSchedulingForm implements OnInit {
       error: (err) => {
         console.error("Erro ao buscar cursos", err);
         this.cursos = [];
+      }
+    });
+  }
+
+  getDisciplinas() {
+    this.serviceDisciplina.getDisciplinas().subscribe({
+      next: (disciplinas: Disciplina[]) => {
+        this.disciplinas = disciplinas;
+      },
+      error: (err) => {
+        console.error("Erro ao buscar disciplinas", err);
+        this.disciplinas = [];
+      }
+    });
+  }
+
+  getSalas() {
+    this.serviceSala.getSalas().subscribe({
+      next: (salas: Sala[]) => {
+        this.salas = salas;
+      },
+      error: (err) => {
+        console.error("Erro ao buscar salas", err);
+        this.salas = [];
       }
     });
   }
