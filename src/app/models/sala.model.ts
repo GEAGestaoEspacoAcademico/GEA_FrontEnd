@@ -11,9 +11,11 @@ export interface Sala{
 
   piso: number,
   /** Status da sala, se esta disponível ou não (ex: false) */
-  disponibilidade: boolean
+  disponibilidade: boolean,
 
   tipoSala: string,
+
+  materias: string[],
 
   observacoes: string
 }
