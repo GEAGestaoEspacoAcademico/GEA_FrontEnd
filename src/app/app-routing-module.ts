@@ -21,7 +21,7 @@ const routes: Routes = [
     path: '',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: { roles: ['PROFESSOR', 'AUXILIAR_DOCENTE'] },
+    data: { roles: ['PROFESSOR'] },
     children: [
       { path: 'agenda', component: Agenda },
       { path: 'aulas', component: Aulas },
