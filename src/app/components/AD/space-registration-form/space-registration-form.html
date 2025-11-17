@@ -12,9 +12,9 @@
                 <label for="piso" class="field-label">Piso</label>
                 <select id="piso" formControlName="piso" class="simple-input">
                     <option value="" disabled>Selecione o piso</option>
-                    <option value="1">1° Andar</option>
-                    <option value="2">2º Andar</option>
-                    <option value="3">3º Andar</option>
+                    <option value="1">Térreo</option>
+                    <option value="2">1° Andar</option>
+                    <option value="3">2º Andar</option>
                 </select>
             </div>
 
@@ -22,9 +22,9 @@
                 <label for="capacidade" class="field-label">Capacidade</label>
                 <select id="capacidade" formControlName="capacidade" class="simple-input">
                     <option value="" disabled>Selecione a capacidade</option>
-                    <option value="10">Entre 10 a 20 Alunos</option>
-                    <option value="20">Entre 20 a 40 Alunos</option>
-                    <option value="30">Entre 40 a 60 Alunos</option>
+                    <option value="10">20</option>
+                    <option value="20">40</option>
+                    <option value="30">60</option>
                 </select>
             </div>
 
@@ -36,10 +36,11 @@
                 <label for="tipo-espaco" class="field-label">Tipo de espaço</label>
                 <select id="tipo-espaco" formControlName="tipoEspaco" class="simple-input">
                     <option value="" disabled>Selecione o tipo</option>
-                    <option value="sala">Sala</option>
-                    <option value="auditorio">Auditório</option>
-                    <option value="lab">Laboratório</option>
-                </select>
+                  
+                    @for (tipo of tiposSalas; track $index) {
+                      <option [value]="tipo.id">{{ tipo.nome }}</option>
+                    }
+                  </select>
             </div>
 
             <div>
