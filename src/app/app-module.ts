@@ -65,6 +65,7 @@ import { SpaceManagement } from './pages/space-management/space-management';
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
+import { ScheduleEvent } from './pages/AD/schedule-event/schedule-event';
 
 
 @NgModule({
@@ -100,6 +101,7 @@ import { Home } from './pages/AD/home/home';
     ScheduleDayModal,
     SpaceManagementTable,
     Home,
+    ScheduleEvent,
   ],
   imports: [
     BrowserModule,

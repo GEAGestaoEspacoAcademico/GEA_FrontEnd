@@ -1,0 +1,16 @@
+<h2>Selecione os dias do evento</h2>
+
+<div class="d-flex w-100 ">
+  <app-multi-date-selector 
+  class="w-50"
+  (doubleClick)="abirModalDetalhe($event)"
+  (selecaoChange)="pegarDias($event)"
+  ></app-multi-date-selector>
+  <div class="w-50">
+    <p>Formulário</p>
+  </div>
+</div>
+
+<app-schedule-day-modal
+#scheduleModal
+></app-schedule-day-modal>

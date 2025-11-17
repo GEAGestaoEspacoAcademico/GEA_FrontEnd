@@ -11,6 +11,7 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { RoleGuard } from './guards/role.guard';
 import { Home } from './pages/AD/home/home';
+import { ScheduleEvent } from './pages/AD/schedule-event/schedule-event';
 
 const routes: Routes = [
   {
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'aulas', component: Aulas },
       { path: 'configuracoes', component: Configuracoes },
       { path: 'aulas/alterar/:id', component: EditarAula},
+      { path: 'marcarevento', component: ScheduleEvent},
       { path: 'adhome', component: Home},
       { path: 'notificacoes', component: Notificacoes },
       { path: '', redirectTo: '/login', pathMatch: 'full' }
