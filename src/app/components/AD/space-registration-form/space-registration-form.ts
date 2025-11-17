@@ -7,6 +7,8 @@ import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
 import type { TiposSalas } from '../../../models/tipoSala.mode';
 import type { Equipamento } from '../../../types/equipamento';
 import type { Software } from '../../../types/software';
+import type { CriarSala } from '../../../types/criarsala';
+import type { AddItemModalData } from '../../../types/additemmodal';
 
 
 
@@ -20,7 +22,7 @@ export class SpaceRegistrationForm implements OnInit {
   
   
   @ViewChild('addItemModal') addItemModal!: AddItemModal;
-  @Output() formSubmit = new EventEmitter<any>();
+  @Output() formSubmit = new EventEmitter<CriarSala>();
 
   equipamentos: Equipamento[] = [];
   softwares: Software[] = [];
@@ -31,10 +33,10 @@ export class SpaceRegistrationForm implements OnInit {
   private tipoSalaService = inject(TipoSalaService);
   
   form: FormGroup = this.fb.group({
-    nomeEspaco: [''],
+    salaNome: [''],
     piso: [''],
     capacidade: [''],
-    tipoEspaco: [''],
+    tipoSala: [''],
     observacoes: ['']
   });
 
@@ -49,17 +51,17 @@ export class SpaceRegistrationForm implements OnInit {
     });
   }
 
-  @Input() set initialData(data: any) {
+  @Input() set initialData(data: CriarSala) {
     if (data) {
       this.form.patchValue({
-        nomeEspaco: data.nomeEspaco,
+        salaNome: data.salaNome,
         piso: data.piso,
         capacidade: data.capacidade,
-        tipoEspaco: data.tipoEspaco,
+        tipoSala: data.tipoSala,
         observacoes: data.observacoes
       });
-      this.equipamentos = data.equipamentos || [];
-      this.softwares = data.softwares || [];
+      this.equipamentos = []; 
+      this.softwares = [];
     }
   }
 
@@ -71,24 +73,25 @@ export class SpaceRegistrationForm implements OnInit {
     this.addItemModal.open();
   }
   
-  onItemAdded(item: any) {
-    if (!item) { return; }
+  onItemAdded(item: AddItemModalData) {
+    if (!item) {return;}
   
     if (this.currentItemType === 'equipamento') {
       const novoEquipamento: Equipamento = {
         id: crypto.randomUUID(),
         name: item.name,
-        quantity: item.quantity
+        quantity: item.quantity ?? 1
       };
       this.equipamentos.push(novoEquipamento);
     } else {
       const novoSoftware: Software = {
         id: crypto.randomUUID(),
-        name: item.name,
+        name: item.name
       };
       this.softwares.push(novoSoftware);
     }
   }
+  
 
   remover(tipo: 'equipamento' | 'software', recurso: Equipamento | Software)
   {
@@ -104,13 +107,13 @@ export class SpaceRegistrationForm implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-
-    const payload = {
-      formData: this.form.value,
-      equipamentos: this.equipamentos,
-      softwares: this.softwares
+  
+    const payload: CriarSala = {
+      ...this.form.value,
+      equipamentoId: this.equipamentos.map(e => Number(e.id)),
+      softwaresId: this.softwares.map(s => Number(s.id))
     };
-
+  
     this.formSubmit.emit(payload);
   }
 }

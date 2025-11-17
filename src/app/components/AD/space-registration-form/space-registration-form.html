@@ -4,8 +4,8 @@
         <div class="line-3-cols">
 
             <div>
-                <label for="nome-espaco" class="field-label">Nome Espaço</label>
-                <input type="text" id="nome-espaco" formControlName="nomeEspaco" class="simple-input">
+                <label for="sala-nome" class="field-label">Nome da Sala</label>
+                <input type="text" id="sala-nome" formControlName="salaNome" class="simple-input">
             </div>
 
             <div>
@@ -22,9 +22,9 @@
                 <label for="capacidade" class="field-label">Capacidade</label>
                 <select id="capacidade" formControlName="capacidade" class="simple-input">
                     <option value="" disabled>Selecione a capacidade</option>
-                    <option value="10">20</option>
-                    <option value="20">40</option>
-                    <option value="30">60</option>
+                    <option value="20">20</option>
+                    <option value="40">40</option>
+                    <option value="60">60</option>
                 </select>
             </div>
 
@@ -33,14 +33,14 @@
         <div class="line-2-cols">
 
             <div>
-                <label for="tipo-espaco" class="field-label">Tipo de espaço</label>
-                <select id="tipo-espaco" formControlName="tipoEspaco" class="simple-input">
+                <label for="tipo-sala" class="field-label">Tipo de sala</label>
+                <select id="tipo-sala" formControlName="tipoSala" class="simple-input">
                     <option value="" disabled>Selecione o tipo</option>
                   
                     @for (tipo of tiposSalas; track $index) {
                       <option [value]="tipo.id">{{ tipo.nome }}</option>
                     }
-                  </select>
+                </select>
             </div>
 
             <div>
