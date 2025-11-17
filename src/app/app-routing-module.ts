@@ -24,8 +24,6 @@ const routes: Routes = [
       { path: 'aulas', component: Aulas },
       { path: 'configuracoes', component: Configuracoes },
       { path: 'aulas/alterar/:id', component: EditarAula},
-      { path: 'marcarevento', component: ScheduleEvent},
-      { path: 'adhome', component: Home},
       { path: 'notificacoes', component: Notificacoes },
       { path: '', redirectTo: '/login', pathMatch: 'full' }
     ]
