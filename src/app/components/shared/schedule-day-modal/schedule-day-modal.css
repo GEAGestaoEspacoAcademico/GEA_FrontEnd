@@ -1,0 +1,63 @@
+::ng-deep .modal.custom-modal .modal-dialog {
+  max-width: 48.75rem;
+}
+
+.modal-header {
+  background-color: var(--color-feedback-error);
+  color: var(--color-default-white);
+  font-family: var(--font-family-primary);
+  border: solid var(--color-default-black);
+  border-width: 1px;
+}
+
+.modal-horarios {
+  font-family: var(--font-family-primary);
+  font-size: 20px;
+}
+
+.modal-card {
+  font-family: var(--font-family-primary);
+  font-size: 16px;
+  background-color: #d9d9d9;
+  padding: var(--spacing-3);
+}
+
+.modal-card-empty {
+  font-family: var(--font-family-primary);
+  font-size: 16px;
+  background-color: #d9d9d9;
+  padding: var(--spacing-3);
+}
+
+.modal-body {
+  padding-right: 3.375rem;
+  padding-left: 2.375rem;
+  border: solid var(--color-default-black);
+  border-width: 1px;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+.gea-btn {
+  padding: 0;
+  background-color: var(--color-primary-700);
+  color: var(--color-default-white);
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: 24px;
+  border: solid 2px var(--color-default-black);
+  width: 15rem;
+  height: 2.75rem;
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.625rem;
+  margin-right: 1.25rem;
+  &:hover{
+    cursor: pointer;
+  }
+}
+
