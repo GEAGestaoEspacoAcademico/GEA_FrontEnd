@@ -64,6 +64,7 @@ import { SpaceManagement } from './pages/space-management/space-management';
 
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
+import { SpaceRegistrationPage } from './pages/AD/space-registration/space-registration.page';
 
 
 @NgModule({
@@ -99,7 +100,8 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
     MultiDateSelector,
     DashboardCard,
     SpaceManagementTable,
-    SpaceRegistrationForm
+    SpaceRegistrationForm,
+    SpaceRegistrationPage
   ],
   imports: [
     BrowserModule,
