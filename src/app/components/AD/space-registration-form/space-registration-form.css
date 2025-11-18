@@ -71,13 +71,33 @@ mat-chip {
     height: 2rem; 
 }
 
-mat-chip button[mat-icon-button] {
-    color: white !important;
-    width: 1.25rem; 
-    height: 1.25rem;
-    line-height: 1.25rem;
+.icone-remover{
+    width: 11.43px;
+    height: auto;
+    padding: 0;
 }
 
+mat-chip button[mat-icon-button] {
+    color: white !important;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    width: 1.25rem; 
+    height: 1.25rem;
+}
+mat-mdc-chip-action-label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex !important;    
+    flex-direction: row !important;
+}
+:host ::ng-deep .mat-mdc-standard-chip .mdc-evolution-chip__text-label {
+    color: var(--color-default-white) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
 .add-btn {
     display: flex;
     align-items: center;
@@ -122,6 +142,18 @@ mat-chip button[mat-icon-button] {
     background-color: white;
     border: 0.063rem solid #b71c1c;
     color: #b71c1c;
+}
+
+.error-msg {
+    color: #b71c1c; /* Vermelho escuro para combinar com seu tema */
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Borda vermelha no input quando der erro */
+.input-error {
+    border-color: #b71c1c !important;
 }
 
 @media (min-width: 48rem) { 
