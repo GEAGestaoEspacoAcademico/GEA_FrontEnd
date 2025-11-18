@@ -57,6 +57,7 @@ import { metaReducers } from './store/meta-reducer';
 import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
+import { SpaceRegistrationForm } from './components/AD/space-registration-form/space-registration-form';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
 import { ScheduleDayModal } from './components/shared/schedule-day-modal/schedule-day-modal';
 import { SpaceManagement } from './pages/space-management/space-management';
@@ -93,13 +94,15 @@ import { Home } from './pages/AD/home/home';
     MainLayout,
     AuthLayout,
     RommInformationComponent,
+    DashboardCard,
     AddItemModal,
     // AD Components
     MultiDateSelector,
     DashboardCard,
     ScheduleDayModal,
     SpaceManagementTable,
-    Home,
+    SpaceRegistrationForm,
+    Home
   ],
   imports: [
     BrowserModule,

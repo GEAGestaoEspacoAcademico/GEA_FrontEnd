@@ -36,8 +36,15 @@ export class AddItemModal {
   });
 
   onSubmit() {
-    this.itemAdd.emit();
+    const item = {
+      name: this.novoItem.value.name || '',
+      quantity: this.novoItem.value.quantity ?? null
+    };
+  
+    this.itemAdd.emit(item);
     this.itemModal.dismissAll();
     this.novoItem.reset();
   }
+  
+  
 }
