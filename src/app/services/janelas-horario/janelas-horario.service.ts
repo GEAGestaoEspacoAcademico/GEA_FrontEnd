@@ -16,4 +16,8 @@ export class JanelasHorarioService {
     return this.http.get<JanelaHorario[]>(this.baseUrl)
   }
 
+  public getHorariosDisponiveisPorData(data: string): Observable<JanelaHorario[]> {    
+    const urlCompleta = `${this.baseUrl}/disponiveis/${data}`;
+    return this.http.get<JanelaHorario[]>(urlCompleta);
+  }
 }

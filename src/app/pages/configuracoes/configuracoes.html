@@ -33,7 +33,7 @@
       <dd>
         <ul>
           @for (disciplina of disciplinas; track $index) {
-            <li>{{ disciplina.nomeDisciplina }}</li>
+            <li>{{ disciplina.disciplinaNome }}</li>
           }
         </ul>
       </dd>
@@ -42,8 +42,8 @@
         <ul>
           @for (disciplina of disciplinas; track $index) {
             <li>
-              {{ disciplina.nomeCurso }} - {{ disciplina.semestre }} -
-              {{ disciplina.nomeDisciplina }}
+              {{ disciplina.cursoNome }} - {{ disciplina.disciplinaSemestre }} -
+              {{ disciplina.disciplinaNome }}
             </li>
           }
         </ul>
