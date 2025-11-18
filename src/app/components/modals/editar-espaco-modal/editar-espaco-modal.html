@@ -1,0 +1,60 @@
+<ng-template #editarEspacoModalTemplate let-modal>
+  <div class="modal-geral" role="dialog" aria-modal="true">
+
+    <div class="header-modal">
+      <span class="title">Editar espaço acadêmicos</span>
+      <button class="close-btn" (click)="onModalClose()">✕</button>
+    </div>
+
+    <div class="body-modal">
+      <form [formGroup]="form" class="form-grid" (submit)="$event.preventDefault()">
+
+        <div class="col-left">
+          <label for="" class="label-small">Nome:</label>
+          <input class="input-small" formControlName="nome" />
+
+          <label for="" class="label-small mt-12">Piso:</label>
+          <input class="input-small short-input" formControlName="piso" />
+        </div>
+
+        <div class="col-right">
+          <label for="" class="label-small">Tipo de Espaço:</label>
+          <input class="input-small" formControlName="tipoDeEspaco" />
+
+          <label for="" class="label-small mt-8">Disciplinas</label>
+
+          <div class="disciplina-input-wrap">
+            <input #newDisc placeholder="Nova Disciplina" class="input-discipline" [disabled]="!editing" />
+            <button class="add-disc-btn" type="button"
+                    (click)="addDisciplinaByName(newDisc.value); newDisc.value='';"
+                    [disabled]="!editing">+</button>
+          </div>
+
+          <div class="disciplina-box">
+            @for (d of disciplinasArray.controls; track $index) {
+              <div class="disciplina-item">
+                <span>{{ (d.value && (d.value.nome || d.value)) || d.value }}</span>
+                <button class="chip-remove" type="button" (click)="removeDisciplina($index)">✕</button>
+              </div>
+            }
+          </div>
+        </div>
+
+      </form>
+
+      <div class="indisponivel-row">
+        <div class="red-dot"></div>
+        <span class="ind-text">Sala Indisponível</span>
+      </div>
+    </div>
+
+    <div class="footer-modal">
+      <button class="btn-edit" type="button" (click)="editing ? onModalSave() : onModalEdit()">
+        {{ editing ? 'Salvar' : 'Editar' }}
+      </button>
+
+      <button class="btn-cancel" type="button" (click)="onModalClose()">Cancelar</button>
+    </div>
+
+  </div>
+</ng-template>
