@@ -8,12 +8,18 @@ import type { ScheduleDayModal } from '../../../components/shared/schedule-day-m
   styleUrl: './schedule-event.css'
 })
 export class ScheduleEvent {
+  datasSelecionadas: Date[] = [new Date()];
 
   @ViewChild("scheduleModal") scheduleModal!: ScheduleDayModal;
   
 
   pegarDias(dias: Date[]){
     console.log(dias)
+    this.datasSelecionadas = dias
+  }
+
+  salvarAgendamentos(data: any[]){
+    console.log(data)
   }
 
   abirModalDetalhe(data: Date){

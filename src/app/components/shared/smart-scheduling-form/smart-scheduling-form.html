@@ -90,7 +90,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Início</mat-label>
                     <mat-select formControlName="inicio">
-                        @for (h of horarios; track $index) {
+                        @for (h of ['10:00','12:00','15:00','17:00']; track $index) {
                             <mat-option [value]="h">{{ h }}</mat-option>
                         }
                     </mat-select>
@@ -101,7 +101,7 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Fim</mat-label>
                     <mat-select formControlName="fim">
-                        <mat-option *ngFor="let h of ['10:00','12:00','15:00','17:00']" [value]="h">{{ h
+                        <mat-option *ngFor="let h of ['10:00','12:00','15:00','17:00']  " [value]="h">{{ h
                             }}</mat-option>
                     </mat-select>
                 </mat-form-field>

@@ -1,0 +1,182 @@
+.field-label {
+    font-weight: 500;
+    color: #333;
+    font-size: 0.875rem;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.simple-input {
+    border: 0.031rem solid var(--color-default-black); 
+    border-radius: 0.5rem;
+    outline: none;
+    width: 100%;
+    font-size: 0.875rem;
+    padding: 0.438rem; 
+    background-color: transparent;
+    box-sizing: border-box;
+}
+
+.simple-input::placeholder {
+    color: #999;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1rem;
+    max-width: 75rem; 
+    margin: 0 auto;
+}
+
+.line-3-cols,
+.line-2-cols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.line-3-cols > div:nth-child(2) select {
+    width: 100%;
+}
+
+#observacoes {
+    width: 100%;
+    min-height: 6.25rem; 
+    resize: none;
+}
+
+.chips-box {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 0.4rem; 
+    min-height: 3rem;
+    padding: 0.4rem;
+    border: 0.063rem solid var(--color-default-black); 
+    border-radius: 0.5rem;
+    background-color: transparent !important;
+}
+
+mat-chip {
+    display: flex;
+    align-items: center;
+    background-color: #b71c1c !important;
+    color: white !important;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    padding-right: 0.3rem;
+    height: 2rem; 
+}
+
+.icone-remover{
+    width: 11.43px;
+    height: auto;
+    padding: 0;
+}
+
+mat-chip button[mat-icon-button] {
+    color: white !important;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    width: 1.25rem; 
+    height: 1.25rem;
+}
+mat-mdc-chip-action-label{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: flex !important;    
+    flex-direction: row !important;
+}
+:host ::ng-deep .mat-mdc-standard-chip .mdc-evolution-chip__text-label {
+    color: var(--color-default-white) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    background-color: #b71c1c;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.4rem 1rem;
+    margin-top: 0.6rem;
+    cursor: pointer;
+    transition: 0.2s;
+    line-height: normal;
+}
+
+.add-btn:hover {
+    background-color: #8a1313;
+}
+
+.add-btn mat-icon {
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.form-buttons .add-btn {
+    margin-top: 0;
+    min-width: 7.5rem; 
+}
+
+.form-buttons .add-btn.cancelar-btn {
+    background-color: white;
+    border: 0.063rem solid #b71c1c;
+    color: #b71c1c;
+}
+
+.error-msg {
+    color: #b71c1c; /* Vermelho escuro para combinar com seu tema */
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Borda vermelha no input quando der erro */
+.input-error {
+    border-color: #b71c1c !important;
+}
+
+@media (min-width: 48rem) { 
+    .line-2-cols {
+        grid-template-columns: 1fr 2fr;
+        gap: 4.375rem; 
+        padding: 0.438rem; 
+    }
+
+    .line-3-cols {
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 1.5rem;
+        padding: 0.438rem 0;
+    }
+
+    .form-group {
+        padding: 1rem 2.813rem; 
+    }
+}
+
+@media (max-width: 31.25rem) {
+    .form-buttons {
+        flex-direction: column;
+    }
+}
+

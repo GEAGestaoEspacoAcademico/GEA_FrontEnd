@@ -7,7 +7,11 @@
   (selecaoChange)="pegarDias($event)"
   ></app-multi-date-selector>
   <div class="w-50">
-    <p>Formulário</p>
+    <app-smart-scheduling-form
+    mode="evento"
+    [dateArray]="datasSelecionadas"
+    (batchSubmit)="salvarAgendamentos($event)"
+    ></app-smart-scheduling-form>
   </div>
 </div>
 

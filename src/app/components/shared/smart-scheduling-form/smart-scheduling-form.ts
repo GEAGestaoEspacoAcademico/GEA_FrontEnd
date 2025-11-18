@@ -32,6 +32,7 @@ export class SmartSchedulingForm implements OnInit {
   // 💡 NOVO: Setter para detectar mudanças na data e chamar o carregamento dos horários
   @Input()
   set singleDate(date: Date | null) {
+    console.log("DATA RECEBIDA: ", date)
     this._singleDate = date;
 
     if (this._singleDate) {
@@ -172,6 +173,7 @@ export class SmartSchedulingForm implements OnInit {
 
     this.serviceHorario.getHorariosDisponiveisPorData(dataString).subscribe({
       next: (janelas: JanelaHorario[]) => {
+        console.log("Janelas", janelas)
         // 2. Mapeia o retorno da API para o formato de string esperado (ex: '07:40 - 9:20')
         this.horarios = janelas.map(janela => {
           // Assumindo que: janela.horaInicio é uma string (ex: "07:40:00")

@@ -59,6 +59,7 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
 import { SmartSchedulingForm } from './components/shared/smart-scheduling-form/smart-scheduling-form';
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
+import { SpaceRegistrationForm } from './components/AD/space-registration-form/space-registration-form';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
 import { ScheduleDayModal } from './components/shared/schedule-day-modal/schedule-day-modal';
 import { SpaceManagement } from './pages/space-management/space-management';
@@ -97,6 +98,7 @@ import { ScheduleEvent } from './pages/AD/schedule-event/schedule-event';
     AuthLayout,
     RommInformationComponent,
     SmartSchedulingForm,
+    DashboardCard,
     AddItemModal,
     // AD Components
     MultiDateSelector,
@@ -105,6 +107,7 @@ import { ScheduleEvent } from './pages/AD/schedule-event/schedule-event';
     SpaceManagementTable,
     Home,
     ScheduleEvent,
+    SpaceRegistrationForm
   ],
   imports: [
     BrowserModule,
