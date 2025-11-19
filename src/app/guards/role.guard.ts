@@ -53,8 +53,7 @@ export const RoleGuard: CanActivateFn = (
     filter(authState => authState.isLoading === false),
     take(1),
     map((authState) => {
-      const cargoUsuario = authState.user?.usuarioCargo
-      console.log("Cargo do usuário (após loading): " + cargoUsuario);
+      const cargoUsuario = authState.user?.usuarioCargo;
       if (!cargoUsuario) {
         snackbarService.showError('Usuário não permitidos');
         return router.createUrlTree(['/login']);

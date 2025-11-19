@@ -1,6 +1,6 @@
 import { isDevMode, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
@@ -59,8 +59,16 @@ import { globalErrorInterceptor } from './Interceptors/Global/global-error-inter
 import { SmartSchedulingForm } from './components/shared/smart-scheduling-form/smart-scheduling-form';
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
+import { SpaceRegistrationForm } from './components/AD/space-registration-form/space-registration-form';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
 import { RecurringSchedulingForm } from './components/shared/recurring-scheduling-form/recurring-scheduling-form';
+import { ScheduleDayModal } from './components/shared/schedule-day-modal/schedule-day-modal';
+import { SpaceManagement } from './pages/space-management/space-management';
+
+
+// AD Components
+import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
+import { Home } from './pages/AD/home/home';
 
 
 @NgModule({
@@ -76,6 +84,7 @@ import { RecurringSchedulingForm } from './components/shared/recurring-schedulin
     Notificacoes,
     EditarAula,
     Login,
+    SpaceManagement,
     // Shared Components
     ClassInfoCard,
     DaySelector,
@@ -89,15 +98,23 @@ import { RecurringSchedulingForm } from './components/shared/recurring-schedulin
     AuthLayout,
     RommInformationComponent,
     SmartSchedulingForm,
+    DashboardCard,
     AddItemModal,
+    // AD Components
     MultiDateSelector,
     DashboardCard,
     RecurringSchedulingForm
+    ScheduleDayModal,
+    SpaceManagementTable,
+    SpaceRegistrationForm,
+    Home
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    AppRoutingModule,
     NgbModule,
     MatIconModule,
     MatFormFieldModule,
@@ -117,28 +134,24 @@ import { RecurringSchedulingForm } from './components/shared/recurring-schedulin
         [AGENDAMENTO_FEATURE_KEY]: agendamentoReducer,
       },
       {
-        metaReducers
-      }
+        metaReducers,
+      },
     ),
     EffectsModule.forRoot([AuthEffects, AgendamentoEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-      logOnly: !isDevMode(), 
+      logOnly: !isDevMode(),
       autoPause: true,
-      trace: false, 
+      trace: false,
       traceLimit: 75,
     }),
 
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [
-    provideHttpClient(
-      withInterceptors([globalErrorInterceptor])
-    )
-  ],
-  bootstrap: [App]
+  providers: [provideHttpClient(withInterceptors([globalErrorInterceptor]))],
+  bootstrap: [App],
 })
-export class AppModule { }
+export class AppModule {}
