@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import type { Observable } from 'rxjs';
+import { map, type Observable } from 'rxjs';
 import type { Sala } from '../../models/sala.model';
 import { environment } from '../../../environments/environment';
 import { FormatUtils } from '../../utils/format.utils';
@@ -36,4 +36,33 @@ export class SalaService {
   deleteSala(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
+
+  public getLaboratorios(): Observable<Sala[]> {
+    return this.http.get<Sala[]>(this.baseUrl).pipe(
+      map((salas: Sala[]) => salas.filter(s => this.isLaboratorio(s)))
+    );
+  }
+ 
+ 
+  private isLaboratorio(s: Sala): boolean {
+    const textFields: string[] = [
+      s.salaNome ?? '',
+    ];
+ 
+    const combined = textFields.join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+ 
+    const keywords = [
+      'lab',
+      'laboratorio',
+      'laboratório',
+      'maker',
+      'mecatron',
+      'informatic',
+      'comput',
+      'lab.'
+    ];
+ 
+    return keywords.some(k => combined.includes(k));
+  }
+
 }
