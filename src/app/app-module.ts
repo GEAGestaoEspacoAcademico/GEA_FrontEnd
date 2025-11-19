@@ -66,6 +66,7 @@ import { SpaceManagement } from './pages/space-management/space-management';
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
+import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 
 
 @NgModule({
@@ -102,7 +103,8 @@ import { Home } from './pages/AD/home/home';
     ScheduleDayModal,
     SpaceManagementTable,
     SpaceRegistrationForm,
-    Home
+    Home,
+    Secretariahome
   ],
   imports: [
     BrowserModule,
