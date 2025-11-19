@@ -11,6 +11,7 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { RoleGuard } from './guards/role.guard';
 import { Home } from './pages/AD/home/home';
+import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
 import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
@@ -30,6 +31,7 @@ const routes: Routes = [
       { path: 'adhome', component: Home },
       { path: 'notificacoes', component: Notificacoes },
       { path: '', redirectTo: '/login', pathMatch: 'full' },
+      { path: 'funcform', component: FuncionarioForm },
     ],
   },
   {
