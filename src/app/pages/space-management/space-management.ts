@@ -27,12 +27,12 @@ export class SpaceManagement implements OnInit {
   
 
   ngOnInit(): void {
-    this.salaService.getSalas().subscribe({
-      next: (salas) => {
-        this.masterSalaList = salas;
+    this.salaService.getLaboratorios().subscribe({
+      next: (labs) => {
+        this.masterSalaList = labs;
         this.atualizarDataVisualizada();
       },
-      error: (err) => console.error('Erro ao carregar salas:', err)
+      error: (err) => console.error('Erro ao carregar laboratórios:', err)
     });
   }
 
