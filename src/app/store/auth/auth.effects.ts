@@ -7,6 +7,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { AuthActions } from './auth.actions';
 import { Router } from '@angular/router';
 import type { HttpErrorResponse} from '@angular/common/http';
+import { TIPOUSUARIO } from '../../models/enums/tipoUsuario.enum';
 
 @Injectable()
 export class AuthEffects {
@@ -31,8 +32,12 @@ export class AuthEffects {
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginSuccess),
-      tap(() => {
-        this.router.navigate(['/aulas']);
+      tap((user) => {
+        if(user.user.usuarioCargo === TIPOUSUARIO.AUXILIAR_DOCENTE){
+          this.router.navigate(['ad/home'])
+        }else if(user.user.usuarioCargo === TIPOUSUARIO.PROFESSOR){
+          this.router.navigate(['/aulas']);
+        }
       })
     ),
     { dispatch: false }
