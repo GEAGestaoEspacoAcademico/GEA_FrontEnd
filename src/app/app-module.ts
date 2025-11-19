@@ -69,7 +69,6 @@ import { SpaceRegistrationPage } from './pages/AD/space-registration/space-regis
 import { Home } from './pages/AD/home/home';
 
 
-
 @NgModule({
   declarations: [
     App,
@@ -106,7 +105,6 @@ import { Home } from './pages/AD/home/home';
     SpaceRegistrationForm,
     SpaceRegistrationPage,
     Home
-
   ],
   imports: [
     BrowserModule,
