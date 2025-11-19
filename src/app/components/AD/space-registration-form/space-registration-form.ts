@@ -1,7 +1,7 @@
 import type { OnInit } from '@angular/core';
 import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import type { FormGroup } from '@angular/forms';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import type { AddItemModal } from '../../shared/add-item-modal/add-item-modal';
 import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
 import type { TiposSalas } from '../../../models/tipoSala.mode';
@@ -26,19 +26,19 @@ export class SpaceRegistrationForm implements OnInit {
 
   equipamentos: Equipamento[] = [];
   softwares: Software[] = [];
-  tiposSalas: TiposSalas[] = [];
+  tiposSalas!: TiposSalas[];
 
   private fb = inject(FormBuilder);
   private currentItemType: 'equipamento' | 'software' | null = null;
   private tipoSalaService = inject(TipoSalaService);
   
-  form: FormGroup = this.fb.group({
-    salaNome: [''],
-    piso: [''],
-    capacidade: [''],
-    tipoSala: [''],
-    observacoes: ['']
-  });
+    form: FormGroup = this.fb.group({
+      salaNome: ['', Validators.required],
+      piso: ['',  Validators.required],
+      capacidade: ['',  Validators.required],
+      tipoSala: ['',  Validators.required],
+      observacoes: ['']
+    });
 
   ngOnInit(): void {
     this.tipoSalaService.getTiposSalas().subscribe({

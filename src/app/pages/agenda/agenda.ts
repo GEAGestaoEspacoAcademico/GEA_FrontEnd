@@ -70,7 +70,8 @@ export class Agenda implements OnInit{
       next: ({disciplinas, cursos, tipoSalas, recursos, janelasHorario}) => {
         const disciplinaOptions = disciplinas.map(d => ({ label: d.nomeDisciplina, value: d.idDisciplina }));
         const cursoOptions = cursos.map(c => ({ label: c.nome, value: c.idCurso }));
-        const tiposSalaOptions = tipoSalas.map(ts => ({ label: ts.nome, value: ts.id }));
+        const tiposSalaOptions = tipoSalas.map(ts => ({ label: ts.tipoSalaNome, value: ts.tipoSalaId }));
+        
         const recursoOptions = recursos.map(r => ({label: r.nome, value: r.id}))
         const janelaHorarioOptions = janelasHorario.map(jh => {
           const hi = FormatUtils.formatHour(jh.horaInicio);

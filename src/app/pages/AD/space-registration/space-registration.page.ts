@@ -55,6 +55,7 @@ export class SpaceRegistrationPage implements OnInit {
   }
  
   private createSala(payload: Sala) {
+    
     this.http.post(`${this.baseUrl}`, payload).subscribe({
       next: () => {
         alert('Espaço criado com sucesso!');
