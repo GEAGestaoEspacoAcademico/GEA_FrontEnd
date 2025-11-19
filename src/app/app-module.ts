@@ -60,6 +60,7 @@ import { SmartSchedulingForm } from './components/shared/smart-scheduling-form/s
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
+import { RecurringSchedulingForm } from './components/shared/recurring-scheduling-form/recurring-scheduling-form';
 
 
 @NgModule({
@@ -90,7 +91,8 @@ import { MultiDateSelector } from './components/shared/multi-date-selector/multi
     SmartSchedulingForm,
     AddItemModal,
     MultiDateSelector,
-    DashboardCard
+    DashboardCard,
+    RecurringSchedulingForm
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,86 @@
+<div class="d-center">
+    <h2>Agendamento de Sala de Matéria</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-3">
+        <div class="row g-3">
+            <div class="col-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Disciplina</mat-label>
+                    <mat-select formControlName="disciplina"
+                        [class.border-red-500]="form.get('disciplina')?.invalid && form.get('disciplina')?.touched">
+                        <mat-option [value]="" disabled>Selecione a Disciplina</mat-option>
+                        @for (disc of disciplinas(); track disc.disciplinaId) {
+                        <mat-option [value]="disc.disciplinaId">{{ disc.disciplinaNome }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                @if (form.get('disciplina')?.invalid && form.get('disciplina')?.touched) {
+                <p class="mt-1 text-xs text-red-600">A disciplina é obrigatória.</p>
+                }
+            </div>
+
+            <div class="col-4">
+                <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Local</mat-label>
+                    <mat-select formControlName="local"
+                        [class.border-red-500]="form.get('local')?.invalid && form.get('local')?.touched">
+                        <mat-option [value]="" disabled>Selecione o Local</mat-option>
+                        @for (local of locais(); track local.salaId) {
+                        <mat-option [value]="local.salaId">{{ local.salaNome }}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+                @if (form.get('local')?.invalid && form.get('local')?.touched) {
+                <p class="mt-1 text-xs text-red-600">O local é obrigatório.</p>
+                }
+            </div>
+
+            <div class="mt-3 w-67">
+                <label for="horariosLista"
+                    class="block text-sm font-medium text-gray-700 required-label">Horários</label>
+                <div formArrayName="horarios" id="horariosLista"
+                    class="p-4 border border-gray-300 rounded-lg bg-gray-50 grid grid-cols-2 gap-x-6 gap-y-3"
+                    [class.border-red-500]="horariosFormArray.invalid && horariosFormArray.touched">
+
+                    @if (horarios().length === 0) {
+                    <p class="text-sm text-gray-500 col-span-2">Nenhum horário disponível para seleção.</p>
+                    } @else {
+
+                    @for (janela of horarios(); track janela.id; let i = $index) {
+                    <div class="flex items-center">
+                        <input [formControlName]="i" [id]="'horario-' + janela.id" type="checkbox"
+                            class="h-4 w-4 text-red-600 border-gray-300 rounded focus:ring-red-500">
+                        <label [for]="'horario-' + janela.id" class="ml-3 text-sm font-medium text-gray-700">
+                            {{ formatTime(janela.horaInicio, janela.horaFim) }}
+                        </label>
+                    </div>
+                    }
+                    }
+                </div>
+
+
+                @if (horariosFormArray.invalid && horariosFormArray.touched) {
+                <p class="mt-1 text-xs text-red-600">Selecione pelo menos um horário.</p>
+                }
+            </div>
+
+            <div class="d-flex justify-content-between">
+                <button type="submit" [disabled]="form.invalid" class="btn btn-primary shadow-sm">
+                    @if (isLoading()) {
+                    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+                        fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12   " cy="12" r="10" stroke="currentColor" stroke-width="4">
+                        </circle>
+                        <path class="opacity-75" fill="currentColor"
+                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+                        </path>
+                    </svg>
+                    Agendando...
+                    } @else {
+                    Agendar
+                    }
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
