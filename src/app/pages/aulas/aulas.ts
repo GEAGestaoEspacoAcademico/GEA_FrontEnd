@@ -43,6 +43,7 @@ export class Aulas implements OnInit {
   agendamentoToCancelId: number | null = null;
 
   ngOnInit(): void {
+    this.headerService.setTitle('Aulas');
     this.headerService.hideBack();
     this.store.dispatch(AgendamentoActions.loadAgendamentos());
     this.activeDayId = FormatUtils.toId(new Date());

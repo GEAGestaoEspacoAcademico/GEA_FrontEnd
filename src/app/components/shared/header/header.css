@@ -82,6 +82,9 @@
   display: inline-block;
   vertical-align: middle;
 }
+.icon-arrow {
+  height: auto;
+}
 
 .header a,
 .header button {
@@ -171,9 +174,4 @@
   .header-right-icons {
     gap: 0.5rem;
   }
-}
-
-.icon-arrow {
-  width: 40px;
-  height: 40px;
 }

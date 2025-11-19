@@ -11,6 +11,7 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { RoleGuard } from './guards/role.guard';
 import { Home } from './pages/AD/home/home';
+import { SpaceManagement } from './pages/space-management/space-management';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
 import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
@@ -38,10 +39,10 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: { roles: ['AUXILIAR_DOCENTE'] },
     children: [
+      { path: 'lista-espacos', component: SpaceManagement },
       { path: 'home', component: Home },
       /*{ path: 'agendar-aula', component: ScheduleClass },
       { path: 'agendar-evento', component: ScheduleEvent },
-      { path: 'lista-espacos', component: AdSpaceListPage },
       { path: 'cadastrar-espaco', component: SpaceRegistration },
       { path: 'cadastrar-espaco/:id', component: AdSpaceRegistrationPage },*/
       { path: '', redirectTo: 'home', pathMatch: 'full' },

@@ -3,18 +3,20 @@ import { Component, inject, ViewChild } from '@angular/core';
 import type { Sala } from '../../models/sala.model';
 import { SalaService } from '../../services/salas/sala.service';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
+import { HeaderTitleService } from '../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-space-management',
   standalone: false,
   templateUrl: './space-management.html',
-  styleUrl: './space-management.css'
+  styleUrl: './space-management.css',
 })
 export class SpaceManagement implements OnInit {
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmationModal;
   salaParaDeletar!: Sala | null;
-  
+
   private salaService = inject(SalaService);
+  private headerService = inject(HeaderTitleService);
 
   masterSalaList: Sala[] = [];
   displayedSalas: Sala[] = [];
@@ -24,15 +26,15 @@ export class SpaceManagement implements OnInit {
   searchTerm: string = '';
   pageSize: number = 7;
 
-  
-
   ngOnInit(): void {
+    this.headerService.showBack();
+    this.headerService.setTitle('Lista de Espaços Acadêmicos');
     this.salaService.getLaboratorios().subscribe({
       next: (labs) => {
         this.masterSalaList = labs;
         this.atualizarDataVisualizada();
       },
-      error: (err) => console.error('Erro ao carregar laboratórios:', err)
+      error: (err) => console.error('Erro ao carregar laboratórios:', err),
     });
   }
 
@@ -42,17 +44,19 @@ export class SpaceManagement implements OnInit {
   }
 
   confirmDelete(): void {
-    if (!this.salaParaDeletar) {return};
+    if (!this.salaParaDeletar) {
+      return;
+    }
 
     this.salaService.deleteSala(this.salaParaDeletar.salaId).subscribe({
       next: () => {
         this.masterSalaList = this.masterSalaList.filter(
-          s => s.salaId !== this.salaParaDeletar!.salaId
+          (s) => s.salaId !== this.salaParaDeletar!.salaId,
         );
         this.atualizarDataVisualizada();
         this.salaParaDeletar = null;
       },
-      error: (err) => console.error('Erro ao deletar sala:', err)
+      error: (err) => console.error('Erro ao deletar sala:', err),
     });
   }
 
@@ -65,9 +69,7 @@ export class SpaceManagement implements OnInit {
 
     if (this.searchTerm.trim() !== '') {
       const term = this.searchTerm.toLowerCase();
-      filtrada = filtrada.filter(s =>
-        s.salaNome.toLowerCase().includes(term)
-      );
+      filtrada = filtrada.filter((s) => s.salaNome.toLowerCase().includes(term));
     }
 
     this.totalPages = Math.ceil(filtrada.length / this.pageSize) || 1;

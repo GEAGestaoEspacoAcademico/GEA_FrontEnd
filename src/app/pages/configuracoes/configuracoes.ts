@@ -31,7 +31,7 @@ export class Configuracoes implements OnInit {
 
   ngOnInit(): void {
     this.headerService.setTitle('Configurações');
-    this.headerService.showBack();
+    this.headerService.hideBack();
     this.disciplinas$ = this.user$.pipe(
       filter((professor) => professor !== null),
       map((professor) => professor.usuarioId),

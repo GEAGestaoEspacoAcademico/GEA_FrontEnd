@@ -11,8 +11,25 @@
     <div class="header-dynamic-content">
       @if (showBackButton$ | async) {
         <div class="header-center-content">
-          <mat-icon svgIcon="arrow-back" class="icon-arrow" (click)="goBack()"></mat-icon>
           <div class="highlight-title">{{ title$ | async }}</div>
+        </div>
+        <div class="header-right-icons">
+          <a
+            class="notification"
+            routerLink="/notificacoes"
+            routerLinkActive="active"
+            #rlaNotif="routerLinkActive"
+            aria-label="Ir para Notificações"
+            [attr.aria-current]="rlaNotif.isActive ? 'page' : null"
+          >
+            <mat-icon
+              [svgIcon]="rlaNotif.isActive ? 'notification-fill' : 'notification'"
+              class="icon-notification-medium"
+              aria-hidden="true"
+            ></mat-icon>
+            <span class="visually-hidden">Notificações</span>
+          </a>
+          <mat-icon svgIcon="details-arrow" class="icon-arrow" (click)="goBack()"></mat-icon>
         </div>
       } @else {
         <div class="header-center-content">
@@ -59,39 +76,40 @@
             <div class="page-title">Minha Conta</div>
           }
         </div>
-      }
-
-      <div class="header-right-icons" role="group" aria-label="Ações do cabeçalho">
-        <a
-          class="notification"
-          routerLink="/notificacoes"
-          routerLinkActive="active"
-          #rlaNotif="routerLinkActive"
-          aria-label="Ir para Notificações"
-          [attr.aria-current]="rlaNotif.isActive ? 'page' : null"
-        >
-          <mat-icon
-            [svgIcon]="rlaNotif.isActive ? 'notification-fill' : 'notification'"
-            class="icon-notification-medium"
-            aria-hidden="true"
-          ></mat-icon>
-          <span class="visually-hidden">Notificações</span>
-        </a>
-
-        @if (cargo?.toUpperCase() === 'AUXILIAR_DOCENTE' || cargo?.toUpperCase() === 'SECRETARIA') {
+        <div class="header-right-icons" role="group" aria-label="Ações do cabeçalho">
           <a
-            (click)="logout()"
-            (keydown.enter)="logout()"
-            class="logout-button"
-            aria-label="Sair"
-            tabindex="0"
-            role="button"
+            class="notification"
+            routerLink="/notificacoes"
+            routerLinkActive="active"
+            #rlaNotif="routerLinkActive"
+            aria-label="Ir para Notificações"
+            [attr.aria-current]="rlaNotif.isActive ? 'page' : null"
           >
-            <mat-icon svgIcon="logout" class="icon-logout-medium" aria-hidden="true"></mat-icon>
-            <span class="visually-hidden">Sair</span>
+            <mat-icon
+              [svgIcon]="rlaNotif.isActive ? 'notification-fill' : 'notification'"
+              class="icon-notification-medium"
+              aria-hidden="true"
+            ></mat-icon>
+            <span class="visually-hidden">Notificações</span>
           </a>
-        }
-      </div>
+
+          @if (
+            cargo?.toUpperCase() === 'AUXILIAR_DOCENTE' || cargo?.toUpperCase() === 'SECRETARIA'
+          ) {
+            <a
+              (click)="logout()"
+              (keydown.enter)="logout()"
+              class="logout-button"
+              aria-label="Sair"
+              tabindex="0"
+              role="button"
+            >
+              <mat-icon svgIcon="logout" class="icon-logout-medium" aria-hidden="true"></mat-icon>
+              <span class="visually-hidden">Sair</span>
+            </a>
+          }
+        </div>
+      }
     </div>
   } @else {
     <div class="header-dynamic-content">

@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { HeaderTitleService } from '../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-notificacoes',
@@ -6,7 +8,14 @@ import { Component } from '@angular/core';
   templateUrl: './notificacoes.html',
   styleUrl: './notificacoes.css',
 })
-export class Notificacoes {
+export class Notificacoes implements OnInit {
+  private headerService = inject(HeaderTitleService);
+
+  ngOnInit(): void {
+    this.headerService.setTitle('Notificações');
+    this.headerService.hideBack();
+  }
+
   notificacoes: Notificacao[] = [
     {
       source: 'Fatec | Comunicação Geral',
