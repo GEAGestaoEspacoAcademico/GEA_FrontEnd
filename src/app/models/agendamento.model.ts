@@ -72,3 +72,26 @@ export interface EditAgendamento {
   /** Horário de fim que a aula irá ocorrer (ex: "11:30"). */
   horaFim: string;
 }
+
+interface Sala {
+  salaId: number;
+  salaNome: string;
+}
+
+export interface AgendamentoData {
+  agendamentoId: number;
+  sala: Sala;
+  disciplinaId: number;
+  disciplinaNome: string;
+  dataInicio: string;
+  dataFim: string;
+  horaInicio: string;
+  horaFim: string;
+  tipo: string;
+}
+
+export interface SlotHorario {
+  horarioExibicao: string;
+  horarioComparacao: string;
+  agendamento?: AgendamentoData;
+}
