@@ -49,7 +49,9 @@
   padding: 0.5rem 0.625rem;
   border-radius: 0.25rem;
   font-size: 0.9rem;
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .page-title {
@@ -169,4 +171,9 @@
   .header-right-icons {
     gap: 0.5rem;
   }
+}
+
+.icon-arrow {
+  width: 40px;
+  height: 40px;
 }

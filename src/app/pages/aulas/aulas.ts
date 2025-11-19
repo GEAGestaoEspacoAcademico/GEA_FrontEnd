@@ -14,6 +14,7 @@ import type { ConfirmationModal } from '../../components/shared/confirmation-mod
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
 import { FormatUtils } from '../../utils/format.utils';
 import type { AddItemModal } from '../../components/shared/add-item-modal/add-item-modal';
+import { HeaderTitleService } from '../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-aulas',
@@ -25,6 +26,7 @@ export class Aulas implements OnInit {
   private store = inject(Store);
   private router = inject(Router);
   private notificationService = inject(SnackBarService);
+  private headerService = inject(HeaderTitleService);
 
   private currentDate = new Date();
 
@@ -41,6 +43,7 @@ export class Aulas implements OnInit {
   agendamentoToCancelId: number | null = null;
 
   ngOnInit(): void {
+    this.headerService.hideBack();
     this.store.dispatch(AgendamentoActions.loadAgendamentos());
     this.activeDayId = FormatUtils.toId(new Date());
     this.generateDaysForMonth();
@@ -63,7 +66,7 @@ export class Aulas implements OnInit {
 
   requestCancelConfirmation(id: number): void {
     this.agendamentoToCancelId = id;
-    this.confirmModal.open()
+    this.confirmModal.open();
   }
 
   confirmCancel(): void {

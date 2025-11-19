@@ -1,5 +1,5 @@
 import type { OnInit } from '@angular/core';
-import { Component, inject, viewChild, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import type { Teacher } from '../../models/teacher.model';
 import { AuthActions } from '../../store/auth/auth.actions';
 import { Store } from '@ngrx/store';
@@ -12,6 +12,7 @@ import { ProfessorService } from '../../services/professor/professor.service';
 import type { Disciplina } from '../../models/disciplina.model';
 import type { ScheduleDayModal } from '../../components/shared/schedule-day-modal/schedule-day-modal';
 import type { Sala } from '../../models/sala.model';
+import { HeaderTitleService } from '../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-configuracoes',
@@ -23,11 +24,14 @@ export class Configuracoes implements OnInit {
   private store = inject(Store);
   private notificationService = inject(SnackBarService);
   private professorService = inject(ProfessorService);
+  private headerService = inject(HeaderTitleService);
 
   user$: Observable<User | null> = this.store.select(selectCurrentUser);
   disciplinas$!: Observable<Disciplina[]>;
 
   ngOnInit(): void {
+    this.headerService.setTitle('Configurações');
+    this.headerService.showBack();
     this.disciplinas$ = this.user$.pipe(
       filter((professor) => professor !== null),
       map((professor) => professor.usuarioId),

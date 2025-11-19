@@ -8,52 +8,58 @@
   </a>
 
   @if (cargo$ | async; as cargo) {
-
     <div class="header-dynamic-content">
-      <div class="header-center-content">
+      @if (showBackButton$ | async) {
+        <div class="header-center-content">
+          <mat-icon svgIcon="arrow-back" class="icon-arrow" (click)="goBack()"></mat-icon>
+          <div class="highlight-title">{{ title$ | async }}</div>
+        </div>
+      } @else {
+        <div class="header-center-content">
+          @if (cargo?.toUpperCase() === 'PROFESSOR') {
+            <nav class="nav-links" aria-label="Navegação principal">
+              <a
+                routerLink="/aulas"
+                routerLinkActive="active-link"
+                #rlaAulas="routerLinkActive"
+                [attr.aria-current]="rlaAulas.isActive ? 'page' : null"
+                class="nav-item"
+              >
+                Aulas
+              </a>
 
-        @if (cargo?.toUpperCase() === 'PROFESSOR') {
-          <nav class="nav-links" aria-label="Navegação principal">
-            <a
-              routerLink="/aulas"
-              routerLinkActive="active-link"
-              #rlaAulas="routerLinkActive"
-              [attr.aria-current]="rlaAulas.isActive ? 'page' : null"
-              class="nav-item"
-            >
-              Aulas
-            </a>
+              <a
+                routerLink="/agenda"
+                routerLinkActive="active-link"
+                #rlaAgenda="routerLinkActive"
+                [attr.aria-current]="rlaAgenda.isActive ? 'page' : null"
+                class="nav-item"
+              >
+                Agendar
+              </a>
 
-            <a
-              routerLink="/agenda"
-              routerLinkActive="active-link"
-              #rlaAgenda="routerLinkActive"
-              [attr.aria-current]="rlaAgenda.isActive ? 'page' : null"
-              class="nav-item"
-            >
-              Agendar
-            </a>
-
-            <a
-              routerLink="/configuracoes"
-              routerLinkActive="active-link"
-              #rlaConfig="routerLinkActive"
-              [attr.aria-current]="rlaConfig.isActive ? 'page' : null"
-              class="nav-item"
-            >
-              Configurações
-            </a>
-          </nav>
-        }
-        @else if (cargo?.toUpperCase() === 'AUXILIAR_ADMINISTRATIVO' || cargo?.toUpperCase() === 'SECRETARIA') {
-          <h2 class="page-title" aria-live="polite">
-            {{ title$ | async }}
-          </h2>
-        }
-        @else {
-          <div class="page-title">Minha Conta</div>
-        }
-      </div>
+              <a
+                routerLink="/configuracoes"
+                routerLinkActive="active-link"
+                #rlaConfig="routerLinkActive"
+                [attr.aria-current]="rlaConfig.isActive ? 'page' : null"
+                class="nav-item"
+              >
+                Configurações
+              </a>
+            </nav>
+          } @else if (
+            cargo?.toUpperCase() === 'AUXILIAR_ADMINISTRATIVO' ||
+            cargo?.toUpperCase() === 'SECRETARIA'
+          ) {
+            <h2 class="page-title" aria-live="polite">
+              {{ title$ | async }}
+            </h2>
+          } @else {
+            <div class="page-title">Minha Conta</div>
+          }
+        </div>
+      }
 
       <div class="header-right-icons" role="group" aria-label="Ações do cabeçalho">
         <a
@@ -87,7 +93,6 @@
         }
       </div>
     </div>
-
   } @else {
     <div class="header-dynamic-content">
       <div class="header-center-content">
@@ -96,7 +101,11 @@
 
       <div class="header-right-icons">
         <a class="notification" aria-hidden="true">
-          <mat-icon svgIcon="notification" class="icon-notification-medium" aria-hidden="true"></mat-icon>
+          <mat-icon
+            svgIcon="notification"
+            class="icon-notification-medium"
+            aria-hidden="true"
+          ></mat-icon>
         </a>
       </div>
     </div>
