@@ -43,6 +43,7 @@ import { Configuracoes } from './pages/configuracoes/configuracoes';
 import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { EditarAula } from './pages/editar-aula/visualizar-aula';
 import { Login } from './pages/login/login';
+import { EsqueciSenha } from './pages/esqueci-senha/esqueci-senha';
 
 // Shared Components
 import { DaySelector } from './components/shared/day-selector/day-selector';
@@ -65,11 +66,11 @@ import { RecurringSchedulingForm } from './components/shared/recurring-schedulin
 import { ScheduleDayModal } from './components/shared/schedule-day-modal/schedule-day-modal';
 import { SpaceManagement } from './pages/space-management/space-management';
 
-
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
-
+import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
+import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { Home } from './pages/AD/home/home';
     EditarAula,
     Login,
     SpaceManagement,
+    EsqueciSenha,
     // Shared Components
     ClassInfoCard,
     DaySelector,
@@ -107,7 +109,9 @@ import { Home } from './pages/AD/home/home';
     ScheduleDayModal,
     SpaceManagementTable,
     SpaceRegistrationForm,
-    Home
+    Home,
+    Secretariahome,
+    CreateResourceModal
   ],
   imports: [
     BrowserModule,

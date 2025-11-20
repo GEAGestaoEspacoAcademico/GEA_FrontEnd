@@ -2,22 +2,22 @@ import type { Field } from '../../components/shared/scheduling/types';
 import type { OnInit} from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import { SalaService } from '../../services/salas/sala.service';
+import { SalaService } from '../../services/sala/sala.service';
 import type { Observable} from 'rxjs';
 import { filter, forkJoin, switchMap, take } from 'rxjs';
 import { ProfessorService } from '../../services/professor/professor.service';
 import type { Option } from '../../components/shared/scheduling/types';
 import { Store } from '@ngrx/store';
 import { selectUserCargo, selectUserId } from '../../store/auth/auth.selectors';
-import type { RecomendacaoRequest, SalasRecomendadas } from '../../types/recomendacao';
 import { RecursoService } from '../../services/recurso/recurso.service';
 import type { AgendarForm, CriarAgendamento } from '../../types/agendar';
 import { TipoSalaService } from '../../services/tipo-sala/tipo-sala.service';
 import { JanelasHorarioService } from '../../services/janelas-horario/janelas-horario.service';
 import { FormatUtils } from '../../utils/format.utils';
-import { AgendamentoService } from '../../services/agendamentos/agendamento.service';
+import { AgendamentoService } from '../../services/agendamento/agendamento.service';
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
-import { Data } from '@angular/router';
+import type { BuscarRecomendacaoRequest, BuscarRecomendacaoResponse } from '../../types/sala.type';
+import type { AgendamentoAulaCriarRequest } from '../../types/agendamentoAula.type';
 
 @Component({
   selector: 'app-agenda',
@@ -40,12 +40,12 @@ export class Agenda implements OnInit{
 
   cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
   
-  requisicaoRecomendacao!: RecomendacaoRequest
+  requisicaoRecomendacao!: BuscarRecomendacaoRequest
   isloading: boolean = false;
   isRecomendacaoLoading: boolean = false
   submittedData!: AgendarForm;
   formFields: Field[] | undefined;
-  salasRecomendadas: SalasRecomendadas[] = []
+  salasRecomendadas: BuscarRecomendacaoResponse[] = []
   idSalaRecomendadaAtual!: number
 
   ngOnInit(): void {
@@ -61,7 +61,7 @@ export class Agenda implements OnInit{
         return forkJoin({
         disciplinas: this.professorService.getDisciplinasDoProfessor(userId),
         cursos: this.professorService.getCursosDoProfessor(userId),
-        tipoSalas: this.tiposSalaService.getTiposSalas(),
+        tipoSalas: this.tiposSalaService.getTiposSala(),
         recursos: this.recursosService.getRecursos(),
         janelasHorario: this.janelasHorarioService.getJanelasHorario()
       });
@@ -69,7 +69,7 @@ export class Agenda implements OnInit{
     ).subscribe({
       next: ({disciplinas, cursos, tipoSalas, recursos, janelasHorario}) => {
         const disciplinaOptions = disciplinas.map(d => ({ label: d.disciplinaNome, value: d.disciplinaId }));
-        const cursoOptions = cursos.map(c => ({ label: c.nome, value: c.idCurso }));
+        const cursoOptions = cursos.map(c => ({ label: c.cursoNome, value: c.cursoId }));
         const tiposSalaOptions = tipoSalas.map(ts => ({ label: ts.tipoSalaNome, value: ts.tipoSalaId }));
         
         const recursoOptions = recursos.map(r => ({label: r.nome, value: r.id}))
@@ -77,7 +77,7 @@ export class Agenda implements OnInit{
           const hi = FormatUtils.formatHour(jh.horaInicio);
           const hf = FormatUtils.formatHour(jh.horaFim);
           return(
-            {label: `${hi}-${hf}`, value: jh.id}
+            {label: `${hi}-${hf}`, value: jh.janelasHorarioId}
           )
         })
         this.isloading = false;
@@ -218,17 +218,16 @@ agendarAula() {
     filter(Boolean),
     take(1),
     switchMap(userId => {
-      const corpoCriarAgendamento: CriarAgendamento = {
+      const corpoCriarAgendamento: AgendamentoAulaCriarRequest = {
         usuarioId: userId,
         salaId: Number(this.idSalaRecomendadaAtual),
         disciplinaId: Number(this.submittedData.disciplinaId),
-        dataInicio: this.submittedData.data,
-        dataFim: this.submittedData.data,
+        data: this.submittedData.data,
         janelasHorarioId: this.submittedData.janelaHorarioId,
-        tipo: 'Aula',
-        diaDaSemana: 'Segunda' 
+        isEvento: false,
+        quantidade: Number(this.submittedData.qtdAulas)
       };
-      return this.agendamentoService.criarAgendamento(corpoCriarAgendamento);
+      return this.agendamentoService.criarAgendamentoAula(corpoCriarAgendamento);
     })
   ).subscribe({
     next: (_) => {

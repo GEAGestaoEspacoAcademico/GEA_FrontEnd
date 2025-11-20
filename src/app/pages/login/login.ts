@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import type { OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthActions } from '../../store/auth/auth.actions';
-import type { UserCredencials } from '../../types/auth.type';
+import type { AuthLoginRequest } from '../../types/authLogin.type';
 import { Store } from '@ngrx/store';
 import type { Observable } from 'rxjs';
 import { selectAuthError, selectAuthIsLoading } from '../../store/auth/auth.selectors';
@@ -43,12 +43,12 @@ export class Login implements OnInit{
       return;
     }
 
-    const userCredencials: UserCredencials = {
+    const AuthLoginRequest: AuthLoginRequest = {
       usuarioLogin: username,
       usuarioSenha: password
     }
     
-    this.store.dispatch(AuthActions.login({ userCredencials }));
+    this.store.dispatch(AuthActions.login({ AuthLoginRequest }));
   }
 
 

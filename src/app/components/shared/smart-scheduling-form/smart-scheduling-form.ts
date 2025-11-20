@@ -8,8 +8,9 @@ import { CursoService } from '../../../services/curso/curso.service';
 import type { Curso } from '../../../models/curso.model';
 import type { Sala } from '../../../models/sala.model';
 import type { Disciplina } from '../../../models/disciplina.model';
-import { SalaService } from '../../../services/salas/sala.service';
+
 import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
+import { SalaService } from '../../../services/sala/sala.service';
 
 @Component({
   selector: 'app-smart-scheduling-form',
@@ -170,7 +171,7 @@ export class SmartSchedulingForm implements OnInit {
     // 1. Garante que a data está no formato correto (AAAA-MM-DD)
     const dataString = date.toISOString().substring(0, 10);
 
-    this.serviceHorario.getHorariosDisponiveisPorData(dataString).subscribe({
+    this.serviceHorario.getJanelaHorarioPorData(dataString).subscribe({
       next: (janelas: JanelaHorario[]) => {
         // 2. Mapeia o retorno da API para o formato de string esperado (ex: '07:40 - 9:20')
         this.horarios = janelas.map(janela => {

@@ -24,5 +24,10 @@ export const selectAgendamentoError = createSelector(
 
 export const selectAulaById = (id: number) => createSelector(
   selectTodasOsAgendamentos,
-  (agendamentos) => agendamentos.find(agendamento => agendamento.id === id)
+  (agendamentos) => agendamentos.find(agendamento => agendamento.agendamentoAulaId === id)
+);
+
+export const selectSelectedAgendamento = createSelector(
+  selectAgendamentoState,
+  (state) => state.selectedAgendamento
 );

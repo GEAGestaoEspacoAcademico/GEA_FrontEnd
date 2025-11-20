@@ -46,11 +46,11 @@
                     <p class="text-sm text-gray-500 col-span-2">Nenhum horário disponível para seleção.</p>
                     } @else {
 
-                    @for (janela of horarios(); track janela.id; let i = $index) {
+                    @for (janela of horarios(); track janela.janelasHorarioId; let i = $index) {
                     <div class="flex items-center">
-                        <input [formControlName]="i" [id]="'horario-' + janela.id" type="checkbox"
+                        <input [formControlName]="i" [id]="'horario-' + janela.janelasHorarioId" type="checkbox"
                             class="h-4 w-4 text-red-600 border-gray-300 rounded focus:ring-red-500">
-                        <label [for]="'horario-' + janela.id" class="ml-3 text-sm font-medium text-gray-700">
+                        <label [for]="'horario-' + janela.janelasHorarioId" class="ml-3 text-sm font-medium text-gray-700">
                             {{ formatTime(janela.horaInicio, janela.horaFim) }}
                         </label>
                     </div>
