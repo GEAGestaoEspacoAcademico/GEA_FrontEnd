@@ -67,6 +67,9 @@ import { SpaceManagement } from './pages/space-management/space-management';
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
+import { SalaForm } from './components/secretaria/sala-form/sala-form';
+import { EspacosTable } from './components/secretaria/espacos-table/espacos-table';
+import { EditarEspacoModal } from './components/modals/editar-espaco-modal/editar-espaco-modal';
 
 
 @NgModule({
@@ -104,7 +107,10 @@ import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome
     SpaceManagementTable,
     SpaceRegistrationForm,
     Home,
-    Secretariahome
+    Secretariahome,
+    SalaForm,
+    EspacosTable,
+    EditarEspacoModal,
   ],
   imports: [
     BrowserModule,
