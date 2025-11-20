@@ -30,7 +30,7 @@ export class SmartSchedulingForm implements OnInit {
   horariosDisponiveisInicio: string[] = [];
   horariosDisponiveisFim: string[] = [];
 
-  // 💡 NOVO: Setter para detectar mudanças na data e chamar o carregamento dos horários
+  //Setter para detectar mudanças na data e chamar o carregamento dos horários
   @Input()
   set singleDate(date: Date | null) {
     this._singleDate = date;
@@ -41,7 +41,6 @@ export class SmartSchedulingForm implements OnInit {
       if (this.aulaForm || this.eventoForm) { // Verifica os dois forms se necessário
         this.horarios = [];
 
-        // 🛑 ESSENCIAL: Limpar as listas de Início e Fim quando a data é removida/nula
         this.horariosDisponiveisInicio = [];
         this.horariosDisponiveisFim = [];
 
@@ -142,7 +141,6 @@ export class SmartSchedulingForm implements OnInit {
 
     const config = this.eventoForm.value;
 
-    // 🛑 CORREÇÃO: Remove a iteração (forEach) e adiciona a configuração apenas para a data selecionada.
     // Isso simula o comportamento de "adicionar à lista de agendamentos" para a data atual.
     this.eventBatch.push({
       date: this.singleDate, // Usa a data única recebida pelo Input
@@ -190,7 +188,7 @@ export class SmartSchedulingForm implements OnInit {
 
       },
       error: (err) => {
-        // ... (restante do código de erro)
+        this.listaHorarios = [];
       }
     });
   }
@@ -201,7 +199,6 @@ export class SmartSchedulingForm implements OnInit {
         this.cursos = cursos;
       },
       error: (err) => {
-        console.error("Erro ao buscar cursos", err);
         this.cursos = [];
       }
     });
@@ -213,7 +210,6 @@ export class SmartSchedulingForm implements OnInit {
         this.disciplinas = disciplinas;
       },
       error: (err) => {
-        console.error("Erro ao buscar disciplinas", err);
         this.disciplinas = [];
       }
     });
@@ -225,7 +221,6 @@ export class SmartSchedulingForm implements OnInit {
         this.salas = salas;
       },
       error: (err) => {
-        console.error("Erro ao buscar salas", err);
         this.salas = [];
       }
     });
