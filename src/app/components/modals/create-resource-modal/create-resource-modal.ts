@@ -16,7 +16,7 @@ export class CreateResourceModal {
   modalTemplate!: TemplateRef<CreateResourceModal>;
 
   @Output() create = new EventEmitter<{ type: string; name: string }>();
-
+  private currentType!: 'EQUIPAMENTO' | 'SOFTWARE';
   modalTitle!: string;
   inputLabel!: string;
   buttonText!: string;
@@ -25,12 +25,14 @@ export class CreateResourceModal {
     name: new FormControl('', Validators.required),
   });
 
-  open(type: string): void {
+  public open(type: 'EQUIPAMENTO' | 'SOFTWARE'): void {
+    this.currentType = type;
+
     if (type === 'EQUIPAMENTO') {
       this.modalTitle = 'Novo Equipamento';
       this.inputLabel = 'Escreva o Nome do Equipamento';
       this.buttonText = 'Criar Equipamento';
-    } else {
+    } else if (type === 'SOFTWARE') {
       this.modalTitle = 'Novo Software';
       this.inputLabel = 'Escreva o Nome do Software';
       this.buttonText = 'Criar Software';
@@ -40,5 +42,14 @@ export class CreateResourceModal {
       centered: true,
       windowClass: 'custom-modal',
     });
+  }
+
+  onSubmit() {
+    this.create.emit({
+      type: this.currentType,
+      name: this.novoItem.get('name')?.value ?? '',
+    });
+    this.serviceModal.dismissAll();
+    this.novoItem.reset();
   }
 }
