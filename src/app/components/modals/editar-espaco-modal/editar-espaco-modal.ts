@@ -3,30 +3,7 @@ import { Component, EventEmitter, inject, Output, ViewChild } from '@angular/cor
 import type { FormArray, FormGroup} from '@angular/forms';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-
-export interface Disciplina {
-  id?: number;
-  nome: string;
-}
-
-export interface Espaco {
-  id: number;
-  nome: string;
-  piso?: string;
-  tipoDeEspaco?: string;
-  disciplinas?: Disciplina[];
-  indisponivel?: boolean;
-}
-
-/** Payload emitido ao salvar (pode conter id e valores atualizados) */
-export interface EspacoEditPayload {
-  id: number;
-  nome: string;
-  piso?: string;
-  tipoDeEspaco?: string;
-  disciplinas: Disciplina[];
-  indisponivel?: boolean;
-}
+import type { Disciplina, Espaco, EspacoEditPayload } from '../../../types/edita-espacos';
 
 @Component({
   selector: 'app-editar-espaco-modal',
@@ -38,9 +15,8 @@ export class EditarEspacoModal {
   private modalService = inject(NgbModal);
   private fb = inject(FormBuilder);
 
-  @Output() edit = new EventEmitter<EspacoEditPayload>();
-  // eslint-disable-next-line @angular-eslint/no-output-native
-  @Output() cancel = new EventEmitter<void>();
+  @Output() clickEdit = new EventEmitter<EspacoEditPayload>();
+  @Output() clickCancel = new EventEmitter<void>();
 
   @ViewChild('editarEspacoModalTemplate') modalTemplate!: TemplateRef<any>;
 
@@ -138,14 +114,14 @@ export class EditarEspacoModal {
       indisponivel: !!this.form.get('indisponivel')!.value,
     };
 
-    this.edit.emit(payload);
+    this.clickEdit.emit(payload);
     this.modalService.dismissAll();
     this.editing = false;
   }
 
   public onModalClose(): void {
     this.modalService.dismissAll();
-    this.cancel.emit();
+    this.clickCancel.emit();
     this.editing = false;
   }
 }

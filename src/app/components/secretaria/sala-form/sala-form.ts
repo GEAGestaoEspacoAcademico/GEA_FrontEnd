@@ -15,9 +15,8 @@ import type { AddItemModalData } from '../../../types/additemmodal';
 })
 export class SalaForm implements OnInit {
   @Input() isLoading: boolean = false;
-  @Output() save = new EventEmitter<FormGroup>();
-  // eslint-disable-next-line @angular-eslint/no-output-native
-  @Output() cancel = new EventEmitter<void>();
+  @Output() clickSave = new EventEmitter<FormGroup>();
+  @Output() clickCancel = new EventEmitter<void>();
 
   @ViewChild('addItemModal') addItemModal!: AddItemModal;
 
@@ -74,10 +73,10 @@ export class SalaForm implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-    this.save.emit(this.form);
+    this.clickSave.emit(this.form);
   }
 
   onCancel() {
-    this.cancel.emit();
+    this.clickCancel.emit();
   }
 }
