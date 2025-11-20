@@ -1,3 +1,4 @@
+import { EsqueciSenha } from './pages/esqueci-senha/esqueci-senha';
 import { NgModule } from '@angular/core';
 import type { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
@@ -52,8 +53,8 @@ const routes: Routes = [
     path: '',
     component: AuthLayout,
     children: [
-      { path: 'login', component: Login }
-      // {}
+      { path: 'login', component: Login },
+      { path: 'esqueci-senha', component: EsqueciSenha },
     ],
   },
 ];
