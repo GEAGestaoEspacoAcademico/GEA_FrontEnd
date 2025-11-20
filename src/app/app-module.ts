@@ -70,6 +70,7 @@ import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome
 import { SalaForm } from './components/secretaria/sala-form/sala-form';
 import { EspacosTable } from './components/secretaria/espacos-table/espacos-table';
 import { EditarEspacoModal } from './components/modals/editar-espaco-modal/editar-espaco-modal';
+import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 
 
 @NgModule({
@@ -111,6 +112,7 @@ import { EditarEspacoModal } from './components/modals/editar-espaco-modal/edita
     SalaForm,
     EspacosTable,
     EditarEspacoModal,
+    ListaEspacos,
   ],
   imports: [
     BrowserModule,

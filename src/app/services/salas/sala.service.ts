@@ -33,8 +33,18 @@ export class SalaService {
     return this.http.post<Recomendacoes[]>(`${this.baseUrl}/recomendacoes`, data)
   }
 
-  deleteSala(id: number) {
-    return this.http.delete(`${this.baseUrl}/${id}`);
+  updateSala(salaId: number, sala: Sala) {
+    return this.http.put(`${this.baseUrl}/${salaId}`, sala);
+  }
+
+  deleteSala(salaId: number) {
+    return this.http.delete(`${this.baseUrl}/${salaId}`);
+  }
+
+  public getSalasComuns(): Observable<Sala[]> {
+    return this.http.get<Sala[]>(this.baseUrl).pipe(
+      map((salas: Sala[]) => salas.filter(s => !this.isLaboratorio(s)))
+    );
   }
 
   public getLaboratorios(): Observable<Sala[]> {
@@ -46,7 +56,7 @@ export class SalaService {
  
   private isLaboratorio(s: Sala): boolean {
     const textFields: string[] = [
-      s.salaNome ?? '',
+      s.tipoSala ?? '',
     ];
  
     const combined = textFields.join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();

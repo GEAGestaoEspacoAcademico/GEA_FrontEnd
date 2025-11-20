@@ -11,7 +11,7 @@
 
         <div class="col-left">
           <label for="" class="label-small">Nome:</label>
-          <input class="input-small" formControlName="nome" />
+          <input class="input-small" formControlName="salaNome" />
 
           <label for="" class="label-small mt-12">Piso:</label>
           <input class="input-small short-input" formControlName="piso" />
@@ -19,22 +19,29 @@
 
         <div class="col-right">
           <label for="" class="label-small">Tipo de Espaço:</label>
-          <input class="input-small" formControlName="tipoDeEspaco" />
+          <input class="input-small" formControlName="tipoSala" />
 
           <label for="" class="label-small mt-8">Disciplinas</label>
 
           <div class="disciplina-input-wrap">
-            <input #newDisc placeholder="Nova Disciplina" class="input-discipline" [disabled]="!editing" />
+            <input #newDisc 
+                    placeholder="Nova Disciplina" 
+                    class="input-discipline" 
+                    [disabled]="form.disabled" />
+
             <button class="add-disc-btn" type="button"
-                    (click)="addDisciplinaByName(newDisc.value); newDisc.value='';"
-                    [disabled]="!editing">+</button>
+                    (click)="addMateriaByName(newDisc.value); newDisc.value='';"
+                    [disabled]="form.disabled">+</button>
           </div>
 
           <div class="disciplina-box">
-            @for (d of disciplinasArray.controls; track $index) {
+            @for (d of materiasArray.controls; track $index) {
               <div class="disciplina-item">
-                <span>{{ (d.value && (d.value.nome || d.value)) || d.value }}</span>
-                <button class="chip-remove" type="button" (click)="removeDisciplina($index)">✕</button>
+                <span>{{ d.value }}</span>
+                <button class="chip-remove" 
+                        type="button" 
+                        (click)="removeMateria($index)"
+                        [disabled]="form.disabled">✕</button>
               </div>
             }
           </div>
@@ -44,13 +51,17 @@
 
       <div class="indisponivel-row">
         <div class="red-dot"></div>
-        <span class="ind-text">Sala Indisponível</span>
+        <span class="ind-text">
+          Sala Indisponível
+        </span>
       </div>
     </div>
 
     <div class="footer-modal">
-      <button class="btn-edit" type="button" (click)="editing ? onModalSave() : onModalEdit()">
-        {{ editing ? 'Salvar' : 'Editar' }}
+      <button class="btn-edit" 
+              type="button" 
+              (click)="form.disabled ? onModalEdit() : onModalSave()">
+        {{ form.disabled ? 'Editar' : 'Salvar' }}
       </button>
 
       <button class="btn-cancel" type="button" (click)="onModalClose()">Cancelar</button>
