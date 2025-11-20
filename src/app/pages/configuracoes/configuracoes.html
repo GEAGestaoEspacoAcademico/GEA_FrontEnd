@@ -6,7 +6,7 @@
     <div class="d-flex flex-column">
       <div class="d-flex flex-row">
         <div class="line mt-3"></div>
-        <a class="subtitle p-1" routerLink="/agenda">Alterar Senha</a>
+        <a class="subtitle p-1" routerLink="/esqueci-senha">Alterar Senha</a>
       </div>
       <div class="d-flex flex-row">
         <div class="line mt-3"></div>
@@ -33,7 +33,7 @@
       <dd>
         <ul>
           @for (disciplina of disciplinas; track $index) {
-            <li>{{ disciplina.nomeDisciplina }}</li>
+            <li>{{ disciplina.disciplinaNome }}</li>
           }
         </ul>
       </dd>
@@ -42,8 +42,8 @@
         <ul>
           @for (disciplina of disciplinas; track $index) {
             <li>
-              {{ disciplina.nomeCurso }} - {{ disciplina.semestre }} -
-              {{ disciplina.nomeDisciplina }}
+              {{ disciplina.cursoNome }} - {{ disciplina.disciplinaSemestre }} -
+              {{ disciplina.disciplinaNome }}
             </li>
           }
         </ul>

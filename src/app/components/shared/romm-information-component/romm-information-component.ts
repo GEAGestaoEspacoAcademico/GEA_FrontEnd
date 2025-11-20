@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import type { BuscarRecomendacaoResponse } from '../../../types/sala.type';
 
-import type { SalasRecomendadas } from '../../../types/recomendacao';
 
 /**
  * Componente de apresentação (dumb component) responsável por
@@ -23,7 +23,7 @@ export class RommInformationComponent {
    * Os dados da sala/laboratório (RoomData) que serão
    * exibidos neste componente.
    */
-  @Input() labData!: SalasRecomendadas;
+  @Input() labData!: BuscarRecomendacaoResponse;
 
   /**
    * Evento emitido quando o usuário executa a ação de confirmação
@@ -36,6 +36,6 @@ export class RommInformationComponent {
    * que dispara o evento 'ConfirmSchedule' com o ID da sala.
    */
   public execute(): void {
-    this.ConfirmSchedule.emit(this.labData.id);
+    this.ConfirmSchedule.emit(this.labData.salaId);
   }
 }

@@ -201,3 +201,24 @@
   clip: rect(0, 0, 0, 0);
   border: 0;
 }
+
+.add-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  background-color: #b71c1c;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.4rem 1rem;
+  margin-top: 0.6rem;
+  cursor: pointer;
+  transition: 0.2s;
+  line-height: normal;
+}
+
+.add-btn:hover {
+  background-color: #8a1313;
+}
