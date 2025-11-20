@@ -1,4 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
 import { CreateResourceModal } from './create-resource-modal';
 
@@ -8,9 +9,8 @@ describe('CreateResourceModal', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CreateResourceModal]
-    })
-    .compileComponents();
+      declarations: [CreateResourceModal],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CreateResourceModal);
     component = fixture.componentInstance;
