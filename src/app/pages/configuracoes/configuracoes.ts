@@ -1,9 +1,8 @@
-import type { OnInit} from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
-import type { Teacher } from '../../models/teacher.model';
 import { AuthActions } from '../../store/auth/auth.actions';
 import { Store } from '@ngrx/store';
-import type { User } from '../../models/user.model';
+import type { Usuario } from '../../models/usuario.model';
 import { filter, map, switchMap, type Observable } from 'rxjs';
 import { selectCurrentUser } from '../../store/auth/auth.selectors';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
@@ -17,22 +16,22 @@ import type { Disciplina } from '../../models/disciplina.model';
   templateUrl: './configuracoes.html',
   styleUrl: './configuracoes.css',
 })
-export class Configuracoes implements OnInit{
+export class Configuracoes implements OnInit {
   private store = inject(Store);
   private notificationService = inject(SnackBarService);
-  private professorService = inject(ProfessorService)
-  
-  user$: Observable<User | null> = this.store.select(selectCurrentUser);
+  private professorService = inject(ProfessorService);
+
+  user$: Observable<Usuario | null> = this.store.select(selectCurrentUser);
   disciplinas$!: Observable<Disciplina[]>;
 
   ngOnInit(): void {
     this.disciplinas$ = this.user$.pipe(
-      filter(professor => professor !== null),
-      map(professor => professor.usuarioId),
-      switchMap(professorId => {
-        return this.professorService.getDisciplinasDoProfessor(professorId)
-      })
-    )
+      filter((professor) => professor !== null),
+      map((professor) => professor.usuarioId),
+      switchMap((professorId) => {
+        return this.professorService.getDisciplinasDoProfessor(professorId);
+      }),
+    );
   }
 
   @ViewChild('ConfirmationModal')

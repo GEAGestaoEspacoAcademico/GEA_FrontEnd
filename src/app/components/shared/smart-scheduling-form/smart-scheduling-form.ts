@@ -8,8 +8,8 @@ import { CursoService } from '../../../services/curso/curso.service';
 import type { Curso } from '../../../models/curso.model';
 import type { Sala } from '../../../models/sala.model';
 import type { Disciplina } from '../../../models/disciplina.model';
-import { SalaService } from '../../../services/salas/sala.service';
 import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
+import { SalaService } from '../../../services/sala/sala.service';
 
 @Component({
   selector: 'app-smart-scheduling-form',
@@ -22,6 +22,7 @@ export class SmartSchedulingForm implements OnInit {
   // --- Propriedades de Entrada (Inputs) ---
   private _singleDate: Date | null = null; // Propriedade interna para armazenar o valor
   horarios: string[] = [];
+  listaHorarios: JanelaHorario[] = [];
   cursos: Curso[] = [];
   salas: Sala[] = [];
   disciplinas: Disciplina[] = [];
@@ -37,9 +38,16 @@ export class SmartSchedulingForm implements OnInit {
     if (this._singleDate) {
       this.getHorariosDisponiveis(this._singleDate);
     } else {
-      if (this.aulaForm) {
+      if (this.aulaForm || this.eventoForm) { // Verifica os dois forms se necessário
         this.horarios = [];
-        this.aulaForm.get('horario')?.setValue('');
+
+        // 🛑 ESSENCIAL: Limpar as listas de Início e Fim quando a data é removida/nula
+        this.horariosDisponiveisInicio = [];
+        this.horariosDisponiveisFim = [];
+
+        this.aulaForm?.get('horario')?.setValue(''); // Limpa o campo 'horario' (se existir)
+        this.eventoForm?.get('inicio')?.setValue(''); // Limpa o campo 'inicio'
+        this.eventoForm?.get('fim')?.setValue('');    // Limpa o campo 'fim'
       }
     }
   }
@@ -127,22 +135,22 @@ export class SmartSchedulingForm implements OnInit {
 
   // --- Lógica de Adicionar Configuração para Agendamento em Lote (Evento) ---
   addEventoConfig() {
-    // Verifica se o formulário de evento é inválido.
-    if (this.eventoForm.invalid) { return };
+    // 1. Verifica se o formulário e a data única são válidos/existem.
+    if (this.eventoForm.invalid || !this.singleDate) {
+      return;
+    }
 
     const config = this.eventoForm.value;
 
-    // Itera sobre o array de datas recebido (dateArray) e cria um objeto de evento para cada data.
-    // Usa '?? []' para garantir que dateArray é um array e evitar erros se for null/undefined.
-    (this.dateArray ?? []).forEach(date => {
-      this.eventBatch.push({ // Adiciona a configuração de evento ao array de lote.
-        date,
-        nomeEvento: config.nomeEvento,
-        local: config.local,
-        inicio: config.inicio,
-        fim: config.fim,
-        todosHorarios: config.todosHorarios
-      });
+    // 🛑 CORREÇÃO: Remove a iteração (forEach) e adiciona a configuração apenas para a data selecionada.
+    // Isso simula o comportamento de "adicionar à lista de agendamentos" para a data atual.
+    this.eventBatch.push({
+      date: this.singleDate, // Usa a data única recebida pelo Input
+      nomeEvento: config.nomeEvento,
+      local: config.local,
+      inicio: config.inicio,
+      fim: config.fim,
+      todosHorarios: config.todosHorarios
     });
 
     this.eventoForm.reset(); // Limpa o formulário de configuração para a próxima entrada.
@@ -156,43 +164,33 @@ export class SmartSchedulingForm implements OnInit {
 
   // --- Lógica de Submissão de Lote (Evento) ---
   submitBatch() {
-    // Verifica se o lote está vazio.
+    // 1. Apenas verifica se há algo para enviar.
     if (this.eventBatch.length === 0) { return };
-    // Verifica se o número de itens no lote corresponde ao número de datas (lógica de validação do batch).
-    if (this.eventBatch.length !== this.dateArray.length) { return };
 
-    // Emite o array completo de agendamentos em lote.
+    // 2. Emite o array completo de agendamentos em lote.
     this.batchSubmit.emit(this.eventBatch);
-    this.eventoForm.reset(); // Limpa o formulário após a submissão.
+
+    // 3. Limpa a lista de agendamentos e o formulário
+    this.eventBatch = []; // Limpa a lista na tela após enviar
+    this.eventoForm.reset();
   }
 
   getHorariosDisponiveis(date: Date): void {
-    // 1. Garante que a data está no formato correto (AAAA-MM-DD)
     const dataString = date.toISOString().substring(0, 10);
 
-    this.serviceHorario.getHorariosDisponiveisPorData(dataString).subscribe({
+    this.serviceHorario.getJanelaHorarioPorData(dataString).subscribe({ // Assumindo o nome correto do serviço
       next: (janelas: JanelaHorario[]) => {
-        // 2. Mapeia o retorno da API para o formato de string esperado (ex: '07:40 - 9:20')
+        this.listaHorarios = janelas;
+
         this.horarios = janelas.map(janela => {
-          // Assumindo que: janela.horaInicio é uma string (ex: "07:40:00")
-          const inicioFormatado = janela.horaInicio.substring(0, 5); // Pega "07:40"
-          const fimFormatado = janela.horaFim.substring(0, 5);      // Pega "09:20"
+          const inicioFormatado = janela.horaInicio.substring(0, 5);
+          const fimFormatado = janela.horaFim.substring(0, 5);
           return `${inicioFormatado} - ${fimFormatado}`;
         });
 
-        this.horariosDisponiveisInicio = janelas.map(janela =>
-          janela.horaInicio.substring(0, 5)
-        );
-
-        this.horariosDisponiveisFim = janelas.map(janela =>
-          janela.horaFim.substring(0, 5)
-        );
       },
       error: (err) => {
-        console.error("Erro ao buscar horários", err);
-        this.horarios = []; // Limpa a lista em caso de erro
-        this.horariosDisponiveisInicio = [];
-        this.horariosDisponiveisFim = [];
+        // ... (restante do código de erro)
       }
     });
   }

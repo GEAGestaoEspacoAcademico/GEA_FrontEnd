@@ -6,7 +6,7 @@ import { DomSanitizer } from '@angular/platform-browser';
  * Serviço responsável pelo gerenciamento de icones da aplicação
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class IconRegistryService {
   private iconPath = 'assets/icons/';
@@ -29,7 +29,7 @@ export class IconRegistryService {
     this.addIcon('menu', 'menu.svg');
     this.addIcon('minimize', 'minimize.svg');
     this.addIcon('notification', 'notification.svg');
-    this.addIcon('notification-fill', 'notification-fill.svg')
+    this.addIcon('notification-fill', 'notification-fill.svg');
     this.addIcon('settings', 'settings.svg');
     this.addIcon('user', 'user.svg');
     this.addIcon('logout', 'logout.svg');
@@ -39,7 +39,14 @@ export class IconRegistryService {
     this.addIcon('add-circle', 'add-circle.svg');
     this.addIcon('computer', 'computer.svg');
     this.addIcon('home', 'home.svg');
-    this.addIcon('tada', 'tada.svg')
+    this.addIcon('tada', 'tada.svg');
+    this.addIcon('pencil', 'pencil.svg');
+    this.addIcon('trash', 'trash.svg');
+    this.addIcon('filter', 'funnel.svg');
+    this.addIcon('edit', 'pencil.svg');
+    this.addIcon('delete', 'trash.svg');
+    this.addIcon('search', 'search.svg');
+    this.addIcon('feedback-email', 'feedback-email.svg');
   }
   /**
    * Insere um novo icone no projeto
@@ -49,7 +56,7 @@ export class IconRegistryService {
   private addIcon(iconName: string, fileName: string): void {
     this.matIconRegistry.addSvgIcon(
       iconName,
-      this.domSanitizer.bypassSecurityTrustResourceUrl(this.iconPath + fileName)
+      this.domSanitizer.bypassSecurityTrustResourceUrl(this.iconPath + fileName),
     );
   }
 }
