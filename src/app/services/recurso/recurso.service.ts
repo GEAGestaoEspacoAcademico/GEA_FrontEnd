@@ -2,8 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import type { Observable } from 'rxjs';
-import type { Recurso } from '../../models/recurso.model';
 import type { AtualizarRecursoRequest } from '../../types/recurso.type';
+import type { Recurso } from '../../models/Recurso.model';
 
 @Injectable({
   providedIn: 'root'
