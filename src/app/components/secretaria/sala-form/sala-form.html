@@ -91,15 +91,13 @@
         </div>
             <div class="form-buttons">
             <button type="submit"
-                    class="add-btn"
-                    [disabled]="form.invalid || isLoading">
+                    class="add-btn">
                 SALVAR
             </button>
 
                 <button type="button"
                         class="add-btn cancelar-btn"
-                        (click)="onCancel()"
-                        [disabled]="isLoading">
+                        (click)="onCancel()">
                     CANCELAR
                 </button>
             </div>
