@@ -28,7 +28,6 @@
           <th scope="col">Nome</th>
           <th scope="col">Piso</th>
           <th scope="col">Tipo de Espaço</th>
-          <th scope="col">Matérias</th>
           <th scope="col">Ações</th>
         </tr>
       </thead>
@@ -38,7 +37,6 @@
             <td>{{ sala.salaNome }}</td>
             <td>{{ sala.piso }}</td>
             <td>{{ sala.tipoSala }}</td>
-            <td>{{ (sala.materias ?? []).join(", ") }}</td>
             <td class="actions">
               <button
                 type="button"
