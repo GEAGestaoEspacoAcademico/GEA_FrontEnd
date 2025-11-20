@@ -1,7 +1,7 @@
 import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import type { Sala } from '../../models/sala.model';
-import { SalaService } from '../../services/salas/sala.service';
+import { SalaService } from '../../services/sala/sala.service';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 
 @Component({
