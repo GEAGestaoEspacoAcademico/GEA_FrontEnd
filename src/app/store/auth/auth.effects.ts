@@ -19,7 +19,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.login),
       exhaustMap(action =>
-        this.authService.loginUser(action.userCredencials).pipe(
+        this.authService.logarUsuario(action.AuthLoginRequest).pipe(
           map(user => AuthActions.loginSuccess({ user })),
           catchError((apiError: HttpErrorResponse) => {
             const errorMessage = apiError.error?.message || 'Credenciais inválidas.';
@@ -32,10 +32,10 @@ export class AuthEffects {
   loginSuccess$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthActions.loginSuccess),
-      tap((user) => {
-        if(user.user.usuarioCargo === TIPOUSUARIO.AUXILIAR_DOCENTE){
+      tap((login) => {
+        if(login.user.usuarioCargo === TIPOUSUARIO.AUXILIAR_DOCENTE){
           this.router.navigate(['ad/home'])
-        }else if(user.user.usuarioCargo === TIPOUSUARIO.PROFESSOR){
+        }else if(login.user.usuarioCargo === TIPOUSUARIO.PROFESSOR){
           this.router.navigate(['/aulas']);
         }
       })

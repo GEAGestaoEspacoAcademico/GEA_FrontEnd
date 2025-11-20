@@ -51,7 +51,10 @@ const routes: Routes = [
   {
     path: '',
     component: AuthLayout,
-    children: [{ path: 'login', component: Login }],
+    children: [
+      { path: 'login', component: Login }
+      // {}
+    ],
   },
 ];
 
