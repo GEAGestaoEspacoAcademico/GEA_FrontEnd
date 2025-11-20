@@ -43,6 +43,7 @@ import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { EditarAula } from './pages/editar-aula/visualizar-aula';
 import { Login } from './pages/login/login';
 import { EsqueciSenha } from './pages/esqueci-senha/esqueci-senha';
+import { AgendamentoAula } from './pages/professor/agendamento-aula/agendamento-aula';
 
 // Shared Components
 import { DaySelector } from './components/shared/day-selector/day-selector';
@@ -106,7 +107,8 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
     SpaceRegistrationForm,
     Home,
     Secretariahome,
-    CreateResourceModal
+    CreateResourceModal,
+    AgendamentoAula,
   ],
   imports: [
     BrowserModule,
