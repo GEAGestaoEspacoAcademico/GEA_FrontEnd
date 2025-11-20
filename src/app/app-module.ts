@@ -67,6 +67,7 @@ import { SpaceManagement } from './pages/space-management/space-management';
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
+import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
 
 
 @NgModule({
@@ -104,7 +105,8 @@ import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome
     SpaceManagementTable,
     SpaceRegistrationForm,
     Home,
-    Secretariahome
+    Secretariahome,
+    CreateResourceModal
   ],
   imports: [
     BrowserModule,
