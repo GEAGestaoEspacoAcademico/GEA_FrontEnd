@@ -14,7 +14,7 @@
         <input type="text" id="inpNome" formControlName="nome" class="gea-input-field full-width"
           placeholder="Digite o nome completo">
         @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
-        <div class="mensagem-erro">O nome é obrigatório.</div>
+          <div class="mensagem-erro">O nome é obrigatório.</div>
         }
       </div>
 
@@ -23,7 +23,7 @@
         <input type="email" id="inpEmail" formControlName="email" class="gea-input-field full-width"
           placeholder="Digite o email">
         @if (form.get('email')?.invalid && form.get('email')?.touched) {
-        <div class="mensagem-erro">O email é obrigatório</div>
+          <div class="mensagem-erro">O email é obrigatório</div>
         }
       </div>
 
@@ -32,44 +32,51 @@
         <input type="text" id="inpRegistro" formControlName="registroProfessor" class="gea-input-field full-width"
           placeholder="Digite o Registro">
         @if (form.get('registroProfessor')?.invalid && form.get('registroProfessor')?.touched) {
-        <div class="mensagem-erro">O registro é obrigatório</div>
+          <div class="mensagem-erro">O registro é obrigatório</div>
         }
       </div>
 
-      <div class="campo-wrapper">
-        <label for="selCargo" class="section-title">Cargo</label>
-        <select id="selCargo" formControlName="cargoId" class="gea-input-field">
-          <option [ngValue]="null">Selecione o cargo</option>
-          <option [ngValue]="1">Coordenador de ADS</option>
-          <option [ngValue]="2">Coordenador de AMS</option>
-          <option [ngValue]="3">Coordenador de Meca</option>
-          <option [ngValue]="4">Coordenador de Eventos</option>
-          <option [ngValue]="5">Coordenador de GE</option>
-          <option [ngValue]="6">Coordenador de GTI</option>
-        </select>
-      </div>
-
-    </div> <div class="coluna-direita">
-
-      <h3 class="section-title">Disciplinas</h3>
-
-      <div class="disciplinas-box">
-        @if (listaDisciplinas.length === 0) {
-        <p class="texto-vazio captions">Nenhuma disciplina vinculada.</p>
-        }
-
-        @for (disc of listaDisciplinas; track disc.idDisciplina) {
-        <div class="chip-disciplina">
-          <span>{{ disc.nomeDisciplina }}</span> <button type="button" class="btn-remove">✕</button>
+      @if (isProfessorOuCoordenador) {
+        <div class="campo-wrapper">
+          <label for="selCargo" class="section-title">Cargo</label>
+          <select id="selCargo" formControlName="cargoId" class="gea-input-field">
+            <option [ngValue]="null">Selecione o cargo</option>
+            <option [ngValue]="1">Coordenador de ADS</option>
+            <option [ngValue]="2">Coordenador de AMS</option>
+            <option [ngValue]="3">Coordenador de Meca</option>
+            <option [ngValue]="4">Coordenador de Eventos</option>
+            <option [ngValue]="5">Coordenador de GE</option>
+            <option [ngValue]="6">Coordenador de GTI</option>
+          </select>
         </div>
-        }
-      </div>
-
-      <button type="button" class="gea-btn gea-btn-primary btn-add-full">
-        <span class="icone-mais">⊕</span> Adicionar Disciplina
-      </button>
+      }
 
     </div>
+
+    @if (isProfessorOuCoordenador) {
+      <div class="coluna-direita">
+
+        <h3 class="section-title">Disciplinas</h3>
+
+        <div class="disciplinas-box">
+          @if (listaDisciplinas.length === 0) {
+            <p class="texto-vazio captions">Nenhuma disciplina vinculada.</p>
+          }
+
+          @for (disc of listaDisciplinas; track disc.idDisciplina) {
+            <div class="chip-disciplina">
+              <span>{{ disc.nomeDisciplina }}</span> 
+              <button type="button" class="btn-remove">✕</button>
+            </div>
+          }
+        </div>
+
+        <button type="button" class="gea-btn gea-btn-primary btn-add-full">
+          <span class="icone-mais">⊕</span> Adicionar Disciplina
+        </button>
+
+      </div>
+    }
 
   </form>
 </div>

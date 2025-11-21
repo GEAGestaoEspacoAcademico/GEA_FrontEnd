@@ -26,16 +26,18 @@ export class EditProfessorModal {
   listaDisciplinas: Disciplina[] = [];
   listaCursos: CursoProfesor[] = [];
 
+  /* --- CONFIGURAÇÃO INICIAL DO FORMULÁRIO --- */
   constructor() {
     this.form = this.fb.group({
       professorId: [null],
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       registroProfessor: ['', Validators.required],
-      cargoId: [null, Validators.required],
+      cargoId: [null],
     });
   }
 
+  /* --- INICIALIZAÇÃO E VERIFICAÇÃO DE ROTA --- */
   ngOnInit(): void {
     let idParaBuscar = this.professorId;
 
@@ -47,10 +49,14 @@ export class EditProfessorModal {
     }
 
     if (idParaBuscar) {
+      this.professorId = idParaBuscar;
       this.buscarDadosProfessor(idParaBuscar);
+      this.carregarDisciplinas();
+      this.carregarCursos();
     }
   }
 
+  /* --- BUSCA DE DADOS DO PROFESSOR --- */
   buscarDadosProfessor(id: number) {
     this.professorService.getById(id).subscribe({
       next: (resposta) => {
@@ -67,6 +73,7 @@ export class EditProfessorModal {
     });
   }
 
+  /* --- SALVAR ALTERAÇÕES --- */
   salvar() {
     if (this.form.invalid) {
       this.snackbarService.showError('Preencha todos os campos obrigatórios!');
@@ -88,10 +95,12 @@ export class EditProfessorModal {
     });
   }
 
+  /* --- FECHAR MODAL --- */
   fecharModal() {
     this.fechar.emit(false);
   }
 
+  /* --- CARREGAMENTO DE DISCIPLINAS --- */
   carregarDisciplinas() {
     const id = this.professorId;
     if (id) {
@@ -103,6 +112,7 @@ export class EditProfessorModal {
     }
   }
 
+  /* --- CARREGAMENTO DE CURSOS --- */
   carregarCursos() {
     const id = this.professorId;
     if (id) {
@@ -115,8 +125,9 @@ export class EditProfessorModal {
     }
   }
 
+  /* --- VERIFICAÇÃO DE CARGO --- */
   get isProfessorOuCoordenador(): boolean {
-  const id = this.form.get('cargoId')?.value;
-  return id === 1 || id === 2; 
-}
+    const id = this.form.get('cargoId')?.value;
+    return id === 1 || id === 2;
+  }
 }
