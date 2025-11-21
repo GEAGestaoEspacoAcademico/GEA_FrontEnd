@@ -4,6 +4,8 @@ import type { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import ProfessorService from '../../../services/professor/professor.service';
+import type { Disciplina } from '../../../models/disciplina.model';
+import type { CursoProfesor } from '../../../types/curso';
 
 @Component({
   selector: 'app-edit-professor-modal',
@@ -21,7 +23,8 @@ export class EditProfessorModal {
   private professorService = inject(ProfessorService);
   private route = inject(ActivatedRoute);
   private snackbarService = inject(SnackBarService);
-
+  listaDisciplinas: Disciplina[] = [];
+  listaCursos: CursoProfesor[] = [];
 
   constructor() {
     this.form = this.fb.group({
@@ -29,13 +32,12 @@ export class EditProfessorModal {
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       registroProfessor: ['', Validators.required],
-      cargoId: [null, Validators.required]
+      cargoId: [null, Validators.required],
     });
   }
 
   ngOnInit(): void {
-
-    let idParaBuscar = this.professorId
+    let idParaBuscar = this.professorId;
 
     if (!idParaBuscar) {
       const idDaRota = this.route.snapshot.paramMap.get('id');
@@ -53,14 +55,16 @@ export class EditProfessorModal {
     this.professorService.getById(id).subscribe({
       next: (resposta) => {
         this.form.patchValue({
-        professorId: resposta.id,
-        nome: resposta.nome,
-        email: resposta.email,
-        registroProfessor: resposta.registro,
-        cargoId: resposta.cargoId
-      });
-      }, error: e => this.snackbarService.showError(e.message || 'Erro ao buscar detalhes do funcionario')
-    })
+          professorId: resposta.id,
+          nome: resposta.nome,
+          email: resposta.email,
+          registroProfessor: resposta.registro,
+          cargoId: resposta.cargoId,
+        });
+      },
+      error: (e) =>
+        this.snackbarService.showError(e.message || 'Erro ao buscar detalhes do funcionario'),
+    });
   }
 
   salvar() {
@@ -75,17 +79,44 @@ export class EditProfessorModal {
     this.professorService.editarProfessor(id, dadosParaEnviar).subscribe({
       next: () => {
         this.snackbarService.showSuccess('Professor atualizado com sucesso!');
-        this.fechar.emit(true); 
+        this.fechar.emit(true);
       },
       error: (err) => {
         console.error(err);
         this.snackbarService.showError('Erro ao atualizar professor.');
-      }
+      },
     });
   }
 
   fecharModal() {
     this.fechar.emit(false);
   }
-  
+
+  carregarDisciplinas() {
+    const id = this.professorId;
+    if (id) {
+      this.professorService.getDisciplinasDoProfessor(id).subscribe({
+        next: (disciplinas) => {
+          this.listaDisciplinas = disciplinas;
+        },
+      });
+    }
+  }
+
+  carregarCursos() {
+    const id = this.professorId;
+    if (id) {
+      this.professorService.getCursosDoProfessor(id).subscribe({
+        next: (cursos: CursoProfesor[]) => {
+          this.listaCursos = cursos;
+        },
+        error: (err) => console.error(err),
+      });
+    }
+  }
+
+  get isProfessorOuCoordenador(): boolean {
+  const id = this.form.get('cargoId')?.value;
+  return id === 1 || id === 2; 
+}
 }
