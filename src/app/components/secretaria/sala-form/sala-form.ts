@@ -3,7 +3,7 @@ import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angu
 import type { FormArray} from '@angular/forms';
 import { FormBuilder, Validators, type FormGroup } from '@angular/forms';
 import type { AddItemModal } from '../../shared/add-item-modal/add-item-modal';
-import type { TiposSalas } from '../../../models/tipoSala.mode';
+import type { TipoSala } from '../../../models/tipoSala.mode';
 import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
 import type { AddItemModalData } from '../../../types/additemmodal';
 
@@ -20,7 +20,7 @@ export class SalaForm implements OnInit {
 
   @ViewChild('addItemModal') addItemModal!: AddItemModal;
 
-  tiposSalas: TiposSalas[] = [];
+  tiposSalas: TipoSala[] = [];
 
   private fb = inject(FormBuilder);
   private tipoSalaService = inject(TipoSalaService);
@@ -35,7 +35,7 @@ export class SalaForm implements OnInit {
   });
 
   ngOnInit(): void {
-    this.tipoSalaService.getTiposSalas().subscribe({
+    this.tipoSalaService.getTiposSala().subscribe({
       next: tipos => this.tiposSalas = tipos,
       error: err => console.error('Erro ao carregar tipos de sala', err)
     });
