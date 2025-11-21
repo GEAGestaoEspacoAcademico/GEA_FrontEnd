@@ -23,6 +23,7 @@ export class SpaceRegistrationForm implements OnInit {
   
   @ViewChild('addItemModal') addItemModal!: AddItemModal;
   @Output() formSubmit = new EventEmitter<CriarSala>();
+  
 
   equipamentos: Equipamento[] = [];
   softwares: Software[] = [];
@@ -51,19 +52,22 @@ export class SpaceRegistrationForm implements OnInit {
     });
   }
 
-  @Input() set initialData(data: CriarSala) {
-    if (data) {
-      this.form.patchValue({
-        salaNome: data.salaNome,
-        piso: data.piso,
-        capacidade: data.capacidade,
-        tipoSala: data.tipoSala,
-        observacoes: data.observacoes
-      });
-      this.equipamentos = []; 
-      this.softwares = [];
-    }
+
+  
+  @Input() set initialData(data: CriarSala | null) {
+  if (data) {
+    this.form.patchValue({
+      salaNome: data.salaNome,
+      piso: data.piso,
+      capacidade: data.capacidade,
+      tipoSala: data.tipoSala,
+      observacoes: data.observacoes
+    });
+
+    this.equipamentos = [];
+    this.softwares = [];
   }
+}
 
   onAddItem(tipo: 'equipamento' | 'software') {
     this.currentItemType = tipo;

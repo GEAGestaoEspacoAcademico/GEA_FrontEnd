@@ -5,6 +5,7 @@ import type { Sala } from '../../models/sala.model';
 import { environment } from '../../../environments/environment';
 import { FormatUtils } from '../../utils/format.utils';
 import type { RecomendacaoRequest, Recomendacoes } from '../../types/recomendacao';
+import type { CriarSala } from '../../types/criarsala';
 /**
  * Serviço responsável pelo CRUD e gerenciamento de salas
  */
@@ -35,5 +36,13 @@ export class SalaService {
 
   deleteSala(id: number) {
     return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+  createSala(payload: CriarSala) {
+    return this.http.post(`${this.baseUrl}`, payload);
+  }
+
+  updateSala(id: number, payload: CriarSala) {
+    return this.http.put(`${this.baseUrl}/${id}`, payload);
   }
 }
