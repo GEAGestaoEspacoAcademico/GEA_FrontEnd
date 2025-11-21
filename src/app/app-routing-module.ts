@@ -44,6 +44,7 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: { roles: ['AUXILIAR_DOCENTE'] },
     children: [
+      { path: 'lista-espacos', component: SpaceManagement },
       { path: 'home', component: Home },
       // { path: 'agendar-aula', component: ScheduleClass },
       // { path: 'agendar-evento', component: ScheduleEvent },
@@ -57,7 +58,7 @@ const routes: Routes = [
     path: 'secretaria',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: {roles: ['SECRETARIA']},
+    data: {roles: ['SECRETARIA', 'AUXILIAR_DOCENTE']},
     children: [
       {path: 'home', component: Secretariahome},
       {path: 'visualizar-espacos', component: ListaEspacos}

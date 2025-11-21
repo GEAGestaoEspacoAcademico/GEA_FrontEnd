@@ -9,6 +9,7 @@ import type { ConfirmationModal } from '../../components/shared/confirmation-mod
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
 import { ProfessorService } from '../../services/professor/professor.service';
 import type { Disciplina } from '../../models/disciplina.model';
+import { HeaderTitleService } from '../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-configuracoes',
@@ -20,11 +21,14 @@ export class Configuracoes implements OnInit {
   private store = inject(Store);
   private notificationService = inject(SnackBarService);
   private professorService = inject(ProfessorService);
+  private headerService = inject(HeaderTitleService);
 
   user$: Observable<Usuario | null> = this.store.select(selectCurrentUser);
   disciplinas$!: Observable<Disciplina[]>;
 
   ngOnInit(): void {
+    this.headerService.setTitle('Configurações');
+    this.headerService.hideBack();
     this.disciplinas$ = this.user$.pipe(
       filter((professor) => professor !== null),
       map((professor) => professor.usuarioId),
