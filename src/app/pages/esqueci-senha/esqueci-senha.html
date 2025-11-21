@@ -7,10 +7,10 @@
   </div>
 
   <div class="card rounded-top-5 border-0 card-senha">
-    <a class="align-items-center btn-voltar gap-2 m-4" routerLink="/login">
+    <button class="align-items-center btn-voltar gap-2 m-4 w-25" (click)="voltarParaPaginaAnterior()">
       <mat-icon svgIcon="arrow-back" class="icon"></mat-icon>
       <span>voltar</span>
-    </a>
+    </button>
     @if (isLoading) {
       <div class="d-flex justify-content-center align-items-center mt-4">
         <mat-spinner diameter="50"></mat-spinner>

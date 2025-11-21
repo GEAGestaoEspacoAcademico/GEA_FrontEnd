@@ -1,25 +1,7 @@
-.header {
-  background-image: url('../../../assets/images/loginBackground.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  flex-shrink: 0;
-}
-
-.login-page {
-  background-image: linear-gradient(to bottom, #870c08 0%, #210302 100%);
-  justify-content: space-between;
-
-  img{
-    padding-left: var(--spacing-4);
-  }
-}
-
 .card-senha {
   background-color: #f9f9fb;
   border-top-left-radius: 2.188rem !important;
   border-top-right-radius: 2.188rem !important;
-  box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.1);
   min-height: 28.875rem;
 
   .card-body{
@@ -130,15 +112,12 @@ h3 {
   }
 
   .card {
-    width: fit-content;
     margin-right: auto;
 
-    border-radius: 0% !important;
-
-    width: 50%;
+    min-height: 100vh;
 
     .card-body {
-      min-width: 50%;
+      min-width: 25%;
       margin-right: auto;
       margin-left: auto;
     }
@@ -175,13 +154,6 @@ h3 {
     text-align: center;
   }
 
-  .logo-fatec {
-    display: block;
-    margin: auto;
-    width: 35%;
-    margin-top: var(--spacing-6);
-  }
-
   .btn-danger{
     margin-top: var(--spacing-2);
     border-radius: var(--spacing-2);
@@ -196,21 +168,5 @@ h3 {
 
   .btn-voltar:hover{
     color: var(--color-primary-300);
-  }
-
-  .confirm-icon{
-    width: 164px;
-    height: auto;
-
-    margin: var(--spacing-4);
-  }
-
-  .text-confirm{
-    font-size: 1.4rem;
-    font-weight: var(--font-weight-regular);
-  }
-
-  .title-confirm{
-    font-size: 1.5rem;
   }
 }

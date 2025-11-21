@@ -44,6 +44,7 @@ import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { EditarAula } from './pages/editar-aula/visualizar-aula';
 import { Login } from './pages/login/login';
 import { EsqueciSenha } from './pages/esqueci-senha/esqueci-senha';
+import { RedefinirSenha } from './pages/redefinir-senha/redefinir-senha';
 
 // Shared Components
 import { DaySelector } from './components/shared/day-selector/day-selector';
@@ -69,14 +70,15 @@ import { SpaceManagement } from './pages/space-management/space-management';
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
+import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 import { SalaForm } from './components/secretaria/sala-form/sala-form';
 import { EspacosTable } from './components/secretaria/espacos-table/espacos-table';
 import { EditarEspacoModal } from './components/modals/editar-espaco-modal/editar-espaco-modal';
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
-import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
 import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
 import { A11yModule } from "@angular/cdk/a11y";
+
 
 @NgModule({
   declarations: [
@@ -117,6 +119,7 @@ import { A11yModule } from "@angular/cdk/a11y";
     SpaceRegistrationForm,
     Home,
     Secretariahome,
+    RedefinirSenha,
     SalaForm,
     EspacosTable,
     EditarEspacoModal,

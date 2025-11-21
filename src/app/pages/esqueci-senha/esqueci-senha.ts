@@ -4,6 +4,7 @@ import type { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/fo
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-esqueci-senha',
@@ -15,10 +16,12 @@ export class EsqueciSenha implements OnInit {
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly snackbarService = inject(SnackBarService);
   private readonly router = inject(Router);
+  private readonly location = inject(Location);
 
   token!: string | null;
   isLoading: boolean = false;
   isEmailSucess: boolean = false;
+  isRedefinirSenhaSucess: boolean = false;
 
   formEmail = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -53,13 +56,13 @@ export class EsqueciSenha implements OnInit {
   );
 
   ngOnInit(): void {
-    this.formEmail.reset();
-
     this.activatedRoute.queryParams.subscribe((params) => {
       this.token = params['token'] || null;
 
       if (this.token) {
         this.formRedefinirSenha.reset();
+      } else {
+        this.formEmail.reset();
       }
     });
   }
@@ -83,6 +86,10 @@ export class EsqueciSenha implements OnInit {
     });
 
     this.isEmailSucess = false;
+  }
+
+  voltarParaPaginaAnterior(): void {
+    this.location.back();
   }
 
   async alterarSenha() {
