@@ -35,6 +35,7 @@ const routes: Routes = [
       { path: 'aulas/alterar/:id', component: EditarAula },
       { path: 'adhome', component: Home },
       { path: 'notificacoes', component: Notificacoes },
+      { path: '', redirectTo: '/login', pathMatch: 'full' },
       { path: 'redefinir-senha', component: RedefinirSenha },
     ],
   },
