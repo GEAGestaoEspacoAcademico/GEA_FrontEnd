@@ -33,7 +33,7 @@ export class EditarEspacoModal {
     piso: [sala.piso ?? 0, Validators.required],
     disponibilidade: [sala.disponibilidade ?? false],
     tipoSala: [sala.tipoSala ?? '', Validators.required],
-    observacoes: [sala.observacoes ?? '']
+    observacoes: [sala.salaObservacoes ?? '']
   });
 
   this.form.disable();
