@@ -1,0 +1,104 @@
+.container-agendamento {
+  padding-left: 4.063rem;
+}
+
+.container-forms {
+  margin-top: 2.375rem;
+}
+
+.title-highlight.big {
+  display: inline-block;
+
+  .title-text {
+    position: relative;
+    font-size: 3rem;
+    margin-bottom: var(--spacing-4);
+    margin-left: 0.313rem;
+    line-height: 1.1;
+  }
+
+  .title-underline {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 0.25rem;
+    margin-top: 0;
+    margin-left: 0.313rem;
+  }
+
+  .line-thick {
+    background-color: var(--color-primary-700);
+    height: 1.625rem;
+    width: 18.75rem;
+    border-radius: var(--spacing-6);
+  }
+
+  .line-thin {
+    background-color: var(--color-primary-700);
+    height: 0.375rem;
+    width: 18.75rem;
+    border-radius: 0.063rem;
+  }
+}
+
+.gea-input-field.medium {
+  width: 12.438rem;
+  height: 2.625rem;
+  padding: var(--spacing-2);
+
+  border: 0.2px solid var(--color-default-black);
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.gea-input-field.small {
+  width: 4.438rem;
+  height: 2.625rem;
+  padding: var(--spacing-2);
+
+  border: 0.2px solid var(--color-default-black);
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.select-big-icon {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image: url(/assets/icons/arrow-down.svg);
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 1rem;
+}
+
+.select-clock-icon {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background-image: url(/assets/icons/clock.svg);
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 1.5rem;
+}
+
+.gea-btn-primary.buscar {
+  width: 16.063rem;
+  height: 3.688rem;
+  margin-top: 59px;
+  background-color: var(--color-primary-700);
+  font-size: 20px;
+}

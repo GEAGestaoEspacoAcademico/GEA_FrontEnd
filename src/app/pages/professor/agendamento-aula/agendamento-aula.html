@@ -1,0 +1,86 @@
+<div class="container-agendamento bg-success">
+  <header
+    class="title-highlight big text-left text-md-start"
+    aria-labelledby="title-highlight-heading"
+  >
+    <h2 id="title-highlight-heading" class="title-text main-title">Agendamento de Aulas</h2>
+
+    <div class="title-underline" aria-hidden="true">
+      <div class="line-thick"></div>
+      <div class="line-thin"></div>
+    </div>
+  </header>
+
+  <div class="container-forms container-fluid">
+    <form>
+      <div class="row">
+        <div class="col-6">
+          <label for="data" class="col-sm-3 col-form-label main-title">Data:</label>
+          <input type="date" id="data" name="data" class="gea-input-field medium" />
+        </div>
+        <div class="col-3">
+          <label for="Equipamento" class="col-sm-6 col-form-label main-title">Equipamento:</label>
+          <input type="text" name="equipamento" id="equipamento" class="gea-input-field medium" />
+        </div>
+        <div class="col-2">
+          <label for="Quantidade" class="col-sm-3 col-form-label main-title">Qtd:</label>
+          <input type="number" name="Quantidade" id="Quantidade" class="gea-input-field small" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <label for="Horário" class="col-sm-3 col-form-label main-title">Horário:</label>
+          <select name="Horário" id="Horário" class="gea-input-field medium select-clock-icon">
+            <option value="">7:40 - 9:20</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <label for="Disciplina" class="col-sm-6 col-form-label main-title">Disciplina:</label>
+          <select id="Disciplina" name="Disciplina" class="gea-input-field medium select-big-icon">
+            @for (d of disciplinas; track d.disciplinaId) {
+              <option [value]="d.disciplinaId">
+                {{ d.disciplinaNome }}
+              </option>
+            }
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <label for="Local" class="col-sm-3 col-form-label main-title">Local:</label>
+          <select
+            type="select"
+            name="Local"
+            id="Local"
+            class="gea-input-field medium select-big-icon"
+          >
+            <option value="">Laboratórios</option>
+            <option value="">Salas</option>
+          </select>
+        </div>
+        <div class="col-3 mb-4">
+          <label for="Softwares" class="col-sm-6 col-form-label main-title">Softwares:</label>
+          <input type="text" name="Softwares" id="Softwares" class="gea-input-field medium" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <label for="Capacidade" class="col-sm-3 col-form-label main-title">Capacidade:</label>
+          <select name="Capacidade" id="Capacidade" class="gea-input-field medium select-big-icon">
+            <option value="20">10-20 Alunos</option>
+            <option value="30">20-30 Alunos</option>
+            <option value="40">30+ Alunos</option>
+          </select>
+        </div>
+        <div class="col-3">
+          <mat-chip-set aria-label="Equipamento/Softwares"> </mat-chip-set>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <button class="gea-btn gea-btn-primary buscar">Buscar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -13,6 +13,7 @@ import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { RoleGuard } from './guards/role.guard';
 import { Home } from './pages/AD/home/home';
 import { SpaceManagement } from './pages/space-management/space-management';
+import { AgendamentoAula } from './pages/professor/agendamento-aula/agendamento-aula';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
 import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
@@ -32,6 +33,7 @@ const routes: Routes = [
       { path: 'adhome', component: Home },
       { path: 'notificacoes', component: Notificacoes },
       { path: '', redirectTo: '/login', pathMatch: 'full' },
+      { path: 'teste', component: AgendamentoAula },
     ],
   },
   {
