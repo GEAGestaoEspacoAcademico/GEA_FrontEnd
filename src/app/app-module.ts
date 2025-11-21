@@ -11,7 +11,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importe aqui
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 
@@ -42,6 +43,7 @@ import { Configuracoes } from './pages/configuracoes/configuracoes';
 import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { EditarAula } from './pages/editar-aula/visualizar-aula';
 import { Login } from './pages/login/login';
+import { EsqueciSenha } from './pages/esqueci-senha/esqueci-senha';
 
 // Shared Components
 import { DaySelector } from './components/shared/day-selector/day-selector';
@@ -55,13 +57,14 @@ import { NotificationCard } from './components/shared/notification-card/notifica
 import { RommInformationComponent } from './components/shared/romm-information-component/romm-information-component';
 import { metaReducers } from './store/meta-reducer';
 import { globalErrorInterceptor } from './Interceptors/Global/global-error-interceptor';
+import { SmartSchedulingForm } from './components/shared/smart-scheduling-form/smart-scheduling-form';
 import { DashboardCard } from './components/shared/dashboard-card/dashboard-card';
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 import { SpaceRegistrationForm } from './components/AD/space-registration-form/space-registration-form';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
+import { RecurringSchedulingForm } from './components/shared/recurring-scheduling-form/recurring-scheduling-form';
 import { ScheduleDayModal } from './components/shared/schedule-day-modal/schedule-day-modal';
 import { SpaceManagement } from './pages/space-management/space-management';
-
 
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
@@ -70,7 +73,10 @@ import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome
 import { SalaForm } from './components/secretaria/sala-form/sala-form';
 import { EspacosTable } from './components/secretaria/espacos-table/espacos-table';
 import { EditarEspacoModal } from './components/modals/editar-espaco-modal/editar-espaco-modal';
+import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
 
+import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
+import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
 
 @NgModule({
   declarations: [
@@ -86,6 +92,7 @@ import { EditarEspacoModal } from './components/modals/editar-espaco-modal/edita
     EditarAula,
     Login,
     SpaceManagement,
+    EsqueciSenha,
     // Shared Components
     ClassInfoCard,
     DaySelector,
@@ -98,11 +105,13 @@ import { EditarEspacoModal } from './components/modals/editar-espaco-modal/edita
     MainLayout,
     AuthLayout,
     RommInformationComponent,
+    SmartSchedulingForm,
     DashboardCard,
     AddItemModal,
     // AD Components
     MultiDateSelector,
     DashboardCard,
+    RecurringSchedulingForm,
     ScheduleDayModal,
     SpaceManagementTable,
     SpaceRegistrationForm,
@@ -111,6 +120,8 @@ import { EditarEspacoModal } from './components/modals/editar-espaco-modal/edita
     SalaForm,
     EspacosTable,
     EditarEspacoModal,
+    FuncionarioTable,
+    CreateResourceModal
   ],
   imports: [
     BrowserModule,
@@ -126,6 +137,8 @@ import { EditarEspacoModal } from './components/modals/editar-espaco-modal/edita
     MatChipsModule,
     MatAutocompleteModule,
     MatProgressSpinnerModule,
+    MatCheckboxModule,
+    
     MatDatepickerModule,
     MatNativeDateModule,
     // NGRX Setup Simplificado

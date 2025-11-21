@@ -30,7 +30,7 @@
         <div class="container-fluid">
           <app-title-highlightt class="mt-2" title="Baseado no seu perfil"></app-title-highlightt>
           <div class="d-flex flex-wrap gap-2 flex-row">
-            @for (sala of salasRecomendadas; track sala.id) {
+            @for (sala of salasRecomendadas; track sala.salaId) {
               <app-romm-information-component
                 [labData]="sala"
                 (ConfirmSchedule)="openInfoModal($event)"
