@@ -2,7 +2,7 @@ import type { OnInit } from '@angular/core';
 import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 import type { FormArray} from '@angular/forms';
 import { FormBuilder, Validators, type FormGroup } from '@angular/forms';
-import type { AddItemModal } from '../../shared/add-item-modal/add-item-modal';
+import type { AddItemModal } from '../../modals/add-item-modal/add-item-modal';
 import type { TipoSala } from '../../../models/tipoSala.mode';
 import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
 import type { AddItemModalData } from '../../../types/additemmodal';

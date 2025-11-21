@@ -1,6 +1,6 @@
 import type { OnInit} from '@angular/core';
 import { Component, inject, ViewChild} from '@angular/core';
-import type { ConfirmationModal } from '../../../components/shared/confirmation-modal/confirmation-modal';
+import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 import type { EditarEspacoModal } from '../../../components/modals/editar-espaco-modal/editar-espaco-modal';
 import type { Sala } from '../../../models/sala.model';
 import { BehaviorSubject } from 'rxjs';

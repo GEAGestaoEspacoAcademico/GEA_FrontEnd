@@ -1,19 +1,19 @@
 import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
-import type { Day } from '../../components/shared/day-selector/day-selector';
+import type { Day } from '../../../components/shared/day-selector/day-selector';
 import { Router } from '@angular/router';
 import { map, type Observable } from 'rxjs';
 import {
   selectTodasOsAgendamentos,
   selectAgendamentoLoading,
-} from '../../store/agendamento/agendamento.selectors';
+} from '../../../store/agendamento/agendamento.selectors';
 import { Store } from '@ngrx/store';
-import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
-import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import { SnackBarService } from '../../services/snackbar/snackbar.service';
-import { FormatUtils } from '../../utils/format.utils';
-import type { AgendamentoAula } from '../../models/agendamentoAula.model';
-import { HeaderTitleService } from '../../services/header-title/header-title.service';
+import { AgendamentoActions } from '../../../store/agendamento/agendamento.actions';
+import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
+import { FormatUtils } from '../../../utils/format.utils';
+import type { AgendamentoAula } from '../../../models/agendamentoAula.model';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-aulas',

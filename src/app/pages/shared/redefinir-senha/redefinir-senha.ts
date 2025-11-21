@@ -1,13 +1,13 @@
-import type { AlterarSenhaUsuarioRequest } from './../../types/auth.type';
-import { UsuarioService } from './../../services/usuario/usuario.service';
+import type { AlterarSenhaUsuarioRequest } from '../../../types/auth.type';
+import { UsuarioService } from '../../../services/usuario/usuario.service';
 import { Component, inject } from '@angular/core';
 import type { OnInit } from '@angular/core';
 import type { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SnackBarService } from '../../services/snackbar/snackbar.service';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { Store } from '@ngrx/store';
-import { selectUserId } from '../../store/auth/auth.selectors';
+import { selectUserId } from '../../../store/auth/auth.selectors';
 import { switchMap, take, type Observable } from 'rxjs';
 
 @Component({

@@ -2,26 +2,26 @@
   import { Component, inject, ViewChild } from '@angular/core';
   import { ActivatedRoute, Router } from '@angular/router';
   import { filter, forkJoin, map, Subject, switchMap, take, takeUntil, tap, type Observable } from 'rxjs';
-  import { selectAgendamentoLoading, selectAulaById } from '../../store/agendamento/agendamento.selectors';
+  import { selectAgendamentoLoading, selectAulaById } from '../../../store/agendamento/agendamento.selectors';
   import { Store } from '@ngrx/store';
-  import { AgendamentoActions } from '../../store/agendamento/agendamento.actions';
-  import type { Field } from '../../components/shared/scheduling/types';
-  import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-  import { CursoService } from '../../services/curso/curso.service';
-  import type { Usuario } from '../../models/usuario.model';
-  import { selectCurrentUser } from '../../store/auth/auth.selectors';
-  import { SalaService } from '../../services/sala/sala.service';
-  import type {Option} from '../../components/shared/scheduling/types'
-  import { SnackBarService } from '../../services/snackbar/snackbar.service';
-  import { FormatUtils } from '../../utils/format.utils';
-import { ProfessorService } from '../../services/professor/professor.service';
-import type { AgendamentoAula } from '../../models/agendamentoAula.model';
-import type { Agendamento } from '../../models/agendamento.model';
-import type { AgendamentoAulaEditarRequest } from '../../types/agendamentoAula.type';
-import { JanelasHorarioService } from '../../services/janelas-horario/janelas-horario.service';
-import type { AgendarForm } from '../../types/agendar';
-import { AgendamentoService } from '../../services/agendamento/agendamento.service';
-import { HeaderTitleService } from '../../services/header-title/header-title.service';
+  import { AgendamentoActions } from '../../../store/agendamento/agendamento.actions';
+  import type { Field } from '../../../components/shared/scheduling/types';
+  import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
+  import { CursoService } from '../../../services/curso/curso.service';
+  import type { Usuario } from '../../../models/usuario.model';
+  import { selectCurrentUser } from '../../../store/auth/auth.selectors';
+  import { SalaService } from '../../../services/sala/sala.service';
+  import type {Option} from '../../../components/shared/scheduling/types'
+  import { SnackBarService } from '../../../services/snackbar/snackbar.service';
+  import { FormatUtils } from '../../../utils/format.utils';
+import { ProfessorService } from '../../../services/professor/professor.service';
+import type { AgendamentoAula } from '../../../models/agendamentoAula.model';
+import type { Agendamento } from '../../../models/agendamento.model';
+import type { AgendamentoAulaEditarRequest } from '../../../types/agendamentoAula.type';
+import { JanelasHorarioService } from '../../../services/janelas-horario/janelas-horario.service';
+import type { AgendarForm } from '../../../types/agendar';
+import { AgendamentoService } from '../../../services/agendamento/agendamento.service';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 
   @Component({
     selector: 'app-editar-aula',

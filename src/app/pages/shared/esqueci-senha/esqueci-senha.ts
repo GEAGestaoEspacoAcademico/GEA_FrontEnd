@@ -3,7 +3,7 @@ import type { OnInit } from '@angular/core';
 import type { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SnackBarService } from '../../services/snackbar/snackbar.service';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { Location } from '@angular/common';
 
 @Component({

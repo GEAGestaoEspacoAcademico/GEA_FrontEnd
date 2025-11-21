@@ -1,6 +1,6 @@
 import type { OnInit } from '@angular/core';
 import { Component, inject } from '@angular/core';
-import { HeaderTitleService } from '../../services/header-title/header-title.service';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-notificacoes',

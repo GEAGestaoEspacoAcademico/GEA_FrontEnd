@@ -1,24 +1,24 @@
-import type { Field } from '../../components/shared/scheduling/types';
-import type { OnInit } from '@angular/core';
-import { Component, inject, ViewChild } from '@angular/core';
-import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import type { Observable } from 'rxjs';
-import { filter, forkJoin, switchMap, take } from 'rxjs';
-import { ProfessorService } from '../../services/professor/professor.service';
-import type { Option } from '../../components/shared/scheduling/types';
-import { Store } from '@ngrx/store';
-import { selectUserCargo, selectUserId } from '../../store/auth/auth.selectors';
-import { RecursoService } from '../../services/recurso/recurso.service';
-import type { AgendarForm, CriarAgendamento } from '../../types/agendar';
-import { TipoSalaService } from '../../services/tipo-sala/tipo-sala.service';
-import { JanelasHorarioService } from '../../services/janelas-horario/janelas-horario.service';
-import { FormatUtils } from '../../utils/format.utils';
-import { AgendamentoService } from '../../services/agendamento/agendamento.service';
-import { SnackBarService } from '../../services/snackbar/snackbar.service';
-import { HeaderTitleService } from '../../services/header-title/header-title.service';
-import type { BuscarRecomendacaoRequest, BuscarRecomendacaoResponse } from '../../types/sala.type';
-import type { AgendamentoAulaCriarRequest } from '../../types/agendamentoAula.type';
-import { SalaService } from '../../services/sala/sala.service';
+import type { OnInit} from "@angular/core";
+import { Component, inject, ViewChild } from "@angular/core";
+import { Store } from "@ngrx/store";
+import type { Observable} from "rxjs";
+import { filter, take, switchMap, forkJoin } from "rxjs";
+import type { ConfirmationModal } from "../../../components/modals/confirmation-modal/confirmation-modal";
+import type { Field } from "../../../components/shared/scheduling/types";
+import { AgendamentoService } from "../../../services/agendamento/agendamento.service";
+import { HeaderTitleService } from "../../../services/header-title/header-title.service";
+import { JanelasHorarioService } from "../../../services/janelas-horario/janelas-horario.service";
+import { ProfessorService } from "../../../services/professor/professor.service";
+import { RecursoService } from "../../../services/recurso/recurso.service";
+import { SalaService } from "../../../services/sala/sala.service";
+import { SnackBarService } from "../../../services/snackbar/snackbar.service";
+import { TipoSalaService } from "../../../services/tipo-sala/tipo-sala.service";
+import { selectUserCargo, selectUserId } from "../../../store/auth/auth.selectors";
+import type { AgendamentoAulaCriarRequest } from "../../../types/agendamentoAula.type";
+import type { AgendarForm } from "../../../types/agendar";
+import type { BuscarRecomendacaoRequest, BuscarRecomendacaoResponse } from "../../../types/sala.type";
+import { FormatUtils } from "../../../utils/format.utils";
+import type { Option } from "../../../types/utils.types"
 
 @Component({
   selector: 'app-agenda',
