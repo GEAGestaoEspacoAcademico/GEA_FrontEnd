@@ -14,7 +14,11 @@
           <input class="input-small" formControlName="salaNome" />
 
           <label for="" class="label-small mt-12">Piso:</label>
-          <input class="input-small short-input" formControlName="piso" />
+          <select formControlName="piso" class="input-small short-input">
+                <option value="0">Térreo</option>
+                <option value="1">1° Andar</option>
+                <option value="2">2° Andar</option>
+          </select>
         </div>
 
         <div class="col-right">
