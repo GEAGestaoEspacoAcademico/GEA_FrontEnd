@@ -69,9 +69,12 @@ import { SpaceManagement } from './pages/space-management/space-management';
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
-import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
-
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
+import { SalaForm } from './components/secretaria/sala-form/sala-form';
+import { EspacosTable } from './components/secretaria/espacos-table/espacos-table';
+import { EditarEspacoModal } from './components/modals/editar-espaco-modal/editar-espaco-modal';
+import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
+import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
 import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
 
 @NgModule({
@@ -112,8 +115,12 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
     SpaceManagementTable,
     SpaceRegistrationForm,
     Home,
-    FuncionarioTable,
     Secretariahome,
+    SalaForm,
+    EspacosTable,
+    EditarEspacoModal,
+    ListaEspacos,
+    FuncionarioTable,
     CreateResourceModal
   ],
   imports: [

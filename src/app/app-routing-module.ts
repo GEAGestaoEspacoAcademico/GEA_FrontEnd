@@ -14,6 +14,7 @@ import { RoleGuard } from './guards/role.guard';
 import { Home } from './pages/AD/home/home';
 import { SpaceManagement } from './pages/space-management/space-management';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
+import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
 import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
@@ -57,6 +58,7 @@ const routes: Routes = [
     data: {roles: ['SECRETARIA']},
     children: [
       {path: 'home', component: Secretariahome},
+      {path: 'visualizar-espacos', component: ListaEspacos}
     ]
   },
   {
