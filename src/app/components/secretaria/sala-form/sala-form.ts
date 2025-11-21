@@ -69,11 +69,7 @@ export class SalaForm implements OnInit {
   }
 
   onSave() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-    this.clickSave.emit(this.form);
+    this.clickSave.emit();
   }
 
   onCancel() {
