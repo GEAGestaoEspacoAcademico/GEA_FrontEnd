@@ -1,37 +1,39 @@
 <div class="container-agendamento">
-  <header
-    class="title-highlight big text-left text-md-start"
-    aria-labelledby="title-highlight-heading"
-  >
-    <h2 id="title-highlight-heading" class="title-text main-title">Agendamento de Aulas</h2>
-
-    <div class="title-underline" aria-hidden="true">
-      <div class="line-thick"></div>
-      <div class="line-thin"></div>
-    </div>
-  </header>
-
+  <app-title-highlightt title="Agendamento de Aula"></app-title-highlightt>
   <div class="container-forms container-fluid">
-    <form>
+    <form [formGroup]="form">
       <div class="row">
         <div class="col-6">
           <div class="row mb-3">
             <label for="data" class="col-sm-3 main-title">Data:</label>
-            <input type="date" id="data" name="data" class="gea-input-field medium" />
+            <input type="date" id="data" formControlName="data" class="gea-input-field medium" />
           </div>
 
           <div class="row mb-3">
             <label for="Horário" class="col-sm-3 main-title">Horário:</label>
-            <select name="Horário" id="Horário" class="gea-input-field medium select-clock-icon">
-              <option value="">7:40 - 9:20</option>
+            <select
+              name="Horário"
+              id="Horário"
+              formControlName="horarioId"
+              class="gea-input-field medium select-clock-icon"
+            >
+              @for (h of horarios; track h.janelasHorarioId) {
+                <option [value]="h.janelasHorarioId">{{ h.horaInicio }}- {{ h.horaFim }}</option>
+              }
             </select>
           </div>
 
           <div class="row mb-3">
             <label for="Local" class="col-sm-3 main-title">Local:</label>
-            <select name="Local" id="Local" class="gea-input-field medium select-big-icon">
-              <option value="">Laboratórios</option>
-              <option value="">Salas</option>
+            <select
+              name="Local"
+              id="Local"
+              formControlName="tipoSalaId"
+              class="gea-input-field medium select-big-icon"
+            >
+              @for (s of tiposSala; track s.tipoSalaId) {
+                <option [value]="s.tipoSalaId">{{ s.tipoSalaNome }}</option>
+              }
             </select>
           </div>
 
@@ -50,63 +52,85 @@
 
           <div class="row mb-3">
             <label for="Disciplina" class="col-sm-3 main-title">Disciplina:</label>
-            <select
-              id="Disciplina"
-              name="Disciplina"
-              class="gea-input-field medium select-big-icon"
-            >
-              @for (d of disciplinas; track d.disciplinaId) {
-                <option [value]="d.disciplinaId">{{ d.disciplinaNome }}</option>
+            @if (disciplinas$ | async; as disciplinas) {
+              @if (disciplinas.length === 0) {
+                <select
+                  id="Disciplina"
+                  formControlName="disciplinaId"
+                  class="gea-input-field medium select-big-icon"
+                >
+                  <option [value]="null">Nenhuma disciplina Encontrada</option>
+                </select>
+              } @else {
+                <select
+                  id="Disciplina"
+                  formControlName="disciplinaId"
+                  class="gea-input-field medium select-big-icon"
+                >
+                  <option [value]="null">Selecione uma Disciplina</option>
+
+                  @for (d of disciplinas; track d.disciplinaId) {
+                    <option [value]="d.disciplinaId">{{ d.disciplinaNome }}</option>
+                  }
+                </select>
               }
-            </select>
+            }
           </div>
           <div class="row">
-            <button class="gea-btn gea-btn-primary buscar">Buscar</button>
+            <button class="gea-btn gea-btn-primary buscar" (click)="handleBuscarRecomendacoes()">
+              Buscar
+            </button>
           </div>
         </div>
         <div class="col-6">
           <div class="row">
             <label for="data" class="col-sm-3 main-title">Equipamento:</label>
-            <input
-              type="text"
-              id="equipamentoNomeInput"
-              name="equipamentoNome"
+            <select
+              id="equipamentoSelect"
+              [formControl]="equipamentoSelectControl"
               class="gea-input-field medium"
-              #equipamentoInput
-            />
+            >
+              <option [ngValue]="null">Selecione o Equipamento</option>
+              @if (recursos$ | async; as recursos) {
+                @for (recurso of recursos; track recurso.id) {
+                  @if (recurso.tipoRecurso === 'Mobiliário') {
+                    <option [ngValue]="recurso">{{ recurso.nome }}</option>
+                  }
+                  @if (recurso.tipoRecurso === 'Hardware') {
+                    <option [ngValue]="recurso">{{ recurso.nome }}</option>
+                  }
+                }
+              }
+            </select>
 
-            <label for="number" class="col-sm-1 main-title">Qtd:</label>
+            <label for="qtdInput" class="col-sm-1 main-title">Qtd:</label>
             <input
               type="number"
               id="qtdInput"
-              name="qtd"
+              [formControl]="quantidadeControl"
               min="1"
               class="gea-input-field small"
-              #qtdInput
             />
 
             <button
               class="col-sm-2 gea-btn gea-btn-primary adicionar"
-              (click)="
-                adicionarEquipamento(equipamentoInput.value, qtdInput.value);
-                equipamentoInput.value = '';
-                qtdInput.value = ''
-              "
+              (click)="adicionarEquipamentoSelecionado()"
+              [disabled]="equipamentoSelectControl.invalid || quantidadeControl.invalid"
             >
               Adicionar
             </button>
           </div>
           <div class="row chip-display-area-row mb-2">
             <mat-chip-grid #chipGrid aria-label="Seleção de Equipamentos" class="col-sm-12">
-              @for (equipamento of equipamentos; track equipamento) {
+              @for (control of equipamentosArray.controls; track $index) {
                 <mat-chip-row
-                  (removed)="removerEquipamento(equipamento)"
+                  (removed)="removerItemDoArray('equipamentosArray', $index)"
                   [removable]="true"
                   color="primary"
                   selected
                 >
-                  {{ equipamento.nome }} ({{ equipamento.qtd }})
-                  <button matChipRemove aria-label="Remover {{ equipamento.nome }}">
+                  {{ control.value.label }} ({{ control.value.quantity }})
+                  <button matChipRemove aria-label="Remover item">
                     <mat-icon>cancel</mat-icon>
                   </button>
                 </mat-chip-row>
@@ -114,31 +138,40 @@
             </mat-chip-grid>
           </div>
           <div class="row">
-            <label for="data" class="col-sm-3 main-title">Software:</label>
-            <input
-              type="text"
-              id="softwareInput"
-              name="softwareInput"
+            <label for="Software" class="col-sm-3 main-title">Software:</label>
+            <select
+              id="Software"
+              [formControl]="softwareSelectControl"
               class="gea-input-field medium"
-              #softwareInput
-            />
+            >
+              <option [ngValue]="null">Selecione o Software</option>
+              @if (recursos$ | async; as recursos) {
+                @for (recurso of recursos; track recurso.id) {
+                  @if (recurso.tipoRecurso === 'Software') {
+                    <option [ngValue]="recurso">{{ recurso.nome }}</option>
+                  }
+                }
+              }
+            </select>
+
             <button
               class="col-sm-2 gea-btn gea-btn-primary adicionar"
-              (click)="adicionarSoftware(softwareInput.value); softwareInput.value = ''"
+              (click)="adicionarSoftwareSelecionado()"
+              [disabled]="softwareSelectControl.invalid"
             >
               Adicionar
             </button>
           </div>
           <div class="row chip-display-area-row">
             <mat-chip-grid #softwareChipGrid aria-label="Seleção de Softwares" class="col-sm-12">
-              @for (software of softwares; track software) {
+              @for (control of softwaresArray.controls; track $index) {
                 <mat-chip-row
-                  (removed)="removerSoftware(software)"
+                  (removed)="removerItemDoArray('softwaresArray', $index)"
                   [removable]="true"
                   color="warn"
                   selected
                 >
-                  {{ software }}
+                  {{ control.value.label }}
                   <button matChipRemove>
                     <mat-icon>cancel</mat-icon>
                   </button>
@@ -149,5 +182,37 @@
         </div>
       </div>
     </form>
+  </div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-4">
+        <app-title-highlightt title="Baseado no Seu perfil"></app-title-highlightt>
+        @if (isRecomendacaoLoading) {
+          <mat-spinner></mat-spinner>
+        } @else {
+          <div class="row mb-2">
+            @for (sala of salasRecomendadas; track sala.salaId) {
+              <app-romm-information-component [labData]="sala"></app-romm-information-component>
+            }
+          </div>
+        }
+      </div>
+      <div class="col-4">
+        <app-title-highlightt title="Outras Opções"></app-title-highlightt>
+        @if (isRecomendacaoLoading) {
+          <mat-spinner></mat-spinner>
+        } @else {
+          <p>Nenhuma outra data disponivel</p>
+        }
+      </div>
+      <div class="col-4">
+        <app-title-highlightt title="Outras Datas Disponiveis"></app-title-highlightt>
+        @if (isRecomendacaoLoading) {
+          <mat-spinner></mat-spinner>
+        } @else {
+          <p>Nenhuma outra data disponivel</p>
+        }
+      </div>
+    </div>
   </div>
 </div>
