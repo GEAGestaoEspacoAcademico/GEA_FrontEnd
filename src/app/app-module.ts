@@ -76,6 +76,7 @@ import { EditarEspacoModal } from './components/modals/editar-espaco-modal/edita
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
 import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
+import { A11yModule } from "@angular/cdk/a11y";
 
 @NgModule({
   declarations: [
@@ -138,33 +139,29 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     MatCheckboxModule,
-    
     MatDatepickerModule,
     MatNativeDateModule,
     // NGRX Setup Simplificado
-    StoreModule.forRoot(
-      {
+    StoreModule.forRoot({
         auth: authReducer,
         [AGENDAMENTO_FEATURE_KEY]: agendamentoReducer,
-      },
-      {
+    }, {
         metaReducers,
-      },
-    ),
+    }),
     EffectsModule.forRoot([AuthEffects, AgendamentoEffects]),
     StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: !isDevMode(),
-      autoPause: true,
-      trace: false,
-      traceLimit: 75,
+        maxAge: 25,
+        logOnly: !isDevMode(),
+        autoPause: true,
+        trace: false,
+        traceLimit: 75,
     }),
-
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      registrationStrategy: 'registerWhenStable:30000',
+        enabled: environment.production,
+        registrationStrategy: 'registerWhenStable:30000',
     }),
-  ],
+    A11yModule
+],
   providers: [provideHttpClient(withInterceptors([globalErrorInterceptor]))],
   bootstrap: [App],
 })

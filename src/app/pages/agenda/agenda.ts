@@ -1,9 +1,8 @@
 import type { Field } from '../../components/shared/scheduling/types';
-import type { OnInit} from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import { SalaService } from '../../services/sala/sala.service';
-import type { Observable} from 'rxjs';
+import type { Observable } from 'rxjs';
 import { filter, forkJoin, switchMap, take } from 'rxjs';
 import { ProfessorService } from '../../services/professor/professor.service';
 import type { Option } from '../../components/shared/scheduling/types';
@@ -16,8 +15,10 @@ import { JanelasHorarioService } from '../../services/janelas-horario/janelas-ho
 import { FormatUtils } from '../../utils/format.utils';
 import { AgendamentoService } from '../../services/agendamento/agendamento.service';
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
+import { HeaderTitleService } from '../../services/header-title/header-title.service';
 import type { BuscarRecomendacaoRequest, BuscarRecomendacaoResponse } from '../../types/sala.type';
 import type { AgendamentoAulaCriarRequest } from '../../types/agendamentoAula.type';
+import { SalaService } from '../../services/sala/sala.service';
 
 @Component({
   selector: 'app-agenda',
@@ -25,16 +26,17 @@ import type { AgendamentoAulaCriarRequest } from '../../types/agendamentoAula.ty
   templateUrl: './agenda.html',
   styleUrl: './agenda.css',
 })
-export class Agenda implements OnInit{
-  private tiposSalaService = inject(TipoSalaService)
-  private salaService = inject(SalaService)
-  private professorService = inject(ProfessorService)
-  private recursosService = inject(RecursoService)
-  private janelasHorarioService = inject(JanelasHorarioService)
-  private agendamentoService = inject(AgendamentoService)
-  private snackbarService = inject(SnackBarService)
-  private store = inject(Store)
-  
+export class Agenda implements OnInit {
+  private tiposSalaService = inject(TipoSalaService);
+  private salaService = inject(SalaService);
+  private professorService = inject(ProfessorService);
+  private recursosService = inject(RecursoService);
+  private janelasHorarioService = inject(JanelasHorarioService);
+  private agendamentoService = inject(AgendamentoService);
+  private snackbarService = inject(SnackBarService);
+  private store = inject(Store);
+  private headerService = inject(HeaderTitleService);
+
   @ViewChild('sucessModal') sucessModal!: ConfirmationModal;
   @ViewChild('classInfoModal') classInfoModal!: ConfirmationModal;
 
@@ -42,13 +44,15 @@ export class Agenda implements OnInit{
   
   requisicaoRecomendacao!: BuscarRecomendacaoRequest
   isloading: boolean = false;
-  isRecomendacaoLoading: boolean = false
+  isRecomendacaoLoading: boolean = false;
   submittedData!: AgendarForm;
   formFields: Field[] | undefined;
   salasRecomendadas: BuscarRecomendacaoResponse[] = []
   idSalaRecomendadaAtual!: number
 
   ngOnInit(): void {
+    this.headerService.setTitle('Agenda');
+    this.headerService.hideBack();
     this.loadDataAndBuildForm();
   }
 
@@ -97,119 +101,128 @@ export class Agenda implements OnInit{
   }
 
   private createFormFields(
-      disciplinaOptions: Option[], 
-      cursoOptions: Option[],      
-      tiposSalaOptions: Option[],
-      recursoOptions: Option[],
-      janelaHorarioOptions:Option[]      
-    ): Field[] {
-      return [
-        {
-          name: 'data',
-          label: 'Data',
-          type: 'date',
-          defaultValue: FormatUtils.formatDateForInput(new Date()),
-          validators: { required: true, errorMessages: { required: 'A data é obrigatória.' } }
+    disciplinaOptions: Option[],
+    cursoOptions: Option[],
+    tiposSalaOptions: Option[],
+    recursoOptions: Option[],
+    janelaHorarioOptions: Option[],
+  ): Field[] {
+    return [
+      {
+        name: 'data',
+        label: 'Data',
+        type: 'date',
+        defaultValue: FormatUtils.formatDateForInput(new Date()),
+        validators: { required: true, errorMessages: { required: 'A data é obrigatória.' } },
+      },
+      {
+        name: 'qtdAulas',
+        label: 'Qtd de aulas',
+        type: 'select',
+        options: [
+          { label: '1 Aula', value: 1 },
+          { label: '2 Aulas', value: 2 },
+          { label: '3 Aulas', value: 3 },
+          { label: '4 Aulas', value: 4 },
+          { label: '5 Aulas', value: 5 },
+          { label: '6 Aulas', value: 6 },
+        ],
+        validators: {
+          required: true,
+          errorMessages: { required: 'Quantidade de aulas é obrigatório' },
         },
-        {
-          name: 'qtdAulas',
-          label: 'Qtd de aulas',
-          type: 'select',
-          options:[
-            {label: '1 Aula', value: 1},
-            {label: '2 Aulas', value: 2},
-            {label: '3 Aulas', value: 3},
-            {label: '4 Aulas', value: 4},
-            {label: '5 Aulas', value: 5},
-            {label: '6 Aulas', value: 6},
-          ],
-          validators: {required: true, errorMessages: {required: 'Quantidade de aulas é obrigatório'}}
+      },
+      {
+        name: 'janelaHorarioId',
+        label: 'Horario',
+        type: 'select',
+        options: janelaHorarioOptions,
+        validators: { required: true, errorMessages: { required: 'O horário é obrigatório.' } },
+      },
+      {
+        name: 'cursoId',
+        label: 'Curso',
+        type: 'select',
+        options: cursoOptions,
+        validators: { required: true, errorMessages: { required: 'O curso é obrigatório.' } },
+      },
+      {
+        name: 'disciplinaId',
+        label: 'Disciplina',
+        type: 'select',
+        options: disciplinaOptions,
+        validators: {
+          required: true,
+          errorMessages: { required: 'O campo disciplina é obrigatório.' },
         },
-        {
-          name: 'janelaHorarioId',
-          label: 'Horario',
-          type: 'select',
-          options: janelaHorarioOptions,
-          validators: { required: true, errorMessages: { required: 'O horário é obrigatório.' } }
+      },
+      {
+        name: 'localId',
+        label: 'Local',
+        type: 'select',
+        options: tiposSalaOptions,
+        validators: {
+          required: true,
+          errorMessages: { required: 'A seleção da sala é obrigatória.' },
         },
-        {
-          name: 'cursoId', 
-          label: 'Curso',
-          type: 'select',
-          options: cursoOptions, 
-          validators: { required: true, errorMessages: { required: 'O curso é obrigatório.' } }
-        },
-        {
-          name: 'disciplinaId',
-          label: 'Disciplina',
-          type: 'select',
-          options: disciplinaOptions,
-          validators: { required: true, errorMessages: { required: 'O campo disciplina é obrigatório.' } }
-        },
-        {
-          name: 'localId', 
-          label: 'Local',
-          type: 'select',
-          options: tiposSalaOptions,
-          validators: { required: true, errorMessages: { required: 'A seleção da sala é obrigatória.' } }
-        },
-        {
-          name: 'capacidade',
-          label: 'Capacidade',
-          type: 'select',
-          options: [
-            {label: '10-20 alunos', value: 20},
-            {label: '20-30 alunos', value: 30},
-            {label: '30+', value: 40}
-          ]
-        },
-        {
-          name: 'recursos',
-          label: 'Recursos',
-          type: 'equipment-select',
-          options: recursoOptions
-        }
-      ];
+      },
+      {
+        name: 'capacidade',
+        label: 'Capacidade',
+        type: 'select',
+        options: [
+          { label: '10-20 alunos', value: 20 },
+          { label: '20-30 alunos', value: 30 },
+          { label: '30+', value: 40 },
+        ],
+      },
+      {
+        name: 'recursos',
+        label: 'Recursos',
+        type: 'equipment-select',
+        options: recursoOptions,
+      },
+    ];
   }
 
-  criarRequisicaoParaRecomendacao(formData: AgendarForm){
+  criarRequisicaoParaRecomendacao(formData: AgendarForm) {
     //TODO: COLOCAR DINÂMICO QUANDO /recomendacao FOR ADAPTADO
-    const recursosIds = formData.recursos.map(r => r.id);
+    const recursosIds = formData.recursos.map((r) => r.id);
     this.requisicaoRecomendacao = {
       capacidade: Number(formData.capacidade),
       data: formData.data,
       horarios: {
         horaFim: '7:40',
-        horaInicio: '9:20'
+        horaInicio: '9:20',
       },
       recursosIds,
-      tipoSalaId: Number(formData.localId)
-    }
+      tipoSalaId: Number(formData.localId),
+    };
   }
 
   handleFormSubmit(formData: any): void {
     this.submittedData = formData;
-    this.criarRequisicaoParaRecomendacao(formData)
-    this.buscarRecomendacoes()
+    this.criarRequisicaoParaRecomendacao(formData);
+    this.buscarRecomendacoes();
   }
 
-  buscarRecomendacoes(){
+  buscarRecomendacoes() {
     this.isRecomendacaoLoading = true;
     this.salaService.getRecomendacao(this.requisicaoRecomendacao).subscribe({
       next: (data) => {
         this.salasRecomendadas = data;
         this.isRecomendacaoLoading = false;
       },
-      error: e => {
-        console.error(e)
-        this.snackbarService.showError("Erro ao buscar salas recomendadas");
+      error: (e) => {
+        console.error(e);
+        this.snackbarService.showError('Erro ao buscar salas recomendadas');
         this.isRecomendacaoLoading = false;
-      }
-    })
+      },
+    });
   }
 
   openInfoModal(id: number) {
-    this.idSalaRecomendadaAtual = id
+    this.idSalaRecomendadaAtual = id;
     this.classInfoModal.open();
   }
 

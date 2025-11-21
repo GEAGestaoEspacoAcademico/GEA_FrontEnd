@@ -1,9 +1,12 @@
-import type { TemplateRef} from '@angular/core';
+import type { OnInit, TemplateRef} from '@angular/core';
 import { Component, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import type { FormGroup} from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import type { Sala } from '../../../models/sala.model';
+import type { AtualizarSalaRequest } from '../../../types/sala.type';
+import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
+import type { TipoSala } from '../../../models/tipoSala.mode';
 
 @Component({
   selector: 'app-editar-espaco-modal',
@@ -11,17 +14,25 @@ import type { Sala } from '../../../models/sala.model';
   templateUrl: './editar-espaco-modal.html',
   styleUrl: './editar-espaco-modal.css'
 })
-export class EditarEspacoModal {
+export class EditarEspacoModal implements OnInit{
   private modalService = inject(NgbModal);
+  private tipoSalaService = inject(TipoSalaService)
   private fb = inject(FormBuilder);
-
+  
   @ViewChild('editarEspacoModalTemplate')
   modalTemplate!: TemplateRef<any>;
+  
+  ngOnInit(): void {
+    this.tipoSalaService.getTiposSala().subscribe({
+      next: (salas) => this.tipoSalaOpcoes = salas
+    })
+  }
 
-  @Output() clickEdit = new EventEmitter<Sala>();
+  @Output() clickEdit = new EventEmitter<AtualizarSalaRequest>();
   @Output() clickCancel = new EventEmitter<void>();
 
   form!: FormGroup;
+  tipoSalaOpcoes: TipoSala[] = [];
   private salaId!: number;
 
   public open(sala: Sala): void {
@@ -29,11 +40,11 @@ export class EditarEspacoModal {
 
   this.form = this.fb.group({
     salaNome: [sala.salaNome ?? '', Validators.required],
-    capacidade: [sala.capacidade ?? 0, Validators.required],
+    salaCapacidade: [sala.capacidade ?? 0, Validators.required],
     piso: [sala.piso ?? 0, Validators.required],
     disponibilidade: [sala.disponibilidade ?? false],
-    tipoSala: [sala.tipoSala ?? '', Validators.required],
-    observacoes: [sala.salaObservacoes ?? '']
+    tipoSalaId: [sala.tipoSala ?? '', Validators.required],
+    salaObservacoes: [sala.salaObservacoes ?? '']
   });
 
   this.form.disable();
@@ -54,7 +65,7 @@ export class EditarEspacoModal {
 
     this.form.enable();
 
-    const updatedData: Sala = {
+    const updatedData: AtualizarSalaRequest = {
       salaId: this.salaId, 
       ...this.form.value
     };
@@ -68,4 +79,16 @@ export class EditarEspacoModal {
     this.modalService.dismissAll();
   }
 
+  get isDisponivel(): boolean {
+    return this.form.get('disponibilidade')?.value ?? false;
+  }
+
+  toggleDisponibilidade() {
+    const control = this.form.get('disponibilidade');
+    if (control) {
+      const novoValor = !control.value;
+      control.setValue(novoValor);
+      control.markAsDirty();
+    }
+  }
 }

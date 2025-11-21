@@ -9,37 +9,46 @@
     <div class="body-modal">
       <form [formGroup]="form" class="form-grid" (submit)="$event.preventDefault()">
 
-        <div class="col-left">
-          <label for="" class="label-small">Nome:</label>
-          <input class="input-small" formControlName="salaNome" />
-
-          <label for="" class="label-small mt-12">Piso:</label>
-          <select formControlName="piso" class="input-small short-input">
-                <option value="0">Térreo</option>
-                <option value="1">1° Andar</option>
-                <option value="2">2° Andar</option>
-          </select>
+        <div class="d-flex flex-row justify-content-center align-items-center gap-5">
+          <div class="col-left">
+            <label for="iNome" class="label-small">Nome:</label>
+            <input class="input-small" id="iNome" formControlName="salaNome" />
+            <label for="" class="label-small mt-12">Piso:</label>
+            <select formControlName="piso" class="input-small short-input">
+                  <option value="1">Térreo</option>
+                  <option value="2">1° Andar</option>
+                  <option value="3">2° Andar</option>
+            </select>
+          </div>
+          <div class="col-right">
+            <label for="tipoEspaco" class="label-small">Tipo de Espaço:</label>
+            <select id="tipoEspaco" formControlName="tipoSalaId" class="input-small short-input">
+              @for (tipoSala of tipoSalaOpcoes; track tipoSala.tipoSalaId) {
+                <option [value]="tipoSala.tipoSalaId">{{tipoSala.tipoSalaNome}}</option>
+              }
+            </select>
+            <label for="iCapacidade" class="label-small mt-12">Capacidade: </label>
+            <input type="number" class="input-small" formControlName="salaCapacidade">
+          </div>
         </div>
 
-        <div class="col-right">
-          <label for="" class="label-small">Tipo de Espaço:</label>
-          <input class="input-small" formControlName="tipoSala" />
-        </div>
-
+        @if (form) {
+          <div class="indisponivel-row">
+            <label class="checkbox-container">
+              <input type="checkbox" formControlName="disponibilidade">
+              
+              <span class="status-dot" 
+                    [ngClass]="form.get('disponibilidade')?.value ? 'neutral-dot' : 'red-dot'">
+              </span>
+              
+              <span class="ind-text">
+                {{ form.get('disponibilidade')?.value ? 'Sala Disponível' : 'Sala Indisponível' }}
+              </span>
+            </label>
+          </div>
+        }
       </form>
 
-      @if (form) {
-        <div class="indisponivel-row">
-          <div 
-            class="status-dot" 
-            [ngClass]="form.get('disponibilidade')?.value ? 'neutral-dot' : 'red-dot'">
-          </div>
-
-          <span class="ind-text">
-            {{ form.get('disponibilidade')?.value ? 'Sala Disponível' : 'Sala Indisponível' }}
-          </span>
-        </div>
-      }
     </div>
 
     <div class="footer-modal">
