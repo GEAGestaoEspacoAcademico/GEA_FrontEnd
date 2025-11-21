@@ -13,6 +13,7 @@ import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { RoleGuard } from './guards/role.guard';
 import { Home } from './pages/AD/home/home';
 import { SpaceManagement } from './pages/space-management/space-management';
+import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
 import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
@@ -48,6 +49,15 @@ const routes: Routes = [
       // { path: 'cadastrar-espaco/:id', component: AdSpaceRegistrationPage },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
     ],
+  },
+  {
+    path: 'secretaria',
+    component: MainLayout,
+    canActivate: [RoleGuard],
+    data: {roles: ['SECRETARIA']},
+    children: [
+      {path: 'home', component: Secretariahome},
+    ]
   },
   {
     path: '',

@@ -69,6 +69,8 @@ import { SpaceManagement } from './pages/space-management/space-management';
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
+import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
+
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
 
@@ -110,6 +112,7 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
     SpaceManagementTable,
     SpaceRegistrationForm,
     Home,
+    FuncionarioTable,
     Secretariahome,
     CreateResourceModal
   ],
