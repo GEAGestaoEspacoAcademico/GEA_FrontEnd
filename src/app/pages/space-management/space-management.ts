@@ -1,7 +1,7 @@
 import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import type { Sala } from '../../models/sala.model';
-import { SalaService } from '../../services/salas/sala.service';
+import { SalaService } from '../../services/sala/sala.service';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 import { HeaderTitleService } from '../../services/header-title/header-title.service';
 
@@ -27,9 +27,7 @@ export class SpaceManagement implements OnInit {
   pageSize: number = 7;
 
   ngOnInit(): void {
-    this.headerService.showBack();
-    this.headerService.setTitle('Lista de Espaços Acadêmicos');
-    this.salaService.getLaboratorios().subscribe({
+    this.salaService.getSalas().subscribe({
       next: (labs) => {
         this.masterSalaList = labs;
         this.atualizarDataVisualizada();

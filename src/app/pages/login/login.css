@@ -23,9 +23,9 @@
   min-height: 28.875rem;
 
   .card-body{
-             padding: var(--spacing-8) /*top*/ 
-             var(--spacing-9) /*right*/ 
-             var(--spacing-8) /*bottom*/ 
+             padding: var(--spacing-8) /*top*/
+             var(--spacing-9) /*right*/
+             var(--spacing-8) /*bottom*/
              var(--spacing-9) /*left*/ !important;
   }
 }
@@ -60,6 +60,10 @@ h2 {
 h3 {
   font-size: 2.6rem !important;
   margin-top: -1rem !important;
+}
+
+a:hover{
+  color: var(--color-neutral-900) !important;
 }
 
 .b-line {
@@ -153,6 +157,10 @@ h3 {
     text-shadow: 0px var(--color-default-black);
 
     text-align: center;
+  }
+
+  a:hover{
+    color: var(--color-primary-900) !important;
   }
 
   .logo-fatec {

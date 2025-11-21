@@ -1,0 +1,139 @@
+<div class="login-page d-flex flex-column min-vh-100">
+  <div class="header flex-grow-1 text-white pb-5">
+    <img src="fatec-logo.png" class="logo-fatec" alt="Logotipo da FATEC" />
+    <div class="text-center mobile-header">
+      <h1 class="fw-bold mt-4 mobile-title">GEA</h1>
+    </div>
+  </div>
+
+  <div class="card rounded-top-5 border-0 card-senha">
+    <a class="align-items-center btn-voltar gap-2 m-4" routerLink="/login">
+      <mat-icon svgIcon="arrow-back" class="icon"></mat-icon>
+      <span>voltar</span>
+    </a>
+    @if (isLoading) {
+      <div class="d-flex justify-content-center align-items-center mt-4">
+        <mat-spinner diameter="50"></mat-spinner>
+      </div>
+    } @else if (token) {
+      <div class="card-body pb-4">
+        <h1 class="desktop-title fw-bold mb-4">Redefinir senha</h1>
+        <h3 class="mb-4 p-2 text-center ml">Redefinir senha</h3>
+        <form [formGroup]="formRedefinirSenha" class="d-flex flex-column gap-3">
+          <div class="form-floating">
+            <input
+              type="password"
+              class="form-control mb-2"
+              id="userNewPassword"
+              formControlName="novaSenha"
+              placeholder=""
+            />
+            <label for="userNewPassword">Nova senha</label>
+
+            @if (
+              formRedefinirSenha.get('novaSenha')?.touched &&
+              formRedefinirSenha.get('novaSenha')?.invalid
+            ) {
+              <div class="text-danger small">
+                @if (formRedefinirSenha.get('novaSenha')?.hasError('minlength')) {
+                  A nova senha tem que ter no minimo 6 caracteres.
+                } @else if (formRedefinirSenha.get('novaSenha')?.hasError('required')) {
+                  O campo 'Nova senha' é obrigatório.
+                }
+              </div>
+            }
+          </div>
+          <div class="form-floating">
+            <input
+              type="password"
+              class="form-control"
+              id="userNewPasswordAgain"
+              formControlName="novaSenhaRepetida"
+              placeholder=""
+            />
+            <label for="userNewPasswordAgain">Confirme a senha</label>
+
+            @if (
+              formRedefinirSenha.get('novaSenhaRepetida')?.touched &&
+              formRedefinirSenha.get('novaSenhaRepetida')?.invalid
+            ) {
+              <div class="text-danger mt-2 small">
+                @if (formRedefinirSenha.hasError('passwordMismatch')) {
+                  As senhas não correspondem.
+                }
+              </div>
+            }
+          </div>
+        </form>
+
+        <button class="btn btn-danger w-100 fw-bold py-2" (click)="validarSenhas()">
+          ALTERAR SENHA
+        </button>
+      </div>
+    } @else if (isEmailSucess) {
+      <div class="row">
+        <div class="col text-center justify-content-between">
+          <mat-icon svgIcon="feedback-email" class="icon confirm-icon"></mat-icon>
+          <h3 class="title-confirm">
+            E-mail enviado com <br />
+            sucesso!
+          </h3>
+          <p class="mt-4 text-confirm">
+            Enviamos um link para sua caixa de <br />
+            entrada. Siga as instruções para <br />
+            redefinir sua senha.
+          </p>
+        </div>
+      </div>
+    } @else {
+      <h1 class="desktop-title fw-bold mb-4">Esqueci a senha</h1>
+      <h2 class="text-center desktop-subtitle mb-4">
+        Digite seu e-mail para <br />
+        enviarmos um link seguro.
+      </h2>
+
+      <div class="p-2 text-center ml">
+        <h3 class="my-4">Esqueci a senha</h3>
+        <h4>
+          Digite seu e-mail para enviarmos <br />
+          um link seguro.
+        </h4>
+      </div>
+      <div class="card-body pb-4">
+        <form [formGroup]="formEmail" class="form">
+          <div class="form-floating">
+            <input
+              type="email"
+              class="form-control mb-2"
+              id="userInput"
+              formControlName="email"
+              placeholder=""
+            />
+            <label for="userInput">E-mail</label>
+
+            @if (formEmail.get('email')?.touched && formEmail.get('email')?.invalid) {
+              <div class="text-danger mt-2 small">
+                @if (formEmail.get('email')?.hasError('required')) {
+                  O campo 'E-mail' é obrigatório.
+                } @else if (formEmail.get('email')?.hasError('email')) {
+                  E-mail inválido.
+                }
+              </div>
+            }
+          </div>
+
+          <div class="row align-items-center justify-content-between">
+            <div class="col-6 col-md-12">
+              <button class="btn btn-danger w-100 fw-bold py-2" (click)="validarEmail()">
+                ENVIAR
+              </button>
+            </div>
+            <div class="col-6">
+              <a class="btn btn-cancelar w-100 fw-bold py-2" routerLink="/login"> CANCELAR </a>
+            </div>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</div>

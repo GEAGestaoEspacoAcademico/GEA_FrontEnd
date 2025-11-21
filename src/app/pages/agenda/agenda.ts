@@ -2,23 +2,23 @@ import type { Field } from '../../components/shared/scheduling/types';
 import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import { SalaService } from '../../services/salas/sala.service';
 import type { Observable } from 'rxjs';
 import { filter, forkJoin, switchMap, take } from 'rxjs';
 import { ProfessorService } from '../../services/professor/professor.service';
 import type { Option } from '../../components/shared/scheduling/types';
 import { Store } from '@ngrx/store';
 import { selectUserCargo, selectUserId } from '../../store/auth/auth.selectors';
-import type { RecomendacaoRequest, SalasRecomendadas } from '../../types/recomendacao';
 import { RecursoService } from '../../services/recurso/recurso.service';
 import type { AgendarForm, CriarAgendamento } from '../../types/agendar';
 import { TipoSalaService } from '../../services/tipo-sala/tipo-sala.service';
 import { JanelasHorarioService } from '../../services/janelas-horario/janelas-horario.service';
 import { FormatUtils } from '../../utils/format.utils';
-import { AgendamentoService } from '../../services/agendamentos/agendamento.service';
+import { AgendamentoService } from '../../services/agendamento/agendamento.service';
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
-import { Data } from '@angular/router';
 import { HeaderTitleService } from '../../services/header-title/header-title.service';
+import type { BuscarRecomendacaoRequest, BuscarRecomendacaoResponse } from '../../types/sala.type';
+import type { AgendamentoAulaCriarRequest } from '../../types/agendamentoAula.type';
+import { SalaService } from '../../services/sala/sala.service';
 
 @Component({
   selector: 'app-agenda',
@@ -41,14 +41,14 @@ export class Agenda implements OnInit {
   @ViewChild('classInfoModal') classInfoModal!: ConfirmationModal;
 
   cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
-
-  requisicaoRecomendacao!: RecomendacaoRequest;
+  
+  requisicaoRecomendacao!: BuscarRecomendacaoRequest
   isloading: boolean = false;
   isRecomendacaoLoading: boolean = false;
   submittedData!: AgendarForm;
   formFields: Field[] | undefined;
-  salasRecomendadas: SalasRecomendadas[] = [];
-  idSalaRecomendadaAtual!: number;
+  salasRecomendadas: BuscarRecomendacaoResponse[] = []
+  idSalaRecomendadaAtual!: number
 
   ngOnInit(): void {
     this.headerService.setTitle('Agenda');
@@ -58,53 +58,46 @@ export class Agenda implements OnInit {
 
   private loadDataAndBuildForm(): void {
     this.isloading = true;
-    this.store
-      .select(selectUserId)
-      .pipe(
-        filter(Boolean),
-        take(1),
-        switchMap((userId) => {
-          return forkJoin({
-            disciplinas: this.professorService.getDisciplinasDoProfessor(userId),
-            cursos: this.professorService.getCursosDoProfessor(userId),
-            tipoSalas: this.tiposSalaService.getTiposSalas(),
-            recursos: this.recursosService.getRecursos(),
-            janelasHorario: this.janelasHorarioService.getJanelasHorario(),
-          });
-        }),
-      )
-      .subscribe({
-        next: ({ disciplinas, cursos, tipoSalas, recursos, janelasHorario }) => {
-          const disciplinaOptions = disciplinas.map((d) => ({
-            label: d.nomeDisciplina,
-            value: d.idDisciplina,
-          }));
-          const cursoOptions = cursos.map((c) => ({ label: c.nome, value: c.idCurso }));
-          const tiposSalaOptions = tipoSalas.map((ts) => ({
-            label: ts.tipoSalaNome,
-            value: ts.tipoSalaId,
-          }));
-
-          const recursoOptions = recursos.map((r) => ({ label: r.nome, value: r.id }));
-          const janelaHorarioOptions = janelasHorario.map((jh) => {
-            const hi = FormatUtils.formatHour(jh.horaInicio);
-            const hf = FormatUtils.formatHour(jh.horaFim);
-            return { label: `${hi}-${hf}`, value: jh.id };
-          });
-          this.isloading = false;
-          this.formFields = this.createFormFields(
-            disciplinaOptions,
-            cursoOptions,
-            tiposSalaOptions,
-            recursoOptions,
-            janelaHorarioOptions,
-          );
-        },
-        error: (err) => {
-          console.error('Falha ao carregar dados do formulário:', err);
-          this.isloading = false;
-        },
+    this.store.select(selectUserId).pipe(
+      filter(Boolean),
+      take(1),
+      switchMap(userId => {
+        return forkJoin({
+        disciplinas: this.professorService.getDisciplinasDoProfessor(userId),
+        cursos: this.professorService.getCursosDoProfessor(userId),
+        tipoSalas: this.tiposSalaService.getTiposSala(),
+        recursos: this.recursosService.getRecursos(),
+        janelasHorario: this.janelasHorarioService.getJanelasHorario()
       });
+      })
+    ).subscribe({
+      next: ({disciplinas, cursos, tipoSalas, recursos, janelasHorario}) => {
+        const disciplinaOptions = disciplinas.map(d => ({ label: d.disciplinaNome, value: d.disciplinaId }));
+        const cursoOptions = cursos.map(c => ({ label: c.cursoNome, value: c.cursoId }));
+        const tiposSalaOptions = tipoSalas.map(ts => ({ label: ts.tipoSalaNome, value: ts.tipoSalaId }));
+        
+        const recursoOptions = recursos.map(r => ({label: r.nome, value: r.id}))
+        const janelaHorarioOptions = janelasHorario.map(jh => {
+          const hi = FormatUtils.formatHour(jh.horaInicio);
+          const hf = FormatUtils.formatHour(jh.horaFim);
+          return(
+            {label: `${hi}-${hf}`, value: jh.janelasHorarioId}
+          )
+        })
+        this.isloading = false;
+        this.formFields = this.createFormFields(
+          disciplinaOptions,
+          cursoOptions,
+          tiposSalaOptions,
+          recursoOptions,
+          janelaHorarioOptions
+        );
+      },
+      error: (err) => {
+        console.error('Falha ao carregar dados do formulário:', err);
+        this.isloading = false;
+      }
+    })
   }
 
   private createFormFields(
@@ -233,34 +226,30 @@ export class Agenda implements OnInit {
     this.classInfoModal.open();
   }
 
-  agendarAula() {
-    this.store
-      .select(selectUserId)
-      .pipe(
-        filter(Boolean),
-        take(1),
-        switchMap((userId) => {
-          const corpoCriarAgendamento: CriarAgendamento = {
-            usuarioId: userId,
-            salaId: Number(this.idSalaRecomendadaAtual),
-            disciplinaId: Number(this.submittedData.disciplinaId),
-            dataInicio: this.submittedData.data,
-            dataFim: this.submittedData.data,
-            janelasHorarioId: this.submittedData.janelaHorarioId,
-            tipo: 'Aula',
-            diaDaSemana: 'Segunda',
-          };
-          return this.agendamentoService.criarAgendamento(corpoCriarAgendamento);
-        }),
-      )
-      .subscribe({
-        next: (_) => {
-          this.snackbarService.showSuccess('Agendamento feito com sucesso');
-        },
-        error: (err) => {
-          console.error('Erro ao criar agendamento:', err);
-          this.snackbarService.showError('Falha ao agendar. Tente novamente.');
-        },
-      });
-  }
+agendarAula() {
+  this.store.select(selectUserId).pipe(
+    filter(Boolean),
+    take(1),
+    switchMap(userId => {
+      const corpoCriarAgendamento: AgendamentoAulaCriarRequest = {
+        usuarioId: userId,
+        salaId: Number(this.idSalaRecomendadaAtual),
+        disciplinaId: Number(this.submittedData.disciplinaId),
+        data: this.submittedData.data,
+        janelasHorarioId: this.submittedData.janelaHorarioId,
+        isEvento: false,
+        quantidade: Number(this.submittedData.qtdAulas)
+      };
+      return this.agendamentoService.criarAgendamentoAula(corpoCriarAgendamento);
+    })
+  ).subscribe({
+    next: (_) => {
+      this.snackbarService.showSuccess("Agendamento feito com sucesso");
+    },
+    error: (err) => {
+      console.error("Erro ao criar agendamento:", err);
+      this.snackbarService.showError("Falha ao agendar. Tente novamente.");
+    }
+  });
+}
 }
