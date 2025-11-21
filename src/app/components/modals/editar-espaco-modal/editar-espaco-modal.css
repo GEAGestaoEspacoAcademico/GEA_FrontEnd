@@ -112,12 +112,18 @@
   gap: 0.625rem;
 }
 
-.red-dot {
-  width: 1.125rem;
-  height: 1.125rem;
+.neutral-dot {
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
-  border: 3px solid white;
-  background: var(--color-primary-300);
+  background-color: var(--color-neutral-100);
+}
+
+.red-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--color-primary-300);
 }
 
 .footer-modal {

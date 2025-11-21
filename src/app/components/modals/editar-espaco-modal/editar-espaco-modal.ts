@@ -1,6 +1,6 @@
 import type { TemplateRef} from '@angular/core';
 import { Component, EventEmitter, inject, Output, ViewChild } from '@angular/core';
-import type { FormArray, FormGroup} from '@angular/forms';
+import type { FormGroup} from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import type { Sala } from '../../../models/sala.model';
@@ -23,10 +23,6 @@ export class EditarEspacoModal {
 
   form!: FormGroup;
   private salaId!: number;
-  
-  get materiasArray(): FormArray {
-    return this.form.get('materias') as FormArray;
-  }
 
   public open(sala: Sala): void {
   this.salaId = sala.salaId;
@@ -37,12 +33,8 @@ export class EditarEspacoModal {
     piso: [sala.piso ?? 0, Validators.required],
     disponibilidade: [sala.disponibilidade ?? false],
     tipoSala: [sala.tipoSala ?? '', Validators.required],
-    materias: this.fb.array([]),
     observacoes: [sala.observacoes ?? '']
   });
-
-  const materias = Array.isArray(sala.materias) ? sala.materias : [];
-  materias.forEach(m => this.materiasArray.push(this.fb.control(m)));
 
   this.form.disable();
 
@@ -64,8 +56,7 @@ export class EditarEspacoModal {
 
     const updatedData: Sala = {
       salaId: this.salaId, 
-      ...this.form.value,
-      materias: this.materiasArray.value
+      ...this.form.value
     };
 
     this.clickEdit.emit(updatedData);
@@ -75,17 +66,6 @@ export class EditarEspacoModal {
   public onModalClose(): void {
     this.clickCancel.emit();
     this.modalService.dismissAll();
-  }
-
-  public addMateriaByName(value: string): void {
-    const nome = value.trim();
-    if (!nome) {return};
-
-    this.materiasArray.push(this.fb.control(nome));
-  }
-
-  public removeMateria(index: number): void {
-    this.materiasArray.removeAt(index);
   }
 
 }

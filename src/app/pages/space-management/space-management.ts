@@ -27,7 +27,7 @@ export class SpaceManagement implements OnInit {
   
 
   ngOnInit(): void {
-    this.salaService.getLaboratorios().subscribe({
+    this.salaService.getSalas().subscribe({
       next: (labs) => {
         this.masterSalaList = labs;
         this.atualizarDataVisualizada();
