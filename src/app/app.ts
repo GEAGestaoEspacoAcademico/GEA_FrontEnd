@@ -10,12 +10,12 @@ import { PushNotificationService } from './services/push-notification/push-notif
 export class App {
   private iconRegistryService = inject(IconRegistryService);
   private pushNotificationService = inject(PushNotificationService);
-  
+
   constructor() {
     this.iconRegistryService.registerIcons();
     this.pushNotificationService.listenToMessages();
     this.pushNotificationService.listenToNotificationClicks();
-    
+
     this.pushNotificationService.inscreverNotificacao();
   }
 }
