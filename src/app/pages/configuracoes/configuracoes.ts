@@ -8,7 +8,7 @@ import { filter, map, switchMap, type Observable } from 'rxjs';
 import { selectCurrentUser } from '../../store/auth/auth.selectors';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
-import { ProfessorService } from '../../services/professor/professor.service';
+import ProfessorService from '../../services/professor/professor.service';
 import type { Disciplina } from '../../models/disciplina.model';
 import type { ScheduleDayModal } from '../../components/shared/schedule-day-modal/schedule-day-modal';
 import type { Sala } from '../../models/sala.model';
