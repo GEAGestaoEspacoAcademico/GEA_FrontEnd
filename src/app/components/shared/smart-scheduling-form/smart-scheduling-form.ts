@@ -96,7 +96,8 @@ export class SmartSchedulingForm implements OnInit {
   buildForms() {
     // Inicializa o formulário de Aula com controles e validadores.
     this.aulaForm = this.fb.group({
-      horario: ['', Validators.required], // Campo obrigatório
+      inicio: ['', Validators.required],
+      fim: ['', Validators.required],
       local: ['', Validators.required],
       disciplina: ['', Validators.required],
       solicitante: ['', Validators.required]
@@ -179,13 +180,6 @@ export class SmartSchedulingForm implements OnInit {
     this.serviceHorario.getJanelaHorarioPorData(dataString).subscribe({ // Assumindo o nome correto do serviço
       next: (janelas: JanelaHorario[]) => {
         this.listaHorarios = janelas;
-
-        this.horarios = janelas.map(janela => {
-          const inicioFormatado = janela.horaInicio.substring(0, 5);
-          const fimFormatado = janela.horaFim.substring(0, 5);
-          return `${inicioFormatado} - ${fimFormatado}`;
-        });
-
       },
       error: (err) => {
         this.listaHorarios = [];

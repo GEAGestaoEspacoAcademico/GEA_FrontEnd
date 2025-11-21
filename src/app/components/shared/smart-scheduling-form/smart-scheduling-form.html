@@ -25,23 +25,23 @@
                 </mat-form-field>
             </div>
 
-            <!-- <div class="col-6">
+            <div class="col-6">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Curso</mat-label>
-                    <mat-select formControlName="curso">
-                        @for (c of cursos; track c.cursoId) {
-                        <mat-option [value]="c">{{c.cursoSigla}}</mat-option>
+                    <mat-label>Início</mat-label>
+                    <mat-select formControlName="inicio">
+                        @for (hInicio of listaHorarios; track hInicio.janelasHorarioId) {
+                        <mat-option [value]="hInicio.horaInicio">{{ hInicio.horaInicio.slice(0, 5) }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
-            </div> -->
+            </div>
 
             <div class="col-6">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Horário</mat-label>
-                    <mat-select formControlName="horario">
-                        @for (h of horarios; track $index) {
-                        <mat-option [value]="h">{{ h }}</mat-option>
+                    <mat-label>Fim</mat-label>
+                    <mat-select formControlName="fim">
+                        @for (hFim of listaHorarios; track hFim.janelasHorarioId) {
+                        <mat-option [value]="hFim.horaFim">{{ hFim.horaFim.slice(0, 5) }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -88,6 +88,12 @@
 
             <div class="col-6">
                 <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Data Selecionada</mat-label>
+                    <input matInput [value]="singleDate | date:'dd/MM/yyyy'" [disabled]="true"> </mat-form-field>
+            </div>
+
+            <div class="col-6">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Início</mat-label>
                     <mat-select formControlName="inicio">
                         @for (hInicio of listaHorarios; track hInicio.janelasHorarioId) {
@@ -108,13 +114,7 @@
                 </mat-form-field>
             </div>
 
-            <div class="col-6">
-                <mat-checkbox formControlName="todosHorarios">
-                    Todos os horários
-                </mat-checkbox>
-            </div>
-
-            <div class="col-6">
+            <div class="col-12" style="width: fit-content; margin-left: auto;">
                 <button mat-raised-button class="btn btn-primary" (click)="addEventoConfig()"
                     [disabled]="eventoForm.invalid">
                     Salvar
