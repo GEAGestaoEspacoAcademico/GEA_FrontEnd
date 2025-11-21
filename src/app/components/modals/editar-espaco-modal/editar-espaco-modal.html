@@ -1,0 +1,56 @@
+<ng-template #editarEspacoModalTemplate let-modal>
+  <div class="modal-geral" role="dialog" aria-modal="true">
+
+    <div class="header-modal">
+      <span class="title">Editar espaço acadêmicos</span>
+      <button class="close-btn" (click)="onModalClose()">✕</button>
+    </div>
+
+    <div class="body-modal">
+      <form [formGroup]="form" class="form-grid" (submit)="$event.preventDefault()">
+
+        <div class="col-left">
+          <label for="" class="label-small">Nome:</label>
+          <input class="input-small" formControlName="salaNome" />
+
+          <label for="" class="label-small mt-12">Piso:</label>
+          <select formControlName="piso" class="input-small short-input">
+                <option value="0">Térreo</option>
+                <option value="1">1° Andar</option>
+                <option value="2">2° Andar</option>
+          </select>
+        </div>
+
+        <div class="col-right">
+          <label for="" class="label-small">Tipo de Espaço:</label>
+          <input class="input-small" formControlName="tipoSala" />
+        </div>
+
+      </form>
+
+      @if (form) {
+        <div class="indisponivel-row">
+          <div 
+            class="status-dot" 
+            [ngClass]="form.get('disponibilidade')?.value ? 'neutral-dot' : 'red-dot'">
+          </div>
+
+          <span class="ind-text">
+            {{ form.get('disponibilidade')?.value ? 'Sala Disponível' : 'Sala Indisponível' }}
+          </span>
+        </div>
+      }
+    </div>
+
+    <div class="footer-modal">
+      <button class="btn-edit" 
+              type="button" 
+              (click)="form.disabled ? onModalEdit() : onModalSave()">
+        {{ form.disabled ? 'Editar' : 'Salvar' }}
+      </button>
+
+      <button class="btn-cancel" type="button" (click)="onModalClose()">Cancelar</button>
+    </div>
+
+  </div>
+</ng-template>

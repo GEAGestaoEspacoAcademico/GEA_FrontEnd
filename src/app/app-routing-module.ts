@@ -15,6 +15,7 @@ import { Home } from './pages/AD/home/home';
 import { SpaceManagement } from './pages/space-management/space-management';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 import { RedefinirSenha } from './pages/redefinir-senha/redefinir-senha';
+import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
 import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
@@ -56,8 +57,11 @@ const routes: Routes = [
     path: 'secretaria',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: { roles: ['SECRETARIA'] },
-    children: [{ path: 'home', component: Secretariahome }],
+    data: {roles: ['SECRETARIA']},
+    children: [
+      {path: 'home', component: Secretariahome},
+      {path: 'visualizar-espacos', component: ListaEspacos}
+    ]
   },
   {
     path: '',

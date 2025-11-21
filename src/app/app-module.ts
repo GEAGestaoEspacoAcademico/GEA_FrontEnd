@@ -44,6 +44,7 @@ import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { EditarAula } from './pages/editar-aula/visualizar-aula';
 import { Login } from './pages/login/login';
 import { EsqueciSenha } from './pages/esqueci-senha/esqueci-senha';
+import { RedefinirSenha } from './pages/redefinir-senha/redefinir-senha';
 
 // Shared Components
 import { DaySelector } from './components/shared/day-selector/day-selector';
@@ -71,8 +72,12 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
 import { Home } from './pages/AD/home/home';
 import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
+import { SalaForm } from './components/secretaria/sala-form/sala-form';
+import { EspacosTable } from './components/secretaria/espacos-table/espacos-table';
+import { EditarEspacoModal } from './components/modals/editar-espaco-modal/editar-espaco-modal';
+import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
-import { RedefinirSenha } from './pages/redefinir-senha/redefinir-senha';
+
 
 @NgModule({
   declarations: [
@@ -112,10 +117,14 @@ import { RedefinirSenha } from './pages/redefinir-senha/redefinir-senha';
     SpaceManagementTable,
     SpaceRegistrationForm,
     Home,
-    FuncionarioTable,
     Secretariahome,
-    CreateResourceModal,
     RedefinirSenha,
+    SalaForm,
+    EspacosTable,
+    EditarEspacoModal,
+    ListaEspacos,
+    FuncionarioTable,
+    CreateResourceModal
   ],
   imports: [
     BrowserModule,
