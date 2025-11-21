@@ -1,17 +1,14 @@
 import type { OnInit } from '@angular/core';
-import { Component, inject, viewChild, ViewChild } from '@angular/core';
-import type { Teacher } from '../../models/teacher.model';
+import { Component, inject, ViewChild } from '@angular/core';
 import { AuthActions } from '../../store/auth/auth.actions';
 import { Store } from '@ngrx/store';
-import type { User } from '../../models/user.model';
+import type { Usuario } from '../../models/usuario.model';
 import { filter, map, switchMap, type Observable } from 'rxjs';
 import { selectCurrentUser } from '../../store/auth/auth.selectors';
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
 import ProfessorService from '../../services/professor/professor.service';
 import type { Disciplina } from '../../models/disciplina.model';
-import type { ScheduleDayModal } from '../../components/shared/schedule-day-modal/schedule-day-modal';
-import type { Sala } from '../../models/sala.model';
 
 @Component({
   selector: 'app-configuracoes',
@@ -24,7 +21,7 @@ export class Configuracoes implements OnInit {
   private notificationService = inject(SnackBarService);
   private professorService = inject(ProfessorService);
 
-  user$: Observable<User | null> = this.store.select(selectCurrentUser);
+  user$: Observable<Usuario | null> = this.store.select(selectCurrentUser);
   disciplinas$!: Observable<Disciplina[]>;
 
   ngOnInit(): void {

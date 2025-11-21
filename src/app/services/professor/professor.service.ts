@@ -5,6 +5,8 @@ import type { Observable } from 'rxjs';
 import type { Disciplina } from '../../models/disciplina.model';
 import type { CursoProfesor } from '../../types/curso';
 import type { Professor } from '../../types/funcionario';
+import type { Professor } from '../../models/professor.model';
+import type { BuscarCursosProfessorResponse, CriarProfessorRequest } from '../../types/professor.types';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +21,32 @@ export default class ProfessorService {
 
   public getCursosDoProfessor(idProfessor: number): Observable<CursoProfesor[]> {
     return this.http.get<CursoProfesor[]>(`${this.baseUrl}/${idProfessor}/cursos`)
+  public getProfessorPorId(idProfessor: number): Observable<Professor>{
+    return this.http.get<Professor>(`${this.baseUrl}/${idProfessor}`);
+  }
+
+  public editProfessor(idProfessor: number, professor: Professor): Observable<Professor>{
+    return this.http.put<Professor>(`${this.baseUrl}/${idProfessor}`, professor);
+  }
+
+  public getProfessores(): Observable<Professor[]> {
+    return this.http.get<Professor[]>(this.baseUrl);
+  }
+
+  public criarProfessor(professor: CriarProfessorRequest): Observable<Professor>{
+    return this.http.post<Professor>(this.baseUrl, professor)
+  }
+
+  public getDisciplinasDoProfessor(idProfessor: number): Observable<Disciplina[]>{
+    return this.http.get<Disciplina[]>(`${this.baseUrl}/${idProfessor}/disciplinas`);
+  }
+
+  public getCursosDoProfessor(idProfessor: number): Observable<BuscarCursosProfessorResponse[]>{
+    return this.http.get<BuscarCursosProfessorResponse[]>(`${this.baseUrl}/${idProfessor}/cursos`)
+  }
+
+  public deleteProfessor(idProfessor: number): Observable<void>{
+    return this.http.delete<void>(`${this.baseUrl}/${idProfessor}`)
   }
 
   public getById(idProfessor: number): Observable<Professor> {

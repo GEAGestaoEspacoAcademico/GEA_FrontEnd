@@ -72,7 +72,7 @@
           <span class="visually-hidden">Notificações</span>
         </a>
 
-        @if (cargo?.toUpperCase() === 'AD' || cargo?.toUpperCase() === 'SECRETARIA') {
+        @if (cargo?.toUpperCase() === 'AUXILIAR_DOCENTE' || cargo?.toUpperCase() === 'SECRETARIA') {
           <a
             (click)="logout()"
             (keydown.enter)="logout()"

@@ -1,6 +1,5 @@
 import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
-import type { Agendamento } from '../../models/agendamento.model';
 import type { Day } from '../../components/shared/day-selector/day-selector';
 import { Router } from '@angular/router';
 import { map, type Observable } from 'rxjs';
@@ -13,7 +12,8 @@ import { AgendamentoActions } from '../../store/agendamento/agendamento.actions'
 import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
 import { SnackBarService } from '../../services/snackbar/snackbar.service';
 import { FormatUtils } from '../../utils/format.utils';
-import type { AddItemModal } from '../../components/shared/add-item-modal/add-item-modal';
+import type { Agendamento } from '../../models/agendamento.model';
+import type { AgendamentoAula } from '../../models/agendamentoAula.model';
 
 @Component({
   selector: 'app-aulas',
@@ -32,10 +32,10 @@ export class Aulas implements OnInit {
   activeDayId!: string;
   monthToDisplay!: string;
 
-  agendamentos$: Observable<Agendamento[]> = this.store.select(selectTodasOsAgendamentos);
+  agendamentos$: Observable<AgendamentoAula[]> = this.store.select(selectTodasOsAgendamentos);
   loading$: Observable<boolean> = this.store.select(selectAgendamentoLoading);
 
-  agendamentosDoDiaSelecionado$!: Observable<Agendamento[]>;
+  agendamentosDoDiaSelecionado$!: Observable<AgendamentoAula[]>;
 
   @ViewChild('confirmCancelModel') confirmModal!: ConfirmationModal;
   agendamentoToCancelId: number | null = null;
@@ -90,7 +90,7 @@ export class Aulas implements OnInit {
     this.agendamentosDoDiaSelecionado$ = this.agendamentos$.pipe(
       map((agendamentos) => {
         const agendamentosFiltrados = agendamentos.filter((agendamento) => {
-          const isDentroDoIntervalo = this.activeDayId === agendamento.dataInicio;
+          const isDentroDoIntervalo = this.activeDayId === agendamento.data;
           return isDentroDoIntervalo;
         });
         return agendamentosFiltrados.sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
