@@ -118,7 +118,13 @@ import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agen
     Home,
     Secretariahome,
     CreateResourceModal,
-    AgendarSalaMateria
+    AgendarSalaMateria,
+    RedefinirSenha,
+    EditarEspacoModal,
+    EspacosTable,
+    FuncionarioTable,
+    SalaForm,
+    ListaEspacos
   ],
   imports: [
     BrowserModule,
