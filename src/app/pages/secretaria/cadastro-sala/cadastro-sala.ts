@@ -2,7 +2,9 @@ import { Component, inject } from '@angular/core';
 import { SalaService } from '../../../services/sala/sala.service';
 import { Router } from '@angular/router';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
-import { catchError, forkJoin, of, switchMap } from 'rxjs';
+import { catchError, of, switchMap } from 'rxjs';
+import type { CriarSalaFormulario } from '../../../types/util.types';
+import type { AdicionarRecursoSalaRequest } from '../../../types/sala.type';
 
 @Component({
   selector: 'app-cadastro-sala',
@@ -17,52 +19,44 @@ export class CadastroSala {
   private snackbar = inject(SnackBarService);
   private router = inject(Router);
 
-  onSave(formValue: any) {
+  onSave(formValue: CriarSalaFormulario) {
     this.isSaving = true;
 
     const dadosPrincipais = {
-      salaNome: formValue.nome,
-      salaCapacidade: formValue.capacidade,
+      salaNome: formValue.salaNome,
+      salaCapacidade: formValue.salaCapacidade,
       piso: formValue.piso,
       disponibilidade: formValue.disponibilidade ?? true,
-      tipoSalaId: formValue.idTipoSala,
-      salaObservacoes: formValue.observacoes,
+      tipoSalaId: formValue.tipoSalaId,
+      salaObservacoes: formValue.salaObservacoes,
     };
 
     this.salaService
       .criarSala(dadosPrincipais)
       .pipe(
         switchMap((salaCriada) => {
-          const equipamentos = formValue.equipamentos || [];
+          const equipamentos = formValue.equipamentos;
 
           if (!equipamentos.length) {
             return of(true);
           }
 
-          const recursosObservables = equipamentos.map((recurso: any) => {
-            const requestBody = {
-              idRecurso: recurso.idRecurso,
-              quantidade: recurso.quantidade,
-            };
+          const requesicaoRecursos: AdicionarRecursoSalaRequest = {
+            listaDeRecursosParaAdicionar: equipamentos
+          }
 
-            return this.salaService.adicionarRecursoEmSala(salaCriada.salaId, requestBody).pipe(
-              catchError((err) => {
-                console.error(
-                  `Erro ao adicionar recurso ID ${recurso.idRecurso} para a sala ${salaCriada.salaId}.`,
-                  err,
-                );
-                return of(null);
-              }),
-            );
-          });
-
-          return forkJoin(recursosObservables);
+          return this.salaService.adicionarRecursoEmSala(salaCriada.salaId, requesicaoRecursos).pipe(
+            catchError((_) => {
+              this.snackbar.showError(`Erro ao adicinoar recurso a sala`);
+              return of(null)
+            })
+          )
         }),
       )
       .subscribe({
         next: () => {
           this.snackbar.showSuccess('Sala salva e recursos adicionados com sucesso!');
-          this.router.navigate(['/secretaria/espacos']);
+          this.router.navigate(['/secretaria/visualizar-espacos']);
         },
         error: (err) => {
           console.error('Erro no fluxo de salvamento completo:', err);

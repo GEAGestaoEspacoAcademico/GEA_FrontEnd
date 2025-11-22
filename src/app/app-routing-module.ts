@@ -38,16 +38,6 @@ const routes: Routes = [
     ],
   },
   {
-    path: 'secretaria',
-    component: MainLayout,
-    canActivate: [RoleGuard],
-    data: { roles: ['SECRETARIA'] },
-    children: [
-      { path: 'secretaria', component:  Secretariahome},
-      { path: 'secretaria/cadastrar-espaco', component: CadastroSala },
-    ],
-  },
-  {
     path: 'ad',
     component: MainLayout,
     canActivate: [RoleGuard],
@@ -66,10 +56,11 @@ const routes: Routes = [
     path: 'secretaria',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: {roles: ['SECRETARIA']},
+    data: {roles: ['SECRETARIA', 'AUXILIAR_DOCENTE']},
     children: [
       {path: 'home', component: Secretariahome},
-      {path: 'visualizar-espacos', component: ListaEspacos}
+      {path: 'visualizar-espacos', component: ListaEspacos},
+      {path: 'cadastrar-laboratorio', component: CadastroSala}
     ]
   },
   {

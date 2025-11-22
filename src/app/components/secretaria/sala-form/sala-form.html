@@ -1,19 +1,20 @@
 <form [formGroup]="form" class="form-group" (ngSubmit)="onSave()">
   <div class="line-cols">
     <div>
-      <label for="idTipoSala" class="field-label">Tipo de Espaço</label>
-      <select
-        formControlName="idTipoSala"
-        class="simple-input"
-        [class.input-error]="form.get('idTipoSala')?.invalid && form.get('idTipoSala')?.touched"
-      >
-        <option value="" disabled>Selecione o tipo</option>
-        @for (tipo of tiposSalas; track tipo.tipoSalaId) {
-          <option [value]="tipo.tipoSalaId">{{ tipo.tipoSalaNome }}</option>
-        }
-      </select>
+    <div>
+        <label class="field-label" for="itipodesala">Tipo de Espaço</label>
+        <input 
+            type="text" 
+            value="Sala de Aula" 
+            class="simple-input disabled" 
+            disabled 
+            readonly
+        >
+    </div>
 
-      @if (form.get('idTipoSala')?.invalid && form.get('idTipoSala')?.touched) {
+    <input type="hidden" formControlName="tipoSalaId">
+
+      @if (form.get('tipoSalaId')?.invalid && form.get('tipoSalaId')?.touched) {
         <span class="error-msg">Selecione o tipo de espaço.</span>
       }
     </div>
@@ -40,34 +41,34 @@
       <label for="nome" class="field-label">Nome do Espaço</label>
       <input
         type="text"
-        formControlName="nome"
+        formControlName="salaNome"
         class="simple-input"
-        [class.input-error]="form.get('nome')?.invalid && form.get('nome')?.touched"
+        [class.input-error]="form.get('salaNome')?.invalid && form.get('salaNome')?.touched"
       />
 
-      @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+      @if (form.get('salaNome')?.invalid && form.get('salaNome')?.touched) {
         <span class="error-msg">O nome é obrigatório.</span>
       }
     </div>
 
     <div>
-      <label for="observacoes" class="field-label">Observações</label>
-      <input formControlName="observacoes" class="simple-input" />
+      <label for="salaObservacoes" class="field-label">Observações</label>
+      <input formControlName="salaObservacoes" class="simple-input" />
     </div>
 
     <div>
-      <label for="capacidade" class="field-label">Capacidade</label>
+      <label for="salaCapacidade" class="field-label">Capacidade</label>
       <select
-        formControlName="capacidade"
+        formControlName="salaCapacidade"
         class="simple-input"
-        [class.input-error]="form.get('capacidade')?.invalid && form.get('capacidade')?.touched"
+        [class.input-error]="form.get('salaCapacidade')?.invalid && form.get('salaCapacidade')?.touched"
       >
         <option value="" disabled>Selecione</option>
         <option value="20">1-20</option>
         <option value="30">21-30</option>
       </select>
 
-      @if (form.get('capacidade')?.invalid && form.get('capacidade')?.touched) {
+      @if (form.get('salaCapacidade')?.invalid && form.get('salaCapacidade')?.touched) {
         <span class="error-msg">Selecione a capacidade.</span>
       }
     </div>

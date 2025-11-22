@@ -8,6 +8,7 @@ import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
 import type { AddItemModalData } from '../../../types/additemmodal';
 import type { Recurso } from '../../../models/Recurso.model';
 import { RecursoService } from '../../../services/recurso/recurso.service';
+import type { CriarSalaFormulario } from '../../../types/util.types';
 
 @Component({
   selector: 'app-sala-form',
@@ -15,14 +16,15 @@ import { RecursoService } from '../../../services/recurso/recurso.service';
   templateUrl: './sala-form.html',
   styleUrl: './sala-form.css',
 })
+
 export class SalaForm implements OnInit {
   @Input() isLoading: boolean = false;
-  @Output() clickSave = new EventEmitter<FormGroup>();
+  @Output() clickSave = new EventEmitter<CriarSalaFormulario>();
   @Output() clickCancel = new EventEmitter<void>();
 
   @ViewChild('addItemModal') addItemModal!: AddItemModal;
 
-  tiposSalas: TipoSala[] = [];
+  salaDeAulaTipo: TipoSala | undefined;
 
   recursosDisponiveis: Recurso[] = [];
 
@@ -30,21 +32,21 @@ export class SalaForm implements OnInit {
   private tipoSalaService = inject(TipoSalaService);
   private recursoService = inject(RecursoService);
 
-  form: FormGroup = this.fb.group({
-    idTipoSala: ['', Validators.required],
-    nome: ['', Validators.required],
-    capacidade: ['', Validators.required],
-    piso: ['', Validators.required],
-    disponibilidade: [true],
-    observacoes: [''],
-    equipamentos: this.fb.array([]),
-  });
-
+  
   ngOnInit(): void {
-    this.tipoSalaService.getTiposSala().subscribe({
-      next: (tipos) => (this.tiposSalas = tipos),
-      error: (err) => console.error('Erro ao carregar tipos de sala', err),
-    });
+this.tipoSalaService.getTiposSala().subscribe({
+    next: (tipos) => {
+      const tipoEncontrado = tipos.find(t => 
+        t.tipoSalaNome.trim().toUpperCase().replace(/\s/g, '') === "SALADEAULA" // Dica: cuidado com espaços
+      );
+      
+      this.salaDeAulaTipo = tipoEncontrado;
+      if (this.salaDeAulaTipo) {
+        this.form.get('tipoSalaId')?.setValue(this.salaDeAulaTipo.tipoSalaId);
+      }
+    },
+    error: (err) => console.error('Erro ao carregar tipos de sala', err),
+  });
 
     this.recursoService.getRecursos().subscribe({
         next: (recursos) => {
@@ -53,6 +55,17 @@ export class SalaForm implements OnInit {
         error: (err) => console.error('Erro ao carregar recursos', err),
     });
   }
+
+  form: FormGroup = this.fb.group({
+    tipoSalaId: [{value: 1, disabled: true}, Validators.required],
+    salaNome: ['', Validators.required],
+    salaCapacidade: ['', Validators.required],
+    piso: ['', Validators.required],
+    disponibilidade: [true],
+    salaObservacoes: [''],
+    equipamentos: this.fb.array([]),
+  });
+
 
   get equipamentosFA(): FormArray {
     return this.form.get('equipamentos') as FormArray;
@@ -71,12 +84,10 @@ export class SalaForm implements OnInit {
     if (!item || !item.recursoId) {
       return;
     }
-
     this.equipamentosFA.push(
       this.fb.group({
-        idRecurso: item.recursoId,
-        nome: item.name,
-        quantidade: item.quantity ?? 1,
+        recursoId: item.recursoId,
+        quantidadeRecurso: item.quantity ?? 1,
       }),
     );
   }
@@ -86,7 +97,7 @@ export class SalaForm implements OnInit {
   }
 
   onSave() {
-    this.clickSave.emit(this.form.value);
+    this.clickSave.emit(this.form.getRawValue());
   }
 
   onCancel() {
