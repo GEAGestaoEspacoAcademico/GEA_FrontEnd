@@ -1,14 +1,15 @@
 import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
-import { AuthActions } from '../../store/auth/auth.actions';
+import { AuthActions } from '../../../store/auth/auth.actions';
 import { Store } from '@ngrx/store';
-import type { Usuario } from '../../models/usuario.model';
+import type { Usuario } from '../../../models/usuario.model';
 import { filter, map, switchMap, type Observable } from 'rxjs';
-import { selectCurrentUser } from '../../store/auth/auth.selectors';
-import type { ConfirmationModal } from '../../components/shared/confirmation-modal/confirmation-modal';
-import { SnackBarService } from '../../services/snackbar/snackbar.service';
-import { ProfessorService } from '../../services/professor/professor.service';
-import type { Disciplina } from '../../models/disciplina.model';
+import { selectCurrentUser } from '../../../store/auth/auth.selectors';
+import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
+import { ProfessorService } from '../../../services/professor/professor.service';
+import type { Disciplina } from '../../../models/disciplina.model';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-configuracoes',
@@ -20,11 +21,14 @@ export class Configuracoes implements OnInit {
   private store = inject(Store);
   private notificationService = inject(SnackBarService);
   private professorService = inject(ProfessorService);
+  private headerService = inject(HeaderTitleService);
 
   user$: Observable<Usuario | null> = this.store.select(selectCurrentUser);
   disciplinas$!: Observable<Disciplina[]>;
 
   ngOnInit(): void {
+    this.headerService.setTitle('Configurações');
+    this.headerService.hideBack();
     this.disciplinas$ = this.user$.pipe(
       filter((professor) => professor !== null),
       map((professor) => professor.usuarioId),

@@ -1,5 +1,5 @@
 .header {
-  background-image: url('../../../assets/images/loginBackground.png');
+  background-image: url('../../../../assets/images/loginBackground.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -53,9 +53,11 @@
   background-color: #ad0f0a !important;
 }
 
-  .btn-voltar{
-    display: none ;
-  }
+.btn-voltar{
+  display: none ;
+  border: none;
+  background-color: var(--color-surface-base);
+}
 
 .form-control {
   border-color: #870c08 !important;
@@ -133,7 +135,7 @@ h3 {
 
     border-radius: 0% !important;
 
-    width: 60%;
+    width: 50%;
 
     .card-body {
       min-width: 50%;
@@ -192,11 +194,6 @@ h3 {
     transition: color 0.3s ease;
   }
 
-  .btn-voltar p {
-    margin: 0;
-    padding: 0;
-  }
-
   .btn-voltar:hover{
     color: var(--color-primary-300);
   }
@@ -215,9 +212,5 @@ h3 {
 
   .title-confirm{
     font-size: 1.5rem;
-  }
-
-  .card-body{
-    width: 55%;
   }
 }

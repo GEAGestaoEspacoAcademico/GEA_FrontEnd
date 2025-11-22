@@ -1,20 +1,12 @@
 import type { OnInit} from '@angular/core';
 import { Component, inject, ViewChild} from '@angular/core';
-import type { ConfirmationModal } from '../../../components/shared/confirmation-modal/confirmation-modal';
+import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 import type { EditarEspacoModal } from '../../../components/modals/editar-espaco-modal/editar-espaco-modal';
 import type { Sala } from '../../../models/sala.model';
-import { SalaService } from '../../../services/salas/sala.service';
 import { BehaviorSubject } from 'rxjs';
-
-interface SalaUpdateDTO {
-  tipoSalaId: number; // Supondo que o tipoSala do form é o ID
-  salaNome: string;
-  salaCapacidade: number;
-  piso: number;
-  disponibilidade: boolean;
-  salaObservacoes: string;
-  // **Removendo materias**, pois o DTO do Spring não o tem.
-}
+import { SalaService } from '../../../services/sala/sala.service';
+import type { AtualizarSalaRequest } from '../../../types/sala.type';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-lista-espacos',
@@ -27,8 +19,10 @@ export class ListaEspacos implements OnInit{
   @ViewChild('editModal') editModal!: EditarEspacoModal;
 
   salaSelecionada!: Sala | null;
+  salaIdEditar!: number; 
 
   private salaService = inject(SalaService);
+  private snackBarService = inject(SnackBarService)
 
   espacos$ = new BehaviorSubject<Sala[]>([]);
   isLoading = false;
@@ -44,7 +38,7 @@ export class ListaEspacos implements OnInit{
   carregarEspacos() {
     this.isLoading = true;
 
-    this.salaService.getSalasComuns().subscribe({
+    this.salaService.getSalas().subscribe({
       next: (sala) => {
         let filtrados = sala;
 
@@ -90,12 +84,18 @@ export class ListaEspacos implements OnInit{
   }
 
   onEdit(sala: Sala): void {
+    this.salaIdEditar = sala.salaId
     this.editModal.open(sala);
   }
 
-  onModalEdit(sala: Sala): void {
-    this.salaService.updateSala(sala.salaId, sala).subscribe({
-      next: () => this.carregarEspacos()
-    })
+  onModalEdit(sala: AtualizarSalaRequest): void {
+    if(this.salaIdEditar){
+      this.salaService.editSala(this.salaIdEditar, sala).subscribe({
+        next: () => {
+          this.snackBarService.showSuccess("Sala atualizada com sucesso")
+          this.carregarEspacos()
+        }
+      })
+    }
   }
 }
