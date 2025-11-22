@@ -34,6 +34,7 @@ export class AgendarSalaMateria {
   isSaving = false;
   statusMessage = signal('Bem-vindo. Selecione datas no calendário.');
   statusClass = signal('bg-blue-50 text-blue-900 border-blue-200');
+  diaSemana: string = "";
 
   constructor() {
     this.iconRegistryService.registerIcons();
@@ -52,6 +53,10 @@ export class AgendarSalaMateria {
     this.janelaHorarioService.getJanelasHorario().subscribe(res => {this.horariosDisponiveis = res});
   }
 
+  getDiaSemana(dia: string){
+    this.diaSemana = dia;
+  }
+
   // Ação: Usuário selecionou datas no componente filho
   onDaysSelected(dates: Date[]) {
     this.selectedRecurringDates = dates;
@@ -66,34 +71,32 @@ export class AgendarSalaMateria {
   }
 
   // Ação: Buscar horários na API
-  // buscarHorarios() {
-  //   this.isLoadingHorarios = true;
-  //   this.statusMessage.set('Verificando disponibilidade...');
-  //   this.statusClass.set('bg-yellow-50 text-yellow-900 border-yellow-200');
+buscarHorarios() {
+    const listaDatas = this.selectedRecurringDates.map(d => d.toISOString().split('T')[0]);
+    const payload: DatasPayload = {
+      datas: listaDatas
+    };
 
-  //   const datesParam = this.selectedRecurringDates.toString(); // Formato para API
-
-  //   this.janelaHorarioService.getJanelaHorarioPorData(datesParam).subscribe({
-  //     next: (res) => {
-  //       this.horariosDisponiveis = res;
-  //       this.isLoadingHorarios = false;
+    // this.janelaHorarioService.getJanelasHorarioPorDatas(payload).subscribe({
+    //   next: (res) => {
+    //     this.horariosDisponiveis = res;
+    //     this.isLoadingHorarios = false;
         
-  //       if (res.length > 0) {
-  //         this.statusMessage.set(`${res.length} horários encontrados.`);
-  //         this.statusClass.set('bg-green-50 text-green-900 border-green-200');
-  //       } else {
-  //         this.statusMessage.set('Nenhum horário disponível para estas datas.');
-  //         this.statusClass.set('bg-red-50 text-red-900 border-red-200');
-  //       }
-  //     },
-  //     error: () => {
-  //       this.isLoadingHorarios = false;
-  //       this.statusMessage.set('Erro ao buscar horários.');
-  //       this.statusClass.set('bg-red-50 text-red-900 border-red-200');
-  //     }
-  //   });
-  // }
-
+    //     if (res.length > 0) {
+    //       this.statusMessage.set(`${res.length} horários encontrados.`);
+    //       this.statusType.set('success');
+    //     } else {
+    //       this.statusMessage.set('Nenhum horário disponível para estas datas.');
+    //       this.statusType.set('danger');
+    //     }
+    //   },
+    //   error: () => {
+    //     this.isLoadingHorarios = false;
+    //     this.statusMessage.set('Erro ao buscar horários.');
+    //     this.statusType.set('danger');
+    //   }
+    // });
+  }
   // Ação: Usuário preencheu tudo e clicou em Agendar
   // onSchedule(formData: SchedulingFormValue) {
   //   this.isSaving = true;
@@ -120,4 +123,8 @@ export class AgendarSalaMateria {
   //     }
   //   });
   // }
+}
+
+export interface DatasPayload {
+  datas: string[];
 }
