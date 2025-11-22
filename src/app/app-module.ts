@@ -69,6 +69,7 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
 import { Home } from './pages/AD/home/home';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
+import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 
 @NgModule({
   declarations: [
@@ -109,6 +110,7 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
     Secretariahome,
     CreateResourceModal,
     AgendamentoAula,
+    AgendarAula,
   ],
   imports: [
     BrowserModule,

@@ -7,12 +7,12 @@
     <div class="row">
       <div class="col-5">
         <div class="row mb-3">
-          <label for="data" class="col-4 main-title">Data:</label>
+          <label for="data" class="col-4 subtitle">Data:</label>
           <input type="date" id="data" formControlName="data" class="gea-input-field medium" />
         </div>
 
         <div class="row mb-3">
-          <label for="Horário" class="col-4 main-title">Horário:</label>
+          <label for="Horário" class="col-4 subtitle">Horário:</label>
           <select
             name="Horário"
             id="Horário"
@@ -27,7 +27,7 @@
         </div>
 
         <div class="row mb-3">
-          <label for="Local" class="col-4 main-title">Local:</label>
+          <label for="Local" class="col-4 subtitle">Local:</label>
           <select
             name="Local"
             id="Local"
@@ -42,7 +42,7 @@
         </div>
 
         <div class="row mb-3">
-          <label for="Capacidade" class="col-4 main-title">Capacidade:</label>
+          <label for="Capacidade" class="col-4 subtitle">Capacidade:</label>
           <select name="Capacidade" id="Capacidade" class="gea-input-field medium select-big-icon">
             <option value="20">10-20 Alunos</option>
             <option value="30">20-30 Alunos</option>
@@ -51,7 +51,7 @@
         </div>
 
         <div class="row mb-3">
-          <label for="Disciplina" class="col-4 main-title">Disciplina:</label>
+          <label for="Disciplina" class="col-4 subtitle">Disciplina:</label>
           @if (disciplinas$ | async; as disciplinas) {
             @if (disciplinas.length === 0) {
               <select
@@ -84,7 +84,7 @@
       </div>
       <div class="col-7">
         <div class="row mb-3">
-          <label for="equipamentoSelect" class="col-auto main-title">Equipamento:</label>
+          <label for="equipamentoSelect" class="col-auto subtitle">Equipamento:</label>
           <select
             id="equipamentoSelect"
             [formControl]="equipamentoSelectControl"
@@ -104,7 +104,7 @@
           </select>
         </div>
         <div class="row">
-          <label for="qtdInput" class="col-auto main-title">Qtd:</label>
+          <label for="qtdInput" class="col-auto subtitle">Qtd:</label>
           <div class="col-auto">
             <input
               type="number"
@@ -143,7 +143,7 @@
           </mat-chip-grid>
         </div>
         <div class="row">
-          <label for="Software" class="col-auto main-title">Software:</label>
+          <label for="Software" class="col-auto subtitle">Software:</label>
           <select
             id="Software"
             [formControl]="softwareSelectControl"

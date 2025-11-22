@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import type { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { Aulas } from './pages/aulas/aulas';
-import { Agenda } from './pages/agenda/agenda';
 import { Configuracoes } from './pages/configuracoes/configuracoes';
 import { Notificacoes } from './pages/notificacoes/notificacoes';
 import { EditarAula } from './pages/editar-aula/visualizar-aula';
@@ -13,6 +12,7 @@ import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { RoleGuard } from './guards/role.guard';
 import { Home } from './pages/AD/home/home';
 import { SpaceManagement } from './pages/space-management/space-management';
+import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
 import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
@@ -25,7 +25,7 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: { roles: ['PROFESSOR'] },
     children: [
-      { path: 'agenda', component: Agenda },
+      { path: 'agenda', component: AgendarAula },
       { path: 'aulas', component: Aulas },
       { path: 'configuracoes', component: Configuracoes },
       { path: 'aulas/alterar/:id', component: EditarAula },
