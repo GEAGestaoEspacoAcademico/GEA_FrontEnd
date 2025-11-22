@@ -1,0 +1,26 @@
+<div class="space-management-container">
+  <h2 class="main-title">List de espaços Acadêmicos</h2>
+  <app-espacos-table
+    [data]="(espacos$ | async) || []"
+    [totalPages]="totalPages"
+    [currentPage]="currentPage"
+    [isLoading]="isLoading"
+    (searchChange)="onSearch($event)"
+    (pageChange)="onPageChange($event)"
+    (editClick)="onEdit($event)"
+    (deleteClick)="onDelete($event)">
+  </app-espacos-table>
+</div>
+
+<app-editar-espaco-modal 
+  #editModal 
+  (clickEdit)="onModalEdit($event)">
+</app-editar-espaco-modal>
+
+<app-confirmation-modal 
+  #deleteModal 
+  mode="aviso" 
+  title="Excluir Espaço"
+  message="Tem certeza que deseja excluir este espaço? Esta ação não pode ser desfeita."
+  (onconfirm)="confirmDelete()">
+</app-confirmation-modal>
