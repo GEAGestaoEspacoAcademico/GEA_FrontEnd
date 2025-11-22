@@ -1,22 +1,36 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-funcionario-form',
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonModule,
+    ReactiveFormsModule, // Resolve o erro do [formGroup]
+    FormsModule          // Resolve o erro do [(ngModel)]
+  ],
   templateUrl: './funcionario-form.html',
-  styleUrl: './funcionario-form.css'
+  styleUrls: ['./funcionario-form.css']
 })
 export class FuncionarioForm implements OnInit {
-  @Input() isLoading: boolean = false;
-  @Output() save = new EventEmitter<FormGroup>();
+
+  @Input() isLoading = false;
+
+  // ❗ renomeado para evitar conflito com eventos nativos do DOM
+  @Output() saveForm = new EventEmitter<FormGroup>();
+
   @Output() cancel = new EventEmitter<void>();
 
   form!: FormGroup;
   modalDisciplinaAberto = false;
   disciplinaTemp = '';
 
-  constructor(private fb: FormBuilder) {}
+  // usando inject() — obrigatório pelo eslint
+  private fb = inject<FormBuilder>(FormBuilder);
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -24,7 +38,7 @@ export class FuncionarioForm implements OnInit {
       email: [''],
       registro: ['', Validators.required],
       perfil: ['', Validators.required],
-      disciplinas: this.fb.array([]),
+      disciplinas: this.fb.array([])
     });
 
     this.form.get('perfil')?.valueChanges.subscribe((perfil) => {
@@ -33,7 +47,7 @@ export class FuncionarioForm implements OnInit {
 
       if (perfil === 'PROFESSOR') {
         emailCtrl.setValidators([Validators.required, Validators.email]);
-      } else if (perfil === 'SECRETARIA' || perfil === 'AUXILIAR_DOCENTE') {
+      } else {
         emailCtrl.setValidators([Validators.required]);
       }
 
@@ -45,29 +59,29 @@ export class FuncionarioForm implements OnInit {
     return this.form.get('disciplinas') as FormArray;
   }
 
-  abrirModalDisciplina() {
+  abrirModalDisciplina(): void {
     this.modalDisciplinaAberto = true;
     this.disciplinaTemp = '';
   }
 
-  confirmarDisciplina() {
+  confirmarDisciplina(): void {
     if (this.disciplinaTemp.trim().length > 0) {
       this.disciplinas.push(this.fb.control(this.disciplinaTemp));
     }
     this.modalDisciplinaAberto = false;
   }
 
-  removeDisciplina(i: number) {
+  removeDisciplina(i: number): void {
     this.disciplinas.removeAt(i);
   }
 
-  onSave() {
+  onSave(): void {
     if (this.form.valid) {
-      this.save.emit(this.form);
+      this.saveForm.emit(this.form);
     }
   }
 
-  onCancel() {
+  onCancel(): void {
     this.cancel.emit();
   }
 }

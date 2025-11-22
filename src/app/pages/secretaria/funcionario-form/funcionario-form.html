@@ -5,6 +5,7 @@
 
       <h3 class="section-title">Cadastrar Funcionário</h3>
 
+      <!-- PERFIL -->
       <div class="mb-4">
         <div class="d-flex align-items-center gap-4 perfil-group">
           <label class="radio-label">
@@ -22,21 +23,25 @@
         </div>
       </div>
 
+      <!-- NOME -->
       <div class="mb-3">
         <label class="form-label field-label">Nome completo</label>
         <input type="text" class="form-control" formControlName="nomeCompleto" placeholder="Digite o nome completo" />
       </div>
 
+      <!-- EMAIL -->
       <div class="mb-3">
         <label class="form-label field-label">E-mail</label>
         <input type="email" class="form-control" formControlName="email" placeholder="Digite o email" />
       </div>
 
+      <!-- REGISTRO -->
       <div class="mb-3">
         <label class="form-label field-label">Registro</label>
         <input type="text" class="form-control" formControlName="registro" placeholder="Digite o Registro" />
       </div>
 
+      <!-- BOTÕES -->
       <div class="d-flex gap-3 mt-4">
         <button class="btn btn-danger px-4" type="button"
                 [disabled]="!form.valid || isLoading"
@@ -53,6 +58,7 @@
 
     </div>
 
+    <!-- DISCIPLINAS -->
     <div class="col-md-6" *ngIf="form.get('perfil')?.value === 'PROFESSOR'">
       <h4 class="section-title">Disciplinas</h4>
 
@@ -77,6 +83,9 @@
 
 </form>
 
+
+
+<!-- MODAL DISCIPLINA -->
 <div *ngIf="modalDisciplinaAberto" class="modal-overlay">
   <div class="modal-content-box">
     <h5>Nova Disciplina</h5>
