@@ -37,13 +37,13 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 
 // Pages
+import { AgendamentoAula } from './pages/professor/agendamento-aula/agendamento-aula';
 import { Aulas } from './pages/AD/aulas/aulas';
 import { Configuracoes } from './pages/AD/configuracoes/configuracoes';
 import { Notificacoes } from './pages/shared/notificacoes/notificacoes';
 import { EditarAula } from './pages/AD/editar-aula/visualizar-aula';
 import { Login } from './pages/shared/login/login';
 import { EsqueciSenha } from './pages/shared/esqueci-senha/esqueci-senha';
-import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 
 // Shared Components
 import { DaySelector } from './components/shared/day-selector/day-selector';
@@ -79,7 +79,9 @@ import { EditarEspacoModal } from './components/modals/editar-espaco-modal/edita
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
 import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
+import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
+import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 
 
 @NgModule({
@@ -121,13 +123,15 @@ import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
     SpaceRegistrationForm,
     Home,
     Secretariahome,
+    CreateResourceModal,
+    AgendamentoAula,
+    AgendarAula,
     RedefinirSenha,
     SalaForm,
     EspacosTable,
     EditarEspacoModal,
     ListaEspacos,
     FuncionarioTable,
-    CreateResourceModal,
     CadastroSala
   ],
   imports: [

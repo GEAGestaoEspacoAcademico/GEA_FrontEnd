@@ -2,7 +2,6 @@ import { EsqueciSenha } from './pages/shared/esqueci-senha/esqueci-senha';
 import { NgModule } from '@angular/core';
 import type { Routes } from '@angular/router';
 import { RouterModule } from '@angular/router';
-import { Aulas } from './pages/AD/aulas/aulas';
 
 import { Configuracoes } from './pages/AD/configuracoes/configuracoes';
 import { Notificacoes } from './pages/shared/notificacoes/notificacoes';
@@ -12,12 +11,13 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { RoleGuard } from './guards/role.guard';
 import { Home } from './pages/AD/home/home';
+import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 import { SpaceManagement } from './pages/AD/space-management/space-management';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
-import { Agenda } from './pages/AD/agenda/agenda';
+import { Aulas } from './pages/AD/aulas/aulas';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
 import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
@@ -30,7 +30,7 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: { roles: ['PROFESSOR'] },
     children: [
-      { path: 'agenda', component: Agenda },
+      { path: 'agenda', component: AgendarAula },
       { path: 'aulas', component: Aulas },
       { path: 'configuracoes', component: Configuracoes },
       { path: 'aulas/alterar/:id', component: EditarAula },
