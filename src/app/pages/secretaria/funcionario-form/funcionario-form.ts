@@ -42,7 +42,6 @@ export class FuncionarioForm implements OnInit {
     this.form.get('perfil')?.valueChanges.subscribe((perfil) => {
       const emailCtrl = this.form.get('email');
       
-      // Correção do erro "Expected { after if condition"
       if (!emailCtrl) {
         return;
       }
