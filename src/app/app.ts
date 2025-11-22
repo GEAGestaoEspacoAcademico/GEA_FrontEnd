@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { IconRegistryService } from './services/iconService/icon-registry';
 import { PushNotificationService } from './services/push-notification/push-notification.service';
 import { DisciplinaService } from './services/disciplina/disciplina.service';
@@ -6,12 +6,8 @@ import { SalaService } from './services/sala/sala.service';
 import { JanelasHorarioService } from './services/janelas-horario/janelas-horario.service';
 import { AgendamentoService } from './services/agendamento/agendamento.service';
 import type { Disciplina } from './models/disciplina.model';
-import type { Sala } from './models/agendamento.model';
+import type { Sala } from './models/sala.model';
 import type { JanelaHorario } from './models/janelasHorario.model';
-import type { RecurringSchedulingForm } from './components/shared/recurring-scheduling-form/recurring-scheduling-form';
-import type { SchedulingFormValue } from './pages/secretaria/agendar-sala-materia/test';
-import { MockDataService } from './pages/secretaria/agendar-sala-materia/test';
-import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-root',
