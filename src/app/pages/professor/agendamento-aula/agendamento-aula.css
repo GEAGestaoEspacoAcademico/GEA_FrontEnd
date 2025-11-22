@@ -1,13 +1,11 @@
-.container-agendamento {
+.container-forms {
+  margin-top: 2.375rem;
   padding-left: 4.063rem;
 }
 
-.container-forms {
-  margin-top: 2.375rem;
-}
-
 .gea-input-field.medium {
-  width: 18rem;
+  max-width: 18rem;
+  width: 100%;
   height: 2.625rem;
   padding: 0;
 
@@ -23,7 +21,8 @@
 }
 
 .gea-input-field.small {
-  width: 4.438rem;
+  max-width: 4.438rem;
+  width: 100%;
   height: 2.625rem;
   padding: 0;
 
@@ -58,15 +57,17 @@
 }
 
 .gea-btn-primary.buscar {
-  width: 16.063rem;
+  max-width: 16.063rem;
+  width: 100%;
   height: 3.688rem;
   margin-top: var(--spacing-12);
 }
 
 .gea-btn-primary.adicionar {
-  width: 9.313rem;
+  max-width: 9.313rem;
+  width: 100%;
   height: 2.625rem;
-  margin-left: 2.25rem;
+  margin-left: 1rem;
 }
 
 .chip-display-area-row mat-chip-grid {

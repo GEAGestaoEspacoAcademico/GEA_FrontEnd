@@ -46,7 +46,7 @@ export class AgendamentoAula implements OnInit {
   idSalaRecomendadaAtual!: number;
   submittedData: AgendarForm | null = null;
   equipamentoSelectControl = new FormControl<Recurso | null>(null);
-  softwareSelectControl = new FormControl<any | null>(null);
+  softwareSelectControl = new FormControl<Recurso | null>(null);
   quantidadeControl = new FormControl<number>(1, [Validators.required, Validators.min(1)]);
 
   disciplinas$!: Observable<Disciplina[]>;
@@ -56,7 +56,7 @@ export class AgendamentoAula implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      data: [null, Validators.required],
+      data: [this.getData(), Validators.required],
       horarioId: [null, Validators.required],
       tipoSalaId: [null, Validators.required],
       capacidade: [null],
@@ -91,6 +91,11 @@ export class AgendamentoAula implements OnInit {
     return this.form.get('softwaresArray') as FormArray;
   }
 
+  getData(): string {
+    const hoje = new Date();
+    return hoje.toISOString().substring(0, 10);
+  }
+
   adicionarEquipamentoSelecionado(): void {
     const recursoSelecionado = this.equipamentoSelectControl.value;
     const qtd = this.quantidadeControl.value;
@@ -122,7 +127,7 @@ export class AgendamentoAula implements OnInit {
     this.equipamentosArray.push(novoItemControl);
 
     this.equipamentoSelectControl.reset(null);
-    this.quantidadeControl.setValue(1);
+    this.quantidadeControl.setValue(null);
   }
 
   adicionarSoftwareSelecionado(): void {
