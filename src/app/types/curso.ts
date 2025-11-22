@@ -1,4 +1,8 @@
-export interface CursoProfesor {
-  idCurso: number,
-  nome: string
+///cursos
+export interface CriarCursoRequest {
+  cursoNome: string,
+  coordenadorId: number,
+  cursoSigla: string
 }
+
+export type AtualizarCursoRequest = CriarCursoRequest;

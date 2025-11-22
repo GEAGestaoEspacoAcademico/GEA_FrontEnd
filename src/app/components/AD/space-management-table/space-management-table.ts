@@ -16,6 +16,8 @@ export class SpaceManagementTable {
   @Output() pageChange = new EventEmitter<number>();
   @Output() editSala = new EventEmitter<Sala>();
   @Output() deleteSala = new EventEmitter<Sala>();
+  @Output() clickNovoSoftware = new EventEmitter<void>();
+  @Output() clickNovoEquipamento = new EventEmitter<void>();
 
   searchTerm: string = '';
 
@@ -35,5 +37,13 @@ export class SpaceManagementTable {
     if (page >= 1 && page <= this.totalPages) {
       this.pageChange.emit(page);
     }
+  }
+
+  onNovoSoftware() {
+    this.clickNovoSoftware.emit();
+  }
+
+  onNovoEquipamento() {
+    this.clickNovoEquipamento.emit();
   }
 }

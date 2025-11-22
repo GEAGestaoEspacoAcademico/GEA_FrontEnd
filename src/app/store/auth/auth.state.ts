@@ -1,7 +1,7 @@
-import type { User } from "../../models/user.model";
+import type { Usuario } from "../../models/usuario.model";
 
 export interface AuthState {
-  user: User | null;
+  user: Usuario | null;
   error: string | null,
   isLoading: boolean
 }

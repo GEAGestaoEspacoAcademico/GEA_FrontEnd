@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import type { Agendamento } from '../../../models/agendamento.model';
 import { FormatUtils } from '../../../utils/format.utils';
+import type { Agendamento } from '../../../models/agendamento.model';
+import type { AgendamentoAula } from '../../../models/agendamentoAula.model';
 
 /**
  * Componente de card responsável por exibir as informações
@@ -8,7 +9,6 @@ import { FormatUtils } from '../../../utils/format.utils';
  *
  * É um "Dumb Component" (componente de apresentação), recebendo
  * dados via @Input e emitindo eventos via @Output.
- *
  * @usage
  * <app-class-info-card
  * [agendamentoData]="meuAgendamento"
@@ -27,7 +27,7 @@ export class ClassInfoCard {
    * Os dados do agendamento a ser exibido.
    * Recebido do componente pai.
    */
-  @Input({ required: true }) agendamentoData!: Agendamento;
+  @Input({ required: true }) agendamentoData!: AgendamentoAula;
 
   /**
    * Evento emitido quando o usuário clica no botão "Cancelar".
@@ -53,7 +53,7 @@ export class ClassInfoCard {
    * Emite o evento 'delete' com o ID do agendamento.
    */
   public handleDelete(): void {
-    this.delete.emit(this.agendamentoData.id);
+    this.delete.emit(this.agendamentoData.agendamentoAulaId);
   }
 
   /**
@@ -61,6 +61,6 @@ export class ClassInfoCard {
    * Emite o evento 'alterar' com o ID do agendamento.
    */
   public handleAlterar(): void {
-    this.alterar.emit(this.agendamentoData.id);
+    this.alterar.emit(this.agendamentoData.agendamentoAulaId);
   }
 }

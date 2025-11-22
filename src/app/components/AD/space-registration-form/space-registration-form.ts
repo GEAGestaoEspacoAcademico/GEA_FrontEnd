@@ -2,13 +2,13 @@ import type { OnInit } from '@angular/core';
 import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import type { FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
-import type { AddItemModal } from '../../shared/add-item-modal/add-item-modal';
+import type { AddItemModal } from '../../modals/add-item-modal/add-item-modal';
 import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
-import type { TiposSalas } from '../../../models/tipoSala.mode';
 import type { Equipamento } from '../../../types/equipamento';
 import type { Software } from '../../../types/software';
-import type { CriarSala } from '../../../types/criarsala';
 import type { AddItemModalData } from '../../../types/additemmodal';
+import type { CriarSalaRequest } from '../../../types/sala.type';
+import type { TipoSala } from '../../../models/tipoSala.mode';
 
 
 
@@ -19,20 +19,20 @@ import type { AddItemModalData } from '../../../types/additemmodal';
   styleUrl: './space-registration-form.css'
 })
 export class SpaceRegistrationForm implements OnInit {
-  
-  
+
+
   @ViewChild('addItemModal') addItemModal!: AddItemModal;
-  @Output() formSubmit = new EventEmitter<CriarSala>();
-  
+
+  @Output() formSubmit = new EventEmitter<CriarSalaRequest>();
 
   equipamentos: Equipamento[] = [];
   softwares: Software[] = [];
-  tiposSalas!: TiposSalas[];
+  tiposSalas!: TipoSala[];
 
   private fb = inject(FormBuilder);
   private currentItemType: 'equipamento' | 'software' | null = null;
   private tipoSalaService = inject(TipoSalaService);
-  
+
     form: FormGroup = this.fb.group({
       salaNome: ['', Validators.required],
       piso: ['',  Validators.required],
@@ -42,7 +42,7 @@ export class SpaceRegistrationForm implements OnInit {
     });
 
   ngOnInit(): void {
-    this.tipoSalaService.getTiposSalas().subscribe({
+    this.tipoSalaService.getTiposSala().subscribe({
       next: (tipos) => {
         this.tiposSalas = tipos;
       },
@@ -52,22 +52,19 @@ export class SpaceRegistrationForm implements OnInit {
     });
   }
 
-
-  
-  @Input() set initialData(data: CriarSala | null) {
-  if (data) {
-    this.form.patchValue({
-      salaNome: data.salaNome,
-      piso: data.piso,
-      capacidade: data.capacidade,
-      tipoSala: data.tipoSala,
-      observacoes: data.observacoes
-    });
-
-    this.equipamentos = [];
-    this.softwares = [];
+  @Input() set initialData(data: CriarSalaRequest) {
+    if (data) {
+      this.form.patchValue({
+        salaNome: data.salaNome,
+        piso: data.piso,
+        capacidade: data.salaCapacidade,
+        tipoSala: data.tipoSalaId,
+        observacoes: data.salaObservacoes
+      });
+      this.equipamentos = [];
+      this.softwares = [];
+    }
   }
-}
 
   onAddItem(tipo: 'equipamento' | 'software') {
     this.currentItemType = tipo;
@@ -76,10 +73,10 @@ export class SpaceRegistrationForm implements OnInit {
     this.addItemModal.showQuantityField = tipo === 'equipamento';
     this.addItemModal.open();
   }
-  
+
   onItemAdded(item: AddItemModalData) {
     if (!item) {return;}
-  
+
     if (this.currentItemType === 'equipamento') {
       const novoEquipamento: Equipamento = {
         id: crypto.randomUUID(),
@@ -95,7 +92,7 @@ export class SpaceRegistrationForm implements OnInit {
       this.softwares.push(novoSoftware);
     }
   }
-  
+
 
   remover(tipo: 'equipamento' | 'software', recurso: Equipamento | Software)
   {
@@ -111,13 +108,13 @@ export class SpaceRegistrationForm implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-  
-    const payload: CriarSala = {
+
+    const payload: CriarSalaRequest = {
       ...this.form.value,
       equipamentoId: this.equipamentos.map(e => Number(e.id)),
       softwaresId: this.softwares.map(s => Number(s.id))
     };
-  
+
     this.formSubmit.emit(payload);
   }
 }

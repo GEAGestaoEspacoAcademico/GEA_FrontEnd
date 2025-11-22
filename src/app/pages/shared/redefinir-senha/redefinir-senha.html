@@ -1,0 +1,86 @@
+<div class="card rounded-top-5 border-0 card-senha">
+  <div class="card-body pb-4">
+    <h1 class="desktop-title fw-bold mb-4">Redefinir senha</h1>
+    <h3 class="mb-4 p-2 text-center ml">Redefinir senha</h3>
+    <form [formGroup]="formRedefinirSenha" class="d-flex flex-column gap-3">
+      <div class="form-floating">
+        <input
+          type="password"
+          class="form-control mb-2"
+          id="userOldPassword"
+          formControlName="senhaAntiga"
+          placeholder=""
+        />
+        <label for="userOldPassword">Senha Atual</label>
+
+        @if (
+          formRedefinirSenha.get('senhaAntiga')?.touched &&
+          formRedefinirSenha.get('senhaAntiga')?.invalid
+        ) {
+          <div class="text-danger small">
+            @if (formRedefinirSenha.get('senhaAntiga')?.hasError('required')) {
+              O campo 'Senha Atual' é obrigatório.
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-floating">
+        <input
+          type="password"
+          class="form-control mb-2"
+          id="userNewPassword"
+          formControlName="novaSenha"
+          placeholder=""
+        />
+        <label for="userNewPassword">Nova senha</label>
+
+        @if (
+          formRedefinirSenha.get('novaSenha')?.touched &&
+          formRedefinirSenha.get('novaSenha')?.invalid
+        ) {
+          <div class="text-danger small">
+            @if (formRedefinirSenha.get('novaSenha')?.hasError('minlength')) {
+              A nova senha tem que ter no minimo 6 caracteres.
+            } @else if (formRedefinirSenha.get('novaSenha')?.hasError('required')) {
+              O campo 'Nova senha' é obrigatório.
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-floating">
+        <input
+          type="password"
+          class="form-control"
+          id="userNewPasswordAgain"
+          formControlName="novaSenhaRepetida"
+          placeholder=""
+        />
+        <label for="userNewPasswordAgain">Confirme a senha</label>
+
+        @if (
+          formRedefinirSenha.get('novaSenhaRepetida')?.touched &&
+          formRedefinirSenha.get('novaSenhaRepetida')?.invalid
+        ) {
+          <div class="text-danger mt-2 small">
+            @if (formRedefinirSenha.hasError('passwordMismatch')) {
+              As senhas não correspondem.
+            }
+          </div>
+        }
+      </div>
+    </form>
+
+    <div class="row align-items-center justify-content-between">
+      <div class="col-6 col-md-12">
+        <button class="btn btn-danger w-100 fw-bold py-2" (click)="validarSenhas()">
+          ALTERAR SENHA
+        </button>
+      </div>
+      <div class="col-6">
+        <a class="btn btn-cancelar w-100 fw-bold py-2" routerLink="/configuracoes"> CANCELAR </a>
+      </div>
+    </div>
+  </div>
+</div>
