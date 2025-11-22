@@ -1,0 +1,57 @@
+.funcionario-form {
+  background: #f3f3f8;
+  border-radius: 8px;
+}
+
+.section-title {
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: #000;
+}
+
+.field-label {
+  font-weight: 600;
+}
+
+.radio-label {
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.radio-label input[type="radio"] {
+  accent-color: #b60000;
+}
+
+.disciplinas-box {
+  min-height: 120px;
+ 
+}
+
+.disc-pill {
+  background: #b60000;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content-box {
+  background: white;
+  padding: 24px;
+  border-radius: 8px;
+  width: 380px;
+  max-width: 90%;
+}
