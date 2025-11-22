@@ -51,9 +51,13 @@ export interface BuscarRecursoSalaResponse {
 }
 
 // POST /salas/{salaId}/recursos
+
+export interface RecursoAdiconarSala {
+  recursoId : number,
+  quantidadeRecurso: number
+}
 export interface AdicionarRecursoSalaRequest {
-  idRecurso: number,
-  quantidade: number
+  listaDeRecursosParaAdicionar: RecursoAdiconarSala[]
 }
 
 //! Sujeito a mudanças

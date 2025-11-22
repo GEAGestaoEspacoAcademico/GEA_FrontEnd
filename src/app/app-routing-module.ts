@@ -16,6 +16,7 @@ import { SpaceManagement } from './pages/AD/space-management/space-management';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
+import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { Agenda } from './pages/AD/agenda/agenda';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
@@ -62,7 +63,8 @@ const routes: Routes = [
     data: {roles: ['SECRETARIA', 'AUXILIAR_DOCENTE']},
     children: [
       {path: 'home', component: Secretariahome},
-      {path: 'visualizar-espacos', component: ListaEspacos}
+      {path: 'visualizar-espacos', component: ListaEspacos},
+      {path: 'cadastrar-laboratorio', component: CadastroSala}
     ]
   },
   {
