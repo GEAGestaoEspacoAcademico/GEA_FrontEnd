@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import type { OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Validators } from '@angular/forms';
 
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import type { FormArray, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-funcionario-form',
   standalone: true,
   imports: [
     CommonModule,
-    ReactiveFormsModule, // Resolve o erro do [formGroup]
-    FormsModule          // Resolve o erro do [(ngModel)]
+    ReactiveFormsModule,
+    FormsModule
   ],
   templateUrl: './funcionario-form.html',
   styleUrls: ['./funcionario-form.css']
@@ -20,17 +20,14 @@ export class FuncionarioForm implements OnInit {
 
   @Input() isLoading = false;
 
-  // ❗ renomeado para evitar conflito com eventos nativos do DOM
   @Output() saveForm = new EventEmitter<FormGroup>();
-
   @Output() cancel = new EventEmitter<void>();
 
   form!: FormGroup;
   modalDisciplinaAberto = false;
   disciplinaTemp = '';
 
-  // usando inject() — obrigatório pelo eslint
-  private fb = inject<FormBuilder>(FormBuilder);
+  private fb = inject(FormBuilder);
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -43,7 +40,11 @@ export class FuncionarioForm implements OnInit {
 
     this.form.get('perfil')?.valueChanges.subscribe((perfil) => {
       const emailCtrl = this.form.get('email');
-      if (!emailCtrl) return;
+      
+      // Correção do erro "Expected { after if condition"
+      if (!emailCtrl) {
+        return;
+      }
 
       if (perfil === 'PROFESSOR') {
         emailCtrl.setValidators([Validators.required, Validators.email]);
