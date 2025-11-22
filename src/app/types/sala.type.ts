@@ -1,0 +1,91 @@
+import type { Sala } from "../models/sala.model"
+
+interface Horario {
+  horaInicio: string,
+  horaFim: string
+}
+
+// /salas/{salaId}
+export interface AtualizarSalaRequest{
+  salaNome: string,
+  salaCapacidade: number,
+  piso: number,
+  disponibilidade: boolean,
+  tipoSalaId: number,
+  salaObservacoes: string
+}
+
+//!O Response do AtulizarSala não é necessária
+
+// /salas/{salaId}/recursos/{recursoId}
+export interface AtulizarQuantidadeRecursoSalaRequest {
+  quantidade: number
+}
+
+// /salas
+export type BuscarSalaResponse = Omit<Sala, 'observacoes'>
+
+
+// POST /salas
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface CriarSalaRequest extends AtualizarSalaRequest {
+  // Eslint desativo a fim de escalar futuramente
+}
+
+export interface CriarSalaResponse {
+  salaId: number,
+  salaNome: string,
+  capacidade: number,
+  piso: number,
+  disponibilidade: boolean,
+  tipoSala: string,
+  observacoes: string
+}
+
+// GET /salas/{salaId}/recursos
+export interface BuscarRecursoSalaResponse {
+  idRecurso: number,
+  nome: string,
+  tipo: string,
+  quantidade: number
+}
+
+// POST /salas/{salaId}/recursos
+export interface AdicionarRecursoSalaRequest {
+  idRecurso: number,
+  quantidade: number
+}
+
+//! Sujeito a mudanças
+export interface AdicionarRecursoSalaResponse {
+  idRecurso: number,
+  nome: string,
+  tipo: string,
+  quantidade: number
+}
+
+// POST /salas/recomendacoes
+export interface BuscarRecomendacaoRequest {
+  horarios: Horario,
+  data: string,
+  tipoSalaId: number,
+  recursosIds: number[],
+  capacidade: number
+}
+
+export interface BuscarRecomendacaoResponse {
+  salaId: number,
+  salaNome: string,
+  capacidade: number,
+  piso: number,
+  disponibilidade: boolean,
+  tipoSala: string
+}
+
+// GET salas/disponíveis
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export interface BuscarSalaDisponivel extends BuscarRecomendacaoResponse{
+  //Lint desabilitado a fim de minimizar o códgo
+  //!Haverá mudanças
+}
+

@@ -10,7 +10,7 @@
   },
   "include": [
     "src/**/*.ts"
-  ],
+, "src/app/types/sala.type.ts"  ],
   "exclude": [
     "src/**/*.spec.ts"
   ]

@@ -1,0 +1,23 @@
+<ng-template #CreateResourceModal let-modal>
+  <div class="body-modal">
+    <form [formGroup]="novoItem" (ngSubmit)="onSubmit()">
+      <div class="d-flex justify-content-center align-items-center">
+        <input
+          type="text"
+          class="gea-input-field"
+          placeholder="{{ inputLabel }}"
+          formControlName="name"
+          name="name"
+        />
+      </div>
+      <button
+        type="submit"
+        class="gea-btn gea-btn-primary d-flex align-items-center justify-content-start mx-auto"
+        [class.disabled-button]="novoItem.invalid"
+        [disabled]="novoItem.invalid"
+      >
+        <mat-icon svgIcon="add-circle" class="plus-icon align-items-center"></mat-icon>{{ buttonText }}
+      </button>
+    </form>
+  </div>
+</ng-template>
