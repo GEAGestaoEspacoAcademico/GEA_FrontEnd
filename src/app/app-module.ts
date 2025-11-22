@@ -62,6 +62,7 @@ import { DashboardCard } from './components/shared/dashboard-card/dashboard-card
 import { AddItemModal } from './components/shared/add-item-modal/add-item-modal';
 import { SpaceRegistrationForm } from './components/AD/space-registration-form/space-registration-form';
 import { MultiDateSelector } from './components/shared/multi-date-selector/multi-date-selector';
+import { RecurringSchedulingForm } from './components/shared/recurring-scheduling-form/recurring-scheduling-form';
 import { ScheduleDayModal } from './components/shared/schedule-day-modal/schedule-day-modal';
 import { SpaceManagement } from './pages/space-management/space-management';
 
@@ -70,6 +71,7 @@ import { SpaceManagementTable } from './components/AD/space-management-table/spa
 import { Home } from './pages/AD/home/home';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
+import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 
 @NgModule({
   declarations: [
@@ -98,18 +100,21 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
     MainLayout,
     AuthLayout,
     RommInformationComponent,
+    SmartSchedulingForm,
     DashboardCard,
     AddItemModal,
     // AD Components
     MultiDateSelector,
     DashboardCard,
+    RecurringSchedulingForm,
     ScheduleDayModal,
     SpaceManagementTable,
     SpaceRegistrationForm,
     Home,
     Secretariahome,
     CreateResourceModal,
-    SmartSchedulingForm
+    SmartSchedulingForm,
+    AgendarSalaMateria
   ],
   imports: [
     BrowserModule,

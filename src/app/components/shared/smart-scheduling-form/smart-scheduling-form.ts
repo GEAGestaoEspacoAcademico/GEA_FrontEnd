@@ -177,7 +177,7 @@ export class SmartSchedulingForm implements OnInit {
   getHorariosDisponiveis(date: Date): void {
     const dataString = date.toISOString().substring(0, 10);
 
-    this.serviceHorario.getJanelaHorarioPorData(dataString).subscribe({ // Assumindo o nome correto do serviço
+    this.serviceHorario.getJanelaHorarioPorData(dataString).subscribe({
       next: (janelas: JanelaHorario[]) => {
         this.listaHorarios = janelas;
       },
