@@ -18,7 +18,7 @@ export class Login implements OnInit{
   loading$: Observable<boolean | null> = this.store.select(selectAuthIsLoading);
 
   loginForm = new FormGroup({
-    user: new FormControl('', [Validators.required, Validators.email]),
+    user: new FormControl('', [Validators.required]),
     password: new FormControl('', [Validators.required])
   });
 
@@ -26,9 +26,9 @@ export class Login implements OnInit{
   btnVisibility: boolean = false;
 
   ngOnInit(): void {
-    // this.loginForm.get('password')?.valueChanges.subscribe(value => {
-    //   this.btnVisibility = !!(value && value.trim().length > 0);
-    // });
+    this.loginForm.get('password')?.valueChanges.subscribe(value => {
+      this.btnVisibility = !!(value && value.trim().length > 0);
+    });
     this.error$ = this.store.select(selectAuthError);
     this.loginForm.reset();
   }

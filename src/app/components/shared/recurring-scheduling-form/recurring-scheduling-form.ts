@@ -3,7 +3,6 @@ import { type AbstractControl, FormArray, FormBuilder, FormControl, type FormGro
 import type { JanelaHorario } from '../../../models/janelasHorario.model';
 import type { Sala } from '../../../models/sala.model';
 import type { Disciplina } from '../../../models/disciplina.model';
-import type { SalaOpcao } from '../../../pages/secretaria/agendar-sala-materia/test';
 
 @Component({
   selector: 'app-recurring-scheduling-form',
@@ -83,7 +82,7 @@ export class RecurringSchedulingForm {
   private fb = inject(FormBuilder);
 
   disciplinas = input<Disciplina[]>([]);
-  locais = input<SalaOpcao[]>([]);
+  locais = input<Sala[]>([]);
   
   horarios = input<JanelaHorario[]>([]);
   isLoading = input<boolean>(false);

@@ -76,7 +76,6 @@ import { Agenda } from './pages/AD/agenda/agenda';
 import { Home } from './pages/AD/home/home';
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
-import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 
 @NgModule({
   declarations: [
@@ -118,7 +117,12 @@ import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agen
     Home,
     Secretariahome,
     CreateResourceModal,
-    AgendarSalaMateria
+    RedefinirSenha,
+    ListaEspacos,
+    EditarEspacoModal,
+    EspacosTable,
+    FuncionarioTable,
+    SalaForm
   ],
   imports: [
     BrowserModule,
