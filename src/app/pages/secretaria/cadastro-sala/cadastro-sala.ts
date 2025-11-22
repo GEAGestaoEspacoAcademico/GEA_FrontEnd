@@ -5,6 +5,7 @@ import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { catchError, of, switchMap } from 'rxjs';
 import type { CriarSalaFormulario } from '../../../types/util.types';
 import type { AdicionarRecursoSalaRequest } from '../../../types/sala.type';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-cadastro-sala',
@@ -18,6 +19,7 @@ export class CadastroSala {
   private salaService = inject(SalaService);
   private snackbar = inject(SnackBarService);
   private router = inject(Router);
+  private location = inject(Location);
 
   onSave(formValue: CriarSalaFormulario) {
     this.isSaving = true;
@@ -71,6 +73,6 @@ export class CadastroSala {
   }
 
   onCancel() {
-    this.router.navigate(['/secretaria']);
+    this.location.back();
   }
 }
