@@ -63,8 +63,8 @@
         [class.input-error]="form.get('capacidade')?.invalid && form.get('capacidade')?.touched"
       >
         <option value="" disabled>Selecione</option>
-        <option value="20">1–20</option>
-        <option value="30">21–30</option>
+        <option value="20">1-20</option>
+        <option value="30">21-30</option>
       </select>
 
       @if (form.get('capacidade')?.invalid && form.get('capacidade')?.touched) {
@@ -72,69 +72,44 @@
       }
     </div>
 
-            <div>
-                <label for="observacoes" class="field-label">Observações</label>
-                <input formControlName="observacoes" class="simple-input">
-            </div>
+    <div>
+      <span class="field-label">Equipamentos</span>
 
-            <div>
-                <label for="capacidade" class="field-label">Capacidade</label>
-                <select formControlName="capacidade" class="simple-input"
-                        [class.input-error]="form.get('capacidade')?.invalid && form.get('capacidade')?.touched">
+      <div class="chips-box">
+        @for (equip of equipamentosFA.controls; track $index) {
+          <div class="chip" role="listitem">
+            <span class="chip-label">
+              {{ equip.value.nome }}
+              <small class="chip-qty">({{ equip.value.quantidade }})</small>
+            </span>
 
-                    <option value="" disabled>Selecione</option>
-                    <option value="20">1–20</option>
-                    <option value="30">21–30</option>
-                </select>
-
-                @if (form.get('capacidade')?.invalid && form.get('capacidade')?.touched) {
-                <span class="error-msg">Selecione a capacidade.</span>
-                }
-            </div>
-            
-            <div>
-                <span class="field-label">Equipamentos</span>
-                <div class="chips-box">
-                    @for (equip of equipamentosFA.controls; track equip.value.id) {
-
-                        <div class="chip" role="listitem" aria-label="Equipamento {{ equip.value.name }}">
-                            <span class="chip-label">{{ equip.value.name }} <small class="chip-qty">({{ equip.value.quantity }})</small></span>
-                            <button type="button"
-                                class="chip-remove"
-                                aria-label="Remover {{ equip.value.name }}"
-                                (click)="removerEquipamento($index)">
-
-                                <mat-icon svgIcon="close" class="remove-icon"></mat-icon>
-                            </button>
-                        </div>
-                    }
-                
-                </div>
-                <button type="button" class="add-btn" (click)="onAddEquipamento()">
-                    <mat-icon>add_circle_outline</mat-icon>
-                    Adicionar Equipamento
-                </button>
-            </div>
-
-        </div>
-            <div class="form-buttons">
-            <button type="submit"
-                    class="add-btn">
-                SALVAR
+            <button
+              type="button"
+              class="chip-remove"
+              aria-label="Remover {{ equip.value.nome }}"
+              (click)="removerEquipamento($index)"
+            >
+              <mat-icon svgIcon="close" class="remove-icon"></mat-icon>
             </button>
           </div>
-      <button type="button" class="add-btn" (click)="onAddEquipamento()">
+        }
+      </div>
+
+      <button type="button" class="add-btn" (click)="onAddEquipamento($event)">
         <mat-icon>add_circle_outline</mat-icon>
         Adicionar Equipamento
       </button>
+    </div>
+  </div>
+
   <div class="form-buttons">
     <button type="submit" class="add-btn" [disabled]="form.invalid || isLoading">SALVAR</button>
 
-                <button type="button"
-                        class="add-btn cancelar-btn"
-                        (click)="onCancel()">
-                    CANCELAR
-                </button>
-            </div>
+    <button type="button" class="add-btn cancelar-btn" (click)="onCancel()">CANCELAR</button>
+  </div>
 
-<app-add-item-modal #addItemModal (itemAdd)="onItemAdded($event)"> </app-add-item-modal>
+  <app-add-item-modal 
+    #addItemModal 
+    (itemAdd)="onItemAdded($event)"
+    [recursosDisponiveis]="recursosDisponiveis"> </app-add-item-modal>
+</form>

@@ -15,6 +15,7 @@ import { Home } from './pages/AD/home/home';
 import { SpaceManagement } from './pages/space-management/space-management';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
+import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
 import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
@@ -34,6 +35,16 @@ const routes: Routes = [
       { path: 'adhome', component: Home },
       { path: 'notificacoes', component: Notificacoes },
       { path: '', redirectTo: '/login', pathMatch: 'full' },
+    ],
+  },
+  {
+    path: 'secretaria',
+    component: MainLayout,
+    canActivate: [RoleGuard],
+    data: { roles: ['SECRETARIA'] },
+    children: [
+      { path: 'secretaria', component:  Secretariahome},
+      { path: 'secretaria/cadastrar-espaco', component: CadastroSala },
     ],
   },
   {

@@ -1,17 +1,19 @@
 import type { OnInit } from '@angular/core';
 import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
-import type { FormArray} from '@angular/forms';
+import type { FormArray } from '@angular/forms';
 import { FormBuilder, Validators, type FormGroup } from '@angular/forms';
 import type { AddItemModal } from '../../shared/add-item-modal/add-item-modal';
 import type { TipoSala } from '../../../models/tipoSala.mode';
 import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
 import type { AddItemModalData } from '../../../types/additemmodal';
+import type { Recurso } from '../../../models/Recurso.model';
+import { RecursoService } from '../../../services/recurso/recurso.service';
 
 @Component({
   selector: 'app-sala-form',
   standalone: false,
   templateUrl: './sala-form.html',
-  styleUrl: './sala-form.css'
+  styleUrl: './sala-form.css',
 })
 export class SalaForm implements OnInit {
   @Input() isLoading: boolean = false;
@@ -22,22 +24,33 @@ export class SalaForm implements OnInit {
 
   tiposSalas: TipoSala[] = [];
 
+  recursosDisponiveis: Recurso[] = [];
+
   private fb = inject(FormBuilder);
   private tipoSalaService = inject(TipoSalaService);
+  private recursoService = inject(RecursoService);
 
   form: FormGroup = this.fb.group({
     idTipoSala: ['', Validators.required],
     nome: ['', Validators.required],
     capacidade: ['', Validators.required],
     piso: ['', Validators.required],
+    disponibilidade: [true],
     observacoes: [''],
-    equipamentos: this.fb.array([])
+    equipamentos: this.fb.array([]),
   });
 
   ngOnInit(): void {
     this.tipoSalaService.getTiposSala().subscribe({
-      next: tipos => this.tiposSalas = tipos,
-      error: err => console.error('Erro ao carregar tipos de sala', err)
+      next: (tipos) => (this.tiposSalas = tipos),
+      error: (err) => console.error('Erro ao carregar tipos de sala', err),
+    });
+
+    this.recursoService.getRecursos().subscribe({
+        next: (recursos) => {
+            this.recursosDisponiveis = recursos;
+        },
+        error: (err) => console.error('Erro ao carregar recursos', err),
     });
   }
 
@@ -45,22 +58,26 @@ export class SalaForm implements OnInit {
     return this.form.get('equipamentos') as FormArray;
   }
 
-  onAddEquipamento() {
-    this.addItemModal.title = "Adicionar Equipamento";
-    this.addItemModal.nameLabel = "Nome do equipamento";
+  onAddEquipamento(event?: Event) {
+    (event?.target as HTMLElement)?.blur();
+
+    this.addItemModal.title = 'Adicionar Equipamento';
+    this.addItemModal.nameLabel = 'Nome do equipamento';
     this.addItemModal.showQuantityField = true;
     this.addItemModal.open();
   }
 
   onItemAdded(item: AddItemModalData) {
-    if (!item) {return};
+    if (!item || !item.recursoId) {
+      return;
+    }
 
     this.equipamentosFA.push(
       this.fb.group({
-        id: crypto.randomUUID(),
-        name: item.name,
-        quantity: item.quantity ?? 1
-      })
+        idRecurso: item.recursoId,
+        nome: item.name,
+        quantidade: item.quantity ?? 1,
+      }),
     );
   }
 
@@ -69,7 +86,7 @@ export class SalaForm implements OnInit {
   }
 
   onSave() {
-    this.clickSave.emit();
+    this.clickSave.emit(this.form.value);
   }
 
   onCancel() {

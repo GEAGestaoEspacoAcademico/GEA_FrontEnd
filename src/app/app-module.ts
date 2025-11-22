@@ -76,6 +76,7 @@ import { EditarEspacoModal } from './components/modals/editar-espaco-modal/edita
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
 import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
+import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 
 @NgModule({
   declarations: [
@@ -121,7 +122,8 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
     EditarEspacoModal,
     ListaEspacos,
     FuncionarioTable,
-    CreateResourceModal
+    CreateResourceModal,
+    CadastroSala
   ],
   imports: [
     BrowserModule,
