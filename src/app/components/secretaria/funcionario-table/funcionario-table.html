@@ -1,0 +1,96 @@
+<section class="space-table-container" aria-labelledby="funcionarios-title">
+
+  <header class="table-header">
+    <div class="header-controls">
+
+      <form class="search-bar" role="search" (submit)="$event.preventDefault()">
+        <label for="searchInput" class="visually-hidden">Buscar funcionário</label>
+
+        <mat-icon class="icon-search" svgIcon="search"></mat-icon>
+
+        <input
+          id="searchInput"
+          type="search"
+          name="search"
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange()"
+          placeholder="Buscar funcionário..."
+          aria-label="Buscar funcionário"
+        />
+
+        <button type="button" aria-label="Aplicar filtros">
+          <mat-icon svgIcon="filter"></mat-icon>
+        </button>
+      </form>
+      <button type="button" class="add-btn" (click)="onNovoFuncionario()">
+        <mat-icon>add_circle_outline</mat-icon>
+          Novo Funcionário
+      </button>
+
+    </div>
+  </header>
+
+  <div class="table-wrapper">
+    <table class="space-table">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>E-mail</th>
+          <th>Registro</th>
+          <th>Cargo</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (funcionario of data; track funcionario?.id ?? funcionario.nome ?? $index) {
+          <tr>
+            <td>{{ funcionario.nome }}</td>
+            <td>{{ funcionario.email }}</td>
+            <td>{{ funcionario.registro }}</td>
+            <td>{{ funcionario.cargo }}</td>
+
+            <td class="actions">
+              <button class="edit-btn" (click)="onEditFuncionario(funcionario)">
+                <mat-icon svgIcon="edit"></mat-icon>
+              </button>
+
+              <button class="delete-btn" (click)="onDeleteFuncionario(funcionario)">
+                <mat-icon svgIcon="delete"></mat-icon>
+              </button>
+            </td>
+          </tr>
+        }
+
+        @if (data.length === 0) {
+          <tr>
+            <td colspan="5" class="no-data">Nenhum funcionário encontrado.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <nav class="pagination">
+    <button
+      type="button"
+      (click)="changePage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+    >
+      &lt;
+    </button>
+
+    <button class="active">
+      {{ currentPage }}
+    </button>
+
+    <button
+      type="button"
+      (click)="changePage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+    >
+      &gt;
+    </button>
+  </nav>
+
+</section>
