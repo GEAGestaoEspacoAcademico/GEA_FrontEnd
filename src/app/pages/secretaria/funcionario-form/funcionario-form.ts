@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import {  Component ,EventEmitter, inject, Input, Output } from '@angular/core';
 import type { OnInit } from '@angular/core';
+import type { ComponentFixture } from '@angular/core/testing';
 
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import type { FormArray, FormGroup } from '@angular/forms';
@@ -21,7 +22,7 @@ export class FuncionarioForm implements OnInit {
   @Input() isLoading = false;
 
   @Output() saveForm = new EventEmitter<FormGroup>();
-  @Output() cancel = new EventEmitter<void>();
+  @Output() cancelForm = new EventEmitter<void>();
 
   form!: FormGroup;
   modalDisciplinaAberto = false;
@@ -83,6 +84,6 @@ export class FuncionarioForm implements OnInit {
   }
 
   onCancel(): void {
-    this.cancel.emit();
+    this.cancelForm.emit();
   }
 }
