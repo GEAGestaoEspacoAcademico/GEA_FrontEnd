@@ -19,6 +19,7 @@ import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { Aulas } from './pages/AD/aulas/aulas';
+import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
 import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
@@ -61,12 +62,13 @@ const routes: Routes = [
     path: 'secretaria',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: {roles: ['SECRETARIA', 'AUXILIAR_DOCENTE']},
+    data: { roles: ['SECRETARIA', 'AUXILIAR_DOCENTE'] },
     children: [
-      {path: 'home', component: Secretariahome},
-      {path: 'visualizar-espacos', component: ListaEspacos},
-      {path: 'cadastrar-laboratorio', component: CadastroSala}
-    ]
+      { path: 'home', component: Secretariahome },
+      { path: 'visualizar-espacos', component: ListaEspacos },
+      { path: 'cadastrar-laboratorio', component: CadastroSala },
+      { path: 'funcionarios', component: Funcionarios },
+    ],
   },
   {
     path: '',
