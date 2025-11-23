@@ -10,7 +10,7 @@ import type { AtualizarDisciplinaRequest, CriarDisciplinaRequest } from '../../t
 })
 export class DisciplinaService {
   private http = inject(HttpClient);
-  
+
   private baseUrl = environment.apiUrl + "/disciplinas";
 
   public getDisciplinaPorId(disciplinaId: number): Observable<Disciplina>{
@@ -22,7 +22,7 @@ export class DisciplinaService {
   }
 
   public deleteDisciplina(disciplinaId: number): Observable<void>{
-    return this.http.get<void>(`${this.baseUrl}/${disciplinaId}`);
+    return this.http.delete<void>(`${this.baseUrl}/${disciplinaId}`);
   }
 
   public getDisciplinas(): Observable<Disciplina[]>{
@@ -31,6 +31,6 @@ export class DisciplinaService {
 
   public criarDisciplina(disciplina: CriarDisciplinaRequest): Observable<Disciplina>{
     return this.http.post<Disciplina>(`${this.baseUrl}`, disciplina);
-  } 
+  }
 
 }

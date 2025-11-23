@@ -21,6 +21,7 @@ import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { SpaceRegistrationPage } from './pages/AD/space-registration/space-registration.page';
 import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 import { Aulas } from './pages/AD/aulas/aulas';
+import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 
 const routes: Routes = [
@@ -69,6 +70,7 @@ const routes: Routes = [
       { path: 'visualizar-espacos', component: ListaEspacos },
       { path: 'cadastrar-laboratorio', component: CadastroSala },
       { path: 'funcionarios', component: Funcionarios },
+      {path: 'cadastrar-funcionario', component: FuncionarioForm}
     ],
   },
   {

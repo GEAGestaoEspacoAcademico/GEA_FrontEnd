@@ -85,6 +85,7 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
 import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
+import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
 import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 
@@ -130,6 +131,7 @@ import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
     SpaceRegistrationForm,
     SpaceRegistrationPage,
     Home,
+    FuncionarioForm,
     FuncionarioTable,
     Funcionarios,
     Secretariahome,
