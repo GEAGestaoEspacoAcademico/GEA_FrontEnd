@@ -1,13 +1,16 @@
-<app-espacos-table
-  [data]="(espacos$ | async) || []"
-  [totalPages]="totalPages"
-  [currentPage]="currentPage"
-  [isLoading]="isLoading"
-  (searchChange)="onSearch($event)"
-  (pageChange)="onPageChange($event)"
-  (editClick)="onEdit($event)"
-  (deleteClick)="onDelete($event)">
-</app-espacos-table>
+<div class="space-management-container">
+  <h2 class="main-title">List de espaços Acadêmicos</h2>
+  <app-espacos-table
+    [data]="(espacos$ | async) || []"
+    [totalPages]="totalPages"
+    [currentPage]="currentPage"
+    [isLoading]="isLoading"
+    (searchChange)="onSearch($event)"
+    (pageChange)="onPageChange($event)"
+    (editClick)="onEdit($event)"
+    (deleteClick)="onDelete($event)">
+  </app-espacos-table>
+</div>
 
 <app-editar-espaco-modal 
   #editModal 

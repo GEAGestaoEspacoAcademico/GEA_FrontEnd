@@ -1,30 +1,29 @@
-import type { Sala } from "../models/sala.model"
+import type { Sala } from '../models/sala.model';
 
 interface Horario {
-  horaInicio: string,
-  horaFim: string
+  horaInicio: string;
+  horaFim: string;
 }
 
 // /salas/{salaId}
-export interface AtualizarSalaRequest{
-  salaNome: string,
-  salaCapacidade: number,
-  piso: number,
-  disponibilidade: boolean,
-  tipoSalaId: number,
-  salaObservacoes: string
+export interface AtualizarSalaRequest {
+  salaNome: string;
+  salaCapacidade: number;
+  andarId: number;
+  disponibilidade: boolean;
+  tipoSalaId: number;
+  salaObservacoes: string;
 }
 
 //!O Response do AtulizarSala não é necessária
 
 // /salas/{salaId}/recursos/{recursoId}
 export interface AtulizarQuantidadeRecursoSalaRequest {
-  quantidade: number
+  quantidade: number;
 }
 
 // /salas
-export type BuscarSalaResponse = Omit<Sala, 'observacoes'>
-
+export type BuscarSalaResponse = Omit<Sala, 'observacoes'>;
 
 // POST /salas
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
@@ -33,59 +32,62 @@ export interface CriarSalaRequest extends AtualizarSalaRequest {
 }
 
 export interface CriarSalaResponse {
-  salaId: number,
-  salaNome: string,
-  capacidade: number,
-  piso: number,
-  disponibilidade: boolean,
-  tipoSala: string,
-  observacoes: string
+  salaId: number;
+  salaNome: string;
+  capacidade: number;
+  andarId: number;
+  disponibilidade: boolean;
+  tipoSala: string;
+  observacoes: string;
 }
 
 // GET /salas/{salaId}/recursos
 export interface BuscarRecursoSalaResponse {
-  idRecurso: number,
-  nome: string,
-  tipo: string,
-  quantidade: number
+  idRecurso: number;
+  nome: string;
+  tipo: string;
+  quantidade: number;
 }
 
 // POST /salas/{salaId}/recursos
+
+export interface RecursoAdiconarSala {
+  recursoId: number;
+  quantidadeRecurso: number;
+}
 export interface AdicionarRecursoSalaRequest {
-  idRecurso: number,
-  quantidade: number
+  listaDeRecursosParaAdicionar: RecursoAdiconarSala[];
 }
 
 //! Sujeito a mudanças
 export interface AdicionarRecursoSalaResponse {
-  idRecurso: number,
-  nome: string,
-  tipo: string,
-  quantidade: number
+  idRecurso: number;
+  nome: string;
+  tipo: string;
+  quantidade: number;
 }
 
 // POST /salas/recomendacoes
 export interface BuscarRecomendacaoRequest {
-  horarios: Horario,
-  data: string,
-  tipoSalaId: number,
-  recursosIds: number[],
-  capacidade: number
+  horarios: Horario;
+  data: string;
+  tipoSalaId: number;
+  recursosIds: number[];
+  capacidade: number;
 }
 
 export interface BuscarRecomendacaoResponse {
-  salaId: number,
-  salaNome: string,
-  capacidade: number,
-  piso: number,
-  disponibilidade: boolean,
-  tipoSala: string
+  salaId: number;
+  salaNome: string;
+  capacidade: number;
+  piso: number;
+  disponibilidade: boolean;
+  tipoSala: string;
 }
 
 // GET salas/disponíveis
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface BuscarSalaDisponivel extends BuscarRecomendacaoResponse{
+export interface BuscarSalaDisponivel extends BuscarRecomendacaoResponse {
   //Lint desabilitado a fim de minimizar o códgo
   //!Haverá mudanças
 }
-

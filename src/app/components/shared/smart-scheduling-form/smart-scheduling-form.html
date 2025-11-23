@@ -8,7 +8,7 @@
                     <mat-label>Local</mat-label>
                     <mat-select formControlName="local">
                         @for (s of salas; track s.salaId) {
-                        <mat-option [value]="s">{{s.salaNome}}</mat-option>
+                        <mat-option [value]="s.salaId">{{s.salaNome}}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -80,8 +80,9 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Local</mat-label>
                     <mat-select formControlName="local">
-                        <mat-option value="Auditório">Auditório</mat-option>
-                        <mat-option value="Sala Master">Sala Maker</mat-option>
+                        @for (sala of salas; track sala.salaId) {
+                            <mat-option [value]="sala.salaId">{{sala.salaNome}}</mat-option>
+                        }
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -89,7 +90,7 @@
             <div class="col-6">
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Data Selecionada</mat-label>
-                    <input matInput [value]="singleDate | date:'dd/MM/yyyy'" [disabled]="true"> </mat-form-field>
+                    <input matInput [value]="singleDate || dateArray[0] | date:'dd/MM/yyyy'" [disabled]="true"> </mat-form-field>
             </div>
 
             <div class="col-6">

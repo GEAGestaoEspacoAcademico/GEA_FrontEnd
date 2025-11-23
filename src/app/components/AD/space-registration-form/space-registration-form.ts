@@ -1,119 +1,111 @@
 import type { OnInit } from '@angular/core';
 import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
-import type { FormGroup } from '@angular/forms';
+import type { FormArray, FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 import type { AddItemModal } from '../../modals/add-item-modal/add-item-modal';
 import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
-import type { Equipamento } from '../../../types/equipamento';
-import type { Software } from '../../../types/software';
-import type { AddItemModalData } from '../../../types/additemmodal';
-import type { CriarSalaRequest } from '../../../types/sala.type';
+import type { Recurso } from '../../../models/Recurso.model';
 import type { TipoSala } from '../../../models/tipoSala.mode';
-
-
+import { RecursoService } from '../../../services/recurso/recurso.service';
+import type { AddItemModalData } from '../../../types/additemmodal';
+import type { CriarSalaFormulario } from '../../../types/util.types';
 
 @Component({
   selector: 'app-space-registration-form',
   standalone: false,
   templateUrl: './space-registration-form.html',
-  styleUrl: './space-registration-form.css'
+  styleUrl: './space-registration-form.css',
 })
 export class SpaceRegistrationForm implements OnInit {
-  
-  
+  @Input() isLoading: boolean = false;
+  @Output() clickSave = new EventEmitter<CriarSalaFormulario>();
+  @Output() clickCancel = new EventEmitter<void>();
+
   @ViewChild('addItemModal') addItemModal!: AddItemModal;
-  @Output() formSubmit = new EventEmitter<CriarSalaRequest>();
 
-  equipamentos: Equipamento[] = [];
-  softwares: Software[] = [];
-  tiposSalas!: TipoSala[];
+  tiposDeSala: TipoSala[] = [];
 
-  private fb = inject(FormBuilder);
-  private currentItemType: 'equipamento' | 'software' | null = null;
-  private tipoSalaService = inject(TipoSalaService);
-  
-    form: FormGroup = this.fb.group({
-      salaNome: ['', Validators.required],
-      piso: ['',  Validators.required],
-      capacidade: ['',  Validators.required],
-      tipoSala: ['',  Validators.required],
-      observacoes: ['']
-    });
+  recursosDisponiveis: Recurso[] = [];
+
+  private readonly fb = inject(FormBuilder);
+  private readonly tipoSalaService = inject(TipoSalaService);
+  private readonly recursoService = inject(RecursoService);
+
+  atualizarListaDisponivel() {
+    const recursosSelecionados = this.equipamentosFA.value.map((item: Recurso) => item.nome);
+
+    this.recursosDisponiveis = this.recursosDisponiveis.filter(
+      (recurso) => !recursosSelecionados.includes(recurso.nome),
+    );
+  }
 
   ngOnInit(): void {
     this.tipoSalaService.getTiposSala().subscribe({
       next: (tipos) => {
-        this.tiposSalas = tipos;
+        this.tiposDeSala = tipos.filter(
+          (t) => t.tipoSalaNome.trim().toUpperCase().replaceAll(/\s/g, '') !== 'SALADEAULA',
+        );
       },
-      error: (err) => {
-        console.error('Erro ao carregar tipos de sala:', err);
-      }
+      error: (err) => console.error('Erro ao carregar tipos de sala', err),
+    });
+
+    this.recursoService.getRecursos().subscribe({
+      next: (recursos) => {
+        this.recursosDisponiveis = recursos;
+      },
+      error: (err) => console.error('Erro ao carregar recursos', err),
+    });
+
+    this.equipamentosFA.valueChanges.subscribe(() => {
+      this.atualizarListaDisponivel();
     });
   }
 
-  @Input() set initialData(data: CriarSalaRequest) {
-    if (data) {
-      this.form.patchValue({
-        salaNome: data.salaNome,
-        piso: data.piso,
-        capacidade: data.salaCapacidade,
-        tipoSala: data.tipoSalaId,
-        observacoes: data.salaObservacoes
-      });
-      this.equipamentos = []; 
-      this.softwares = [];
-    }
+  form: FormGroup = this.fb.group({
+    tipoSalaId: ['', Validators.required],
+    salaNome: ['', Validators.required],
+    salaCapacidade: ['', Validators.required],
+    andarId: ['', Validators.required],
+    disponibilidade: [true],
+    salaObservacoes: [''],
+    equipamentos: this.fb.array([]),
+  });
+
+  get equipamentosFA(): FormArray {
+    return this.form.get('equipamentos') as FormArray;
   }
 
-  onAddItem(tipo: 'equipamento' | 'software') {
-    this.currentItemType = tipo;
-    this.addItemModal.title = tipo === 'equipamento' ? 'Adicionar Equipamento' : 'Adicionar Software';
-    this.addItemModal.nameLabel = tipo === 'equipamento' ? 'Nome do equipamento' : 'Nome do software';
-    this.addItemModal.showQuantityField = tipo === 'equipamento';
+  onAddEquipamento(event?: Event) {
+    (event?.target as HTMLElement)?.blur();
+
+    this.addItemModal.title = 'Adicionar Equipamento';
+    this.addItemModal.nameLabel = 'Nome do equipamento';
+    this.addItemModal.showQuantityField = true;
     this.addItemModal.open();
   }
-  
+
   onItemAdded(item: AddItemModalData) {
-    if (!item) {return;}
-  
-    if (this.currentItemType === 'equipamento') {
-      const novoEquipamento: Equipamento = {
-        id: crypto.randomUUID(),
-        name: item.name,
-        quantity: item.quantity ?? 1
-      };
-      this.equipamentos.push(novoEquipamento);
-    } else {
-      const novoSoftware: Software = {
-        id: crypto.randomUUID(),
-        name: item.name
-      };
-      this.softwares.push(novoSoftware);
-    }
-  }
-  
-
-  remover(tipo: 'equipamento' | 'software', recurso: Equipamento | Software)
-  {
-    if (tipo === 'equipamento') {
-      this.equipamentos = this.equipamentos.filter(r => r.id !== recurso.id);
-    } else {
-      this.softwares = this.softwares.filter(r => r.id !== recurso.id);
-    }
-  }
-
-  onSubmitForm() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
+    if (!item) {
       return;
     }
-  
-    const payload: CriarSalaRequest = {
-      ...this.form.value,
-      equipamentoId: this.equipamentos.map(e => Number(e.id)),
-      softwaresId: this.softwares.map(s => Number(s.id))
-    };
-  
-    this.formSubmit.emit(payload);
+    this.equipamentosFA.push(
+      this.fb.group({
+        recursoId: item.recursoId,
+        nome: item.name,
+        quantidadeRecurso: item.quantity ?? 1,
+      }),
+    );
+  }
+
+  removerEquipamento(i: number) {
+    this.equipamentosFA.removeAt(i);
+  }
+
+  onSave() {
+    this.clickSave.emit(this.form.getRawValue());
+  }
+
+  onCancel() {
+    this.clickCancel.emit();
   }
 }

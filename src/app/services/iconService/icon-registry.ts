@@ -47,6 +47,7 @@ export class IconRegistryService {
     this.addIcon('delete', 'trash.svg');
     this.addIcon('search', 'search.svg');
     this.addIcon('feedback-email', 'feedback-email.svg');
+    this.addIcon('clock', 'clock.svg');
   }
   /**
    * Insere um novo icone no projeto

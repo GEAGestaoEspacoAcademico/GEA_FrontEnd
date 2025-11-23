@@ -7,9 +7,10 @@ import { filter, map, switchMap, type Observable } from 'rxjs';
 import { selectCurrentUser } from '../../../store/auth/auth.selectors';
 import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
-import { ProfessorService } from '../../../services/professor/professor.service';
 import type { Disciplina } from '../../../models/disciplina.model';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
+import ProfessorService from '../../../services/professor/professor.service';
+import type { EditProfessorModal } from '../../../components/secretaria/edit-professor-modal/edit-professor-modal';
 
 @Component({
   selector: 'app-configuracoes',
