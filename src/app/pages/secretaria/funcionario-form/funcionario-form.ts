@@ -49,7 +49,9 @@ export class FuncionarioForm implements OnInit {
     this.form.get('perfil')?.valueChanges.subscribe((perfil) => {
       const emailCtrl = this.form.get('email');
 
-      if (!emailCtrl) return;
+      if (!emailCtrl) {
+        return;
+      }
 
       if (perfil === 'PROFESSOR') {
         emailCtrl.setValidators([Validators.required, Validators.email]);
