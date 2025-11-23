@@ -70,6 +70,7 @@ import { Agenda } from './pages/AD/agenda/agenda';
 
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
+import { SpaceRegistrationPage } from './pages/AD/space-registration/space-registration.page';
 import { Home } from './pages/AD/home/home';
 import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 
@@ -125,6 +126,7 @@ import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
     Home,
     ScheduleEvent,
     SpaceRegistrationForm,
+    SpaceRegistrationPage,
     Home,
     FuncionarioTable,
     Funcionarios,
