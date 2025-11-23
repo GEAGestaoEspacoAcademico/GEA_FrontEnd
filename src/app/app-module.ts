@@ -86,6 +86,7 @@ import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
+import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 
 @NgModule({
   declarations: [
@@ -142,7 +143,8 @@ import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
     EspacosTable,
     FuncionarioTable,
     SalaForm,
-    CadastroSala
+    CadastroSala,
+    ScheduleClass
   ],
   imports: [
     BrowserModule,

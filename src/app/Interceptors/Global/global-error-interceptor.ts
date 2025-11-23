@@ -43,38 +43,13 @@ export const globalErrorInterceptor: HttpInterceptorFn = (
   return next(request).pipe(
     catchError((error: HttpErrorResponse) => {
       console.error('ERRO INTERCEPTADO PELA API:', error);
-      let userMessage = 'Algo deu errado. Tente novamente mais tarde.';
       const showErrorToast = true;
 
-      switch (error.status) {
-        case 0:
-          userMessage = 'Sem conexão. Verifique sua internet e tente novamente.';
-          break;
-        case 403:
-          userMessage = 'Acesso negado. Redirecionando para o login...';
-          router.navigate(['/login']);
-          break;
-        case 404:
-          userMessage = 'Recurso não encontrado (404).';
-          break;
-        case 422: {
-          const apiErrorMessage = error.error?.message || 'Os dados enviados são inválidos.';
-          userMessage = `Erro de validação: ${apiErrorMessage}`;
-          break;
-        }
-        case 500:
-        case 503:
-          userMessage = error.error.message || 'Erro no servidor. Tente novamente mais tarde.';
-          break;
-        default:
-          userMessage = `Erro inesperado (Código: ${error.status}). Tente novamente.`;
-      }
-
       if (showErrorToast) {
-        notificationService.showError(userMessage);
+        notificationService.showError(error.message);
       }
 
-      return throwError(() => new Error(userMessage));
+      return throwError(() => new Error(error.message));
     }),
   );
 };

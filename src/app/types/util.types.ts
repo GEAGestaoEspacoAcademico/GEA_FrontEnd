@@ -1,5 +1,15 @@
+import type { Disciplina } from "../models/disciplina.model";
 import type { CriarSalaRequest, RecursoAdiconarSala} from "./sala.type";
 
 export interface CriarSalaFormulario extends CriarSalaRequest {
   equipamentos: RecursoAdiconarSala[]
+}
+
+export interface CriarAgendamentoAulaFormulario {
+  inicio: string,
+  fim: string,
+  local: number,
+  disciplina: number,
+  solicitante: string,
+  date: string
 }

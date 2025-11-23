@@ -1,11 +1,11 @@
 import { Component, inject, ViewChild } from '@angular/core';
 import type { ScheduleDayModal } from '../../../components/shared/schedule-day-modal/schedule-day-modal';
-import type { CriarEventoFormulario, CriarEventoRequest } from '../../../types/agendamentoEvento.type';
+import type { CriarEventoFormulario } from '../../../types/agendamentoEvento.type';
 import { AgendamentoService } from '../../../services/agendamento/agendamento.service';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../../../store/auth/auth.selectors';
-import { filter, forkJoin, switchMap, take, throwError } from 'rxjs';
+import { forkJoin, switchMap, take, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-schedule-event',
