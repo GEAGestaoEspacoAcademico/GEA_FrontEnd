@@ -16,8 +16,6 @@ import type { CriarSecretariaRequest } from '../../../types/secretaria.type';
   styleUrls: ['./funcionario-form.css'],
 })
 export class FuncionarioForm implements OnInit {
-  @Input() isLoading = false;
-
   @Output() saveForm = new EventEmitter<FormGroup>();
   @Output() cancelForm = new EventEmitter<void>();
 
@@ -114,7 +112,6 @@ export class FuncionarioForm implements OnInit {
           matricula: this.form.get('registro')?.value,
         };
 
-        this.isLoading = true;
         this.secretariaService.cadastrar(dados).subscribe({
           next: () => {
             this.snackBar.showSuccess('Secretaria cadastrada com sucesso!');
@@ -123,7 +120,6 @@ export class FuncionarioForm implements OnInit {
             this.saveForm.emit(this.form);
           },
           error: (err) => {
-            this.isLoading = false;
             this.snackBar.showError(err);
           },
         });
