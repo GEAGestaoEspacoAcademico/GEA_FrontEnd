@@ -14,7 +14,6 @@
   import type {Option} from '../../../components/shared/scheduling/types'
   import { SnackBarService } from '../../../services/snackbar/snackbar.service';
   import { FormatUtils } from '../../../utils/format.utils';
-import { ProfessorService } from '../../../services/professor/professor.service';
 import type { AgendamentoAula } from '../../../models/agendamentoAula.model';
 import type { Agendamento } from '../../../models/agendamento.model';
 import type { AgendamentoAulaEditarRequest } from '../../../types/agendamentoAula.type';
@@ -22,6 +21,7 @@ import { JanelasHorarioService } from '../../../services/janelas-horario/janelas
 import type { AgendarForm } from '../../../types/agendar';
 import { AgendamentoService } from '../../../services/agendamento/agendamento.service';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
+import ProfessorService from '../../../services/professor/professor.service';
 
   @Component({
     selector: 'app-editar-aula',
