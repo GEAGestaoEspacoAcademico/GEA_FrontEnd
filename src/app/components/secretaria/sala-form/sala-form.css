@@ -1,0 +1,168 @@
+form.form-group {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.line-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.field-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  display: block;
+}
+
+.simple-input {
+  width: 80%;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--color-default-black);
+  border-radius: 0.8rem;
+  outline: none;
+  transition: 0.15s;
+}
+
+.simple-input:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 4px var(--color-primary-700);
+}
+
+.piso-select {
+    width: 40%;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    border: 1px solid var(--color-default-black);
+    border-radius: 0.8rem;
+    outline: none;
+    transition: 0.15s;
+}
+
+.piso-select:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 4px var(--color-primary-700);
+}
+
+.input-error {
+  border-color: var(--color-primary-500) !important;
+  background: #fff5f5;
+}
+
+.error-msg {
+  color: var(--color-primary-500);
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  display: block;
+}
+
+.chips-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 1rem;
+  border: 1px solid var(--color-default-black);
+  border-radius: 0.35rem;
+  min-height: 3.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  background-color: var(--color-primary-500);
+  color: #fff;
+  border-radius: 0.2rem;
+  border: none;
+  box-shadow: none;
+  font-size: 0.9rem;
+}
+
+.chip-label {
+  display: inline-block;
+  line-height: 1;
+}
+
+.chip-qty {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin-left: 0.25rem;
+}
+
+.chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  color: #fff;
+  border: none;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.chip-remove:hover {
+  background: var(--color-primary-700);
+}
+
+.chip.pill {
+  border-radius: 2rem;
+}
+
+.add-btn {
+  margin-top: 0.8rem;
+  background: var(--color-primary-500);
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.7rem;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: 0.2s;
+  width: auto;
+}
+
+.add-btn mat-icon {
+  font-size: 1.2rem;
+}
+
+.add-btn:hover {
+  background: var(--color-primary-700);
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1.3rem;
+  margin-top: 2.5rem;
+}
+
+.cancelar-btn {
+  background: transparent;
+  color: var(--color-primary-500);
+  border: 1px solid var(--color-primary-500);
+}
+
+.cancelar-btn:hover {
+  background: #ffeaea;
+}
+
+.remove-btn {
+    background-color: var(--color-primary-500);
+    border: none;
+}
+
+.remove-icon {
+    width: 0.8rem;
+    height: 1rem;
+    color: white;
+}

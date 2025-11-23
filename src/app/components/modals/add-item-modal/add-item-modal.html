@@ -1,0 +1,38 @@
+<ng-template #itemModal let-modal>
+  <div class="body-modal">
+    <form [formGroup]="novoItem" class="" (ngSubmit)="onSubmit()">
+      <div class="d-flex justify-content-center align-items-center w-100">
+        <select
+          formControlName="recursoId"
+          class="gea-input-field flex-grow-1"
+          [class.input-error]="
+            novoItem.get('recursoId')?.invalid && novoItem.get('recursoId')?.touched
+          "
+        >
+          <option value="" disabled selected>Selecione um {{ nameLabel.toLowerCase() }}</option>
+          @for (recurso of recursosDisponiveis; track recurso.id) {
+            <option [ngValue]="recurso.id">{{ recurso.nome }}</option>
+          }
+        </select>
+
+        @if (showQuantityField) {
+          <input
+            type="number"
+            class="gea-input-field gea-input-field-small"
+            placeholder="Qtd"
+            formControlName="quantity"
+          />
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="gea-btn gea-btn-primary d-flex align-items-center justify-content-start mx-auto"
+        [class.disabled-button]="novoItem.invalid"
+        [disabled]="novoItem.invalid"
+      >
+        <mat-icon svgIcon="add-circle" class="plus-icon align-items-center"></mat-icon>{{ title }}
+      </button>
+    </form>
+  </div>
+</ng-template>

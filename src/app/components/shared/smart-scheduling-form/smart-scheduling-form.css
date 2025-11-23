@@ -6,7 +6,7 @@
 
 mat-chip {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0.313rem;
     vertical-align: middle;
 }
 
@@ -15,23 +15,23 @@ mat-icon {
 }
 
 .aula-form {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
 
     margin-left: auto;
 }
 
 .agenda-form {
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
 
     margin-left: auto;
 }
 
 .border-card {
-    border: 1px solid var(--color-neutral-300);
-    border-radius: 8px;
-    padding: 16px;
+    border: 0.063 solid var(--color-neutral-300);
+    border-radius: var(--spacing-2);
+    padding: var(--spacing-4);
 
     width: fit-content;
     margin-top: var(--spacing-4);

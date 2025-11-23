@@ -2,7 +2,7 @@ import type { OnInit } from '@angular/core';
 import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
 import type { FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
-import type { AddItemModal } from '../../shared/add-item-modal/add-item-modal';
+import type { AddItemModal } from '../../modals/add-item-modal/add-item-modal';
 import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
 import type { Equipamento } from '../../../types/equipamento';
 import type { Software } from '../../../types/software';
