@@ -8,7 +8,8 @@ import { IconRegistryService } from '../../../services/iconService/icon-registry
 import { PushNotificationService } from '../../../services/push-notification/push-notification.service';
 import type { Disciplina } from '../../../models/disciplina.model';
 import type { Sala } from '../../../models/sala.model';
-import type { JanelaHorario } from '../../../models/janelasHorario.model';
+import type { Datas, JanelaHorario } from '../../../models/janelasHorario.model';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-agendar-sala-materia',
@@ -23,6 +24,7 @@ export class AgendarSalaMateria implements OnInit {
   private agendamentoService = inject(AgendamentoService);
   private iconRegistryService = inject(IconRegistryService);
   private pushNotificationService = inject(PushNotificationService);
+  private store = inject(Store);
 
   // Estado de Dados (Variáveis simples para o template)
   disciplinas: Disciplina[] = [];
@@ -51,7 +53,6 @@ export class AgendarSalaMateria implements OnInit {
   carregarDadosIniciais() {
     this.disciplinaService.getDisciplinas().subscribe(res => {this.disciplinas = res;});
     this.salaService.getSalas().subscribe(res => {this.locais = res;});
-    this.janelaHorarioService.getJanelasHorario().subscribe(res => {this.horariosDisponiveis = res});
   }
 
   getDiaSemana(dia: string){
@@ -62,38 +63,42 @@ export class AgendarSalaMateria implements OnInit {
   onDaysSelected(dates: Date[]) {
     this.selectedRecurringDates = dates;
 
-    // if (dates.length > 0) {
-    //   this.buscarHorarios();
-    // } else {
-    //   this.horariosDisponiveis = [];
-    //   this.statusMessage.set('Selecione datas para ver horários.');
-    //   this.statusClass.set('bg-blue-50 text-blue-900 border-blue-200');
-    // }
+    if (dates.length > 0) {
+      this.buscarHorarios();
+    } else {
+      this.horariosDisponiveis = [];
+      this.statusMessage.set('Selecione datas para ver horários.');
+      this.statusClass.set('bg-blue-50 text-blue-900 border-blue-200');
+    }
   }
 
-// buscarHorarios() {
-//     const listaDatas = this.selectedRecurringDates.map(d => d.toISOString().split('T')[0]);
-//     const payload: Datas = {
-//       datas: listaDatas
-//     };
+buscarHorarios() {
+    const listaDatas = this.selectedRecurringDates.map(d => d.toISOString().split('T')[0]);
+    const payload: Datas = {
+      datas: listaDatas
+    };
 
-//     this.janelaHorarioService.postJanelasHorarioPorDatas(payload).subscribe({
-//       next: (res) => {
-//         this.horariosDisponiveis = res;
-//         this.isLoadingHorarios = false;
-//       },
-//       error: () => {
-//         this.isLoadingHorarios = false;
-//         this.statusMessage.set('Erro ao buscar horários.');
-//         this.statusType.set('danger');
-//       }
-//     });
-//   }
+    this.janelaHorarioService.postJanelasHorarioPorDatas(payload).subscribe({
+      next: (res: JanelaHorario[]) => {
+        this.horariosDisponiveis = res;
+        this.isLoadingHorarios = false;
+      },
+      error: () => {
+        this.isLoadingHorarios = false;
+        this.statusMessage.set('Erro ao buscar horários.');
+      }
+    });
+  }
 
 
   // postAulaRecorrencia() {
   //   let recorrenciaBody = {
-
+  //     usuarioId: this.store.select(selectUserId),
+  //     dataInicio: ,
+  //     dataFim: ,
+  //     janelasHorarioId: [],
+  //     disciplinaId: ,
+  //     salaId
   //   }
   // }
 }

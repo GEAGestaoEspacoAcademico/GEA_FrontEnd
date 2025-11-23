@@ -34,8 +34,8 @@ export class JanelasHorarioService {
     return this.http.get<JanelaHorario[]>(`${this.baseUrl}/disponiveis/${data}`)
   }
 
-  public postJanelasHorarioPorDatas(datas: Datas): Observable<Datas>{
-    return this.http.post<Datas>(`${this.baseUrl}/disponiveis/datas`, datas);
+  public postJanelasHorarioPorDatas(datas: Datas): Observable<JanelaHorario[]>{
+    return this.http.post<JanelaHorario[]>(`${this.baseUrl}/disponiveis/datas`, datas);
   }
 
 }
