@@ -1,0 +1,14 @@
+.d-center{
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.w-67{
+    width: 67%;
+}
+
+.btn-primary{
+    width: fit-content;
+    background-color: var(--color-primary-300);
+}

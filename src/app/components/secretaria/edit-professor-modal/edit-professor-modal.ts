@@ -1,14 +1,17 @@
 import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
-import type { TemplateRef } from '@angular/core';
+import type { TemplateRef , OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import type { FormGroup } from '@angular/forms';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import ProfessorService from '../../../services/professor/professor.service';
 import type { Disciplina } from '../../../models/disciplina.model';
-import type { CursoProfesor } from '../../../types/curso';
-import { TempService } from '../../../services/temp-service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
+import { UsuarioService } from '../../../services/usuario/usuario.service';
+import type { Curso } from '../../../models/curso.model';
+import type { Observable } from 'rxjs';
+import type { Professor } from '../../../models/professor.model';
+import type { BuscarCursosProfessorResponse } from '../../../types/professor.types';
 
 @Component({
   selector: 'app-edit-professor-modal',
@@ -16,7 +19,7 @@ import { DisciplinaService } from '../../../services/disciplina/disciplina.servi
   templateUrl: './edit-professor-modal.html',
   styleUrl: './edit-professor-modal.css',
 })
-export class EditProfessorModal {
+export class EditProfessorModal implements OnInit {
   form: FormGroup;
 
   @Input() usuarioId: number | null = null;
@@ -27,11 +30,11 @@ export class EditProfessorModal {
   private modalService = inject(NgbModal);
 
   private professorService = inject(ProfessorService);
-  private auxiliarService = inject(TempService);
+  private usuarioService = inject(UsuarioService);
   private disciplinaService = inject(DisciplinaService);
 
   listaDisciplinas: Disciplina[] = [];
-  listaCursos: CursoProfesor[] = [];
+  listaCursos: BuscarCursosProfessorResponse[] = [];
 
   @ViewChild('EditProfessor')
   modalTemplate!: TemplateRef<EditProfessorModal>;
@@ -68,7 +71,7 @@ export class EditProfessorModal {
   }
 
   identificarEBuscarDados(id: number) {
-    this.auxiliarService.getById(id).subscribe({
+    this.usuarioService.buscarUsuarioPorId(id).subscribe({
       next: (usuario) => {
         const cargo = usuario.cargoId;
 
@@ -100,10 +103,10 @@ export class EditProfessorModal {
 
   /* --- BUSCA DE DADOS DO PROFESSOR --- */
   buscarDadosProfessor(id: number) {
-    this.professorService.getById(id).subscribe({
+    this.professorService.getProfessorPorId(id).subscribe({
       next: (resposta) => {
         this.form.patchValue({
-          usuarioId: resposta.usuarioid,
+          usuarioId: resposta.usuarioId,
           nome: resposta.professorNome,
           email: resposta.professorEmail,
           registro: resposta.registroProfessor,
@@ -126,7 +129,7 @@ export class EditProfessorModal {
     const id = this.usuarioId || dadosForm.usuarioId;
     const isAcademico = this.isProfessorOuCoordenador;
 
-    let requestObservable;
+    let requestObservable: Observable<Professor | void>;
 
     if (isAcademico) {
       const idsDisciplinas = this.listaDisciplinas.map(d => d.disciplinaId);
@@ -138,8 +141,7 @@ export class EditProfessorModal {
 
       requestObservable = this.professorService.editarProfessor(id, payloadProfessor);
     } else {
-      
-      requestObservable = this.auxiliarService.atualizarAD(id, dadosForm);
+      requestObservable = this.usuarioService.atualizarUsuarioAdmin(id, dadosForm);
     }
 
     requestObservable.subscribe({

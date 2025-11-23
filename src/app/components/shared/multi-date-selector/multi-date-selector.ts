@@ -14,7 +14,9 @@ export class MultiDateSelector implements OnInit{
 	@ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
 
 	@Input() initialSelectedDates: Date[] = []
+  @Input() modo: 'dias' | 'reccorente' = 'dias';
 	@Output() selecaoChange = new EventEmitter<Date[]>();
+  @Output() diaDaSemana = new EventEmitter<string>();
 	@Output() doubleClick = new EventEmitter<Date>();
 
 	private readonly CLICK_TIMEOUT_MS = 300;
@@ -65,21 +67,14 @@ export class MultiDateSelector implements OnInit{
       this.doubleClick.emit(date);
   }
 
-  private handleSingleClick(date: Date): void {
-    const index = this.findDateIndex(date);
-
-    if (index === -1) {
-      // Adiciona ao array
-      this.datasSelecionadas.push(date);
+private handleSingleClick(date: Date): void {
+    if (this.modo === 'reccorente') {
+      this.aplicaSelecaoRecorrente(date);
     } else {
-      // Remove do array
-      this.datasSelecionadas.splice(index, 1);
+      this.aplicaSelecaoUnica(date);
     }
 
-
-		this.calendar.updateTodaysDate();
-
-    this.selecaoChange.emit([...this.datasSelecionadas]);
+    this.atulizarSelecaoMudar();
   }
 
 	private findDateIndex(dateToFind: Date): number {
@@ -88,5 +83,55 @@ export class MultiDateSelector implements OnInit{
       d.getMonth() === dateToFind.getMonth() &&
       d.getFullYear() === dateToFind.getFullYear()
     );
+  }
+
+  private atulizarSelecaoMudar(): void {
+    this.calendar.updateTodaysDate(); 
+    this.selecaoChange.emit([...this.datasSelecionadas]);
+    const diaDaSemanaPortugues = this.datasSelecionadas[0].toLocaleDateString('pt-BR', {weekday: 'long'})
+    this.diaDaSemana.emit(diaDaSemanaPortugues.split('-')[0])
+  }
+  private aplicaSelecaoUnica(date: Date): void {
+    const index = this.findDateIndex(date);
+
+    if (index === -1) {
+      this.datasSelecionadas.push(date);
+    } else {
+      this.datasSelecionadas.splice(index, 1);
+    }
+  }
+
+  private aplicaSelecaoRecorrente(clickedDate: Date): void {
+    const targetDay = clickedDate.getDay();
+    const targetMonth = clickedDate.getMonth();
+    const targetYear = clickedDate.getFullYear();
+
+    const cursor = new Date(targetYear, targetMonth, 1);
+    const datesInMonth: Date[] = [];
+
+    while (cursor.getMonth() === targetMonth) {
+      if (cursor.getDay() === targetDay) {
+        datesInMonth.push(new Date(cursor));
+      }
+      cursor.setDate(cursor.getDate() + 1);
+    }
+
+    const allAlreadySelected = datesInMonth.every(d => this.findDateIndex(d) !== -1);
+
+    if (allAlreadySelected) {
+      this.datasSelecionadas = this.datasSelecionadas.filter(existing => {
+        const isSameMonth = existing.getMonth() === targetMonth && existing.getFullYear() === targetYear;
+        const isSameWeekDay = existing.getDay() === targetDay;
+        
+        return !(isSameMonth && isSameWeekDay);
+      });
+
+    } else {
+      datesInMonth.forEach(newDate => {
+        if (this.findDateIndex(newDate) === -1) {
+          this.datasSelecionadas.push(newDate);
+        }
+      });
+    }
   }
 }

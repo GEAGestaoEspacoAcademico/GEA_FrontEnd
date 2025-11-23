@@ -1,4 +1,4 @@
-export interface TiposSalas{
-  id: number,
-  nome: string
+export interface TipoSala {
+  tipoSalaId: number,
+  tipoSalaNome: string
 }

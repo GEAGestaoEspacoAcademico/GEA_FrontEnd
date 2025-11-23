@@ -4,6 +4,7 @@ import { type Observable } from 'rxjs';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 import { selectUserCargo } from '../../../store/auth/auth.selectors';
 import { AuthActions } from '../../../store/auth/auth.actions';
+import { Location } from '@angular/common';
 
 /**
  * Componente de UI responsável por exbir o header da aplicação
@@ -15,11 +16,12 @@ import { AuthActions } from '../../../store/auth/auth.actions';
   selector: 'app-header',
   standalone: false,
   templateUrl: './header.html',
-  styleUrl: './header.css'
+  styleUrl: './header.css',
 })
 export class Header {
   private store = inject(Store);
   private headerTitleService = inject(HeaderTitleService);
+  private location = inject(Location);
 
   public cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
 
@@ -28,4 +30,10 @@ export class Header {
   logout(): void {
     this.store.dispatch(AuthActions.logout());
   }
+
+  goBack(): void {
+    this.location.back();
+  }
+
+  showBackButton$ = this.headerTitleService.showBackButton$;
 }

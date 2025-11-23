@@ -1,0 +1,4 @@
+export enum TIPOSALA {
+  SALA = "SALA",
+  LABORATORIO = "LABORATORIO"
+}

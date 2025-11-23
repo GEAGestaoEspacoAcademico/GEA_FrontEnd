@@ -8,86 +8,109 @@
   </a>
 
   @if (cargo$ | async; as cargo) {
-
     <div class="header-dynamic-content">
-      <div class="header-center-content">
-
-        @if (cargo?.toUpperCase() === 'PROFESSOR') {
-          <nav class="nav-links" aria-label="Navegação principal">
-            <a
-              routerLink="/aulas"
-              routerLinkActive="active-link"
-              #rlaAulas="routerLinkActive"
-              [attr.aria-current]="rlaAulas.isActive ? 'page' : null"
-              class="nav-item"
-            >
-              Aulas
-            </a>
-
-            <a
-              routerLink="/agenda"
-              routerLinkActive="active-link"
-              #rlaAgenda="routerLinkActive"
-              [attr.aria-current]="rlaAgenda.isActive ? 'page' : null"
-              class="nav-item"
-            >
-              Agendar
-            </a>
-
-            <a
-              routerLink="/configuracoes"
-              routerLinkActive="active-link"
-              #rlaConfig="routerLinkActive"
-              [attr.aria-current]="rlaConfig.isActive ? 'page' : null"
-              class="nav-item"
-            >
-              Configurações
-            </a>
-          </nav>
-        }
-        @else if (cargo?.toUpperCase() === 'AUXILIAR_ADMINISTRATIVO' || cargo?.toUpperCase() === 'SECRETARIA') {
-          <h2 class="page-title" aria-live="polite">
-            {{ title$ | async }}
-          </h2>
-        }
-        @else {
-          <div class="page-title">Minha Conta</div>
-        }
-      </div>
-
-      <div class="header-right-icons" role="group" aria-label="Ações do cabeçalho">
-        <a
-          class="notification"
-          routerLink="/notificacoes"
-          routerLinkActive="active"
-          #rlaNotif="routerLinkActive"
-          aria-label="Ir para Notificações"
-          [attr.aria-current]="rlaNotif.isActive ? 'page' : null"
-        >
-          <mat-icon
-            [svgIcon]="rlaNotif.isActive ? 'notification-fill' : 'notification'"
-            class="icon-notification-medium"
-            aria-hidden="true"
-          ></mat-icon>
-          <span class="visually-hidden">Notificações</span>
-        </a>
-
-        @if (cargo?.toUpperCase() === 'AD' || cargo?.toUpperCase() === 'SECRETARIA') {
+      @if (showBackButton$ | async) {
+        <div class="header-center-content">
+          <div class="highlight-title">{{ title$ | async }}</div>
+        </div>
+        <div class="header-right-icons">
           <a
-            (click)="logout()"
-            (keydown.enter)="logout()"
-            class="logout-button"
-            aria-label="Sair"
-            tabindex="0"
-            role="button"
+            class="notification"
+            routerLink="/notificacoes"
+            routerLinkActive="active"
+            #rlaNotif="routerLinkActive"
+            aria-label="Ir para Notificações"
+            [attr.aria-current]="rlaNotif.isActive ? 'page' : null"
           >
-            <mat-icon svgIcon="logout" class="icon-logout-medium" aria-hidden="true"></mat-icon>
-            <span class="visually-hidden">Sair</span>
+            <mat-icon
+              [svgIcon]="rlaNotif.isActive ? 'notification-fill' : 'notification'"
+              class="icon-notification-medium"
+              aria-hidden="true"
+            ></mat-icon>
+            <span class="visually-hidden">Notificações</span>
           </a>
-        }
-      </div>
-    </div>
+          <mat-icon svgIcon="details-arrow" class="icon-arrow" (click)="goBack()"></mat-icon>
+        </div>
+      } @else {
+        <div class="header-center-content">
+          @if (cargo?.toUpperCase() === 'PROFESSOR') {
+            <nav class="nav-links" aria-label="Navegação principal">
+              <a
+                routerLink="/aulas"
+                routerLinkActive="active-link"
+                #rlaAulas="routerLinkActive"
+                [attr.aria-current]="rlaAulas.isActive ? 'page' : null"
+                class="nav-item"
+              >
+                Aulas
+              </a>
 
+              <a
+                routerLink="/agenda"
+                routerLinkActive="active-link"
+                #rlaAgenda="routerLinkActive"
+                [attr.aria-current]="rlaAgenda.isActive ? 'page' : null"
+                class="nav-item"
+              >
+                Agendar
+              </a>
+
+              <a
+                routerLink="/configuracoes"
+                routerLinkActive="active-link"
+                #rlaConfig="routerLinkActive"
+                [attr.aria-current]="rlaConfig.isActive ? 'page' : null"
+                class="nav-item"
+              >
+                Configurações
+              </a>
+            </nav>
+          } @else if (
+            cargo?.toUpperCase() === 'AUXILIAR_ADMINISTRATIVO' ||
+            cargo?.toUpperCase() === 'SECRETARIA'
+          ) {
+            <h2 class="page-title" aria-live="polite">
+              {{ title$ | async }}
+            </h2>
+          } @else {
+            <div class="page-title">Minha Conta</div>
+          }
+        </div>
+        <div class="header-right-icons" role="group" aria-label="Ações do cabeçalho">
+          <a
+            class="notification"
+            routerLink="/notificacoes"
+            routerLinkActive="active"
+            #rlaNotif="routerLinkActive"
+            aria-label="Ir para Notificações"
+            [attr.aria-current]="rlaNotif.isActive ? 'page' : null"
+          >
+            <mat-icon
+              [svgIcon]="rlaNotif.isActive ? 'notification-fill' : 'notification'"
+              class="icon-notification-medium"
+              aria-hidden="true"
+            ></mat-icon>
+            <span class="visually-hidden">Notificações</span>
+          </a>
+
+          @if (
+            cargo?.toUpperCase() === 'AUXILIAR_DOCENTE' || cargo?.toUpperCase() === 'SECRETARIA'
+          ) {
+            <a
+              (click)="logout()"
+              (keydown.enter)="logout()"
+              class="logout-button"
+              aria-label="Sair"
+              tabindex="0"
+              role="button"
+            >
+              <mat-icon svgIcon="logout" class="icon-logout-medium" aria-hidden="true"></mat-icon>
+              <span class="visually-hidden">Sair</span>
+            </a>
+          }
+        </div>
+      }
+    </div>
   } @else {
     <div class="header-dynamic-content">
       <div class="header-center-content">
@@ -96,7 +119,11 @@
 
       <div class="header-right-icons">
         <a class="notification" aria-hidden="true">
-          <mat-icon svgIcon="notification" class="icon-notification-medium" aria-hidden="true"></mat-icon>
+          <mat-icon
+            svgIcon="notification"
+            class="icon-notification-medium"
+            aria-hidden="true"
+          ></mat-icon>
         </a>
       </div>
     </div>

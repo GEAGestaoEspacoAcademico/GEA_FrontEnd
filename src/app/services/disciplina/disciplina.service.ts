@@ -3,9 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import type { Observable } from 'rxjs';
 import type { Disciplina } from '../../models/disciplina.model';
 import { environment } from '../../../environments/environment';
-/**
- * Serviço responsável pelo CRUD e gerenciamento de Disciplina
- */
+import type { AtualizarDisciplinaRequest, CriarDisciplinaRequest } from '../../types/disciplina.model';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,17 +13,24 @@ export class DisciplinaService {
   
   private baseUrl = environment.apiUrl + "/disciplinas";
 
-  /**
-   * Busca todas as disciplinas contidas no banco de dados
-   * @returns Retorna um observable contendo um array de objetos Disciplina
-   */
+  public getDisciplinaPorId(disciplinaId: number): Observable<Disciplina>{
+    return this.http.get<Disciplina>(`${this.baseUrl}/${disciplinaId}`);
+  }
+
+  public editDisciplina(disciplinaId: number, disciplina: AtualizarDisciplinaRequest): Observable<Disciplina>{
+    return this.http.put<Disciplina>(`${this.baseUrl}/${disciplinaId}`, disciplina)
+  }
+
+  public deleteDisciplina(disciplinaId: number): Observable<void>{
+    return this.http.get<void>(`${this.baseUrl}/${disciplinaId}`);
+  }
+
   public getDisciplinas(): Observable<Disciplina[]>{
     return this.http.get<Disciplina[]>(this.baseUrl);
   }
 
-  /**
-   * Pega todas as disciplinas em que um professor está relacionado
-   * @param idProfessor Id númerico do Professor
-   * @returns Retorna um observable contendo um array de objetos Disciplina relacionadas ao professor
-   */
+  public criarDisciplina(disciplina: CriarDisciplinaRequest): Observable<Disciplina>{
+    return this.http.post<Disciplina>(`${this.baseUrl}`, disciplina);
+  } 
+
 }
