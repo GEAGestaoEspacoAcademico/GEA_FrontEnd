@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import type { JanelaHorario } from '../../models/janelasHorario.model';
+import type { Datas, JanelaHorario } from '../../models/janelasHorario.model';
 import type { Observable } from 'rxjs';
 import type { AtualizarJanelaHorarioRequest, CriarJanelaHorarioRequest } from '../../types/janelaHorario.type';
 
@@ -32,6 +32,10 @@ export class JanelasHorarioService {
 
   public getJanelaHorarioPorData(data: string): Observable<JanelaHorario[]>{
     return this.http.get<JanelaHorario[]>(`${this.baseUrl}/disponiveis/${data}`)
+  }
+
+  public postJanelasHorarioPorDatas(datas: Datas): Observable<Datas>{
+    return this.http.post<Datas>(`${this.baseUrl}/disponiveis/datas`, datas);
   }
 
 }

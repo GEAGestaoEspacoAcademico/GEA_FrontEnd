@@ -7,6 +7,7 @@ import type { AgendamentoAulaCriarADReponse, AgendamentoAulaCriarADRequest, Agen
 import type { Agendamento } from '../../models/agendamento.model';
 import type { AgendamentoEvento } from '../../models/agendamentoEvento.model';
 import type { CriarAgendamentoEventoRequest} from '../../types/agendamentoEvento.type';
+import type { AgendamentoRecorrente } from '../../models/agendamentoRecorrente.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,6 +39,10 @@ export class AgendamentoService {
 
   public criarAgendamentoAulaAD(agendamento: AgendamentoAulaCriarADRequest): Observable<AgendamentoAulaCriarADReponse>{
     return this.http.post<AgendamentoAulaCriarADReponse>(`${this.baseUrl}/aulas/auxiliar-docente`, agendamento);
+  }
+
+  public criarAgendamentoAulaRecorrente(agendamento: AgendamentoRecorrente): Observable<AgendamentoRecorrente>{
+    return this.http.post<AgendamentoRecorrente>(`${this.baseUrl}/aulas/recorrencia`, agendamento);
   }
   
   public getAgendamentos(): Observable<Agendamento[]>{

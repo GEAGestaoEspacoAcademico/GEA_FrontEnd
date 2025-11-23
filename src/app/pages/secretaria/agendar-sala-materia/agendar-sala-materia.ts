@@ -1,4 +1,5 @@
-import { Component, inject, output, signal } from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
 import { SalaService } from '../../../services/sala/sala.service';
 import { JanelasHorarioService } from '../../../services/janelas-horario/janelas-horario.service';
@@ -15,7 +16,7 @@ import type { JanelaHorario } from '../../../models/janelasHorario.model';
   templateUrl: './agendar-sala-materia.html',
   styleUrl: './agendar-sala-materia.css'
 })
-export class AgendarSalaMateria {
+export class AgendarSalaMateria implements OnInit {
   private disciplinaService = inject(DisciplinaService);
   private salaService = inject(SalaService);
   private janelaHorarioService = inject(JanelasHorarioService);
@@ -48,8 +49,8 @@ export class AgendarSalaMateria {
   }
 
   carregarDadosIniciais() {
-    this.disciplinaService.getDisciplinas().subscribe(res => {this.disciplinas = res; console.log(this.disciplinas);});
-    this.salaService.getSalas().subscribe(res => {this.locais = res; console.log(this.disciplinas);});
+    this.disciplinaService.getDisciplinas().subscribe(res => {this.disciplinas = res;});
+    this.salaService.getSalas().subscribe(res => {this.locais = res;});
     this.janelaHorarioService.getJanelasHorario().subscribe(res => {this.horariosDisponiveis = res});
   }
 
@@ -70,61 +71,29 @@ export class AgendarSalaMateria {
     // }
   }
 
-  // Ação: Buscar horários na API
-buscarHorarios() {
-    const listaDatas = this.selectedRecurringDates.map(d => d.toISOString().split('T')[0]);
-    const payload: DatasPayload = {
-      datas: listaDatas
-    };
+// buscarHorarios() {
+//     const listaDatas = this.selectedRecurringDates.map(d => d.toISOString().split('T')[0]);
+//     const payload: Datas = {
+//       datas: listaDatas
+//     };
 
-    // this.janelaHorarioService.getJanelasHorarioPorDatas(payload).subscribe({
-    //   next: (res) => {
-    //     this.horariosDisponiveis = res;
-    //     this.isLoadingHorarios = false;
-        
-    //     if (res.length > 0) {
-    //       this.statusMessage.set(`${res.length} horários encontrados.`);
-    //       this.statusType.set('success');
-    //     } else {
-    //       this.statusMessage.set('Nenhum horário disponível para estas datas.');
-    //       this.statusType.set('danger');
-    //     }
-    //   },
-    //   error: () => {
-    //     this.isLoadingHorarios = false;
-    //     this.statusMessage.set('Erro ao buscar horários.');
-    //     this.statusType.set('danger');
-    //   }
-    // });
-  }
-  // Ação: Usuário preencheu tudo e clicou em Agendar
-  // onSchedule(formData: SchedulingFormValue) {
-  //   this.isSaving = true;
+//     this.janelaHorarioService.postJanelasHorarioPorDatas(payload).subscribe({
+//       next: (res) => {
+//         this.horariosDisponiveis = res;
+//         this.isLoadingHorarios = false;
+//       },
+//       error: () => {
+//         this.isLoadingHorarios = false;
+//         this.statusMessage.set('Erro ao buscar horários.');
+//         this.statusType.set('danger');
+//       }
+//     });
+//   }
 
-  //   const horariosReais = this.horariosDisponiveis.filter((_, i) => formData.horarios[i]);
-    
-  //   const payload = {
-  //     datas: this.selectedRecurringDates,
-  //     disciplinaId: formData.disciplina,
-  //     localId: formData.local,
-  //     horarios: horariosReais
-  //   };
 
-  //   this.agendamentoService(payload).subscribe({
-  //     next: () => {
-  //       this.isSaving = false;
-  //       this.statusMessage.set('Agendamento realizado com Sucesso!');
-  //       this.statusClass.set('bg-green-100 text-green-900 border-green-400 font-bold');
-  //     },
-  //     error: () => {
-  //       this.isSaving = false;
-  //       this.statusMessage.set('Falha ao realizar agendamento.');
-  //       this.statusClass.set('bg-red-100 text-red-900 border-red-400');
-  //     }
-  //   });
+  // postAulaRecorrencia() {
+  //   let recorrenciaBody = {
+
+  //   }
   // }
-}
-
-export interface DatasPayload {
-  datas: string[];
 }
