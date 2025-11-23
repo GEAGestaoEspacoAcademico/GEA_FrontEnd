@@ -11,6 +11,7 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 import { RoleGuard } from './guards/role.guard';
 import { Home } from './pages/AD/home/home';
+import { ScheduleEvent } from './pages/AD/schedule-event/schedule-event';
 import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 import { SpaceManagement } from './pages/AD/space-management/space-management';
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
@@ -49,7 +50,7 @@ const routes: Routes = [
       { path: 'lista-espacos', component: SpaceManagement },
       { path: 'home', component: Home },
       // { path: 'agendar-aula', component: ScheduleClass },
-      // { path: 'agendar-evento', component: ScheduleEvent },
+      { path: 'agendar-evento', component: ScheduleEvent },
       { path: 'lista-espacos', component: SpaceManagement },
       // { path: 'cadastrar-espaco', component:  },
       // { path: 'cadastrar-espaco/:id', component: AdSpaceRegistrationPage },

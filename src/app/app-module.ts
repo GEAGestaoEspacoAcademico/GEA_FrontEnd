@@ -72,6 +72,8 @@ import { Agenda } from './pages/AD/agenda/agenda';
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
+import { ScheduleEvent } from './pages/AD/schedule-event/schedule-event';
+
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 import { SalaForm } from './components/secretaria/sala-form/sala-form';
 import { EspacosTable } from './components/secretaria/espacos-table/espacos-table';
@@ -120,10 +122,13 @@ import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
     RecurringSchedulingForm,
     ScheduleDayModal,
     SpaceManagementTable,
+    Home,
+    ScheduleEvent,
     SpaceRegistrationForm,
     Home,
     Secretariahome,
     CreateResourceModal,
+    SmartSchedulingForm,
     AgendamentoAula,
     AgendarAula,
     RedefinirSenha,
