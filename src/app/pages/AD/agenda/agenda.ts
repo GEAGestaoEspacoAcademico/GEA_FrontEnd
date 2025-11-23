@@ -8,7 +8,6 @@ import type { Field } from "../../../components/shared/scheduling/types";
 import { AgendamentoService } from "../../../services/agendamento/agendamento.service";
 import { HeaderTitleService } from "../../../services/header-title/header-title.service";
 import { JanelasHorarioService } from "../../../services/janelas-horario/janelas-horario.service";
-import { ProfessorService } from "../../../services/professor/professor.service";
 import { RecursoService } from "../../../services/recurso/recurso.service";
 import { SalaService } from "../../../services/sala/sala.service";
 import { SnackBarService } from "../../../services/snackbar/snackbar.service";
@@ -19,6 +18,7 @@ import type { AgendarForm } from "../../../types/agendar";
 import type { BuscarRecomendacaoRequest, BuscarRecomendacaoResponse } from "../../../types/sala.type";
 import { FormatUtils } from "../../../utils/format.utils";
 import type { Option } from "../../../types/utils.types"
+import ProfessorService from "../../../services/professor/professor.service";
 
 @Component({
   selector: 'app-agenda',

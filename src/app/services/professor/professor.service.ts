@@ -4,12 +4,12 @@ import { environment } from '../../../environments/environment';
 import type { Observable } from 'rxjs';
 import type { Disciplina } from '../../models/disciplina.model';
 import type { Professor } from '../../models/professor.model';
-import type { BuscarCursosProfessorResponse, CriarProfessorRequest } from '../../types/professor.types';
+import type { AtualizarProfessorRequest, BuscarCursosProfessorResponse, CriarProfessorRequest } from '../../types/professor.types';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProfessorService {
+export default class ProfessorService {
   private http = inject(HttpClient);
   private baseUrl = environment.apiUrl + "/professores";
 
@@ -40,4 +40,9 @@ export class ProfessorService {
   public deleteProfessor(idProfessor: number): Observable<void>{
     return this.http.delete<void>(`${this.baseUrl}/${idProfessor}`)
   }
+
+  public editarProfessor(id: number, dadosProfessor: AtualizarProfessorRequest): Observable<Professor> {
+    return this.http.put<Professor>(`${this.baseUrl}/${id}`, dadosProfessor);
+  }
+
 }

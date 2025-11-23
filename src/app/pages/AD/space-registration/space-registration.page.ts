@@ -5,6 +5,7 @@ import { SalaService } from '../../../services/sala/sala.service';
 import { catchError, of, switchMap } from 'rxjs';
 import type { AdicionarRecursoSalaRequest, RecursoAdiconarSala } from '../../../types/sala.type';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-space-registration',
@@ -16,6 +17,7 @@ export class SpaceRegistrationPage {
   private readonly salaService = inject(SalaService);
   private readonly snackBar = inject(SnackBarService);
   private readonly router = inject(Router);
+  private readonly location = inject(Location)
 
   onFormSubimit(formularioCriarSala: CriarSalaFormulario) {
     const dadosPrincipais = {
@@ -65,5 +67,8 @@ export class SpaceRegistrationPage {
           this.snackBar.showError('Erro ao salvar sala.');
         },
       });
+    }
+  cancelForm(){
+    this.location.back()
   }
 }

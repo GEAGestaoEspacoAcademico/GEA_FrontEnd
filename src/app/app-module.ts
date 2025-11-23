@@ -72,8 +72,7 @@ import { Agenda } from './pages/AD/agenda/agenda';
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { SpaceRegistrationPage } from './pages/AD/space-registration/space-registration.page';
 import { Home } from './pages/AD/home/home';
-import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
-
+import { EditProfessorModal } from './components/secretaria/edit-professor-modal/edit-professor-modal';
 import { ScheduleEvent } from './pages/AD/schedule-event/schedule-event';
 
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
@@ -87,6 +86,8 @@ import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
+import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
+import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 
 @NgModule({
   declarations: [
@@ -125,6 +126,7 @@ import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario
     ScheduleDayModal,
     SpaceManagementTable,
     Home,
+    EditProfessorModal,
     ScheduleEvent,
     SpaceRegistrationForm,
     SpaceRegistrationPage,
@@ -138,12 +140,13 @@ import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario
     AgendamentoAula,
     AgendarAula,
     RedefinirSenha,
-    SalaForm,
-    EspacosTable,
-    EditarEspacoModal,
     ListaEspacos,
+    EditarEspacoModal,
+    EspacosTable,
     FuncionarioTable,
+    SalaForm,
     CadastroSala,
+    ScheduleClass
   ],
   imports: [
     BrowserModule,

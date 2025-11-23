@@ -22,11 +22,7 @@ import { SpaceRegistrationPage } from './pages/AD/space-registration/space-regis
 import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 import { Aulas } from './pages/AD/aulas/aulas';
 import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
-/*
-import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
-import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
-import {ScheduleEvent} from './pages/AD/scheduleEvent/schedule:Event'
-*/
+import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 
 const routes: Routes = [
   {
@@ -53,11 +49,10 @@ const routes: Routes = [
     children: [
       { path: 'lista-espacos', component: SpaceManagement },
       { path: 'home', component: Home },
-      // { path: 'agendar-aula', component: ScheduleClass },
+      { path: 'agendar-aula', component: ScheduleClass },
       { path: 'agendar-evento', component: ScheduleEvent },
       { path: 'lista-espacos', component: SpaceManagement },
-      // { path: 'cadastrar-espaco', component:  },
-      // { path: 'cadastrar-espaco/:id', component: AdSpaceRegistrationPage },
+      { path: 'cadastrar-espaco', component:  SpaceRegistrationPage},
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'cadastrar-espaco',
