@@ -37,13 +37,13 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 
 // Pages
+import { AgendamentoAula } from './pages/professor/agendamento-aula/agendamento-aula';
 import { Aulas } from './pages/AD/aulas/aulas';
 import { Configuracoes } from './pages/AD/configuracoes/configuracoes';
 import { Notificacoes } from './pages/shared/notificacoes/notificacoes';
 import { EditarAula } from './pages/AD/editar-aula/visualizar-aula';
 import { Login } from './pages/shared/login/login';
 import { EsqueciSenha } from './pages/shared/esqueci-senha/esqueci-senha';
-import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 
 // Shared Components
 import { DaySelector } from './components/shared/day-selector/day-selector';
@@ -66,17 +66,26 @@ import { RecurringSchedulingForm } from './components/shared/recurring-schedulin
 import { ScheduleDayModal } from './components/shared/schedule-day-modal/schedule-day-modal';
 import { SpaceManagement } from './pages/AD/space-management/space-management';
 import { A11yModule } from '@angular/cdk/a11y';
-import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
-import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
-import { EditarEspacoModal } from './components/modals/editar-espaco-modal/editar-espaco-modal';
-import { EspacosTable } from './components/secretaria/espacos-table/espacos-table';
-import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
-import { SalaForm } from './components/secretaria/sala-form/sala-form';
 import { Agenda } from './pages/AD/agenda/agenda';
-import { Home } from './pages/AD/home/home';
-import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
-import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
+
+
+// AD Components
+import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
+import { Home } from './pages/AD/home/home';
+import { ScheduleEvent } from './pages/AD/schedule-event/schedule-event';
+
+import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
+import { SalaForm } from './components/secretaria/sala-form/sala-form';
+import { EspacosTable } from './components/secretaria/espacos-table/espacos-table';
+import { EditarEspacoModal } from './components/modals/editar-espaco-modal/editar-espaco-modal';
+import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
+import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
+import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
+import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
+import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
+import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
+
 
 @NgModule({
   declarations: [
@@ -114,17 +123,23 @@ import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agen
     RecurringSchedulingForm,
     ScheduleDayModal,
     SpaceManagementTable,
+    Home,
+    ScheduleEvent,
     SpaceRegistrationForm,
     Home,
     Secretariahome,
     CreateResourceModal,
     AgendarSalaMateria,
+    SmartSchedulingForm,
+    AgendamentoAula,
+    AgendarAula,
     RedefinirSenha,
     EditarEspacoModal,
     EspacosTable,
     FuncionarioTable,
     SalaForm,
-    ListaEspacos
+    ListaEspacos,
+    CadastroSala
   ],
   imports: [
     BrowserModule,
