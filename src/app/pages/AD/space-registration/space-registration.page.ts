@@ -1,94 +1,69 @@
-import type { OnInit } from '@angular/core';
+import { SnackBarService } from './../../../services/snackbar/snackbar.service';
+import type { CriarSalaFormulario } from './../../../types/util.types';
 import { Component, inject } from '@angular/core';
-import { SalaService } from '../../../services/salas/sala.service';
-import { ActivatedRoute, Router } from '@angular/router';
-
-import type { Sala } from '../../../models/sala.model';
-import { SnackBarService } from '../../../services/snackbar/snackbar.service';
-import type { CriarSala } from '../../../types/criarsala';
+import { SalaService } from '../../../services/sala/sala.service';
+import { catchError, of, switchMap } from 'rxjs';
+import type { AdicionarRecursoSalaRequest, RecursoAdiconarSala } from '../../../types/sala.type';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-space-registration',
   standalone: false,
   templateUrl: './space-registration.page.html',
-  styleUrl: './space-registration.page.css'
+  styleUrl: './space-registration.page.css',
 })
-export class SpaceRegistrationPage implements OnInit {
+export class SpaceRegistrationPage {
+  private readonly salaService = inject(SalaService);
+  private readonly snackBar = inject(SnackBarService);
+  private readonly router = inject(Router);
 
-  
-  private route = inject(ActivatedRoute);
-  private salaService = inject(SalaService);
-  private snackBar = inject(SnackBarService);
-  private router = inject(Router);
+  onFormSubimit(formularioCriarSala: CriarSalaFormulario) {
+    const dadosPrincipais = {
+      salaNome: formularioCriarSala.salaNome,
+      salaCapacidade: Number(formularioCriarSala.salaCapacidade),
+      andarId: Number(formularioCriarSala.andarId),
+      disponibilidade: formularioCriarSala.disponibilidade ?? true,
+      tipoSalaId: Number(formularioCriarSala.tipoSalaId),
+      salaObservacoes: formularioCriarSala.salaObservacoes,
+    };
 
-  isEditMode = false;
-  spaceId: number | null = null;
+    this.salaService
+      .criarSala(dadosPrincipais)
+      .pipe(
+        switchMap((salaCriada) => {
+          const equipamentos = formularioCriarSala.equipamentos;
 
-  initialData: CriarSala | null = null;
-
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const idParam = params.get('id');
-
-      if (idParam) {
-        this.spaceId = Number(idParam);
-        this.isEditMode = true;
-
-        this.salaService.getSalaId(this.spaceId).subscribe({
-          next: (data: Sala) => {
-            this.initialData = {
-              ...data,
-              equipamentoId: [],
-              softwaresId: [],
-              equipamentos: [],
-              softwares: []
-            };
-          },
-          error: err => {
-            this.snackBar.showError('Erro ao carregar os dados do espaço.');
-            console.error(err);
+          if (!equipamentos.length) {
+            return of(true);
           }
-        });
 
-      } else {
-        this.isEditMode = false;
-      }
-    });
+          const recursosParaAPI = equipamentos.map((equipamento: RecursoAdiconarSala) => ({
+            recursoId: equipamento.recursoId,
+            quantidadeRecurso: equipamento.quantidadeRecurso,
+          }));
+
+          const requesicaoRecursos: AdicionarRecursoSalaRequest = {
+            listaDeRecursosParaAdicionar: recursosParaAPI,
+          };
+
+          return this.salaService
+            .adicionarRecursoEmSala(salaCriada.salaId, requesicaoRecursos)
+            .pipe(
+              catchError((_) => {
+                this.snackBar.showError(`Erro ao adicinoar recurso a sala`);
+                return of(null);
+              }),
+            );
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.snackBar.showSuccess('Sala salva com sucesso!');
+          this.router.navigate(['/secretaria/visualizar-espacos']);
+        },
+        error: () => {
+          this.snackBar.showError('Erro ao salvar sala.');
+        },
+      });
   }
-
-  onFormSubmit(payload: CriarSala) {
-    if (this.isEditMode && this.spaceId) {
-      this.updateSala(this.spaceId, payload);
-    } else {
-      this.createSala(payload);
-    }
-  }
-
-  private createSala(payload: CriarSala) {
-    this.salaService.createSala(payload).subscribe({
-      next: () => {
-        this.snackBar.showSuccess('Espaço criado com sucesso!');
-        this.router.navigate(['/ad/cadastrar-espaco']);
-      },
-      error: err => {
-        this.snackBar.showError('Erro ao criar espaço.');
-        console.error(err);
-      }
-    });
-  }
-
-  private updateSala(id: number, payload: CriarSala) {
-    this.salaService.updateSala(id, payload).subscribe({
-      next: () => {
-        this.snackBar.showSuccess('Espaço atualizado com sucesso!');
-        this.router.navigate(['/ad/cadastrar-espaco']);
-      },
-      error: err => {
-        this.snackBar.showError('Erro ao atualizar espaço.');
-        console.error(err);
-      }
-    });
-  }
-
-
 }

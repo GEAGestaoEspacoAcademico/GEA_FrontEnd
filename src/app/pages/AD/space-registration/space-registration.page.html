@@ -1,12 +1,4 @@
 <section class="page-container">
-
-    <h1 class="page-title">
-        {{ isEditMode ? 'Editar Espaço' : 'Cadastrar Espaço' }}
-    </h1>
-
-    <app-space-registration-form
-        [initialData]="initialData"
-        (formSubmit)="onFormSubmit($event)">
-    </app-space-registration-form>
-
+  <h1 class="page-title">Cadastrar Espaço</h1>
+  <app-space-registration-form (clickSave)="onFormSubimit($event)"></app-space-registration-form>
 </section>

@@ -18,6 +18,7 @@ import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { Agenda } from './pages/AD/agenda/agenda';
+import { SpaceRegistrationPage } from './pages/AD/space-registration/space-registration.page';
 /*
 import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
 import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
@@ -55,18 +56,22 @@ const routes: Routes = [
       // { path: 'cadastrar-espaco', component:  },
       // { path: 'cadastrar-espaco/:id', component: AdSpaceRegistrationPage },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {
+        path: 'cadastrar-espaco',
+        component: SpaceRegistrationPage,
+      },
     ],
   },
   {
     path: 'secretaria',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: {roles: ['SECRETARIA', 'AUXILIAR_DOCENTE']},
+    data: { roles: ['SECRETARIA', 'AUXILIAR_DOCENTE'] },
     children: [
-      {path: 'home', component: Secretariahome},
-      {path: 'visualizar-espacos', component: ListaEspacos},
-      {path: 'cadastrar-laboratorio', component: CadastroSala}
-    ]
+      { path: 'home', component: Secretariahome },
+      { path: 'visualizar-espacos', component: ListaEspacos },
+      { path: 'cadastrar-laboratorio', component: CadastroSala },
+    ],
   },
   {
     path: '',

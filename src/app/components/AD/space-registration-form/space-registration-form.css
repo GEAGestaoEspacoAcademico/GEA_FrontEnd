@@ -1,182 +1,168 @@
+form.form-group {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.line-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+}
+
 .field-label {
-    font-weight: 500;
-    color: #333;
-    font-size: 0.875rem;
-    display: block;
-    margin-bottom: 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+  display: block;
 }
 
 .simple-input {
-    border: 0.031rem solid var(--color-default-black); 
-    border-radius: 0.5rem;
+  width: 80%;
+  padding: 0.7rem 1rem;
+  font-size: 1rem;
+  border: 1px solid var(--color-default-black);
+  border-radius: 0.8rem;
+  outline: none;
+  transition: 0.15s;
+}
+
+.simple-input:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 4px var(--color-primary-700);
+}
+
+.select {
+    width: 60%;
+    padding: 0.7rem 1rem;
+    font-size: 1rem;
+    border: 1px solid var(--color-default-black);
+    border-radius: 0.8rem;
     outline: none;
-    width: 100%;
-    font-size: 0.875rem;
-    padding: 0.438rem; 
-    background-color: transparent;
-    box-sizing: border-box;
+    transition: 0.15s;
 }
 
-.simple-input::placeholder {
-    color: #999;
+.select:focus {
+  border-color: var(--color-primary-500);
+  box-shadow: 0 0 4px var(--color-primary-700);
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    padding: 1rem;
-    max-width: 75rem; 
-    margin: 0 auto;
-}
-
-.line-3-cols,
-.line-2-cols {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    width: 100%;
-}
-
-.line-3-cols > div:nth-child(2) select {
-    width: 100%;
-}
-
-#observacoes {
-    width: 100%;
-    min-height: 6.25rem; 
-    resize: none;
-}
-
-.chips-box {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 0.4rem; 
-    min-height: 3rem;
-    padding: 0.4rem;
-    border: 0.063rem solid var(--color-default-black); 
-    border-radius: 0.5rem;
-    background-color: transparent !important;
-}
-
-mat-chip {
-    display: flex;
-    align-items: center;
-    background-color: #b71c1c !important;
-    color: white !important;
-    font-weight: 500;
-    border-radius: 0.5rem;
-    padding-right: 0.3rem;
-    height: 2rem; 
-}
-
-.icone-remover{
-    width: 11.43px;
-    height: auto;
-    padding: 0;
-}
-
-mat-chip button[mat-icon-button] {
-    color: white !important;
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    width: 1.25rem; 
-    height: 1.25rem;
-}
-mat-mdc-chip-action-label{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: flex !important;    
-    flex-direction: row !important;
-}
-:host ::ng-deep .mat-mdc-standard-chip .mdc-evolution-chip__text-label {
-    color: var(--color-default-white) !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-.add-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.3rem;
-    background-color: #b71c1c;
-    color: white;
-    font-weight: 600;
-    border: none;
-    border-radius: 0.5rem;
-    padding: 0.4rem 1rem;
-    margin-top: 0.6rem;
-    cursor: pointer;
-    transition: 0.2s;
-    line-height: normal;
-}
-
-.add-btn:hover {
-    background-color: #8a1313;
-}
-
-.add-btn mat-icon {
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.form-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 1rem;
-}
-
-.form-buttons .add-btn {
-    margin-top: 0;
-    min-width: 7.5rem; 
-}
-
-.form-buttons .add-btn.cancelar-btn {
-    background-color: white;
-    border: 0.063rem solid #b71c1c;
-    color: #b71c1c;
+.input-error {
+  border-color: var(--color-primary-500) !important;
+  background: #fff5f5;
 }
 
 .error-msg {
-    color: #b71c1c; /* Vermelho escuro para combinar com seu tema */
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-    display: block;
+  color: var(--color-primary-500);
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  display: block;
 }
 
-/* Borda vermelha no input quando der erro */
-.input-error {
-    border-color: #b71c1c !important;
+.chips-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding: 1rem;
+  border: 1px solid var(--color-default-black);
+  border-radius: 0.35rem;
+  min-height: 3.5rem;
 }
 
-@media (min-width: 48rem) { 
-    .line-2-cols {
-        grid-template-columns: 1fr 2fr;
-        gap: 4.375rem; 
-        padding: 0.438rem; 
-    }
-
-    .line-3-cols {
-        grid-template-columns: 2fr 1fr 1fr;
-        gap: 1.5rem;
-        padding: 0.438rem 0;
-    }
-
-    .form-group {
-        padding: 1rem 2.813rem; 
-    }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 0.8rem;
+  background-color: var(--color-primary-500);
+  color: #fff;
+  border-radius: 0.2rem;
+  border: none;
+  box-shadow: none;
+  font-size: 0.9rem;
 }
 
-@media (max-width: 31.25rem) {
-    .form-buttons {
-        flex-direction: column;
-    }
+.chip-label {
+  display: inline-block;
+  line-height: 1;
 }
 
+.chip-qty {
+  font-size: 0.8rem;
+  opacity: 0.9;
+  margin-left: 0.25rem;
+}
+
+.chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  color: #fff;
+  border: none;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.35rem;
+  cursor: pointer;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.chip-remove:hover {
+  background: var(--color-primary-700);
+}
+
+.chip.pill {
+  border-radius: 2rem;
+}
+
+.add-btn {
+  margin-top: 0.8rem;
+  background: var(--color-primary-500);
+  color: #fff;
+  border: none;
+  padding: 0.7rem 1.7rem;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: 0.2s;
+  width: auto;
+}
+
+.add-btn mat-icon {
+  font-size: 1.2rem;
+}
+
+.add-btn:hover {
+  background: var(--color-primary-700);
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1.3rem;
+  margin-top: 2.5rem;
+}
+
+.cancelar-btn {
+  background: transparent;
+  color: var(--color-primary-500);
+  border: 1px solid var(--color-primary-500);
+}
+
+.cancelar-btn:hover {
+  background: #ffeaea;
+}
+
+.remove-btn {
+    background-color: var(--color-primary-500);
+    border: none;
+}
+
+.remove-icon {
+    width: 0.8rem;
+    height: 1rem;
+    color: white;
+}
