@@ -38,7 +38,6 @@ export class SpaceManagementTable {
       this.pageChange.emit(page);
     }
   }
-
   onNovoSoftware() {
     this.clickNovoSoftware.emit();
   }

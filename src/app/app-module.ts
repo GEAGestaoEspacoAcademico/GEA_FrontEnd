@@ -37,13 +37,13 @@ import { MainLayout } from './layouts/main-layout/main-layout';
 import { AuthLayout } from './layouts/auth-layout/auth-layout';
 
 // Pages
+import { AgendamentoAula } from './pages/professor/agendamento-aula/agendamento-aula';
 import { Aulas } from './pages/AD/aulas/aulas';
 import { Configuracoes } from './pages/AD/configuracoes/configuracoes';
 import { Notificacoes } from './pages/shared/notificacoes/notificacoes';
 import { EditarAula } from './pages/AD/editar-aula/visualizar-aula';
 import { Login } from './pages/shared/login/login';
 import { EsqueciSenha } from './pages/shared/esqueci-senha/esqueci-senha';
-import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 
 // Shared Components
 import { DaySelector } from './components/shared/day-selector/day-selector';
@@ -68,11 +68,14 @@ import { SpaceManagement } from './pages/AD/space-management/space-management';
 import { A11yModule } from '@angular/cdk/a11y';
 import { Agenda } from './pages/AD/agenda/agenda';
 
-
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { SpaceRegistrationPage } from './pages/AD/space-registration/space-registration.page';
 import { Home } from './pages/AD/home/home';
+import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
+
+import { ScheduleEvent } from './pages/AD/schedule-event/schedule-event';
+
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
 import { SalaForm } from './components/secretaria/sala-form/sala-form';
 import { EspacosTable } from './components/secretaria/espacos-table/espacos-table';
@@ -80,8 +83,9 @@ import { EditarEspacoModal } from './components/modals/editar-espaco-modal/edita
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
 import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
+import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
-
+import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 
 @NgModule({
   declarations: [
@@ -119,18 +123,25 @@ import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
     RecurringSchedulingForm,
     ScheduleDayModal,
     SpaceManagementTable,
+    Home,
+    ScheduleEvent,
     SpaceRegistrationForm,
     SpaceRegistrationPage,
     Home,
+    FuncionarioTable,
+    Funcionarios,
     Secretariahome,
+    CreateResourceModal,
+    SmartSchedulingForm,
+    AgendamentoAula,
+    AgendarAula,
     RedefinirSenha,
     SalaForm,
     EspacosTable,
     EditarEspacoModal,
     ListaEspacos,
     FuncionarioTable,
-    CreateResourceModal,
-    CadastroSala
+    CadastroSala,
   ],
   imports: [
     BrowserModule,
@@ -150,26 +161,29 @@ import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
     MatDatepickerModule,
     MatNativeDateModule,
     // NGRX Setup Simplificado
-    StoreModule.forRoot({
+    StoreModule.forRoot(
+      {
         auth: authReducer,
         [AGENDAMENTO_FEATURE_KEY]: agendamentoReducer,
-    }, {
+      },
+      {
         metaReducers,
-    }),
+      },
+    ),
     EffectsModule.forRoot([AuthEffects, AgendamentoEffects]),
     StoreDevtoolsModule.instrument({
-        maxAge: 25,
-        logOnly: !isDevMode(),
-        autoPause: true,
-        trace: false,
-        traceLimit: 75,
+      maxAge: 25,
+      logOnly: !isDevMode(),
+      autoPause: true,
+      trace: false,
+      traceLimit: 75,
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {
-        enabled: environment.production,
-        registrationStrategy: 'registerWhenStable:30000',
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:30000',
     }),
-    A11yModule
-],
+    A11yModule,
+  ],
   providers: [provideHttpClient(withInterceptors([globalErrorInterceptor]))],
   bootstrap: [App],
 })

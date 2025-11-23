@@ -1,0 +1,226 @@
+<div class="container-forms">
+  <app-title-highlightt title="Agendamento de Aula"></app-title-highlightt>
+</div>
+
+<div class="container-forms container-fluid">
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-5">
+        <div class="row mb-3">
+          <label for="data" class="col-4 subtitle">Data:</label>
+          <input type="date" id="data" formControlName="data" class="gea-input-field medium" />
+        </div>
+
+        <div class="row mb-3">
+          <label for="Horário" class="col-4 subtitle">Horário:</label>
+          <select
+            name="Horário"
+            id="Horário"
+            formControlName="horarioId"
+            class="gea-input-field medium select-clock-icon"
+          >
+            <option [ngValue]="null">Selecione o Horário</option>
+            @for (h of horarios; track h.janelasHorarioId) {
+              <option [value]="h.janelasHorarioId">{{ h.horaInicio }}- {{ h.horaFim }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label for="Local" class="col-4 subtitle">Local:</label>
+          <select
+            name="Local"
+            id="Local"
+            formControlName="tipoSalaId"
+            class="gea-input-field medium select-big-icon"
+          >
+            <option [ngValue]="null">Selecione o Local</option>
+            @for (s of tiposSala; track s.tipoSalaId) {
+              <option [value]="s.tipoSalaId">{{ s.tipoSalaNome }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label for="Capacidade" class="col-4 subtitle">Capacidade:</label>
+          <select name="Capacidade" id="Capacidade" class="gea-input-field medium select-big-icon">
+            <option value="20">10-20 Alunos</option>
+            <option value="30">20-30 Alunos</option>
+            <option value="40">30+ Alunos</option>
+          </select>
+        </div>
+
+        <div class="row mb-3">
+          <label for="Disciplina" class="col-4 subtitle">Disciplina:</label>
+          @if (disciplinas$ | async; as disciplinas) {
+            @if (disciplinas.length === 0) {
+              <select
+                id="Disciplina"
+                formControlName="disciplinaId"
+                class="gea-input-field medium select-big-icon"
+              >
+                <option [value]="null">Nenhuma disciplina Encontrada</option>
+              </select>
+            } @else {
+              <select
+                id="Disciplina"
+                formControlName="disciplinaId"
+                class="gea-input-field medium select-big-icon"
+              >
+                <option [value]="null">Selecione uma Disciplina</option>
+
+                @for (d of disciplinas; track d.disciplinaId) {
+                  <option [value]="d.disciplinaId">{{ d.disciplinaNome }}</option>
+                }
+              </select>
+            }
+          }
+        </div>
+        <div class="row">
+          <button class="gea-btn gea-btn-primary buscar" (click)="handleBuscarRecomendacoes()">
+            Buscar
+          </button>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="row mb-3">
+          <label for="equipamentoSelect" class="col-auto subtitle">Equipamento:</label>
+          <select
+            id="equipamentoSelect"
+            [formControl]="equipamentoSelectControl"
+            class="col-2 gea-input-field medium"
+          >
+            <option [ngValue]="null">Selecione o Equipamento</option>
+            @if (recursos$ | async; as recursos) {
+              @for (recurso of recursos; track recurso.id) {
+                @if (recurso.tipoRecurso === 'Hardware') {
+                  <option [ngValue]="recurso">{{ recurso.nome }}</option>
+                }
+                @if (recurso.tipoRecurso === 'Mobiliário') {
+                  <option [ngValue]="recurso">{{ recurso.nome }}</option>
+                }
+              }
+            }
+          </select>
+        </div>
+        <div class="row">
+          <label for="qtdInput" class="col-auto subtitle">Qtd:</label>
+          <div class="col-auto">
+            <input
+              type="number"
+              id="qtdInput"
+              [formControl]="quantidadeControl"
+              class="gea-input-field small"
+            />
+          </div>
+
+          <div class="col-auto">
+            <button
+              class="gea-btn gea-btn-primary adicionar"
+              (click)="adicionarEquipamentoSelecionado()"
+              [disabled]="equipamentoSelectControl.invalid || quantidadeControl.invalid"
+            >
+              Adicionar
+            </button>
+          </div>
+        </div>
+
+        <div class="row chip-display-area-row mb-2">
+          <mat-chip-grid #chipGrid aria-label="Seleção de Equipamentos" class="col-sm-12">
+            @for (control of equipamentosArray.controls; track $index) {
+              <mat-chip-row
+                (removed)="removerItemDoArray('equipamentosArray', $index)"
+                [removable]="true"
+                color="primary"
+                selected
+              >
+                {{ control.value.label }} ({{ control.value.quantity }})
+                <button matChipRemove aria-label="Remover item">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            }
+          </mat-chip-grid>
+        </div>
+        <div class="row">
+          <label for="Software" class="col-auto subtitle">Software:</label>
+          <select
+            id="Software"
+            [formControl]="softwareSelectControl"
+            class="col-auto gea-input-field medium"
+          >
+            <option [ngValue]="null">Selecione o Software</option>
+            @if (recursos$ | async; as recursos) {
+              @for (recurso of recursos; track recurso.id) {
+                @if (recurso.tipoRecurso === 'Software') {
+                  <option [ngValue]="recurso">{{ recurso.nome }}</option>
+                }
+              }
+            }
+          </select>
+          <div class="col-auto">
+            <button
+              class="gea-btn gea-btn-primary adicionar"
+              (click)="adicionarSoftwareSelecionado()"
+              [disabled]="softwareSelectControl.invalid"
+            >
+              Adicionar
+            </button>
+          </div>
+        </div>
+        <div class="row chip-display-area-row">
+          <mat-chip-grid #softwareChipGrid aria-label="Seleção de Softwares" class="col-sm-12">
+            @for (control of softwaresArray.controls; track $index) {
+              <mat-chip-row
+                (removed)="removerItemDoArray('softwaresArray', $index)"
+                [removable]="true"
+                color="warn"
+                selected
+              >
+                {{ control.value.label }}
+                <button matChipRemove>
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            }
+          </mat-chip-grid>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="container-forms container-fluid">
+  <div class="row">
+    <div class="col-4">
+      <app-title-highlightt title="Baseado no Seu perfil"></app-title-highlightt>
+      @if (isRecomendacaoLoading) {
+        <mat-spinner></mat-spinner>
+      } @else {
+        <div class="row">
+          @for (sala of salasRecomendadas; track sala.salaId) {
+            <app-romm-information-component
+              [labData]="sala"
+              class="mb-3"
+            ></app-romm-information-component>
+          }
+        </div>
+      }
+    </div>
+    <div class="col-4">
+      <app-title-highlightt title="Outras Opções"></app-title-highlightt>
+      @if (isRecomendacaoLoading) {
+        <mat-spinner></mat-spinner>
+      } @else {
+        <p>Nenhuma outra data disponivel</p>
+      }
+    </div>
+    <div class="col-4">
+      <app-title-highlightt title="Outras Datas Disponiveis"></app-title-highlightt>
+      @if (isRecomendacaoLoading) {
+        <mat-spinner></mat-spinner>
+      } @else {
+        <p>Nenhuma outra data disponivel</p>
+      }
+    </div>
+  </div>
+</div>

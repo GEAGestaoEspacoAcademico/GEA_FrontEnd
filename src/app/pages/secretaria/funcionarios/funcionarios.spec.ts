@@ -1,17 +1,18 @@
 import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-import { FuncionarioTable } from './funcionario-table';
 
-describe('FuncionarioTable', () => {
-  let component: FuncionarioTable;
-  let fixture: ComponentFixture<FuncionarioTable>;
+import { Funcionarios } from './funcionarios';
+
+describe('Funcionarios', () => {
+  let component: Funcionarios;
+  let fixture: ComponentFixture<Funcionarios>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FuncionarioTable],
+      declarations: [Funcionarios],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(FuncionarioTable);
+    fixture = TestBed.createComponent(Funcionarios);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
