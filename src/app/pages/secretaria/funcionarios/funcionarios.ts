@@ -1,6 +1,5 @@
 import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
-import type { Funcionario } from '../../../models/funcionario.model';
 import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 import { UsuarioService } from '../../../services/usuario/usuario.service';
 import type { GetUsuarioResponse } from '../../../types/usuario.type';

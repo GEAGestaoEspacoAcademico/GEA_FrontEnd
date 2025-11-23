@@ -50,10 +50,9 @@
 
 .btn-close-white {
   filter: invert(100%);
-  background: transparent;
   border: none;
   font-size: 0.8rem;
-  color: #fff;
+  color: #ffff;
 }
 
 /* botão grande de adicionar */

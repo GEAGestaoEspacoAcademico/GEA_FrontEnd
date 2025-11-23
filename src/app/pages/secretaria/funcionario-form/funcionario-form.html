@@ -1,22 +1,20 @@
 <form [formGroup]="form" class="container py-4 funcionario-form" novalidate>
-
   <div class="row">
     <div class="col-md-6">
-
       <h3 class="section-title">Cadastrar Funcionário</h3>
 
       <div class="mb-4">
         <div class="d-flex align-items-center gap-4 perfil-group">
           <label class="radio-label" for="perfilProfessor">
-            <input type="radio" formControlName="perfil" value="PROFESSOR" id="perfilProfessor" />
+            <input type="radio" formControlName="perfil" value="PROFESSOR" id="perfilProfessor"/>
             Professor
           </label>
-          <label class="radio-label" for="perfilSec" >
-            <input type="radio" formControlName="perfil" value="SECRETARIA"  id="perfilSec" />
+          <label class="radio-label" for="perfilSec">
+            <input type="radio" formControlName="perfil" value="SECRETARIA" id="perfilSec" />
             Secretaria
           </label>
           <label class="radio-label" for="perfilAux">
-            <input type="radio" formControlName="perfil" value="AUXILIAR_DOCENTE"  id="perfilAux" />
+            <input type="radio" formControlName="perfil" value="AUXILIAR_DOCENTE" id="perfilAux" />
             Aux. Docente
           </label>
         </div>
@@ -24,10 +22,13 @@
 
       <div class="mb-3">
         <label class="form-label field-label" for="nomeComp">Nome completo*</label>
-        <input type="text" class="form-control"
-               formControlName="nomeCompleto"
-               placeholder="Digite o nome completo" 
-               id="nomeComp" />
+        <input
+          type="text"
+          class="form-control"
+          formControlName="nomeCompleto"
+          placeholder="Digite o nome completo"
+          id="nomeComp"
+        />
         <div *ngIf="campoInvalido('nomeCompleto')" class="erro-campo">
           Nome obrigatório (mínimo 3 caracteres).
         </div>
@@ -35,40 +36,47 @@
 
       <div class="mb-3">
         <label class="form-label field-label" for="emailForm">E-mail*</label>
-        <input type="email" class="form-control"
-               formControlName="email"
-               placeholder="Digite o email" 
-               id="emailForm"/>
-        <div *ngIf="campoInvalido('email')" class="erro-campo">
-          Informe um e-mail válido.
-        </div>
+        <input
+          type="email"
+          class="form-control"
+          formControlName="email"
+          placeholder="Digite o email"
+          id="emailForm"
+        />
+        <div *ngIf="campoInvalido('email')" class="erro-campo">Informe um e-mail válido.</div>
       </div>
 
       <div class="mb-3">
         <label class="form-label field-label" for="registrocamp">Registro*</label>
-        <input type="text" class="form-control"
-               formControlName="registro"
-               placeholder="Digite o Registro" 
-               id="registrocamp"/>
-        <div *ngIf="campoInvalido('registro')" class="erro-campo">
-          Registro é obrigatório.
-        </div>
+        <input
+          type="text"
+          class="form-control"
+          formControlName="registro"
+          placeholder="Digite o Registro"
+          id="registrocamp"
+        />
+        <div *ngIf="campoInvalido('registro')" class="erro-campo">Registro é obrigatório.</div>
       </div>
 
       <div class="d-flex gap-3 mt-4">
-        <button class="btn btn-danger px-4" type="button"
-                [disabled]="!form.valid || isLoading"
-                (click)="onSave()">
+        <button
+          class="btn btn-danger px-4"
+          type="button"
+          [disabled]="!form.valid || isLoading"
+          (click)="onSave()"
+        >
           SALVAR
         </button>
 
-        <button class="btn btn-outline-danger px-4" type="button"
-                [disabled]="isLoading"
-                (click)="onCancel()">
+        <button
+          class="btn btn-outline-danger px-4"
+          type="button"
+          [disabled]="isLoading"
+          routerLink="/secretaria/home"
+        >
           CANCELAR
         </button>
       </div>
-
     </div>
 
     <div class="col-md-6" *ngIf="form.get('perfil')?.value === 'PROFESSOR'">
@@ -77,11 +85,13 @@
       <div class="disciplinas-box border rounded p-3">
         <div class="d-flex flex-wrap gap-2 mb-3">
           <span *ngFor="let disc of disciplinas.controls; let i = index" class="disc-pill">
-            {{ disc.value }}
-            <button type="button"
-                    class="btn-close btn-close-white ms-2"
-                    aria-label="Remover disciplina"
-                    (click)="removeDisciplina(i)"></button>
+            {{ disc.value.disciplinaNome }}
+            <button
+              type="button"
+              class="btn-close btn-close-white ms-2"
+              aria-label="Remover disciplina"
+              (click)="removeDisciplina(i)"
+            ></button>
           </span>
 
           <small *ngIf="disciplinas.length === 0" class="text-muted">
@@ -89,9 +99,11 @@
           </small>
         </div>
 
-        <button type="button"
-                class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2 add-disc-btn"
-                (click)="abrirModalDisciplina()">
+        <button
+          type="button"
+          class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2 add-disc-btn"
+          (click)="abrirModalDisciplina()"
+        >
           <i class="bi bi-plus-circle"></i> Adicionar Disciplinas
         </button>
       </div>
@@ -102,35 +114,26 @@
 
 <div *ngIf="modalDisciplinaAberto" class="modal-overlay">
   <div class="modal-content-box">
-
     <div class="modal-header-red">
       <button class="close-x" aria-label="Fechar" (click)="modalDisciplinaAberto = false">✕</button>
     </div>
 
     <div class="modal-body">
-
       <h5 class="modal-title">Disciplinas</h5>
 
-      <select class="form-select mt-3" [(ngModel)]="disciplinaTemp">
-        <option value=""></option>
-        <option *ngFor="let d of disciplinasDisponiveis" [value]="d">
-          {{ d }}
+      <select class="form-select mt-3" [(ngModel)]="disciplinaSelecionada">
+        <option [ngValue]="null">Selecione uma disciplina</option>
+        <option *ngFor="let d of disciplinasDisponiveis" [ngValue]="d">
+          {{ d.disciplinaNome }}
         </option>
-        <option value="OUTRA">Outra...</option>
       </select>
-
-      <input *ngIf="disciplinaTemp === 'OUTRA'"
-             type="text"
-             class="form-control mt-2 small-input"
-             placeholder="Nome da disciplina"
-             [(ngModel)]="disciplinaDigitada" />
 
       <div class="d-flex justify-content-center mt-3">
         <button class="btn btn-danger modal-add-btn" (click)="confirmarDisciplina()">
           <i class="bi bi-plus-circle"></i> Adicionar Disciplina
         </button>
       </div>
-
     </div>
   </div>
 </div>
+

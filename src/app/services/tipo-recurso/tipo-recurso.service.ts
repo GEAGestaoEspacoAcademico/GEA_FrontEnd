@@ -10,21 +10,21 @@ import type { AtualizarTipoRecursoRequest, CriarTipoRecursoRequest } from '../..
 })
 export class TipoRecursoService {
   private http = inject(HttpClient)
-  private baseUrl = environment.apiUrl + "/tipos-recursos"
+  private baseUrl = environment.apiUrl + "/tipo-recurso"
 
 
   public getTipoRecursoPorId(tipoRecursoId: number): Observable<TipoRecurso>{
     return this.http.get<TipoRecurso>(`${this.baseUrl}/${tipoRecursoId}`);
   }
-  
+
   public editTipoRecursoPorId(tipoRecursoId: number, tipoRecurso: AtualizarTipoRecursoRequest): Observable<TipoRecurso>{
     return this.http.put<TipoRecurso>(`${this.baseUrl}/${tipoRecursoId}`, tipoRecurso);
   }
-  
+
   public deleteTipoRecursoPorId(tipoRecursoId: number): Observable<void>{
     return this.http.delete<void>(`${this.baseUrl}/${tipoRecursoId}`);
   }
-  
+
   public getTipoRecurso(): Observable<TipoRecurso[]>{
     return this.http.get<TipoRecurso[]>(this.baseUrl)
   }

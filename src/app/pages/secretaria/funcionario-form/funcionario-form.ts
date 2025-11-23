@@ -1,49 +1,49 @@
-import { CommonModule } from '@angular/common';
-import {  Component ,EventEmitter, inject, Input, Output } from '@angular/core';
+import { DisciplinaService } from './../../../services/disciplina/disciplina.service';
+import type { Disciplina } from './../../../models/disciplina.model';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import type { OnInit } from '@angular/core';
 
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import type { FormArray, FormGroup } from '@angular/forms';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
+import { SecretariaService } from '../../../services/secretaria/secretaria.service';
+import type { CriarSecretariaRequest } from '../../../types/secretaria.type';
 
 @Component({
   selector: 'app-funcionario-form',
-  standalone: true,
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
+  standalone: false,
   templateUrl: './funcionario-form.html',
-  styleUrls: ['./funcionario-form.css']
+  styleUrls: ['./funcionario-form.css'],
 })
 export class FuncionarioForm implements OnInit {
-
-   @Input() isLoading = false;
+  @Input() isLoading = false;
 
   @Output() saveForm = new EventEmitter<FormGroup>();
   @Output() cancelForm = new EventEmitter<void>();
 
+  private readonly disciplinaService: DisciplinaService = inject(DisciplinaService);
+  private readonly snackBar: SnackBarService = inject(SnackBarService);
+  private readonly secretariaService: SecretariaService = inject(SecretariaService);
+
   form!: FormGroup;
   modalDisciplinaAberto = false;
 
-  disciplinaTemp = '';
-  disciplinaDigitada = '';
+  disciplinasDisponiveis: Disciplina[] = [];
+  disciplinaSelecionada: Disciplina | null = null;
 
-  disciplinasDisponiveis = [
-    'Gestão de Projetos (ADS)',
-    'Inglês (AMS)'
-
-  ];
-
-  private fb = inject(FormBuilder);
+  private readonly fb = inject(FormBuilder);
 
   ngOnInit(): void {
     this.form = this.fb.group({
       nomeCompleto: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', Validators.required],
       registro: ['', Validators.required],
-      perfil: ['', Validators.required],
-      disciplinas: this.fb.array([])
+      perfil: ['PROFESSOR', Validators.required],
+      disciplinas: this.fb.array([]),
+    });
+
+    this.disciplinaService.getDisciplinas().subscribe({
+      next: (data) => (this.disciplinasDisponiveis = data),
     });
 
     this.form.get('perfil')?.valueChanges.subscribe((perfil) => {
@@ -70,30 +70,29 @@ export class FuncionarioForm implements OnInit {
 
   abrirModalDisciplina(): void {
     this.modalDisciplinaAberto = true;
-    this.disciplinaTemp = '';
-    this.disciplinaDigitada = '';
   }
 
   confirmarDisciplina(): void {
-    let nomeFinal = '';
-
-    if (this.disciplinaTemp === 'OUTRA') {
-      nomeFinal = this.disciplinaDigitada.trim();
-    } else {
-      nomeFinal = this.disciplinaTemp.trim();
+    if (this.disciplinaSelecionada === null) {
+      this.snackBar.showError('Selecione uma disciplina');
+      return;
     }
 
-    if (nomeFinal.length > 0) {
-      const jaExiste = this.disciplinas.value.some(
-        (n: string) => n.toLowerCase() === nomeFinal.toLowerCase()
+    const jaExiste = this.disciplinas.value.some(
+      (disciplina: Disciplina) =>
+        this.disciplinaSelecionada?.disciplinaId === disciplina.disciplinaId,
+    );
+
+    if (!jaExiste) {
+      this.disciplinas.push(this.fb.control(this.disciplinaSelecionada));
+
+      this.disciplinasDisponiveis = this.disciplinasDisponiveis.filter(
+        (d) => d.disciplinaId !== this.disciplinaSelecionada?.disciplinaId,
       );
 
-      if (!jaExiste) {
-        this.disciplinas.push(this.fb.control(nomeFinal));
-      }
+      this.disciplinaSelecionada = null;
+      this.modalDisciplinaAberto = false;
     }
-
-    this.modalDisciplinaAberto = false;
   }
 
   removeDisciplina(i: number): void {
@@ -108,11 +107,27 @@ export class FuncionarioForm implements OnInit {
   onSave(): void {
     this.form.markAllAsTouched();
     if (this.form.valid) {
-      this.saveForm.emit(this.form);
-    }
-  }
+      if (this.form.get('perfil')?.value === 'SECRETARIA') {
+        const dados: CriarSecretariaRequest = {
+          nome: this.form.get('nomeCompleto')?.value,
+          email: this.form.get('email')?.value,
+          matricula: this.form.get('registro')?.value,
+        };
 
-  onCancel(): void {
-    this.cancelForm.emit();
+        this.isLoading = true;
+        this.secretariaService.cadastrar(dados).subscribe({
+          next: () => {
+            this.snackBar.showSuccess('Secretaria cadastrada com sucesso!');
+
+            this.form.reset({ perfil: 'PROFESSOR' });
+            this.saveForm.emit(this.form);
+          },
+          error: (err) => {
+            this.isLoading = false;
+            this.snackBar.showError(err);
+          },
+        });
+      }
+    }
   }
 }

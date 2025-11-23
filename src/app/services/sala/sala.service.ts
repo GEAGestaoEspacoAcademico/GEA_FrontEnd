@@ -12,7 +12,7 @@ import type { AdicionarRecursoSalaRequest, AdicionarRecursoSalaResponse, Atualiz
 export class SalaService {
   private http = inject(HttpClient)
   private baseUrl = environment.apiUrl + "/salas"
-  
+
   public getSalaPorId(salaId: number): Observable<Sala>{
     return this.http.get<Sala>(`${this.baseUrl}/${salaId}`)
   }
@@ -26,13 +26,13 @@ export class SalaService {
   }
 
   public editQuantidadeRecursoSala(salaId: number, recursoId: number, recurso: AtulizarQuantidadeRecursoSalaRequest ): Observable<void> {
-    return this.http.put<void>(`${this.baseUrl}/${salaId}/recursos q${recursoId}`, recurso)
+    return this.http.put<void>(`${this.baseUrl}/${salaId}/recursos/${recursoId}`, recurso)
   }
 
   public deleteRecursoSala(salaId: number, recursoId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${salaId}/recursos/${recursoId}`)
   }
-  
+
   public getSalas(): Observable<Sala[]>{
     return this.http.get<Sala[]>(this.baseUrl);
   }
