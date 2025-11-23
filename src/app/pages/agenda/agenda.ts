@@ -68,7 +68,7 @@ export class Agenda implements OnInit {
       })
     ).subscribe({
       next: ({ disciplinas, cursos, tipoSalas, recursos, janelasHorario }) => {
-        const disciplinaOptions = disciplinas.map(d => ({ label: d.nomeDisciplina, value: d.idDisciplina }));
+        const disciplinaOptions = disciplinas.map(d => ({ label: d.disciplinaNome, value: d.disciplinaId }));
         const cursoOptions = cursos.map(c => ({ label: c.nome, value: c.idCurso }));
         const tiposSalaOptions = tipoSalas.map(ts => ({ label: ts.nome, value: ts.id }));
         const recursoOptions = recursos.map(r => ({ label: r.nome, value: r.id }))

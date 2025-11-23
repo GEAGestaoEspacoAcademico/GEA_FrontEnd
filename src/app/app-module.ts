@@ -65,7 +65,6 @@ import { SpaceManagement } from './pages/space-management/space-management';
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
-import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { EditProfessorModal } from './components/secretaria/edit-professor-modal/edit-professor-modal';
 
 
@@ -102,7 +101,6 @@ import { EditProfessorModal } from './components/secretaria/edit-professor-modal
     ScheduleDayModal,
     SpaceManagementTable,
     Home,
-    ScheduleClass,
     EditProfessorModal,
   ],
   imports: [

@@ -1,11 +1,14 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
+import type { TemplateRef } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import type { FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import ProfessorService from '../../../services/professor/professor.service';
 import type { Disciplina } from '../../../models/disciplina.model';
 import type { CursoProfesor } from '../../../types/curso';
+import { TempService } from '../../../services/temp-service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
 
 @Component({
   selector: 'app-edit-professor-modal',
@@ -16,44 +19,83 @@ import type { CursoProfesor } from '../../../types/curso';
 export class EditProfessorModal {
   form: FormGroup;
 
-  @Input() professorId: number | null = null;
+  @Input() usuarioId: number | null = null;
 
   @Output() fechar = new EventEmitter<boolean>();
   private fb = inject(FormBuilder);
-  private professorService = inject(ProfessorService);
-  private route = inject(ActivatedRoute);
   private snackbarService = inject(SnackBarService);
+  private modalService = inject(NgbModal);
+
+  private professorService = inject(ProfessorService);
+  private auxiliarService = inject(TempService);
+  private disciplinaService = inject(DisciplinaService);
+
   listaDisciplinas: Disciplina[] = [];
   listaCursos: CursoProfesor[] = [];
+
+  @ViewChild('EditProfessor')
+  modalTemplate!: TemplateRef<EditProfessorModal>;
+
+  listaTodasDisciplinas: Disciplina[] = []; // Todas as do sistema (para o select)
+  disciplinaSelecionadaControl = new FormControl(null, Validators.required); // O controle do Select
+
+  @ViewChild('modalAddDisciplina') modalAddDisciplina!: TemplateRef<any>;
 
   /* --- CONFIGURAÇÃO INICIAL DO FORMULÁRIO --- */
   constructor() {
     this.form = this.fb.group({
-      professorId: [null],
+      usuarioId: [null],
       nome: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      registroProfessor: ['', Validators.required],
+      registro: ['', Validators.required],
       cargoId: [null],
     });
   }
 
   /* --- INICIALIZAÇÃO E VERIFICAÇÃO DE ROTA --- */
   ngOnInit(): void {
-    let idParaBuscar = this.professorId;
-
-    if (!idParaBuscar) {
-      const idDaRota = this.route.snapshot.paramMap.get('id');
-      if (idDaRota) {
-        idParaBuscar = Number(idDaRota);
-      }
+    if (this.usuarioId) {
+      this.identificarEBuscarDados(this.usuarioId);
     }
+  }
 
-    if (idParaBuscar) {
-      this.professorId = idParaBuscar;
-      this.buscarDadosProfessor(idParaBuscar);
-      this.carregarDisciplinas();
-      this.carregarCursos();
-    }
+  abrirInstaciaModal() {
+    this.modalService.open(this.modalTemplate, {
+      backdrop: 'static',
+      centered: true,
+      size: 'lg',
+    });
+  }
+
+  identificarEBuscarDados(id: number) {
+    this.auxiliarService.getById(id).subscribe({
+      next: (usuario) => {
+        const cargo = usuario.cargoId;
+
+        if (this.isCargoAcademico(cargo)) {
+          this.buscarDadosProfessor(id);
+          this.carregarDisciplinas();
+          this.carregarCursos();
+        } else {
+          this.buscarDadosAuxiliar(usuario);
+          this.listaDisciplinas = [];
+          this.listaCursos = [];
+        }
+      },
+      error: (err) => {
+        this.snackbarService.showError('Erro ao identificar usuário.');
+      },
+    });
+  }
+
+  buscarDadosAuxiliar(usuario: any) {
+    this.form.patchValue({
+      usuarioId: usuario.id,
+      nome: usuario.nome,
+      email: usuario.email,
+      registro: usuario.matricula,
+      cargoId: usuario.cargoId,
+    });
   }
 
   /* --- BUSCA DE DADOS DO PROFESSOR --- */
@@ -61,10 +103,10 @@ export class EditProfessorModal {
     this.professorService.getById(id).subscribe({
       next: (resposta) => {
         this.form.patchValue({
-          professorId: resposta.id,
-          nome: resposta.nome,
-          email: resposta.email,
-          registroProfessor: resposta.registro,
+          usuarioId: resposta.usuarioid,
+          nome: resposta.professorNome,
+          email: resposta.professorEmail,
+          registro: resposta.registroProfessor,
           cargoId: resposta.cargoId,
         });
       },
@@ -73,61 +115,119 @@ export class EditProfessorModal {
     });
   }
 
-  /* --- SALVAR ALTERAÇÕES --- */
+  /* --- SALVAR --- */
   salvar() {
     if (this.form.invalid) {
       this.snackbarService.showError('Preencha todos os campos obrigatórios!');
       return;
     }
 
-    const dadosParaEnviar = this.form.value;
-    const id = this.professorId || dadosParaEnviar.professorId;
+    const dadosForm = this.form.value;
+    const id = this.usuarioId || dadosForm.usuarioId;
+    const isAcademico = this.isProfessorOuCoordenador;
 
-    this.professorService.editarProfessor(id, dadosParaEnviar).subscribe({
+    let requestObservable;
+
+    if (isAcademico) {
+      const idsDisciplinas = this.listaDisciplinas.map(d => d.disciplinaId);
+
+      const payloadProfessor = {
+        ...dadosForm,              
+        disciplinas: idsDisciplinas 
+      };
+
+      requestObservable = this.professorService.editarProfessor(id, payloadProfessor);
+    } else {
+      
+      requestObservable = this.auxiliarService.atualizarAD(id, dadosForm);
+    }
+
+    requestObservable.subscribe({
       next: () => {
-        this.snackbarService.showSuccess('Professor atualizado com sucesso!');
+        this.snackbarService.showSuccess('Dados atualizados com sucesso!');
         this.fechar.emit(true);
+        this.modalService.dismissAll();
       },
       error: (err) => {
         console.error(err);
-        this.snackbarService.showError('Erro ao atualizar professor.');
+        this.snackbarService.showError('Erro ao atualizar.');
       },
     });
   }
 
-  /* --- FECHAR MODAL --- */
+  /* --- UTILITÁRIOS --- */
   fecharModal() {
     this.fechar.emit(false);
+    this.modalService.dismissAll();
   }
 
-  /* --- CARREGAMENTO DE DISCIPLINAS --- */
   carregarDisciplinas() {
-    const id = this.professorId;
-    if (id) {
-      this.professorService.getDisciplinasDoProfessor(id).subscribe({
-        next: (disciplinas) => {
-          this.listaDisciplinas = disciplinas;
-        },
+    if (this.usuarioId) {
+      this.professorService.getDisciplinasDoProfessor(this.usuarioId).subscribe({
+        next: (disciplinas) => (this.listaDisciplinas = disciplinas),
       });
     }
   }
 
-  /* --- CARREGAMENTO DE CURSOS --- */
   carregarCursos() {
-    const id = this.professorId;
-    if (id) {
-      this.professorService.getCursosDoProfessor(id).subscribe({
-        next: (cursos: CursoProfesor[]) => {
-          this.listaCursos = cursos;
-        },
+    if (this.usuarioId) {
+      this.professorService.getCursosDoProfessor(this.usuarioId).subscribe({
+        next: (cursos) => (this.listaCursos = cursos),
         error: (err) => console.error(err),
       });
     }
   }
 
-  /* --- VERIFICAÇÃO DE CARGO --- */
+  isCargoAcademico(cargoId: number): boolean {
+    return [1, 2, 3, 4, 5, 6].includes(cargoId);
+  }
+
   get isProfessorOuCoordenador(): boolean {
     const id = this.form.get('cargoId')?.value;
-    return id === 1 || id === 2;
+    return this.isCargoAcademico(id);
   }
+
+  /* --- MiniModal para disciplinas --- */
+
+  abrirModalAdicionarDisciplina() {
+    this.disciplinaService.getDisciplinas().subscribe({
+      next: (todas) => {
+        this.listaTodasDisciplinas = todas;
+
+        this.modalService.open(this.modalAddDisciplina, { size: 'sm', centered: true });
+      },
+      error: () => this.snackbarService.showError('Erro ao carregar disciplinas disponíveis.'),
+    });
+  }
+
+  salvarNovaDisciplina(modal: any) {
+  if (this.disciplinaSelecionadaControl.invalid) {return;}
+
+  const idSelecionado = Number(this.disciplinaSelecionadaControl.value);
+
+  const disciplinaEncontrada = this.listaTodasDisciplinas.find(
+    (d) => d.disciplinaId === idSelecionado 
+  );
+
+  if (disciplinaEncontrada) {
+    const jaExiste = this.listaDisciplinas.some(
+      (d) => d.disciplinaId === idSelecionado
+    );
+
+    if (!jaExiste) {
+      this.listaDisciplinas.push(disciplinaEncontrada);
+    } else {
+      this.snackbarService.showError('Esta disciplina já foi adicionada.');
+    }
+  }
+
+  this.disciplinaSelecionadaControl.reset();
+  modal.close();
+}
+
+ removerDisciplina(idParaRemover: number) {
+  this.listaDisciplinas = this.listaDisciplinas.filter(d => 
+    d.disciplinaId !== idParaRemover
+  );
+}
 }

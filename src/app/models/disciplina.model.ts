@@ -3,9 +3,9 @@
  */
 export interface Disciplina{
   /** Identificador único da Disciplina */
-  idDisciplina: number,
+  disciplinaId: number,
   /** Nome da disciplina  (ex: "Calculo 1") */
-  nomeDisciplina: string,
+  disciplinaNome: string,
   /** Disciplina relacionado à Disciplina(ex: "2025.2")*/
   semestre: string,
   /** Nome do professor que ministra a Disciplina  (ex: "Cláudio")*/

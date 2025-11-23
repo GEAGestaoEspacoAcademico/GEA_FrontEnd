@@ -1,4 +1,4 @@
-<!-- <ng-template #EditProfessor let-modal> -->
+<ng-template #EditProfessor let-modal>
 
 <div class="modal-header-custom">
   <h2 class="titulo-modal">Editar</h2>
@@ -29,9 +29,9 @@
 
       <div class="campo-wrapper">
         <label for="inpRegistro" class="section-title">Registro</label>
-        <input type="text" id="inpRegistro" formControlName="registroProfessor" class="gea-input-field full-width"
+        <input type="text" id="inpRegistro" formControlName="registro" class="gea-input-field full-width"
           placeholder="Digite o Registro">
-        @if (form.get('registroProfessor')?.invalid && form.get('registroProfessor')?.touched) {
+        @if (form.get('registro')?.invalid && form.get('registro')?.touched) {
           <div class="mensagem-erro">O registro é obrigatório</div>
         }
       </div>
@@ -63,15 +63,15 @@
             <p class="texto-vazio captions">Nenhuma disciplina vinculada.</p>
           }
 
-          @for (disc of listaDisciplinas; track disc.idDisciplina) {
+          @for (disc of listaDisciplinas; track disc.disciplinaId) {
             <div class="chip-disciplina">
-              <span>{{ disc.nomeDisciplina }}</span> 
-              <button type="button" class="btn-remove">✕</button>
+              <span>{{ disc.disciplinaNome }}</span> 
+              <button type="button" class="btn-remove" (click)="removerDisciplina(disc.disciplinaId)">✕</button>
             </div>
           }
         </div>
 
-        <button type="button" class="gea-btn gea-btn-primary btn-add-full">
+        <button type="button" class="gea-btn gea-btn-primary btn-add-full" (click)="abrirModalAdicionarDisciplina()">
           <span class="icone-mais">⊕</span> Adicionar Disciplina
         </button>
 
@@ -96,4 +96,41 @@
   </button>
 </div>
 
-<!-- </ng-template> -->
+</ng-template>
+
+
+<ng-template #modalAddDisciplina let-modalDisc>
+  
+  <div class="modal-header-custom">
+    <h4 class="titulo-modal" style="font-size: 1.2rem;">Nova Disciplina</h4>
+  </div>
+  
+  <div class="modal-body-custom" style="padding: 2rem;">
+    <div class="campo-wrapper">
+      <label for="" class="section-title">Selecione a disciplina:</label>
+      
+      <select [formControl]="disciplinaSelecionadaControl" class="gea-input-field full-width">
+        <option [ngValue]="null">Selecione...</option>
+        
+        @for (d of listaTodasDisciplinas; track d.disciplinaId) {
+          <option [ngValue]="d.disciplinaId">
+             {{ d.disciplinaNome || d.disciplinaNome}}
+          </option>
+        }
+      </select>
+    </div>
+  </div>
+
+  <div class="modal-footer-custom">
+    <button type="button" class="gea-btn btn-cancelar-custom" (click)="modalDisc.dismiss()">
+      Cancelar
+    </button>
+    
+    <button type="button" class="gea-btn gea-btn-primary" 
+            (click)="salvarNovaDisciplina(modalDisc)" 
+            [disabled]="disciplinaSelecionadaControl.invalid">
+      Confirmar
+    </button>
+  </div>
+
+</ng-template>

@@ -1,8 +1,8 @@
 export interface Professor {
-    id: number,
-    nome: string,
-    email: string,
-    registro: string,
+    usuarioid: number,
+    professorNome: string,
+    professorEmail: string,
+    registroProfessor: string,
     cargoId: number,
     disciplinas: string[]
 }
