@@ -85,6 +85,7 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
 import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
+import { VisualizarAulaDesktop } from './pages/professor/visualizar-aula-desktop/visualizar-aula-desktop';
 
 @NgModule({
   declarations: [
@@ -142,6 +143,7 @@ import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
     ListaEspacos,
     FuncionarioTable,
     CadastroSala,
+    VisualizarAulaDesktop,
   ],
   imports: [
     BrowserModule,
