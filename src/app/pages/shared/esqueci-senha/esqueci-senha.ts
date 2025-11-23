@@ -23,6 +23,12 @@ export class EsqueciSenha implements OnInit {
   isEmailSucess: boolean = false;
   isRedefinirSenhaSucess: boolean = false;
 
+  hideNewPassword = false;
+  hideRepeatPassword = false;
+
+  btnNewVisibility = false;
+  btnRepeatVisibility = false;
+
   formEmail = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
   });
@@ -60,13 +66,32 @@ export class EsqueciSenha implements OnInit {
       this.token = params['token'] || null;
 
       if (this.token) {
-        this.formRedefinirSenha.reset();
+        this.formRedefinirSenha.reset();    
+        this.setupPasswordObservers();
       } else {
         this.formEmail.reset();
       }
     });
   }
 
+  setupPasswordObservers() {
+    this.formRedefinirSenha.get('novaSenha')?.valueChanges.subscribe(value => {
+      this.btnNewVisibility = !!(value && value.trim().length > 0);
+    });
+
+    this.formRedefinirSenha.get('novaSenhaRepetida')?.valueChanges.subscribe(value => {
+      this.btnRepeatVisibility = !!(value && value.trim().length > 0);
+    });
+  }
+
+  toggleNewPassword() {
+    this.hideNewPassword = !this.hideNewPassword;
+  }
+
+  toggleRepeatPassword() {
+    this.hideRepeatPassword = !this.hideRepeatPassword;
+  }
+  
   async enviarEmail() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
 

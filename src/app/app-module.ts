@@ -137,12 +137,12 @@ import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
     AgendamentoAula,
     AgendarAula,
     RedefinirSenha,
-    SalaForm,
-    EspacosTable,
-    EditarEspacoModal,
     ListaEspacos,
+    EditarEspacoModal,
+    EspacosTable,
     FuncionarioTable,
-    CadastroSala,
+    SalaForm,
+    CadastroSala
   ],
   imports: [
     BrowserModule,
