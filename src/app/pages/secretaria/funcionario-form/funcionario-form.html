@@ -1,4 +1,4 @@
-<form [formGroup]="form" class="container py-4 funcionario-form">
+<form [formGroup]="form" class="container py-4 funcionario-form" novalidate>
 
   <div class="row">
     <div class="col-md-6">
@@ -23,18 +23,33 @@
       </div>
 
       <div class="mb-3">
-        <label class="form-label field-label" for="nomeCompletoInput">Nome completo</label>
-        <input type="text" id="nomeCompletoInput" class="form-control" formControlName="nomeCompleto" placeholder="Digite o nome completo" />
+        <label class="form-label field-label">Nome completo*</label>
+        <input type="text" class="form-control"
+               formControlName="nomeCompleto"
+               placeholder="Digite o nome completo" />
+        <div *ngIf="campoInvalido('nomeCompleto')" class="erro-campo">
+          Nome obrigatório (mínimo 3 caracteres).
+        </div>
       </div>
 
       <div class="mb-3">
-        <label class="form-label field-label" for="emailInput">E-mail</label>
-        <input type="email" id="emailInput" class="form-control" formControlName="email" placeholder="Digite o email" />
+        <label class="form-label field-label">E-mail*</label>
+        <input type="email" class="form-control"
+               formControlName="email"
+               placeholder="Digite o email" />
+        <div *ngIf="campoInvalido('email')" class="erro-campo">
+          Informe um e-mail válido.
+        </div>
       </div>
 
       <div class="mb-3">
-        <label class="form-label field-label" for="registroInput">Registro</label>
-        <input type="text" id="registroInput" class="form-control" formControlName="registro" placeholder="Digite o Registro" />
+        <label class="form-label field-label">Registro*</label>
+        <input type="text" class="form-control"
+               formControlName="registro"
+               placeholder="Digite o Registro" />
+        <div *ngIf="campoInvalido('registro')" class="erro-campo">
+          Registro é obrigatório.
+        </div>
       </div>
 
       <div class="d-flex gap-3 mt-4">
@@ -58,19 +73,23 @@
 
       <div class="disciplinas-box border rounded p-3">
         <div class="d-flex flex-wrap gap-2 mb-3">
-          <span *ngFor="let disc of disciplinas.controls; let i = index"
-                class="disc-pill">
+          <span *ngFor="let disc of disciplinas.controls; let i = index" class="disc-pill">
             {{ disc.value }}
-            <button type="button" class="btn-close btn-close-white ms-2"
+            <button type="button"
+                    class="btn-close btn-close-white ms-2"
                     aria-label="Remover disciplina"
                     (click)="removeDisciplina(i)"></button>
           </span>
+
+          <small *ngIf="disciplinas.length === 0" class="text-muted">
+            Nenhuma disciplina adicionada
+          </small>
         </div>
 
         <button type="button"
-                class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2"
+                class="btn btn-danger w-100 d-flex align-items-center justify-content-center gap-2 add-disc-btn"
                 (click)="abrirModalDisciplina()">
-          <i class="bi bi-plus-circle"></i> Adicionar Disciplina
+          <i class="bi bi-plus-circle"></i> Adicionar Disciplinas
         </button>
       </div>
     </div>
@@ -80,15 +99,35 @@
 
 <div *ngIf="modalDisciplinaAberto" class="modal-overlay">
   <div class="modal-content-box">
-    <h5>Nova Disciplina</h5>
 
-    <label for="novaDisciplinaInput" class="visually-hidden">Nome da disciplina</label>
-    <input type="text" id="novaDisciplinaInput" class="form-control mt-3"
-           [(ngModel)]="disciplinaTemp" />
+    <div class="modal-header-red">
+      <button class="close-x" aria-label="Fechar" (click)="modalDisciplinaAberto = false">✕</button>
+    </div>
 
-    <div class="d-flex justify-content-end gap-2 mt-3">
-      <button class="btn btn-outline-secondary" (click)="modalDisciplinaAberto = false">Cancelar</button>
-      <button class="btn btn-danger" (click)="confirmarDisciplina()">Adicionar</button>
+    <div class="modal-body">
+
+      <h5 class="modal-title">Disciplinas</h5>
+
+      <select class="form-select mt-3" [(ngModel)]="disciplinaTemp">
+        <option value=""></option>
+        <option *ngFor="let d of disciplinasDisponiveis" [value]="d">
+          {{ d }}
+        </option>
+        <option value="OUTRA">Outra...</option>
+      </select>
+
+      <input *ngIf="disciplinaTemp === 'OUTRA'"
+             type="text"
+             class="form-control mt-2 small-input"
+             placeholder="Nome da disciplina"
+             [(ngModel)]="disciplinaDigitada" />
+
+      <div class="d-flex justify-content-center mt-3">
+        <button class="btn btn-danger modal-add-btn" (click)="confirmarDisciplina()">
+          <i class="bi bi-plus-circle"></i> Adicionar Disciplina
+        </button>
+      </div>
+
     </div>
   </div>
 </div>

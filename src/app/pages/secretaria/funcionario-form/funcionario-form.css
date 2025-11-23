@@ -1,8 +1,15 @@
+:host {
+  font-family: 'Merriweather Sans', Arial, Helvetica, sans-serif;
+}
+
+/* formulário */
 .funcionario-form {
   background: #f3f3f8;
   border-radius: 8px;
+  padding: 16px;
 }
 
+/* titulos */
 .section-title {
   font-weight: 700;
   margin-bottom: 12px;
@@ -13,20 +20,22 @@
   font-weight: 600;
 }
 
+/* radios */
+.perfil-group { gap: 18px; }
 .radio-label {
-  font-weight: 500;
+  font-weight: 700;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
+  cursor: pointer;
 }
-
 .radio-label input[type="radio"] {
   accent-color: #b60000;
 }
 
+/* disciplinas box */
 .disciplinas-box {
   min-height: 120px;
- 
 }
 
 .disc-pill {
@@ -39,6 +48,31 @@
   font-size: 0.9rem;
 }
 
+.btn-close-white {
+  filter: invert(100%);
+  background: transparent;
+  border: none;
+  font-size: 0.8rem;
+  color: #fff;
+}
+
+/* botão grande de adicionar */
+.add-disc-btn {
+  margin-top: 6px;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+/* mensagens de erro */
+.erro-campo {
+  color: #b60000;
+  font-size: .85rem;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
+/* modal geral */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -46,12 +80,77 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1100;
 }
 
 .modal-content-box {
-  background: white;
-  padding: 24px;
+  background: #ffffff;
+  padding: 0;
+  border-radius: 6px;
+  width: 420px;
+  max-width: 95%;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+
+/* cabeçalho vermelho */
+.modal-header-red {
+  background: #b60000;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 12px;
+}
+
+/* botão fechar no header */
+.modal-header-red .close-x {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* corpo do modal */
+.modal-body {
+  padding: 20px 22px 26px 22px;
+  text-align: center;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 700;
+}
+
+/* select estilizado */
+.form-select {
+  height: 44px;
+  border: 1px solid #e0dede;
   border-radius: 8px;
-  width: 380px;
-  max-width: 90%;
+}
+
+/* campo pequeno que aparece logo acima do botão */
+.small-input {
+  width: 100%;
+  height: 36px;
+  border-radius: 6px;
+}
+
+/* botão vermelho dentro do modal (ícone + texto) */
+.modal-add-btn {
+  background: #b60000;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 6px;
+  margin-top: 12px;
+  box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+  font-weight: 700;
+}
+
+@media (max-width: 576px) {
+  .modal-content-box { width: 320px; }
 }
