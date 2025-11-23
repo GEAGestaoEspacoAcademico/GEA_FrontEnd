@@ -62,7 +62,7 @@
         <button
           class="btn btn-danger px-4"
           type="button"
-          [disabled]="!form.valid || isLoading"
+          [disabled]="!form.valid"
           (click)="onSave()"
         >
           SALVAR
@@ -71,7 +71,6 @@
         <button
           class="btn btn-outline-danger px-4"
           type="button"
-          [disabled]="isLoading"
           routerLink="/secretaria/home"
         >
           CANCELAR
