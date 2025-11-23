@@ -5,7 +5,7 @@
   margin-bottom: var(--spacing-6);
   font-size: 20px;
   border: 0.2px solid var(--color-default-black);
-  text-align: center;
+  text-align: start;
 
   &:focus {
     box-shadow: none;
@@ -18,6 +18,10 @@
   &:not(:placeholder-shown) {
     text-align: start;
   }
+}
+
+.gea-input-field option:first-child:checked {
+    text-align: center;
 }
 
 .gea-input-field-small {

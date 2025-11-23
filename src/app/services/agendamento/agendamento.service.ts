@@ -6,7 +6,7 @@ import type { AgendamentoAula } from '../../models/agendamentoAula.model';
 import type { AgendamentoAulaCriarADReponse, AgendamentoAulaCriarADRequest, AgendamentoAulaCriarRequest, AgendamentoAulaEditarRequest } from '../../types/agendamentoAula.type';
 import type { Agendamento } from '../../models/agendamento.model';
 import type { AgendamentoEvento } from '../../models/agendamentoEvento.model';
-import type { CriarAgendamentoEventoRequest} from '../../types/agendamentoEvento.type';
+import type { CriarEventoRequest} from '../../types/agendamentoEvento.type';
 
 @Injectable({
   providedIn: 'root',
@@ -58,7 +58,7 @@ export class AgendamentoService {
     return this.http.get<AgendamentoEvento[]>(`${this.baseUrl}/eventos`);
   }
 
-  public criarAgendamentoEvento(agendamentoEvento: CriarAgendamentoEventoRequest): Observable<void> {
+  public criarAgendamentoEvento(agendamentoEvento: CriarEventoRequest): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/eventos`, agendamentoEvento);
   }  
 }

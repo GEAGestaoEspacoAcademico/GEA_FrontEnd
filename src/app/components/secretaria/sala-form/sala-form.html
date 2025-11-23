@@ -1,19 +1,20 @@
 <form [formGroup]="form" class="form-group" (ngSubmit)="onSave()">
   <div class="line-cols">
     <div>
-      <label for="idTipoSala" class="field-label">Tipo de Espaço</label>
-      <select
-        formControlName="idTipoSala"
-        class="simple-input"
-        [class.input-error]="form.get('idTipoSala')?.invalid && form.get('idTipoSala')?.touched"
-      >
-        <option value="" disabled>Selecione o tipo</option>
-        @for (tipo of tiposSalas; track tipo.tipoSalaId) {
-          <option [value]="tipo.tipoSalaId">{{ tipo.tipoSalaNome }}</option>
-        }
-      </select>
+    <div>
+        <label class="field-label" for="itipodesala">Tipo de Espaço</label>
+        <input 
+            type="text" 
+            value="Sala de Aula" 
+            class="simple-input disabled" 
+            disabled 
+            readonly
+        >
+    </div>
 
-      @if (form.get('idTipoSala')?.invalid && form.get('idTipoSala')?.touched) {
+    <input type="hidden" formControlName="tipoSalaId">
+
+      @if (form.get('tipoSalaId')?.invalid && form.get('tipoSalaId')?.touched) {
         <span class="error-msg">Selecione o tipo de espaço.</span>
       }
     </div>
@@ -40,101 +41,76 @@
       <label for="nome" class="field-label">Nome do Espaço</label>
       <input
         type="text"
-        formControlName="nome"
+        formControlName="salaNome"
         class="simple-input"
-        [class.input-error]="form.get('nome')?.invalid && form.get('nome')?.touched"
+        [class.input-error]="form.get('salaNome')?.invalid && form.get('salaNome')?.touched"
       />
 
-      @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+      @if (form.get('salaNome')?.invalid && form.get('salaNome')?.touched) {
         <span class="error-msg">O nome é obrigatório.</span>
       }
     </div>
 
     <div>
-      <label for="observacoes" class="field-label">Observações</label>
-      <input formControlName="observacoes" class="simple-input" />
+      <label for="salaObservacoes" class="field-label">Observações</label>
+      <input formControlName="salaObservacoes" class="simple-input" />
     </div>
 
     <div>
-      <label for="capacidade" class="field-label">Capacidade</label>
+      <label for="salaCapacidade" class="field-label">Capacidade</label>
       <select
-        formControlName="capacidade"
+        formControlName="salaCapacidade"
         class="simple-input"
-        [class.input-error]="form.get('capacidade')?.invalid && form.get('capacidade')?.touched"
+        [class.input-error]="form.get('salaCapacidade')?.invalid && form.get('salaCapacidade')?.touched"
       >
         <option value="" disabled>Selecione</option>
-        <option value="20">1–20</option>
-        <option value="30">21–30</option>
+        <option value="20">1-20</option>
+        <option value="30">21-30</option>
       </select>
 
-      @if (form.get('capacidade')?.invalid && form.get('capacidade')?.touched) {
+      @if (form.get('salaCapacidade')?.invalid && form.get('salaCapacidade')?.touched) {
         <span class="error-msg">Selecione a capacidade.</span>
       }
     </div>
 
-            <div>
-                <label for="observacoes" class="field-label">Observações</label>
-                <input formControlName="observacoes" class="simple-input">
-            </div>
+    <div>
+      <span class="field-label">Equipamentos</span>
 
-            <div>
-                <label for="capacidade" class="field-label">Capacidade</label>
-                <select formControlName="capacidade" class="simple-input"
-                        [class.input-error]="form.get('capacidade')?.invalid && form.get('capacidade')?.touched">
+      <div class="chips-box">
+        @for (equip of equipamentosFA.controls; track $index) {
+          <div class="chip" role="listitem">
+            <span class="chip-label">
+              {{ equip.value.nome }}
+              <small class="chip-qty">({{ equip.value.quantidade }})</small>
+            </span>
 
-                    <option value="" disabled>Selecione</option>
-                    <option value="20">1–20</option>
-                    <option value="30">21–30</option>
-                </select>
-
-                @if (form.get('capacidade')?.invalid && form.get('capacidade')?.touched) {
-                <span class="error-msg">Selecione a capacidade.</span>
-                }
-            </div>
-            
-            <div>
-                <span class="field-label">Equipamentos</span>
-                <div class="chips-box">
-                    @for (equip of equipamentosFA.controls; track equip.value.id) {
-
-                        <div class="chip" role="listitem" aria-label="Equipamento {{ equip.value.name }}">
-                            <span class="chip-label">{{ equip.value.name }} <small class="chip-qty">({{ equip.value.quantity }})</small></span>
-                            <button type="button"
-                                class="chip-remove"
-                                aria-label="Remover {{ equip.value.name }}"
-                                (click)="removerEquipamento($index)">
-
-                                <mat-icon svgIcon="close" class="remove-icon"></mat-icon>
-                            </button>
-                        </div>
-                    }
-                
-                </div>
-                <button type="button" class="add-btn" (click)="onAddEquipamento()">
-                    <mat-icon>add_circle_outline</mat-icon>
-                    Adicionar Equipamento
-                </button>
-            </div>
-
-        </div>
-            <div class="form-buttons">
-            <button type="submit"
-                    class="add-btn">
-                SALVAR
+            <button
+              type="button"
+              class="chip-remove"
+              aria-label="Remover {{ equip.value.nome }}"
+              (click)="removerEquipamento($index)"
+            >
+              <mat-icon svgIcon="close" class="remove-icon"></mat-icon>
             </button>
           </div>
-      <button type="button" class="add-btn" (click)="onAddEquipamento()">
+        }
+      </div>
+
+      <button type="button" class="add-btn" (click)="onAddEquipamento($event)">
         <mat-icon>add_circle_outline</mat-icon>
         Adicionar Equipamento
       </button>
+    </div>
+  </div>
+
   <div class="form-buttons">
     <button type="submit" class="add-btn" [disabled]="form.invalid || isLoading">SALVAR</button>
 
-                <button type="button"
-                        class="add-btn cancelar-btn"
-                        (click)="onCancel()">
-                    CANCELAR
-                </button>
-            </div>
+    <button type="button" class="add-btn cancelar-btn" (click)="onCancel()">CANCELAR</button>
+  </div>
 
-<app-add-item-modal #addItemModal (itemAdd)="onItemAdded($event)"> </app-add-item-modal>
+  <app-add-item-modal 
+    #addItemModal 
+    (itemAdd)="onItemAdded($event)"
+    [recursosDisponiveis]="recursosDisponiveis"> </app-add-item-modal>
+</form>

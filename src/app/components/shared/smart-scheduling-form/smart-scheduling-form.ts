@@ -8,9 +8,10 @@ import { CursoService } from '../../../services/curso/curso.service';
 import type { Curso } from '../../../models/curso.model';
 import type { Sala } from '../../../models/sala.model';
 import type { Disciplina } from '../../../models/disciplina.model';
-
 import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
 import { SalaService } from '../../../services/sala/sala.service';
+import type { CriarEventoFormulario } from '../../../types/agendamentoEvento.type';
+import { FormatUtils } from '../../../utils/format.utils';
 
 @Component({
   selector: 'app-smart-scheduling-form',
@@ -18,11 +19,22 @@ import { SalaService } from '../../../services/sala/sala.service';
   templateUrl: './smart-scheduling-form.html',
   styleUrl: './smart-scheduling-form.css'
 })
+
 export class SmartSchedulingForm implements OnInit {
 
-  // --- Propriedades de Entrada (Inputs) ---
-  private _singleDate: Date | null = null; // Propriedade interna para armazenar o valor
+  // --- Injeção de Dependência ---
+  private fb = inject(FormBuilder);
+  private serviceHorario = inject(JanelasHorarioService);
+  private serviceCurso = inject(CursoService);
+  private serviceSala = inject(SalaService);
+  private serviceDisciplina = inject(DisciplinaService);
+
+
+  private _singleDate: Date | null = null;
+  private _dateArray: Date[] = [];
+
   horarios: string[] = [];
+  listaHorarios: JanelaHorario[] = [];
   cursos: Curso[] = [];
   salas: Sala[] = [];
   disciplinas: Disciplina[] = [];
@@ -30,7 +42,13 @@ export class SmartSchedulingForm implements OnInit {
   horariosDisponiveisInicio: string[] = [];
   horariosDisponiveisFim: string[] = [];
 
-  // 💡 NOVO: Setter para detectar mudanças na data e chamar o carregamento dos horários
+  aulaForm!: FormGroup;
+  eventoForm!: FormGroup;
+  eventBatch: any[] = [];
+
+  
+  @Input() mode: 'aula' | 'evento' = 'aula';
+
   @Input()
   set singleDate(date: Date | null) {
     this._singleDate = date;
@@ -38,87 +56,76 @@ export class SmartSchedulingForm implements OnInit {
     if (this._singleDate) {
       this.getHorariosDisponiveis(this._singleDate);
     } else {
-      if (this.aulaForm) {
-        this.horarios = [];
-        this.aulaForm.get('horario')?.setValue('');
-      }
+      this.limparSelecoesDeHorario();
     }
   }
 
   get singleDate(): Date | null {
     return this._singleDate;
   }
-  @Input() mode: 'aula' | 'evento' = 'aula';
-  // Recebe um array de datas para agendamento em lote no modo 'evento'.
-  @Input() dateArray: Date[] = [];
 
+  @Input()
+  set dateArray(values: Date[]) {
+    console.log("LOTE DE DATAS RECEBIDO: ", values);
+    this._dateArray = values || [];
+    if (this._dateArray.length > 0) {
+      const dataReferencia = this._dateArray[0]; 
+      this.getHorariosDisponiveis(dataReferencia);
+    } else {
+      this.listaHorarios = [];
+    }
+  }
 
-  // --- Propriedades de Saída (Outputs) ---
-  // Emite um objeto (any) com os dados de um agendamento único (modo 'aula').
+  get dateArray(): Date[] {
+    return this._dateArray;
+  }
+
   @Output() scheduleSubmit = new EventEmitter<any>();
-  // Emite um array de objetos (any[]) com os dados de agendamentos em lote (modo 'evento').
-  @Output() batchSubmit = new EventEmitter<any[]>();
+  @Output() batchSubmit = new EventEmitter<CriarEventoFormulario[]>();
 
-  // --- Injeção de Dependência (Método Moderno: inject()) ---
-  // Injeta o serviço FormBuilder para construir e gerenciar os objetos FormGroup.
-  // Esta é a forma preferencial no Angular moderno, atendendo às regras do ESLint como 'prefer-inject'.
-  private fb = inject(FormBuilder);
-  private serviceHorario = inject(JanelasHorarioService);
-  private serviceCurso = inject(CursoService);
-  private serviceSala = inject(SalaService);
-  private serviceDisciplina = inject(DisciplinaService);
-
-  // --- Propriedades do Formulário ---
-  // Objeto FormGroup para o agendamento de aulas (modo 'aula').
-  aulaForm!: FormGroup;
-  // Objeto FormGroup para a configuração de eventos (modo 'evento').
-  eventoForm!: FormGroup;
-
-  // Array que armazena a configuração de eventos (eventos) antes da submissão em lote.
-  eventBatch: any[] = [];
-
-  // --- Ciclo de Vida do Componente ---
-  // Método chamado após a inicialização das propriedades de Input.
   ngOnInit(): void {
-    this.buildForms(); // Chama a função para inicializar os formulários.
+    this.buildForms();
     this.getCursosProfessor();
     this.getDisciplinas();
     this.getSalas();
   }
 
-  // --- Lógica de Inicialização dos Formulários ---
   buildForms() {
-    // Inicializa o formulário de Aula com controles e validadores.
     this.aulaForm = this.fb.group({
-      horario: ['', Validators.required], // Campo obrigatório
+      inicio: ['', Validators.required],
+      fim: ['', Validators.required],
       local: ['', Validators.required],
       disciplina: ['', Validators.required],
       solicitante: ['', Validators.required]
     });
 
-    // Inicializa o formulário de Evento com controles e validadores.
     this.eventoForm = this.fb.group({
       nomeEvento: ['', Validators.required],
       local: ['', Validators.required],
       inicio: ['', Validators.required],
       fim: ['', Validators.required],
-      // Campo booleano para indicar se a configuração se aplica a todos os horários (presumivelmente).
-      todosHorarios: [false]
     });
   }
 
-  // --- Lógica de Submissão de Formulário Único (Aula) ---
+  limparSelecoesDeHorario() {
+    if (this.aulaForm || this.eventoForm) {
+      this.horarios = [];
+      this.horariosDisponiveisInicio = [];
+      this.horariosDisponiveisFim = [];
+      this.aulaForm?.get('horario')?.setValue('');
+      this.eventoForm?.get('inicio')?.setValue('');
+      this.eventoForm?.get('fim')?.setValue('');
+    }
+  }
+
   submitAula() {
-    // Verifica se o formulário é inválido (se há campos obrigatórios faltando).
     if (this.aulaForm.invalid) { return };
 
-    // Cria o payload de dados combinando os valores do formulário com a data única recebida.
     const payload = {
       ...this.aulaForm.value,
       date: this.singleDate
     };
 
-    // Emite o evento com os dados de agendamento.
     this.scheduleSubmit.emit(payload);
 
     setTimeout(() => {
@@ -126,74 +133,93 @@ export class SmartSchedulingForm implements OnInit {
     }, 2000);
   }
 
-  // --- Lógica de Adicionar Configuração para Agendamento em Lote (Evento) ---
   addEventoConfig() {
-    // Verifica se o formulário de evento é inválido.
-    if (this.eventoForm.invalid) { return };
+    if (this.eventoForm.invalid) {
+      return;
+    }
+
+    const temArray = this.dateArray && this.dateArray.length > 0;
+    const temSingle = !!this.singleDate;
+
+    if (!temArray && !temSingle) {
+      console.warn("Nenhuma data selecionada para adicionar o evento.");
+      return;
+    }
 
     const config = this.eventoForm.value;
 
-    // Itera sobre o array de datas recebido (dateArray) e cria um objeto de evento para cada data.
-    // Usa '?? []' para garantir que dateArray é um array e evitar erros se for null/undefined.
-    (this.dateArray ?? []).forEach(date => {
-      this.eventBatch.push({ // Adiciona a configuração de evento ao array de lote.
-        date,
+    if (temArray) {
+      this.dateArray.forEach(data => {
+        this.eventBatch.push({
+          date: data, 
+          nomeEvento: config.nomeEvento,
+          local: config.local,
+          inicio: config.inicio,
+          fim: config.fim,
+          todosHorarios: config.todosHorarios
+        });
+      });
+    } else if (temSingle) {
+      this.eventBatch.push({
+        date: this.singleDate,
         nomeEvento: config.nomeEvento,
         local: config.local,
         inicio: config.inicio,
         fim: config.fim,
         todosHorarios: config.todosHorarios
       });
-    });
+    }
 
-    this.eventoForm.reset(); // Limpa o formulário de configuração para a próxima entrada.
+    this.eventoForm.reset();
   }
 
-  // --- Lógica de Gerenciamento do Lote ---
-  // Remove um item do array de lote (eventBatch) com base no índice.
   removeBatchItem(index: number) {
     this.eventBatch.splice(index, 1);
   }
 
-  // --- Lógica de Submissão de Lote (Evento) ---
   submitBatch() {
-    // Verifica se o lote está vazio.
-    if (this.eventBatch.length === 0) { return };
-    // Verifica se o número de itens no lote corresponde ao número de datas (lógica de validação do batch).
-    if (this.eventBatch.length !== this.dateArray.length) { return };
+    if (this.eventBatch.length === 0) { return; }
+    const payloadAgrupado: CriarEventoFormulario[] = [];
+    this.eventBatch.forEach(item => {
+    let grupoExistente = payloadAgrupado.find(g => 
+      g.eventoNome === item.nomeEvento && g.salaId === Number(item.local)
+    );
 
-    // Emite o array completo de agendamentos em lote.
-    this.batchSubmit.emit(this.eventBatch);
-    this.eventoForm.reset(); // Limpa o formulário após a submissão.
+    if (!grupoExistente) {
+      grupoExistente = {
+        eventoNome: item.nomeEvento,
+        salaId: Number(item.local),
+        dias: []
+      };
+      payloadAgrupado.push(grupoExistente);
+    }
+
+      const dataFormatada = FormatUtils.formatDateForInput(new Date(item.date))
+
+      grupoExistente.dias.push({
+        dia: dataFormatada,
+        horaInicio: item.inicio,
+        horaFim: item.fim
+      });
+    });
+
+    console.log("Payload Formatado:", payloadAgrupado); // Para você conferir no console
+    this.batchSubmit.emit(payloadAgrupado);
+
+    this.eventBatch = [];
+    this.eventoForm.reset();
   }
 
+
   getHorariosDisponiveis(date: Date): void {
-    // 1. Garante que a data está no formato correto (AAAA-MM-DD)
     const dataString = date.toISOString().substring(0, 10);
 
     this.serviceHorario.getJanelaHorarioPorData(dataString).subscribe({
       next: (janelas: JanelaHorario[]) => {
-        // 2. Mapeia o retorno da API para o formato de string esperado (ex: '07:40 - 9:20')
-        this.horarios = janelas.map(janela => {
-          // Assumindo que: janela.horaInicio é uma string (ex: "07:40:00")
-          const inicioFormatado = janela.horaInicio.substring(0, 5); // Pega "07:40"
-          const fimFormatado = janela.horaFim.substring(0, 5);      // Pega "09:20"
-          return `${inicioFormatado} - ${fimFormatado}`;
-        });
-
-        this.horariosDisponiveisInicio = janelas.map(janela =>
-          janela.horaInicio.substring(0, 5)
-        );
-
-        this.horariosDisponiveisFim = janelas.map(janela =>
-          janela.horaFim.substring(0, 5)
-        );
+        this.listaHorarios = janelas;
       },
       error: (err) => {
-        console.error("Erro ao buscar horários", err);
-        this.horarios = []; // Limpa a lista em caso de erro
-        this.horariosDisponiveisInicio = [];
-        this.horariosDisponiveisFim = [];
+        this.listaHorarios = [];
       }
     });
   }
@@ -203,10 +229,7 @@ export class SmartSchedulingForm implements OnInit {
       next: (cursos: Curso[]) => {
         this.cursos = cursos;
       },
-      error: (err) => {
-        console.error("Erro ao buscar cursos", err);
-        this.cursos = [];
-      }
+      error: () => { this.cursos = []; }
     });
   }
 
@@ -215,10 +238,7 @@ export class SmartSchedulingForm implements OnInit {
       next: (disciplinas: Disciplina[]) => {
         this.disciplinas = disciplinas;
       },
-      error: (err) => {
-        console.error("Erro ao buscar disciplinas", err);
-        this.disciplinas = [];
-      }
+      error: () => { this.disciplinas = []; }
     });
   }
 
@@ -227,11 +247,7 @@ export class SmartSchedulingForm implements OnInit {
       next: (salas: Sala[]) => {
         this.salas = salas;
       },
-      error: (err) => {
-        console.error("Erro ao buscar salas", err);
-        this.salas = [];
-      }
+      error: () => { this.salas = []; }
     });
   }
-
 }

@@ -16,6 +16,7 @@ export class MultiDateSelector implements OnInit{
 	@Input() initialSelectedDates: Date[] = []
   @Input() modo: 'dias' | 'reccorente' = 'dias';
 	@Output() selecaoChange = new EventEmitter<Date[]>();
+  @Output() diaDaSemana = new EventEmitter<string>();
 	@Output() doubleClick = new EventEmitter<Date>();
 
 	private readonly CLICK_TIMEOUT_MS = 300;
@@ -87,6 +88,8 @@ private handleSingleClick(date: Date): void {
   private atulizarSelecaoMudar(): void {
     this.calendar.updateTodaysDate(); 
     this.selecaoChange.emit([...this.datasSelecionadas]);
+    const diaDaSemanaPortugues = this.datasSelecionadas[0].toLocaleDateString('pt-BR', {weekday: 'long'})
+    this.diaDaSemana.emit(diaDaSemanaPortugues.split('-')[0])
   }
   private aplicaSelecaoUnica(date: Date): void {
     const index = this.findDateIndex(date);

@@ -73,7 +73,7 @@ export class SpaceRegistrationForm implements OnInit {
     this.addItemModal.open();
   }
   
-  onItemAdded(item: AddItemModalData) {
+  onItemAdded(item: any) {
     if (!item) {return;}
   
     if (this.currentItemType === 'equipamento') {
