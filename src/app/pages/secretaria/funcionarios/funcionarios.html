@@ -1,0 +1,26 @@
+<div class="funcionario-management-container">
+    <h2 class="main-title">Lista de Funcionários</h2>
+  
+    <app-funcionario-table
+      [data]="displayedFuncionarios"
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+      (searchChange)="onSearch($event)"
+      (pageChange)="onPageChange($event)"
+      (editFuncionario)="onEditFuncionario($event)"
+      (deleteFuncionario)="openDeleteModal($event)"
+      class="w-100">
+    </app-funcionario-table>
+</div>
+  
+  <app-confirmation-modal
+    #confirmDeleteModal
+    mode="aviso"
+    title="Confirmar Delete"
+    message="Você tem certeza que deseja deletar este funcionário? Esta ação não pode ser desfeita."
+    confirmText="Confirmar"
+    cancelText="Cancelar"
+    (onconfirm)="confirmDelete()"
+    (oncancel)="closeModal()"
+  ></app-confirmation-modal>
+  

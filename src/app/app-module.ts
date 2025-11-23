@@ -66,13 +66,9 @@ import { SpaceManagement } from './pages/space-management/space-management';
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
-<<<<<<< HEAD
 import { FuncionarioTable } from './components/secretaria/funcionario-table/funcionario-table';
+import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 
-=======
-import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
-import { CreateResourceModal } from './components/modals/create-resource-modal/create-resource-modal';
->>>>>>> origin/develop
 
 @NgModule({
   declarations: [
@@ -110,12 +106,8 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
     SpaceManagementTable,
     SpaceRegistrationForm,
     Home,
-<<<<<<< HEAD
-    FuncionarioTable
-=======
-    Secretariahome,
-    CreateResourceModal
->>>>>>> origin/develop
+    FuncionarioTable,
+    Funcionarios
   ],
   imports: [
     BrowserModule,
