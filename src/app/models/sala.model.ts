@@ -8,4 +8,5 @@ export interface Sala {
   disponibilidade: boolean,
   tipoSala: TIPOSALA,
   salaObservacoes: string
+  
 }

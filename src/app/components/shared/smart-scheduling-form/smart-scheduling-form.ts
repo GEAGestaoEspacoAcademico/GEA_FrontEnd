@@ -1,0 +1,253 @@
+import type { OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { FormBuilder, type FormGroup } from '@angular/forms';
+import { Validators } from '@angular/forms';
+import { JanelasHorarioService } from '../../../services/janelas-horario/janelas-horario.service';
+import type { JanelaHorario } from '../../../models/janelasHorario.model';
+import { CursoService } from '../../../services/curso/curso.service';
+import type { Curso } from '../../../models/curso.model';
+import type { Sala } from '../../../models/sala.model';
+import type { Disciplina } from '../../../models/disciplina.model';
+import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
+import { SalaService } from '../../../services/sala/sala.service';
+import type { CriarEventoFormulario } from '../../../types/agendamentoEvento.type';
+import { FormatUtils } from '../../../utils/format.utils';
+
+@Component({
+  selector: 'app-smart-scheduling-form',
+  standalone: false,
+  templateUrl: './smart-scheduling-form.html',
+  styleUrl: './smart-scheduling-form.css'
+})
+
+export class SmartSchedulingForm implements OnInit {
+
+  // --- Injeção de Dependência ---
+  private fb = inject(FormBuilder);
+  private serviceHorario = inject(JanelasHorarioService);
+  private serviceCurso = inject(CursoService);
+  private serviceSala = inject(SalaService);
+  private serviceDisciplina = inject(DisciplinaService);
+
+
+  private _singleDate: Date | null = null;
+  private _dateArray: Date[] = [];
+
+  horarios: string[] = [];
+  listaHorarios: JanelaHorario[] = [];
+  cursos: Curso[] = [];
+  salas: Sala[] = [];
+  disciplinas: Disciplina[] = [];
+
+  horariosDisponiveisInicio: string[] = [];
+  horariosDisponiveisFim: string[] = [];
+
+  aulaForm!: FormGroup;
+  eventoForm!: FormGroup;
+  eventBatch: any[] = [];
+
+  
+  @Input() mode: 'aula' | 'evento' = 'aula';
+
+  @Input()
+  set singleDate(date: Date | null) {
+    this._singleDate = date;
+
+    if (this._singleDate) {
+      this.getHorariosDisponiveis(this._singleDate);
+    } else {
+      this.limparSelecoesDeHorario();
+    }
+  }
+
+  get singleDate(): Date | null {
+    return this._singleDate;
+  }
+
+  @Input()
+  set dateArray(values: Date[]) {
+    console.log("LOTE DE DATAS RECEBIDO: ", values);
+    this._dateArray = values || [];
+    if (this._dateArray.length > 0) {
+      const dataReferencia = this._dateArray[0]; 
+      this.getHorariosDisponiveis(dataReferencia);
+    } else {
+      this.listaHorarios = [];
+    }
+  }
+
+  get dateArray(): Date[] {
+    return this._dateArray;
+  }
+
+  @Output() scheduleSubmit = new EventEmitter<any>();
+  @Output() batchSubmit = new EventEmitter<CriarEventoFormulario[]>();
+
+  ngOnInit(): void {
+    this.buildForms();
+    this.getCursosProfessor();
+    this.getDisciplinas();
+    this.getSalas();
+  }
+
+  buildForms() {
+    this.aulaForm = this.fb.group({
+      inicio: ['', Validators.required],
+      fim: ['', Validators.required],
+      local: ['', Validators.required],
+      disciplina: ['', Validators.required],
+      solicitante: ['', Validators.required]
+    });
+
+    this.eventoForm = this.fb.group({
+      nomeEvento: ['', Validators.required],
+      local: ['', Validators.required],
+      inicio: ['', Validators.required],
+      fim: ['', Validators.required],
+    });
+  }
+
+  limparSelecoesDeHorario() {
+    if (this.aulaForm || this.eventoForm) {
+      this.horarios = [];
+      this.horariosDisponiveisInicio = [];
+      this.horariosDisponiveisFim = [];
+      this.aulaForm?.get('horario')?.setValue('');
+      this.eventoForm?.get('inicio')?.setValue('');
+      this.eventoForm?.get('fim')?.setValue('');
+    }
+  }
+
+  submitAula() {
+    if (this.aulaForm.invalid) { return };
+
+    const payload = {
+      ...this.aulaForm.value,
+      date: this.singleDate
+    };
+
+    this.scheduleSubmit.emit(payload);
+
+    setTimeout(() => {
+      this.aulaForm.reset();
+    }, 2000);
+  }
+
+  addEventoConfig() {
+    if (this.eventoForm.invalid) {
+      return;
+    }
+
+    const temArray = this.dateArray && this.dateArray.length > 0;
+    const temSingle = !!this.singleDate;
+
+    if (!temArray && !temSingle) {
+      console.warn("Nenhuma data selecionada para adicionar o evento.");
+      return;
+    }
+
+    const config = this.eventoForm.value;
+
+    if (temArray) {
+      this.dateArray.forEach(data => {
+        this.eventBatch.push({
+          date: data, 
+          nomeEvento: config.nomeEvento,
+          local: config.local,
+          inicio: config.inicio,
+          fim: config.fim,
+          todosHorarios: config.todosHorarios
+        });
+      });
+    } else if (temSingle) {
+      this.eventBatch.push({
+        date: this.singleDate,
+        nomeEvento: config.nomeEvento,
+        local: config.local,
+        inicio: config.inicio,
+        fim: config.fim,
+        todosHorarios: config.todosHorarios
+      });
+    }
+
+    this.eventoForm.reset();
+  }
+
+  removeBatchItem(index: number) {
+    this.eventBatch.splice(index, 1);
+  }
+
+  submitBatch() {
+    if (this.eventBatch.length === 0) { return; }
+    const payloadAgrupado: CriarEventoFormulario[] = [];
+    this.eventBatch.forEach(item => {
+    let grupoExistente = payloadAgrupado.find(g => 
+      g.eventoNome === item.nomeEvento && g.salaId === Number(item.local)
+    );
+
+    if (!grupoExistente) {
+      grupoExistente = {
+        eventoNome: item.nomeEvento,
+        salaId: Number(item.local),
+        dias: []
+      };
+      payloadAgrupado.push(grupoExistente);
+    }
+
+      const dataFormatada = FormatUtils.formatDateForInput(new Date(item.date))
+
+      grupoExistente.dias.push({
+        dia: dataFormatada,
+        horaInicio: item.inicio,
+        horaFim: item.fim
+      });
+    });
+
+    console.log("Payload Formatado:", payloadAgrupado); // Para você conferir no console
+    this.batchSubmit.emit(payloadAgrupado);
+
+    this.eventBatch = [];
+    this.eventoForm.reset();
+  }
+
+
+  getHorariosDisponiveis(date: Date): void {
+    const dataString = date.toISOString().substring(0, 10);
+
+    this.serviceHorario.getJanelaHorarioPorData(dataString).subscribe({
+      next: (janelas: JanelaHorario[]) => {
+        this.listaHorarios = janelas;
+      },
+      error: (err) => {
+        this.listaHorarios = [];
+      }
+    });
+  }
+
+  getCursosProfessor() {
+    this.serviceCurso.getCursos().subscribe({
+      next: (cursos: Curso[]) => {
+        this.cursos = cursos;
+      },
+      error: () => { this.cursos = []; }
+    });
+  }
+
+  getDisciplinas() {
+    this.serviceDisciplina.getDisciplinas().subscribe({
+      next: (disciplinas: Disciplina[]) => {
+        this.disciplinas = disciplinas;
+      },
+      error: () => { this.disciplinas = []; }
+    });
+  }
+
+  getSalas() {
+    this.serviceSala.getSalas().subscribe({
+      next: (salas: Sala[]) => {
+        this.salas = salas;
+      },
+      error: () => { this.salas = []; }
+    });
+  }
+}

@@ -1,25 +1,25 @@
-import type { OnInit} from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
-import type { ConfirmationModal } from '../../../components/shared/confirmation-modal/confirmation-modal';
 import type { Funcionario } from '../../../models/funcionario.model';
-import { FuncionarioService } from '../../../services/funcionario/funcionario';
+import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
+import { UsuarioService } from '../../../services/usuario/usuario.service';
+import type { GetUsuarioResponse } from '../../../types/usuario.type';
 
 @Component({
   selector: 'app-funcionarios',
   standalone: false,
   templateUrl: './funcionarios.html',
-  styleUrl: './funcionarios.css'
+  styleUrl: './funcionarios.css',
 })
-export class Funcionarios implements OnInit{
-
+export class Funcionarios implements OnInit {
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmationModal;
 
-  private funcionarioService = inject(FuncionarioService);
+  private usuarioService = inject(UsuarioService);
 
-  funcionarioParaDeletar!: Funcionario | null;
+  funcionarioParaDeletar!: GetUsuarioResponse | null;
 
-  masterFuncionarioList: Funcionario[] = [];
-  displayedFuncionarios: Funcionario[] = [];
+  masterFuncionarioList: GetUsuarioResponse[] = [];
+  displayedFuncionarios: GetUsuarioResponse[] = [];
 
   currentPage = 1;
   totalPages = 1;
@@ -27,33 +27,35 @@ export class Funcionarios implements OnInit{
   pageSize = 7;
 
   ngOnInit(): void {
-    this.funcionarioService.getFuncionarios().subscribe({
-      next: (result: Funcionario[]) => {
+    this.usuarioService.listarUsuarios().subscribe({
+      next: (result: GetUsuarioResponse[]) => {
         this.masterFuncionarioList = result;
         this.atualizarDataVisualizada();
       },
-      error: (err) => console.error('Erro ao carregar funcionários:', err)
+      error: (err) => console.error('Erro ao carregar usuários:', err),
     });
   }
 
-  openDeleteModal(funcionario: Funcionario): void {
+  openDeleteModal(funcionario: GetUsuarioResponse): void {
     this.funcionarioParaDeletar = funcionario;
     this.confirmDeleteModal.open();
   }
 
   confirmDelete(): void {
-    if (!this.funcionarioParaDeletar) {return;}
+    if (!this.funcionarioParaDeletar) {
+      return;
+    }
 
-    this.funcionarioService.deleteFuncionario(this.funcionarioParaDeletar.id).subscribe({
-      next: () => {
-        this.masterFuncionarioList = this.masterFuncionarioList.filter(
-          f => f.id !== this.funcionarioParaDeletar!.id
-        );
-        this.atualizarDataVisualizada();
-        this.funcionarioParaDeletar = null;
-      },
-      error: (err) => console.error('Erro ao deletar funcionário:', err)
-    });
+    // this.usuarioService.deleteFuncionario(this.funcionarioParaDeletar.id).subscribe({
+    //   next: () => {
+    //     this.masterFuncionarioList = this.masterFuncionarioList.filter(
+    //       (f) => f.id !== this.funcionarioParaDeletar!.id,
+    //     );
+    //     this.atualizarDataVisualizada();
+    //     this.funcionarioParaDeletar = null;
+    //   },
+    //   error: (err) => console.error('Erro ao deletar funcionário:', err),
+    // });
   }
 
   closeModal(): void {
@@ -65,9 +67,7 @@ export class Funcionarios implements OnInit{
 
     if (this.searchTerm.trim() !== '') {
       const term = this.searchTerm.toLowerCase();
-      filtrada = filtrada.filter(f =>
-        f.nome.toLowerCase().includes(term)
-      );
+      filtrada = filtrada.filter((f) => f.usuarioNome.toLowerCase().includes(term));
     }
 
     this.totalPages = Math.ceil(filtrada.length / this.pageSize) || 1;
@@ -89,7 +89,7 @@ export class Funcionarios implements OnInit{
     this.atualizarDataVisualizada();
   }
 
-  onEditFuncionario(funcionario: Funcionario): void {
-    console.log('Editar funcionário:', funcionario.id);
+  onEditFuncionario(funcionario: GetUsuarioResponse): void {
+    console.log('Editar funcionário:', funcionario.usuarioId);
   }
 }

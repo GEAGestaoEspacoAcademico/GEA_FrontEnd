@@ -1,12 +1,15 @@
-interface Dia {
-  dia: string,
-  horarioInicio: string,
-  horaFim: string
-}
 ///agendamentos/eventos
-export interface CriarAgendamentoEventoRequest {
-  usuarioId: number,
-  eventoNome: string,
-  salaId: number,
-  dias: Dia[]
+interface DiaEvento{
+  dia: string,
+  horaInicio: string,
+  horaFim: string,
 }
+
+export interface CriarEventoRequest {
+  usuarioId: number
+  eventoNome: string,
+  salaId: number
+  dias: DiaEvento[]
+}
+
+export type CriarEventoFormulario = Omit<CriarEventoRequest, 'usuarioId'>

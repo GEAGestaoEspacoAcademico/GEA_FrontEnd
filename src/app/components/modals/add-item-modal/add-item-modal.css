@@ -1,0 +1,64 @@
+.gea-input-field {
+  width: 90%;
+  margin-right: var(--spacing-5);
+  padding: var(--spacing-2);
+  margin-bottom: var(--spacing-6);
+  font-size: 20px;
+  border: 0.2px solid var(--color-default-black);
+  text-align: start;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+
+  &:not(:placeholder-shown) {
+    text-align: start;
+  }
+}
+
+.gea-input-field option:first-child:checked {
+    text-align: center;
+}
+
+.gea-input-field-small {
+  width: 20%;
+}
+
+.body-modal {
+  padding: 4.375rem var(--spacing-13) var(--spacing-9) 2.875rem;
+  box-shadow: 0 0 0.5rem 0 var(--color-default-black);
+}
+
+.gea-btn-primary {
+  border: none;
+  padding: var(--spacing-3) var(--spacing-6);
+  border-radius: 0.5rem;
+  background-color: var(--color-feedback-error);
+  color: var(--color-default-white);
+}
+
+.plus-icon {
+  color: var(--color-default-white);
+  margin-right: var(--spacing-2);
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-bottom: var(--spacing-1);
+}
+
+::ng-deep .modal.custom-modal .modal-dialog {
+  max-width: 37.813rem;
+}
+
+
+.disabled-button{
+  background-color: var(--color-neutral-100);
+  color: var(--color-neutral-900);
+  cursor: not-allowed;
+  .plus-icon{
+    color: var(--color-neutral-900);
+  }
+}

@@ -1,18 +1,18 @@
-<div class="funcionario-management-container">
+<div class="funcionario-management-container px-5">
     <h2 class="main-title">Lista de Funcionários</h2>
-  
+
     <app-funcionario-table
       [data]="displayedFuncionarios"
       [currentPage]="currentPage"
       [totalPages]="totalPages"
       (searchChange)="onSearch($event)"
       (pageChange)="onPageChange($event)"
-      (editFuncionario)="onEditFuncionario($event)"
-      (deleteFuncionario)="openDeleteModal($event)"
+      (editUsuario)="onEditFuncionario($event)"
+      (deleteUsuario)="openDeleteModal($event)"
       class="w-100">
     </app-funcionario-table>
 </div>
-  
+
   <app-confirmation-modal
     #confirmDeleteModal
     mode="aviso"
@@ -23,4 +23,3 @@
     (onconfirm)="confirmDelete()"
     (oncancel)="closeModal()"
   ></app-confirmation-modal>
-  

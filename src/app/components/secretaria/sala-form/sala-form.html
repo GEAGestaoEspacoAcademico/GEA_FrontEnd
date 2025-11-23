@@ -1,0 +1,116 @@
+<form [formGroup]="form" class="form-group" (ngSubmit)="onSave()">
+  <div class="line-cols">
+    <div>
+    <div>
+        <label class="field-label" for="itipodesala">Tipo de Espaço</label>
+        <input 
+            type="text" 
+            value="Sala de Aula" 
+            class="simple-input disabled" 
+            disabled 
+            readonly
+        >
+    </div>
+
+    <input type="hidden" formControlName="tipoSalaId">
+
+      @if (form.get('tipoSalaId')?.invalid && form.get('tipoSalaId')?.touched) {
+        <span class="error-msg">Selecione o tipo de espaço.</span>
+      }
+    </div>
+
+    <div>
+      <label for="piso" class="field-label">Piso</label>
+      <select
+        formControlName="piso"
+        class="piso-select"
+        [class.input-error]="form.get('piso')?.invalid && form.get('piso')?.touched"
+      >
+        <option value="" disabled>Selecione</option>
+        <option value="0">Térreo</option>
+        <option value="1">1° Andar</option>
+        <option value="2">2° Andar</option>
+      </select>
+
+      @if (form.get('piso')?.invalid && form.get('piso')?.touched) {
+        <span class="error-msg">Selecione o piso.</span>
+      }
+    </div>
+
+    <div>
+      <label for="nome" class="field-label">Nome do Espaço</label>
+      <input
+        type="text"
+        formControlName="salaNome"
+        class="simple-input"
+        [class.input-error]="form.get('salaNome')?.invalid && form.get('salaNome')?.touched"
+      />
+
+      @if (form.get('salaNome')?.invalid && form.get('salaNome')?.touched) {
+        <span class="error-msg">O nome é obrigatório.</span>
+      }
+    </div>
+
+    <div>
+      <label for="salaObservacoes" class="field-label">Observações</label>
+      <input formControlName="salaObservacoes" class="simple-input" />
+    </div>
+
+    <div>
+      <label for="salaCapacidade" class="field-label">Capacidade</label>
+      <select
+        formControlName="salaCapacidade"
+        class="simple-input"
+        [class.input-error]="form.get('salaCapacidade')?.invalid && form.get('salaCapacidade')?.touched"
+      >
+        <option value="" disabled>Selecione</option>
+        <option value="20">1-20</option>
+        <option value="30">21-30</option>
+      </select>
+
+      @if (form.get('salaCapacidade')?.invalid && form.get('salaCapacidade')?.touched) {
+        <span class="error-msg">Selecione a capacidade.</span>
+      }
+    </div>
+
+    <div>
+      <span class="field-label">Equipamentos</span>
+
+      <div class="chips-box">
+        @for (equip of equipamentosFA.controls; track $index) {
+          <div class="chip" role="listitem">
+            <span class="chip-label">
+              {{ equip.value.nome }}
+              <small class="chip-qty">({{ equip.value.quantidade }})</small>
+            </span>
+
+            <button
+              type="button"
+              class="chip-remove"
+              aria-label="Remover {{ equip.value.nome }}"
+              (click)="removerEquipamento($index)"
+            >
+              <mat-icon svgIcon="close" class="remove-icon"></mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+
+      <button type="button" class="add-btn" (click)="onAddEquipamento($event)">
+        <mat-icon>add_circle_outline</mat-icon>
+        Adicionar Equipamento
+      </button>
+    </div>
+  </div>
+
+  <div class="form-buttons">
+    <button type="submit" class="add-btn" [disabled]="form.invalid || isLoading">SALVAR</button>
+
+    <button type="button" class="add-btn cancelar-btn" (click)="onCancel()">CANCELAR</button>
+  </div>
+
+  <app-add-item-modal 
+    #addItemModal 
+    (itemAdd)="onItemAdded($event)"
+    [recursosDisponiveis]="recursosDisponiveis"> </app-add-item-modal>
+</form>
