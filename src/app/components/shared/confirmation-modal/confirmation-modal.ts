@@ -2,7 +2,7 @@ import type { TemplateRef } from '@angular/core';
 import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import type { Sala } from '../../../models/sala.model';
-import { SalaService } from '../../../services/salas/sala.service';
+import { SalaService } from '../../../services/sala/sala.service';
 import type { AgendarForm } from '../../../types/agendar';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 
@@ -105,7 +105,7 @@ export class ConfirmationModal{
   public open(): void {
     if (this.mode === 'detalhes') {
       if (this.salaRecomendadaId) {
-        this.salaService.getSalaId(this.salaRecomendadaId).subscribe({
+        this.salaService.getSalaPorId(this.salaRecomendadaId).subscribe({
           next: s => {
             this.detalhesSala = s;
             this.abrirInstaciaModal();

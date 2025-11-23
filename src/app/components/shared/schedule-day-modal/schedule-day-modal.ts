@@ -1,9 +1,10 @@
 import type { TemplateRef } from '@angular/core';
-import { Component, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { AgendamentoService } from '../../../services/agendamentos/agendamento.service';
-import type { AgendamentoData, SlotHorario } from '../../../models/agendamento.model';
+import { AgendamentoService } from '../../../services/agendamento/agendamento.service';
 import { FormatUtils } from '../../../utils/format.utils';
+import type { Agendamento } from '../../../models/agendamento.model';
+import type { SlotHorario } from '../../../models/janelasHorario.model';
 
 @Component({
   selector: 'app-schedule-day-modal',
@@ -28,8 +29,8 @@ export class ScheduleDayModal {
     this.loading = true;
     const dataFormatada = FormatUtils.formatDateForInput(new Date(this.selectedDate));
 
-    this.agendamentoService.getAgendamentoPorDia(dataFormatada).subscribe({
-      next: (dados: AgendamentoData[]) => {
+    this.agendamentoService.getAgendamentoPorData(dataFormatada).subscribe({
+      next: (dados: Agendamento[]) => {
         this.agendamento = dados || [];
         this.mapearAgendamentos();
         this.loading = false;
@@ -83,7 +84,7 @@ export class ScheduleDayModal {
     console.warn('Agendamento:', id);
   }
 
-  agendamento: AgendamentoData[] = [];
+  agendamento: Agendamento[] = [];
 
   horarios: SlotHorario[] = [
     { horarioExibicao: '07:40 - 08:30', horarioComparacao: '07:40:00 - 08:30:00' },
@@ -102,4 +103,5 @@ export class ScheduleDayModal {
     { horarioExibicao: '21:40 - 22:30', horarioComparacao: '21:40:00 - 22:30:00' },
     { horarioExibicao: '23:00 - 23:50', horarioComparacao: '23:00:00 - 23:50:00' },
   ];
+
 }

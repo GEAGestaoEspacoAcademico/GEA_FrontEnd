@@ -1,20 +1,21 @@
-<h2>Selecione os dias do evento</h2>
-
-<div class="d-flex w-100 ">
-  <app-multi-date-selector 
-  class="w-50"
-  (doubleClick)="abirModalDetalhe($event)"
-  (selecaoChange)="pegarDias($event)"
-  ></app-multi-date-selector>
-  <div class="w-50">
+<div class="container agendarEvento">
+  <h2>Selecione os dias do evento</h2>
+  
+  <div class="d-flex w-100 align-itens-center justify-content-around">
+    <app-multi-date-selector
+    class="w-50"
+    (doubleClick)="abirModalDetalhe($event)"
+    (selecaoChange)="pegarDias($event)"
+    ></app-multi-date-selector>
     <app-smart-scheduling-form
+    class="w-25"
     mode="evento"
     [dateArray]="datasSelecionadas"
     (batchSubmit)="salvarAgendamentos($event)"
     ></app-smart-scheduling-form>
   </div>
+  
+  <app-schedule-day-modal
+  #scheduleModal
+  ></app-schedule-day-modal>
 </div>
-
-<app-schedule-day-modal
-#scheduleModal
-></app-schedule-day-modal>

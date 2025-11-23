@@ -8,7 +8,7 @@
                     <mat-label>Local</mat-label>
                     <mat-select formControlName="local">
                         @for (s of salas; track s.salaId) {
-                            <mat-option [value]="s">{{s.salaNome}}</mat-option>
+                        <mat-option [value]="s.salaId">{{s.salaNome}}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -19,29 +19,29 @@
                     <mat-label>Disciplina</mat-label>
                     <mat-select formControlName="disciplina">
                         @for (d of disciplinas; track d.disciplinaId) {
-                            <mat-option [value]="d">{{d.disciplinaNome}}</mat-option>
+                        <mat-option [value]="d">{{d.disciplinaNome}}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
             </div>
 
-            <!-- <div class="col-6">
+            <div class="col-6">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Curso</mat-label>
-                    <mat-select formControlName="curso">
-                        @for (c of cursos; track c.cursoId) {
-                        <mat-option [value]="c">{{c.cursoSigla}}</mat-option>
+                    <mat-label>Início</mat-label>
+                    <mat-select formControlName="inicio">
+                        @for (hInicio of listaHorarios; track hInicio.janelasHorarioId) {
+                        <mat-option [value]="hInicio.horaInicio">{{ hInicio.horaInicio.slice(0, 5) }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
-            </div> -->
+            </div>
 
             <div class="col-6">
                 <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Horário</mat-label>
-                    <mat-select formControlName="horario">
-                        @for (h of horarios; track $index) {
-                        <mat-option [value]="h">{{ h }}</mat-option>
+                    <mat-label>Fim</mat-label>
+                    <mat-select formControlName="fim">
+                        @for (hFim of listaHorarios; track hFim.janelasHorarioId) {
+                        <mat-option [value]="hFim.horaFim">{{ hFim.horaFim.slice(0, 5) }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -80,18 +80,25 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Local</mat-label>
                     <mat-select formControlName="local">
-                        <mat-option value="Auditório">Auditório</mat-option>
-                        <mat-option value="Sala Master">Sala Maker</mat-option>
+                        @for (sala of salas; track sala.salaId) {
+                            <mat-option [value]="sala.salaId">{{sala.salaNome}}</mat-option>
+                        }
                     </mat-select>
                 </mat-form-field>
             </div>
 
             <div class="col-6">
                 <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Data Selecionada</mat-label>
+                    <input matInput [value]="singleDate || dateArray[0] | date:'dd/MM/yyyy'" [disabled]="true"> </mat-form-field>
+            </div>
+
+            <div class="col-6">
+                <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Início</mat-label>
                     <mat-select formControlName="inicio">
-                        @for (h of ['10:00','12:00','15:00','17:00']; track $index) {
-                            <mat-option [value]="h">{{ h }}</mat-option>
+                        @for (hInicio of listaHorarios; track hInicio.janelasHorarioId) {
+                        <mat-option [value]="hInicio.horaInicio">{{ hInicio.horaInicio.slice(0, 5) }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -101,19 +108,14 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Fim</mat-label>
                     <mat-select formControlName="fim">
-                        <mat-option *ngFor="let h of ['10:00','12:00','15:00','17:00']  " [value]="h">{{ h
-                            }}</mat-option>
+                        @for (hFim of listaHorarios; track hFim.janelasHorarioId) {
+                        <mat-option [value]="hFim.horaFim">{{ hFim.horaFim.slice(0, 5) }}</mat-option>
+                        }
                     </mat-select>
                 </mat-form-field>
             </div>
 
-            <div class="col-6">
-                <mat-checkbox formControlName="todosHorarios">
-                    Todos os horários
-                </mat-checkbox>
-            </div>
-
-            <div class="col-6">
+            <div class="col-12" style="width: fit-content; margin-left: auto;">
                 <button mat-raised-button class="btn btn-primary" (click)="addEventoConfig()"
                     [disabled]="eventoForm.invalid">
                     Salvar
@@ -139,8 +141,7 @@
         </ul>
 
         <button mat-raised-button class="btn btn-secundary" (click)="submitBatch()"
-            [disabled]="eventBatch.length !== dateArray.length">
-            Agendar
+            [disabled]="eventBatch.length === 0"> Agendar
         </button>
     </div>
 

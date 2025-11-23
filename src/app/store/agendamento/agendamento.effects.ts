@@ -5,9 +5,10 @@ import type { Observable} from 'rxjs';
 import { catchError, filter, map, mergeMap, of, withLatestFrom } from 'rxjs';
 import { AgendamentoActions } from './agendamento.actions'; 
 import { Store } from '@ngrx/store';
-import { AgendamentoService } from '../../services/agendamentos/agendamento.service';
-import type { User } from '../../models/user.model';
+import { AgendamentoService } from '../../services/agendamento/agendamento.service';
+import type { Usuario } from '../../models/usuario.model';
 import { selectCurrentUser } from '../auth/auth.selectors';
+import type { AgendamentoAula } from '../../models/agendamentoAula.model';
 
 @Injectable()
 export class AgendamentoEffects {
@@ -15,7 +16,7 @@ export class AgendamentoEffects {
   private store = inject(Store);
   private agendamentoService = inject(AgendamentoService)
   
-  private user$!: Observable<User | null>;
+  private user$!: Observable<Usuario | null>;
 
   loadAgendamentos$ = createEffect(() =>
     this.actions$.pipe(
@@ -28,7 +29,7 @@ export class AgendamentoEffects {
       }),
       mergeMap(([_, user]) => {
         const userId = user!.usuarioId;
-        return this.agendamentoService.getAgendamentosProfessor(userId).pipe(
+        return this.agendamentoService.getAgendamentosPorfessor(userId).pipe(
           map(agendamentos => {
             return AgendamentoActions.loadAgendamentosSuccess({ agendamentos })}),
           catchError(_ => of(AgendamentoActions.loadAgendamentosFailure({ error: 'Falha ao carregar agendamentos' })))
@@ -40,11 +41,11 @@ export class AgendamentoEffects {
   loadAgendamentosById$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AgendamentoActions.loadAgendamentoById),
-      mergeMap(action => this.agendamentoService.getAgendamentoById(action.id).pipe(
-        map(agendamentoEncontrado => AgendamentoActions.loadAgendamentoByIdSuccess({ agendamento: agendamentoEncontrado })
+      mergeMap(action => this.agendamentoService.getAgendamentoAulaPorId(action.id).pipe(
+        map((agendamentoEncontrado: AgendamentoAula) => 
+          AgendamentoActions.loadAgendamentoByIdSuccess({ agendamento: agendamentoEncontrado })
         ),
-        catchError(_ => of(AgendamentoActions.loadAgendamentoByIdFailure({ error: `Falha ao carregar agendamento com ID ${action.id}` }))
-        )
+        catchError(error => of(AgendamentoActions.loadAgendamentoByIdFailure({ error: error.message || 'Erro ao carregar' })))
       ))
     )
   );
@@ -54,7 +55,7 @@ export class AgendamentoEffects {
     this.actions$.pipe(
       ofType(AgendamentoActions.deleteAgendamento),
       mergeMap(action => {
-        return this.agendamentoService.deleteAgendamento(action.id).pipe(
+        return this.agendamentoService.deleteAgendamentoAula(action.id).pipe(
           map(() => AgendamentoActions.deleteAgendamentoSuccess({ id: action.id })),
           catchError(_ => of(AgendamentoActions.deleteAgendamentoFailure({ error: 'Falha ao deletar agendamento' }))
           )
@@ -63,15 +64,13 @@ export class AgendamentoEffects {
     )
   );
 
-   editAgendamento$ = createEffect(() =>
+  editAgendamento$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AgendamentoActions.editAgendamento),
       mergeMap(({ id, agendamento }) => {
-        return this.agendamentoService.editAgendamento(id, agendamento).pipe(
-          map(AgendamentoAtualizado => AgendamentoActions.editAgendamentoSuccess({agendamento: AgendamentoAtualizado})),
-          catchError(_ => 
-            of(AgendamentoActions.editAgendamentoFailure({ error: `Falha ao editar agendamento ${id}` }))
-          )
+        return this.agendamentoService.editAgendamentoAula(id, agendamento).pipe (
+          map((response: any) => AgendamentoActions.editAgendamentoSuccess({ agendamento: response })),
+          catchError(error => of(AgendamentoActions.editAgendamentoFailure({ error: error.message })))
         )
       })
     )

@@ -76,7 +76,7 @@
 .icon-notification-medium,
 .icon-logout-medium {
   width: 1.641rem;
-  height: 2.188rem;
+  height: auto;
   display: inline-block;
   vertical-align: middle;
 }

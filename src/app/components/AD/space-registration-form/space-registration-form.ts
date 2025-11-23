@@ -4,11 +4,11 @@ import type { FormGroup } from '@angular/forms';
 import { FormBuilder, Validators } from '@angular/forms';
 import type { AddItemModal } from '../../shared/add-item-modal/add-item-modal';
 import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
-import type { TiposSalas } from '../../../models/tipoSala.mode';
 import type { Equipamento } from '../../../types/equipamento';
 import type { Software } from '../../../types/software';
-import type { CriarSala } from '../../../types/criarsala';
 import type { AddItemModalData } from '../../../types/additemmodal';
+import type { CriarSalaRequest } from '../../../types/sala.type';
+import type { TipoSala } from '../../../models/tipoSala.mode';
 
 
 
@@ -22,11 +22,11 @@ export class SpaceRegistrationForm implements OnInit {
   
   
   @ViewChild('addItemModal') addItemModal!: AddItemModal;
-  @Output() formSubmit = new EventEmitter<CriarSala>();
+  @Output() formSubmit = new EventEmitter<CriarSalaRequest>();
 
   equipamentos: Equipamento[] = [];
   softwares: Software[] = [];
-  tiposSalas!: TiposSalas[];
+  tiposSalas!: TipoSala[];
 
   private fb = inject(FormBuilder);
   private currentItemType: 'equipamento' | 'software' | null = null;
@@ -41,7 +41,7 @@ export class SpaceRegistrationForm implements OnInit {
     });
 
   ngOnInit(): void {
-    this.tipoSalaService.getTiposSalas().subscribe({
+    this.tipoSalaService.getTiposSala().subscribe({
       next: (tipos) => {
         this.tiposSalas = tipos;
       },
@@ -51,14 +51,14 @@ export class SpaceRegistrationForm implements OnInit {
     });
   }
 
-  @Input() set initialData(data: CriarSala) {
+  @Input() set initialData(data: CriarSalaRequest) {
     if (data) {
       this.form.patchValue({
         salaNome: data.salaNome,
         piso: data.piso,
-        capacidade: data.capacidade,
-        tipoSala: data.tipoSala,
-        observacoes: data.observacoes
+        capacidade: data.salaCapacidade,
+        tipoSala: data.tipoSalaId,
+        observacoes: data.salaObservacoes
       });
       this.equipamentos = []; 
       this.softwares = [];
@@ -108,7 +108,7 @@ export class SpaceRegistrationForm implements OnInit {
       return;
     }
   
-    const payload: CriarSala = {
+    const payload: CriarSalaRequest = {
       ...this.form.value,
       equipamentoId: this.equipamentos.map(e => Number(e.id)),
       softwaresId: this.softwares.map(s => Number(s.id))
