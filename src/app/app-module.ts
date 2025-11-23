@@ -68,10 +68,11 @@ import { SpaceManagement } from './pages/AD/space-management/space-management';
 import { A11yModule } from '@angular/cdk/a11y';
 import { Agenda } from './pages/AD/agenda/agenda';
 
-
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
 import { Home } from './pages/AD/home/home';
+import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
+
 import { ScheduleEvent } from './pages/AD/schedule-event/schedule-event';
 
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
@@ -84,7 +85,6 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
 import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
-
 
 @NgModule({
   declarations: [
@@ -126,6 +126,8 @@ import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
     ScheduleEvent,
     SpaceRegistrationForm,
     Home,
+    FuncionarioTable,
+    Funcionarios,
     Secretariahome,
     CreateResourceModal,
     SmartSchedulingForm,
@@ -137,7 +139,7 @@ import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
     EditarEspacoModal,
     ListaEspacos,
     FuncionarioTable,
-    CadastroSala
+    CadastroSala,
   ],
   imports: [
     BrowserModule,
@@ -157,26 +159,29 @@ import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
     MatDatepickerModule,
     MatNativeDateModule,
     // NGRX Setup Simplificado
-    StoreModule.forRoot({
+    StoreModule.forRoot(
+      {
         auth: authReducer,
         [AGENDAMENTO_FEATURE_KEY]: agendamentoReducer,
-    }, {
+      },
+      {
         metaReducers,
-    }),
+      },
+    ),
     EffectsModule.forRoot([AuthEffects, AgendamentoEffects]),
     StoreDevtoolsModule.instrument({
-        maxAge: 25,
-        logOnly: !isDevMode(),
-        autoPause: true,
-        trace: false,
-        traceLimit: 75,
+      maxAge: 25,
+      logOnly: !isDevMode(),
+      autoPause: true,
+      trace: false,
+      traceLimit: 75,
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {
-        enabled: environment.production,
-        registrationStrategy: 'registerWhenStable:30000',
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:30000',
     }),
-    A11yModule
-],
+    A11yModule,
+  ],
   providers: [provideHttpClient(withInterceptors([globalErrorInterceptor]))],
   bootstrap: [App],
 })
