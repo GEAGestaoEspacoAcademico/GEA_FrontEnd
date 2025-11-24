@@ -12,3 +12,11 @@ export interface CriarAgendamentoAulaFormulario {
   solicitante: string,
   date: string
 }
+
+export interface AtulizarUsuarioFormulario {
+  usuarioId: number;
+  nome: string;
+  email: string;
+  registro: number;
+  cargoId: number;
+}

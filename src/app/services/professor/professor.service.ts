@@ -44,5 +44,4 @@ export default class ProfessorService {
   public editarProfessor(id: number, dadosProfessor: AtualizarProfessorRequest): Observable<Professor> {
     return this.http.put<Professor>(`${this.baseUrl}/${id}`, dadosProfessor);
   }
-
 }

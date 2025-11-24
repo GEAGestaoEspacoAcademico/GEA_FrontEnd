@@ -10,7 +10,7 @@ import type { CriarCargoRequest } from '../../types/cargo.type';
 })
 export class CargoService {
   private http = inject(HttpClient);
-  
+
   private baseUrl = environment.apiUrl + "/cargos";
 
   public getCargos(): Observable<Cargo[]>{
@@ -24,5 +24,4 @@ export class CargoService {
   // public pegarCargoUsuario
 
   // public pegarCargoAdmin
-
 }

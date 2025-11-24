@@ -16,3 +16,7 @@ export interface AlterarSenhaUsuarioRequest {
   novaSenha: string;
   repetirNovaSenha: string;
 }
+
+export interface UsuarioComNomeCargo extends GetUsuarioResponse{
+  nomeCargo: string,
+}

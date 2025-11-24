@@ -14,13 +14,16 @@
   </app-funcionario-table>
 </div>
 
-<app-confirmation-modal
-  #confirmDeleteModal
-  mode="aviso"
-  title="Confirmar Delete"
-  message="Você tem certeza que deseja deletar este funcionário? Esta ação não pode ser desfeita."
-  confirmText="Confirmar"
-  cancelText="Cancelar"
-  (onconfirm)="confirmDelete()"
-  (oncancel)="closeModal()"
-></app-confirmation-modal>
+  <app-confirmation-modal
+    #confirmDeleteModal
+    mode="aviso"
+    title="Confirmar Delete"
+    message="Você tem certeza que deseja deletar este funcionário? Esta ação não pode ser desfeita."
+    confirmText="Confirmar"
+    cancelText="Cancelar"
+    (onconfirm)="confirmDelete()"
+    (oncancel)="closeModal()"
+  ></app-confirmation-modal>
+  
+  <app-edit-professor-modal #modalEditar>
+  </app-edit-professor-modal>

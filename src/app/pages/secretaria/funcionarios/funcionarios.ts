@@ -4,6 +4,7 @@ import type { ConfirmationModal } from '../../../components/modals/confirmation-
 import { UsuarioService } from '../../../services/usuario/usuario.service';
 import type { GetUsuarioResponse } from '../../../types/usuario.type';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
+import type { EditProfessorModal } from '../../../components/secretaria/edit-professor-modal/edit-professor-modal';
 
 @Component({
   selector: 'app-funcionarios',
@@ -13,6 +14,7 @@ import { HeaderTitleService } from '../../../services/header-title/header-title.
 })
 export class Funcionarios implements OnInit {
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmationModal;
+  @ViewChild('modalEditar') modalEditar!: EditProfessorModal;
 
   private usuarioService = inject(UsuarioService);
   private headerService = inject(HeaderTitleService)
@@ -30,7 +32,10 @@ export class Funcionarios implements OnInit {
   ngOnInit(): void {
     this.headerService.setTitle('Funcionários')
     this.headerService.showBack()
+    this.listarUsuario()
+  }
 
+  listarUsuario(){
     this.usuarioService.listarUsuarios().subscribe({
       next: (result: GetUsuarioResponse[]) => {
         this.masterFuncionarioList = result;
@@ -50,16 +55,16 @@ export class Funcionarios implements OnInit {
       return;
     }
 
-    // this.usuarioService.deleteFuncionario(this.funcionarioParaDeletar.id).subscribe({
-    //   next: () => {
-    //     this.masterFuncionarioList = this.masterFuncionarioList.filter(
-    //       (f) => f.id !== this.funcionarioParaDeletar!.id,
-    //     );
-    //     this.atualizarDataVisualizada();
-    //     this.funcionarioParaDeletar = null;
-    //   },
-    //   error: (err) => console.error('Erro ao deletar funcionário:', err),
-    // });
+    this.usuarioService.deletar(this.funcionarioParaDeletar.usuarioId).subscribe({
+      next: () => {
+        this.masterFuncionarioList = this.masterFuncionarioList.filter(
+          (f) => f.usuarioId !== this.funcionarioParaDeletar!.usuarioId,
+        );
+        this.listarUsuario();
+        this.funcionarioParaDeletar = null;
+      },
+      error: (err) => console.error('Erro ao deletar funcionário:', err),
+    });
   }
 
   closeModal(): void {
@@ -94,6 +99,7 @@ export class Funcionarios implements OnInit {
   }
 
   onEditFuncionario(funcionario: GetUsuarioResponse): void {
-    console.log('Editar funcionário:', funcionario.usuarioId);
+    this.modalEditar.abrirInstaciaModal(funcionario.usuarioId);
+    this.listarUsuario()
   }
 }
