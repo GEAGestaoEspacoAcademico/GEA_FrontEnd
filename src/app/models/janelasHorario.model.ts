@@ -11,3 +11,7 @@ export interface SlotHorario {
   horarioComparacao: string;
   agendamento?: Agendamento;
 }
+
+export interface Datas {
+  datas: string[];
+}

@@ -1,88 +1,78 @@
-    <div class="d-center">
-        <h2>Agendamento de Sala de Matéria</h2>
+<div class="d-center">
+    <div class="h-100 d-flex flex-column">
+        <h4 class="mb-4 text-secondary fw-bold">Detalhes do Agendamento</h4>
 
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="mt-3">
-            <div class="row g-3">
-                <div class="col-4">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm" class="d-flex flex-column h-100">
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Disciplina</mat-label>
-                        <mat-select formControlName="disciplina"
-                            [class.border-red-500]="form.get('disciplina')?.invalid && form.get('disciplina')?.touched">
+                        <mat-select formControlName="disciplina">
                             <mat-option [value]="" disabled>Selecione a Disciplina</mat-option>
                             @for (disc of disciplinas(); track disc.disciplinaId) {
-                            <mat-option [value]="disc.disciplinaId">{{ disc.disciplinaNome }}</mat-option>
+                              <mat-option [value]="disc.disciplinaId">{{ disc.disciplinaNome }}</mat-option>
                             }
                         </mat-select>
                     </mat-form-field>
                     @if (form.get('disciplina')?.invalid && form.get('disciplina')?.touched) {
-                    <p class="mt-1 text-xs text-red-600">A disciplina é obrigatória.</p>
+                      <div class="text-danger small mt-1">A disciplina é obrigatória.</div>
                     }
                 </div>
 
-                <div class="col-4">
+                <div class="col-md-6">
                     <mat-form-field appearance="outline" class="w-100">
                         <mat-label>Local</mat-label>
-                        <mat-select formControlName="local"
-                            [class.border-red-500]="form.get('local')?.invalid && form.get('local')?.touched">
+                        <mat-select formControlName="local">
                             <mat-option [value]="" disabled>Selecione o Local</mat-option>
                             @for (local of locais(); track local.salaId) {
-                            <mat-option [value]="local.salaId">{{ local.salaNome }}</mat-option>
+                              <mat-option [value]="local.salaId">{{ local.salaNome }}</mat-option>
                             }
                         </mat-select>
                     </mat-form-field>
                     @if (form.get('local')?.invalid && form.get('local')?.touched) {
-                    <p class="mt-1 text-xs text-red-600">O local é obrigatório.</p>
+                      <div class="text-danger small mt-1">O local é obrigatório.</div>
                     }
                 </div>
+            </div>
 
-                <div class="mt-3 w-67">
-                    <label for="horariosLista"
-                        class="block text-sm font-medium text-gray-700 required-label">Horários</label>
-                    <div formArrayName="horarios" id="horariosLista"
-                        class="p-4 border border-gray-300 rounded-lg bg-gray-50 grid grid-cols-2 gap-x-6 gap-y-3"
-                        [class.border-red-500]="horariosFormArray.invalid && horariosFormArray.touched">
-
-                        @if (horarios().length === 0) {
-                        <p class="text-sm text-gray-500 col-span-2">Nenhum horário disponível para seleção.</p>
-                        } @else {
-
-                        @for (janela of horarios(); track janela.janelasHorarioId; let i = $index) {
-                        <div class="flex items-center">
-                            <input [formControlName]="i" [id]="'horario-' + janela.janelasHorarioId" type="checkbox"
-                                class="h-4 w-4 text-red-600 border-gray-300 rounded focus:ring-red-500">
-                            <label [for]="'horario-' + janela.janelasHorarioId" class="ml-3 text-sm font-medium text-gray-700">
-                                {{ formatTime(janela.horaInicio, janela.horaFim) }}
-                            </label>
+            <div class="flex-grow-1 mb-3">
+                <label class="form-label fw-bold" for="horarios">Horários<span class="text-danger">*</span></label>
+                
+                <div formArrayName="horarios" 
+                     class="horarios-container p-4"
+                     [class.border-danger]="horariosFormArray.invalid && horariosFormArray.touched">
+                                             <div class="row g-3">
+                            @for (janela of horarios(); track janela.janelasHorarioId; let i = $index) {
+                                <div class="col-sm-6">
+                                    <div class="d-flex justify-content-between align-items-center p-2 bg-white border rounded h-100">
+                                        <label [for]="'h-' + i" class="horario-label m-0 flex-grow-1">
+                                            {{ formatTime(janela.horaInicio, janela.horaFim) }}
+                                        </label>
+                                        
+                                        <input [formControlName]="i" [id]="'h-' + i" type="checkbox"
+                                               class="form-check-input checkbox-lg m-0 border-secondary" style="cursor: pointer;">
+                                    </div>
+                                </div>
+                            }
                         </div>
-                        }
-                        }
-                    </div>
-
-
-                    @if (horariosFormArray.invalid && horariosFormArray.touched) {
-                    <p class="mt-1 text-xs text-red-600">Selecione pelo menos um horário.</p>
-                    }
                 </div>
 
-                <div class="d-flex justify-content-between mt-4">
-                    <button type="submit" [disabled]="form.invalid" class="btn btn-primary shadow-sm px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-50">
-                        @if (isLoading()) {
-                        <span class="flex items-center">
-                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4">
-                                </circle>
-                                <path class="opacity-75" fill="currentColor"
-                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
-                                </path>
-                            </svg>
-                            Agendando...
-                        </span>
-                        } @else {
-                        Agendar
-                        }
-                    </button>
-                </div>
+                @if (horarios().length === 0) {
+                   <div class="mt-1"><h4>Selecione uma data para listar os horários.</h4></div>
+                }
+
+                @if (horariosFormArray.invalid && horarios().length !== 0) {
+                    <div class="text-danger small mt-1">Selecione pelo menos um horário</div>
+                }
+            </div>
+
+            <div class="mt-auto d-flex justify-content-end border-top pt-3">
+                <button type="submit" 
+                    [disabled]="horarios().length === 0" 
+                    class="btn btn-primary shadow-sm" style="width: fit-content; margin-right: auto; margin-left: auto;">
+                    Confirmar Agendamento
+                </button>
             </div>
         </form>
     </div>
+</div>

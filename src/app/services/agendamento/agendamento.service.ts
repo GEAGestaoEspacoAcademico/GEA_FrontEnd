@@ -6,6 +6,7 @@ import type { AgendamentoAula } from '../../models/agendamentoAula.model';
 import type { AgendamentoAulaCriarADReponse, AgendamentoAulaCriarADRequest, AgendamentoAulaCriarRequest, AgendamentoAulaEditarRequest } from '../../types/agendamentoAula.type';
 import type { Agendamento } from '../../models/agendamento.model';
 import type { AgendamentoEvento } from '../../models/agendamentoEvento.model';
+import type { AgendamentoRecorrente } from '../../models/agendamentoRecorrente.model';
 import type { CriarEventoRequest} from '../../types/agendamentoEvento.type';
 
 @Injectable({
@@ -38,6 +39,10 @@ export class AgendamentoService {
 
   public criarAgendamentoAulaAD(agendamento: AgendamentoAulaCriarADRequest): Observable<AgendamentoAulaCriarADReponse>{
     return this.http.post<AgendamentoAulaCriarADReponse>(`${this.baseUrl}/aulas/auxiliar-docente`, agendamento);
+  }
+
+  public criarAgendamentoAulaRecorrente(agendamento: AgendamentoRecorrente): Observable<AgendamentoRecorrente>{
+    return this.http.post<AgendamentoRecorrente>(`${this.baseUrl}/aulas/recorrencia`, agendamento);
   }
   
   public getAgendamentos(): Observable<Agendamento[]>{
