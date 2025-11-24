@@ -15,6 +15,7 @@ import { filter, finalize, switchMap, take } from 'rxjs';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import type { MultiDateSelector } from '../../../components/shared/multi-date-selector/multi-date-selector';
 import type { RecurringSchedulingForm } from '../../../components/shared/recurring-scheduling-form/recurring-scheduling-form';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-agendar-sala-materia',
@@ -31,6 +32,7 @@ export class AgendarSalaMateria implements OnInit {
   private pushNotificationService = inject(PushNotificationService);
   private store = inject(Store);
   private snackbarService = inject(SnackBarService);
+  private headerService = inject(HeaderTitleService)
 
   @ViewChild('calendario') calendario!: MultiDateSelector;
   @ViewChild('formulario') formulario!: RecurringSchedulingForm;
@@ -57,6 +59,8 @@ export class AgendarSalaMateria implements OnInit {
 
   ngOnInit() {
     this.carregarDadosIniciais();
+    this.headerService.setTitle('Agendar Sala da Matéria')
+    this.headerService.showBack()
   }
 
   carregarDadosIniciais() {
@@ -105,7 +109,7 @@ buscarHorarios() {
   }
 
 
- postDataRecorrente(formData: any) { 
+  postDataRecorrente(formData: any) { 
     this.isSaving = true;
 
     const janelasIds = this.horariosDisponiveis

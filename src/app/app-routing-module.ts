@@ -23,6 +23,7 @@ import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 import { Aulas } from './pages/AD/aulas/aulas';
 import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
+import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 
 const routes: Routes = [
   {
@@ -64,13 +65,14 @@ const routes: Routes = [
     path: 'secretaria',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: { roles: ['SECRETARIA', 'AUXILIAR_DOCENTE'] },
+    data: { roles: ['SECRETARIA'] },
     children: [
       { path: 'home', component: Secretariahome },
       { path: 'visualizar-espacos', component: ListaEspacos },
       { path: 'cadastrar-laboratorio', component: CadastroSala },
+      { path: 'agendar-sala', component: AgendarSalaMateria},
       { path: 'funcionarios', component: Funcionarios },
-      {path: 'cadastrar-funcionario', component: FuncionarioForm}
+      { path: 'cadastrar-funcionario', component: FuncionarioForm}
     ],
   },
   {
