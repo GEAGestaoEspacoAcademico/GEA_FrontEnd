@@ -9,7 +9,7 @@ interface Horario {
 export interface AtualizarSalaRequest {
   salaNome: string;
   salaCapacidade: number;
-  andarId: number;
+  pisoId: number;
   disponibilidade: boolean;
   tipoSalaId: number;
   salaObservacoes: string;
@@ -35,7 +35,7 @@ export interface CriarSalaResponse {
   salaId: number;
   salaNome: string;
   capacidade: number;
-  andarId: number;
+  pisoId: number;
   disponibilidade: boolean;
   tipoSala: string;
   observacoes: string;

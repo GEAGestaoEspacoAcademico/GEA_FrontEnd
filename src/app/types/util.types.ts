@@ -1,4 +1,3 @@
-import type { Disciplina } from "../models/disciplina.model";
 import type { CriarSalaRequest, RecursoAdiconarSala} from "./sala.type";
 
 export interface CriarSalaFormulario extends CriarSalaRequest {

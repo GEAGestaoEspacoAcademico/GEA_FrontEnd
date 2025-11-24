@@ -3,6 +3,7 @@ import { Component, inject, ViewChild } from '@angular/core';
 import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 import { UsuarioService } from '../../../services/usuario/usuario.service';
 import type { GetUsuarioResponse } from '../../../types/usuario.type';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-funcionarios',
@@ -14,6 +15,7 @@ export class Funcionarios implements OnInit {
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmationModal;
 
   private usuarioService = inject(UsuarioService);
+  private headerService = inject(HeaderTitleService)
 
   funcionarioParaDeletar!: GetUsuarioResponse | null;
 
@@ -26,6 +28,9 @@ export class Funcionarios implements OnInit {
   pageSize = 7;
 
   ngOnInit(): void {
+    this.headerService.setTitle('Funcionários')
+    this.headerService.showBack()
+
     this.usuarioService.listarUsuarios().subscribe({
       next: (result: GetUsuarioResponse[]) => {
         this.masterFuncionarioList = result;

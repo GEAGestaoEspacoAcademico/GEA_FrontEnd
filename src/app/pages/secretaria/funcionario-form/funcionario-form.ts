@@ -1,6 +1,6 @@
 import { DisciplinaService } from './../../../services/disciplina/disciplina.service';
 import type { Disciplina } from './../../../models/disciplina.model';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Output } from '@angular/core';
 import type { OnInit } from '@angular/core';
 
 import { FormBuilder, Validators } from '@angular/forms';
@@ -8,6 +8,7 @@ import type { FormArray, FormGroup } from '@angular/forms';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { SecretariaService } from '../../../services/secretaria/secretaria.service';
 import type { CriarSecretariaRequest } from '../../../types/secretaria.type';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-funcionario-form',
@@ -16,12 +17,14 @@ import type { CriarSecretariaRequest } from '../../../types/secretaria.type';
   styleUrls: ['./funcionario-form.css'],
 })
 export class FuncionarioForm implements OnInit {
+
   @Output() saveForm = new EventEmitter<FormGroup>();
   @Output() cancelForm = new EventEmitter<void>();
 
   private readonly disciplinaService: DisciplinaService = inject(DisciplinaService);
   private readonly snackBar: SnackBarService = inject(SnackBarService);
   private readonly secretariaService: SecretariaService = inject(SecretariaService);
+  private readonly headerService = inject(HeaderTitleService)
 
   form!: FormGroup;
   modalDisciplinaAberto = false;
@@ -32,6 +35,9 @@ export class FuncionarioForm implements OnInit {
   private readonly fb = inject(FormBuilder);
 
   ngOnInit(): void {
+    this.headerService.setTitle('Novo Funcionário')
+    this.headerService.showBack()
+
     this.form = this.fb.group({
       nomeCompleto: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', Validators.required],

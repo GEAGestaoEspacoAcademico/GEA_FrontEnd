@@ -33,7 +33,7 @@ export class ScheduleClass {
   }
 
   salvarAgendamentoAula(aula: CriarAgendamentoAulaFormulario){
-    console.log("[AGENDAR Aula] data: ", aula)
+    console.log("[AGENDAR Aula] data: ", aula)  
     this.isLoadingCriarAula = true;
 
     if(!aula) {return;}

@@ -16,7 +16,7 @@ export class CreateResourceModal {
   modalTemplate!: TemplateRef<CreateResourceModal>;
 
   @Output() create = new EventEmitter<{ type: string; name: string }>();
-  private currentType!: 'EQUIPAMENTO' | 'SOFTWARE';
+  private currentType!: 'HARDWARE' | 'SOFTWARE';
   modalTitle!: string;
   inputLabel!: string;
   buttonText!: string;
@@ -25,10 +25,10 @@ export class CreateResourceModal {
     name: new FormControl('', Validators.required),
   });
 
-  public open(type: 'EQUIPAMENTO' | 'SOFTWARE'): void {
+  public open(type: 'HARDWARE' | 'SOFTWARE'): void {
     this.currentType = type;
 
-    if (type === 'EQUIPAMENTO') {
+    if (type === 'HARDWARE') {
       this.modalTitle = 'Novo Equipamento';
       this.inputLabel = 'Escreva o Nome do Equipamento';
       this.buttonText = 'Criar Equipamento';

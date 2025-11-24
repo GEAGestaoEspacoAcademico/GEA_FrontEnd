@@ -3,7 +3,7 @@ import type { CriarSalaFormulario } from './../../../types/util.types';
 import { Component, inject } from '@angular/core';
 import { SalaService } from '../../../services/sala/sala.service';
 import { catchError, of, switchMap } from 'rxjs';
-import type { AdicionarRecursoSalaRequest, RecursoAdiconarSala } from '../../../types/sala.type';
+import type { AdicionarRecursoSalaRequest, CriarSalaRequest, RecursoAdiconarSala } from '../../../types/sala.type';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
@@ -20,10 +20,10 @@ export class SpaceRegistrationPage {
   private readonly location = inject(Location)
 
   onFormSubimit(formularioCriarSala: CriarSalaFormulario) {
-    const dadosPrincipais = {
+    const dadosPrincipais: CriarSalaRequest = {
       salaNome: formularioCriarSala.salaNome,
       salaCapacidade: Number(formularioCriarSala.salaCapacidade),
-      andarId: Number(formularioCriarSala.andarId),
+      pisoId: Number(formularioCriarSala.pisoId),
       disponibilidade: formularioCriarSala.disponibilidade ?? true,
       tipoSalaId: Number(formularioCriarSala.tipoSalaId),
       salaObservacoes: formularioCriarSala.salaObservacoes,

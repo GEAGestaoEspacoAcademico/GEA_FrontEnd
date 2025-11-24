@@ -8,7 +8,9 @@
     (searchChange)="onSearch($event)"
     (pageChange)="onPageChange($event)"
     (editClick)="onEdit($event)"
-    (deleteClick)="onDelete($event)">
+    (deleteClick)="onDelete($event)"
+    (clickAdicionarEquipamento)="adicionarEquipamento()"
+    >
   </app-espacos-table>
 </div>
 
@@ -16,6 +18,12 @@
   #editModal 
   (clickEdit)="onModalEdit($event)">
 </app-editar-espaco-modal>
+
+<app-create-resource-modal
+#criarRecursoId
+(create)="criarRecurso($event)"
+></app-create-resource-modal>
+
 
 <app-confirmation-modal 
   #deleteModal 
