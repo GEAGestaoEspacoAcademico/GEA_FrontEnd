@@ -58,7 +58,7 @@ export class SalaForm implements OnInit {
     tipoSalaId: [{ value: 1, disabled: true }, Validators.required],
     salaNome: ['', Validators.required],
     salaCapacidade: ['', Validators.required],
-    piso: ['', Validators.required],
+    pisoId: [1, Validators.required],
     disponibilidade: [true],
     salaObservacoes: [''],
     equipamentos: this.fb.array([]),
@@ -84,6 +84,7 @@ export class SalaForm implements OnInit {
     this.equipamentosFA.push(
       this.fb.group({
         recursoId: item.recursoId,
+        nomeRecurso: item.name,
         quantidadeRecurso: item.quantity ?? 1,
       }),
     );
@@ -94,6 +95,7 @@ export class SalaForm implements OnInit {
   }
 
   onSave() {
+    console.log(this.form.getRawValue())
     this.clickSave.emit(this.form.getRawValue());
   }
 

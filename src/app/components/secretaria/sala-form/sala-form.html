@@ -20,20 +20,20 @@
     </div>
 
     <div>
-      <label for="piso" class="field-label">Piso</label>
+      <label for="pisoId" class="field-label">piso</label>
       <select
-        formControlName="piso"
+        formControlName="pisoId"
         class="piso-select"
-        [class.input-error]="form.get('piso')?.invalid && form.get('piso')?.touched"
+        [class.input-error]="form.get('pisoId')?.invalid && form.get('pisoId')?.touched"
       >
         <option value="" disabled>Selecione</option>
-        <option value="0">Térreo</option>
-        <option value="1">1° Andar</option>
-        <option value="2">2° Andar</option>
+        <option value="1">Térreo</option>
+        <option value="2">1° Andar</option>
+        <option value="3">2° Andar</option>
       </select>
 
-      @if (form.get('piso')?.invalid && form.get('piso')?.touched) {
-        <span class="error-msg">Selecione o piso.</span>
+      @if (form.get('pisoId')?.invalid && form.get('pisoId')?.touched) {
+        <span class="error-msg">Selecione o pisoId.</span>
       }
     </div>
 
@@ -80,8 +80,8 @@
         @for (equip of equipamentosFA.controls; track $index) {
           <div class="chip" role="listitem">
             <span class="chip-label">
-              {{ equip.value.nome }}
-              <small class="chip-qty">({{ equip.value.quantidade }})</small>
+              {{ equip.value.nomeRecurso }}
+              <small class="chip-qty">({{ equip.value.quantidadeRecurso }})</small>
             </span>
 
             <button

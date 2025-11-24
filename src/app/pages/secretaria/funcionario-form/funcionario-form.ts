@@ -121,7 +121,7 @@ export class FuncionarioForm implements OnInit {
         this.secretariaService.cadastrar(dados).subscribe({
           next: () => {
             this.snackBar.showSuccess('Secretaria cadastrada com sucesso!');
-
+            
             this.form.reset({ perfil: 'PROFESSOR' });
             this.saveForm.emit(this.form);
           },
