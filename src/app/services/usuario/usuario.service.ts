@@ -28,10 +28,15 @@ export class UsuarioService {
     usuarioId: number,
     requisicao: AtualizarUsuarioAdminResquest,
   ): Observable<void> {
+    console.log('ATUALIZANDO USUARIO', requisicao);
     return this.http.patch<void>(`${this.baseUrl}/${usuarioId}`, requisicao);
   }
 
   public alterarSenha(usuarioId: number, requisicao: AlterarSenhaUsuarioRequest): Observable<void> {
     return this.http.patch<void>(`${this.baseUrl}/${usuarioId}/senha`, requisicao);
+  }
+
+  public deletar(usuarioId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${usuarioId}`);
   }
 }
