@@ -117,17 +117,17 @@ export class EsqueciSenha implements OnInit {
       }, 
       error: (_) => {
         this.snackbarService.showError("Erro enviar email")
+        this.isEmailSucess = false;
       }
     })
-
-
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    this.isEmailSucess = false;
   }
 
   voltarParaPaginaAnterior(): void {
-    this.location.back();
+    if(this.token){
+      this.router.navigate(['/login'])
+    }else{
+      this.location.back();
+    }
   }
 
   async alterarSenha() {

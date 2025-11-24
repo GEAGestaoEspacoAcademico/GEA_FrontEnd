@@ -3,6 +3,7 @@ export interface GetUsuarioResponse {
   usuarioNome: string;
   usuarioEmail: string;
   cargoId: number;
+  cargoNome: string
 }
 
 export interface AtualizarUsuarioAdminResquest {
@@ -16,11 +17,6 @@ export interface AlterarSenhaUsuarioRequest {
   novaSenha: string;
   repetirNovaSenha: string;
 }
-
-export interface UsuarioComNomeCargo extends GetUsuarioResponse{
-  nomeCargo: string,
-}
-
 
 ///usuarios/resetPassword
 export interface EnviarEmailRequest {

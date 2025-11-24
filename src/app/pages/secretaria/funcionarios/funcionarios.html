@@ -25,5 +25,7 @@
     (oncancel)="closeModal()"
   ></app-confirmation-modal>
   
-  <app-edit-professor-modal #modalEditar>
+  <app-edit-professor-modal #modalEditar
+  (fechar)="listarUsuario()"
+  >
   </app-edit-professor-modal>
