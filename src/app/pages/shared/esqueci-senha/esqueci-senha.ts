@@ -5,6 +5,8 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { Location } from '@angular/common';
+import { UsuarioService } from '../../../services/usuario/usuario.service';
+import type { AlterarSenhaEsquecidaRequest, EnviarEmailRequest } from '../../../types/usuario.type';
 
 @Component({
   selector: 'app-esqueci-senha',
@@ -17,6 +19,7 @@ export class EsqueciSenha implements OnInit {
   private readonly snackbarService = inject(SnackBarService);
   private readonly router = inject(Router);
   private readonly location = inject(Location);
+  private readonly usuarioService = inject(UsuarioService);
 
   token!: string | null;
   isLoading: boolean = false;
@@ -100,15 +103,25 @@ export class EsqueciSenha implements OnInit {
 
     const email = this.formEmail.get('email')?.value?.trim();
 
-    //chama serviço de email
+    if(!email) {
+      this.snackbarService.showError("Informe um email")
+      return;
+    }
 
-    this.isEmailSucess = true;
+    const corpoEnviarEmail: EnviarEmailRequest = {
+      email
+    }
+    this.usuarioService.enviarEmailRedefinirSenha(corpoEnviarEmail).subscribe({
+      next: (_) => {
+        this.isEmailSucess = true;
+      }, 
+      error: (_) => {
+        this.snackbarService.showError("Erro enviar email")
+      }
+    })
+
 
     await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    this.router.navigate(['/esqueci-senha'], {
-      queryParams: { token: 'teste' },
-    });
 
     this.isEmailSucess = false;
   }
@@ -121,13 +134,24 @@ export class EsqueciSenha implements OnInit {
     const novaSenha = this.formRedefinirSenha.get('novaSenha')?.value?.trim();
     const novaSenhaRepetida = this.formRedefinirSenha.get('novaSenhaRepetida')?.value?.trim();
 
-    //chama service redefinir senha
+    if(!novaSenha || !novaSenhaRepetida || !this.token) { return }
 
-    this.snackbarService.showSuccess('Senha alterada com sucesso!');
+    const corpoEsqueciSenha: AlterarSenhaEsquecidaRequest = {
+      repetirSenha: novaSenhaRepetida,
+      senha: novaSenha,
+      token: this.token
+    }
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    this.router.navigate(['/login']);
+    this.usuarioService.alterarSenhaEsquecida(corpoEsqueciSenha).subscribe({
+      next: (resposta) => {
+        this.snackbarService.showSuccess('Senha alterada com sucesso!');
+        this.router.navigate(['/login']);
+        console.log(resposta)
+      },
+      error: (_) => {
+        this.snackbarService.showError("Erro ao alterar senha")
+      }
+    })
   }
 
   validarEmail() {

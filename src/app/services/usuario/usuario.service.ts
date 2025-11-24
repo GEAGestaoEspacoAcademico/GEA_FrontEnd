@@ -3,8 +3,11 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import type { Observable } from 'rxjs';
 import type {
+  AlterarSenhaEsquecidaRequest,
   AlterarSenhaUsuarioRequest,
   AtualizarUsuarioAdminResquest,
+  EnviarEmailRequest,
+  EnviarEmailResponse,
   GetUsuarioResponse,
 } from '../../types/usuario.type';
 
@@ -28,7 +31,6 @@ export class UsuarioService {
     usuarioId: number,
     requisicao: AtualizarUsuarioAdminResquest,
   ): Observable<void> {
-    console.log('ATUALIZANDO USUARIO', requisicao);
     return this.http.patch<void>(`${this.baseUrl}/${usuarioId}`, requisicao);
   }
 
@@ -38,5 +40,13 @@ export class UsuarioService {
 
   public deletar(usuarioId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${usuarioId}`);
+  }
+
+  public enviarEmailRedefinirSenha(email: EnviarEmailRequest): Observable<EnviarEmailResponse> {
+    return this.http.post<EnviarEmailResponse>(`${this.baseUrl}/resetPassword`, email)
+  }
+
+  public alterarSenhaEsquecida(corpoEsqueciSenha: AlterarSenhaEsquecidaRequest): Observable<string>{
+    return this.http.patch<string>(`${this.baseUrl}/alterarSenha`, corpoEsqueciSenha)
   }
 }

@@ -20,3 +20,19 @@ export interface AlterarSenhaUsuarioRequest {
 export interface UsuarioComNomeCargo extends GetUsuarioResponse{
   nomeCargo: string,
 }
+
+
+///usuarios/resetPassword
+export interface EnviarEmailRequest {
+  email: string
+}
+
+export interface EnviarEmailResponse {
+  message: string
+}
+
+export interface AlterarSenhaEsquecidaRequest {
+  senha: string,
+  repetirSenha: string,
+  token: string
+}

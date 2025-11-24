@@ -89,6 +89,9 @@
     cursor: pointer;
   }
 }
+.highlight-title{
+  font-size: 2rem;
+}
 
 .header a,
 .header button {
