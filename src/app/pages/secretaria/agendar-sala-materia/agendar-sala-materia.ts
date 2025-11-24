@@ -1,5 +1,5 @@
 import type { OnInit } from '@angular/core';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
 import { SalaService } from '../../../services/sala/sala.service';
 import { JanelasHorarioService } from '../../../services/janelas-horario/janelas-horario.service';
@@ -10,6 +10,11 @@ import type { Disciplina } from '../../../models/disciplina.model';
 import type { Sala } from '../../../models/sala.model';
 import type { Datas, JanelaHorario } from '../../../models/janelasHorario.model';
 import { Store } from '@ngrx/store';
+import { selectUserId } from '../../../store/auth/auth.selectors';
+import { filter, finalize, switchMap, take } from 'rxjs';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
+import type { MultiDateSelector } from '../../../components/shared/multi-date-selector/multi-date-selector';
+import type { RecurringSchedulingForm } from '../../../components/shared/recurring-scheduling-form/recurring-scheduling-form';
 
 @Component({
   selector: 'app-agendar-sala-materia',
@@ -25,6 +30,10 @@ export class AgendarSalaMateria implements OnInit {
   private iconRegistryService = inject(IconRegistryService);
   private pushNotificationService = inject(PushNotificationService);
   private store = inject(Store);
+  private snackbarService = inject(SnackBarService);
+
+  @ViewChild('calendario') calendario!: MultiDateSelector;
+  @ViewChild('formulario') formulario!: RecurringSchedulingForm;
 
   // Estado de Dados (Variáveis simples para o template)
   disciplinas: Disciplina[] = [];
@@ -59,7 +68,6 @@ export class AgendarSalaMateria implements OnInit {
     this.diaSemana = dia;
   }
 
-  // Ação: Usuário selecionou datas no componente filho
   onDaysSelected(dates: Date[]) {
     this.selectedRecurringDates = dates;
 
@@ -90,15 +98,50 @@ buscarHorarios() {
     });
   }
 
+    resetScreen() {
+    this.selectedRecurringDates = [];
+    this.horariosDisponiveis = [];
+    this.diaSemana = '';
+  }
 
-  // postAulaRecorrencia() {
-  //   let recorrenciaBody = {
-  //     usuarioId: this.store.select(selectUserId),
-  //     dataInicio: ,
-  //     dataFim: ,
-  //     janelasHorarioId: [],
-  //     disciplinaId: ,
-  //     salaId
-  //   }
-  // }
+
+ postDataRecorrente(formData: any) { 
+    this.isSaving = true;
+
+    const janelasIds = this.horariosDisponiveis
+      .filter((_, i) => formData.horarios[i])
+      .map(h => h.janelasHorarioId);
+
+    const datasOrdenadas = [...this.selectedRecurringDates].sort((a, b) => a.getTime() - b.getTime());
+
+    const dataInicio = datasOrdenadas[0].toISOString().split('T')[0];
+    const dataFim = datasOrdenadas[datasOrdenadas.length - 1].toISOString().split('T')[0];
+
+    this.store.select(selectUserId).pipe(
+      filter((userId: any): userId is number => !!userId),
+      take(1),
+      switchMap((userId) => {
+        const recorrenciaBody = {
+          usuarioId: userId,
+          dataInicio: dataInicio,
+          dataFim: dataFim,
+          diaDaSemana: this.diaSemana,
+          janelasHorarioId: janelasIds,
+          disciplinaId: formData.disciplina,
+          salaId: formData.local
+        };
+
+        return this.agendamentoService.criarAgendamentoAulaRecorrente(recorrenciaBody);
+      }),finalize(() => {
+        this.resetScreen(); 
+      })
+    ).subscribe({
+      next: () => {
+        this.snackbarService.showSuccess('Agendamento realizado com Sucesso!');
+      },
+      error: (err) => {
+        this.snackbarService.showError('Falha ao realizar agendamento.');
+      }
+    });
+  }
 }

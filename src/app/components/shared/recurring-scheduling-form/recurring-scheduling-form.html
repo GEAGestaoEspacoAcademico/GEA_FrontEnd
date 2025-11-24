@@ -2,7 +2,7 @@
     <div class="h-100 d-flex flex-column">
         <h4 class="mb-4 text-secondary fw-bold">Detalhes do Agendamento</h4>
 
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="d-flex flex-column h-100">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm" class="d-flex flex-column h-100">
             <div class="row g-3 mb-3">
                 <div class="col-md-6">
                     <mat-form-field appearance="outline" class="w-100">
@@ -57,14 +57,18 @@
                         </div>
                 </div>
 
-                @if (horariosFormArray.invalid && horariosFormArray.touched) {
-                   <div class="text-danger small mt-1">Selecione pelo menos um horário.</div>
+                @if (horarios().length === 0) {
+                   <div class="mt-1"><h4>Selecione uma data para listar os horários.</h4></div>
+                }
+
+                @if (horariosFormArray.invalid && horarios().length !== 0) {
+                    <div class="text-danger small mt-1">Selecione pelo menos um horário</div>
                 }
             </div>
 
             <div class="mt-auto d-flex justify-content-end border-top pt-3">
                 <button type="submit" 
-                    [disabled]="form.invalid || horarios().length === 0" 
+                    [disabled]="horarios().length === 0" 
                     class="btn btn-primary shadow-sm" style="width: fit-content; margin-right: auto; margin-left: auto;">
                     Confirmar Agendamento
                 </button>
