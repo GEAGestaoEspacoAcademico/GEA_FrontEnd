@@ -18,12 +18,12 @@ import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome
 import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
+import { SpaceRegistrationPage } from './pages/AD/space-registration/space-registration.page';
+import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 import { Aulas } from './pages/AD/aulas/aulas';
-/*
-import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
-import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
-import {ScheduleEvent} from './pages/AD/scheduleEvent/scheduleEvent'
-*/
+import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
+import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
+
 const routes: Routes = [
   {
     path: '',
@@ -49,24 +49,29 @@ const routes: Routes = [
     children: [
       { path: 'lista-espacos', component: SpaceManagement },
       { path: 'home', component: Home },
-      // { path: 'agendar-aula', component: ScheduleClass },
+      { path: 'agendar-aula', component: ScheduleClass },
       { path: 'agendar-evento', component: ScheduleEvent },
       { path: 'lista-espacos', component: SpaceManagement },
-      // { path: 'cadastrar-espaco', component:  },
-      // { path: 'cadastrar-espaco/:id', component: AdSpaceRegistrationPage },
+      { path: 'cadastrar-espaco', component:  SpaceRegistrationPage},
       { path: '', redirectTo: 'home', pathMatch: 'full' },
+      {
+        path: 'cadastrar-espaco',
+        component: SpaceRegistrationPage,
+      },
     ],
   },
   {
     path: 'secretaria',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: {roles: ['SECRETARIA', 'AUXILIAR_DOCENTE']},
+    data: { roles: ['SECRETARIA', 'AUXILIAR_DOCENTE'] },
     children: [
-      {path: 'home', component: Secretariahome},
-      {path: 'visualizar-espacos', component: ListaEspacos},
-      {path: 'cadastrar-laboratorio', component: CadastroSala}
-    ]
+      { path: 'home', component: Secretariahome },
+      { path: 'visualizar-espacos', component: ListaEspacos },
+      { path: 'cadastrar-laboratorio', component: CadastroSala },
+      { path: 'funcionarios', component: Funcionarios },
+      {path: 'cadastrar-funcionario', component: FuncionarioForm}
+    ],
   },
   {
     path: '',

@@ -1,0 +1,159 @@
+/* --- ESTRUTURA GERAL DO MODAL --- */
+.modal-header-custom {
+  background-color: var(--color-primary-300);
+  padding: var(--spacing-4);
+  text-align: center;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.titulo-modal {
+  color: var(--color-default-white);
+  margin: 0;
+  font-family: var(--font-family-primary);
+  font-weight: var(--font-weight-bold);
+  font-size: 1.5rem;
+}
+
+.modal-body-custom {
+  padding: 4rem;
+  background-color: var(--color-surface-base);
+}
+
+/* --- ESTILIZAÇÃO DOS INPUTS --- */
+.modal-body-custom .gea-input-field {
+  width: 100%;
+  max-width: 100%;
+  text-align: left;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: 3rem;
+  box-sizing: border-box;
+  display: block;
+}
+
+select.gea-input-field {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23000000%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 0.65em auto;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+
+/* --- GRID DE 2 COLUNAS --- */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+}
+
+@media (max-width: 48rem) {
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .modal-body-custom {
+    padding: 1.5rem;
+  }
+}
+
+/* --- WRAPPERS E MENSAGENS --- */
+.campo-wrapper {
+  margin-bottom: var(--spacing-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-2);
+}
+
+.mensagem-erro {
+  color: var(--color-feedback-error);
+  font-size: 0.875rem;
+  font-family: var(--font-family-primary);
+}
+
+/* --- ÁREA DE DISCIPLINAS --- */
+.disciplinas-box {
+  border: 0.0625rem solid var(--color-neutral-300); 
+  border-radius: 0.5rem;
+  padding: var(--spacing-3);
+  min-height: 6.25rem;
+  background-color: #fff; 
+  margin-bottom: var(--spacing-4);
+  
+  display: flex;
+  flex-wrap: wrap; 
+  align-content: flex-start;
+  gap: 0.5rem;
+}
+
+
+.chip-disciplina {
+  background-color: var(--color-primary-500); 
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.25rem; 
+  
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  
+  font-size: 0.9rem;
+  font-family: var(--font-family-primary);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.btn-remove {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 0;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.btn-remove:hover {
+  color: #ffcccc;
+}
+
+
+.btn-add-full {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+
+.modal-footer-custom {
+  padding: 0 var(--spacing-6) var(--spacing-6) var(--spacing-6);
+  
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-4);
+}
+
+
+.btn-largo {
+  min-width: 9.375rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.btn-cancelar-custom {
+  background-color: transparent;
+  border: 0.0625rem solid var(--color-primary-300);
+  color: var(--color-primary-300);
+  font-weight: bold;
+}
+
+.btn-cancelar-custom:hover {
+  background-color: var(--color-surface-subtle);
+}

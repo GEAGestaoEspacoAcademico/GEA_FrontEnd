@@ -17,6 +17,7 @@ export class EspacosTable {
   @Output() pageChange = new EventEmitter<number>();
   @Output() editClick = new EventEmitter<Sala>();
   @Output() deleteClick = new EventEmitter<Sala>();
+  @Output() clickAdicionarEquipamento = new EventEmitter<void>()
 
   searchTerm: string = '';
 
@@ -36,5 +37,9 @@ export class EspacosTable {
     if (page >= 1 && page <= this.totalPages) {
       this.pageChange.emit(page);
     }
+  }
+
+  adicionarEquipamento(){
+    this.clickAdicionarEquipamento.emit()
   }
 }

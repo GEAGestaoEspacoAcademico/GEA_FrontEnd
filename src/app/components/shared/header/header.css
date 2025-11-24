@@ -84,6 +84,10 @@
 }
 .icon-arrow {
   height: auto;
+  transform: scaleX(-1);
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .header a,

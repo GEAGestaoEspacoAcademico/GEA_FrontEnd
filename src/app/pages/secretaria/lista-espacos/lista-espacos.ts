@@ -7,6 +7,10 @@ import { BehaviorSubject } from 'rxjs';
 import { SalaService } from '../../../services/sala/sala.service';
 import type { AtualizarSalaRequest } from '../../../types/sala.type';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
+import type { CriarRecursoRequest } from '../../../types/recurso.type';
+import type { CreateResourceModal } from '../../../components/modals/create-resource-modal/create-resource-modal';
+import { RecursoService } from '../../../services/recurso/recurso.service';
 
 @Component({
   selector: 'app-lista-espacos',
@@ -17,12 +21,15 @@ import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 export class ListaEspacos implements OnInit{
   @ViewChild('deleteModal') deleteModal!: ConfirmationModal;
   @ViewChild('editModal') editModal!: EditarEspacoModal;
+  @ViewChild('criarRecursoId') criarRecursoModal!: CreateResourceModal;
 
   salaSelecionada!: Sala | null;
   salaIdEditar!: number; 
 
   private salaService = inject(SalaService);
   private snackBarService = inject(SnackBarService)
+  private headerService = inject(HeaderTitleService)
+  private recursoService = inject(RecursoService)
 
   espacos$ = new BehaviorSubject<Sala[]>([]);
   isLoading = false;
@@ -33,6 +40,8 @@ export class ListaEspacos implements OnInit{
 
   ngOnInit() {
     this.carregarEspacos();
+    this.headerService.setTitle('Lista de Espaços Acadêmicos')
+    this.headerService.showBack()
   }
 
   carregarEspacos() {
@@ -57,6 +66,21 @@ export class ListaEspacos implements OnInit{
       },
       complete: () => (this.isLoading = false)
     });
+  }
+
+  adicionarEquipamento(){
+    this.criarRecursoModal.open('SOFTWARE')
+  }
+
+  criarRecurso(recurso: { type: string; name: string }){  
+    const corpoCriarRecurso: CriarRecursoRequest = {
+      recursoNome: recurso.name,
+      recursoTipoId: recurso.type === 'SOFTWARE' ? 2 : 1
+    }
+    this.recursoService.criarRecurso(corpoCriarRecurso).subscribe({
+      next: () => this.snackBarService.showSuccess("Recurso criado com sucesso"),
+      error: () => this.snackBarService.showError("Erro ao crari recurso")
+    })
   }
 
   onSearch(term: string) {

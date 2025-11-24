@@ -5,7 +5,6 @@ import { JanelasHorarioService } from '../../../services/janelas-horario/janelas
 import type { JanelaHorario } from '../../../models/janelasHorario.model';
 import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
 import type { TipoSala } from '../../../models/tipoSala.mode';
-import { ProfessorService } from '../../../services/professor/professor.service';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../../../store/auth/auth.selectors';
 import type { Observable } from 'rxjs';
@@ -21,6 +20,7 @@ import type {
   BuscarRecomendacaoResponse,
 } from '../../../types/sala.type';
 import { SalaService } from '../../../services/sala/sala.service';
+import ProfessorService from '../../../services/professor/professor.service';
 
 @Component({
   selector: 'app-agendamento-aula',

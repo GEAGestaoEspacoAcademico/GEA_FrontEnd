@@ -16,7 +16,6 @@ import type { CriarSalaFormulario } from '../../../types/util.types';
   templateUrl: './sala-form.html',
   styleUrl: './sala-form.css',
 })
-
 export class SalaForm implements OnInit {
   @Input() isLoading: boolean = false;
   @Output() clickSave = new EventEmitter<CriarSalaFormulario>();
@@ -32,32 +31,31 @@ export class SalaForm implements OnInit {
   private tipoSalaService = inject(TipoSalaService);
   private recursoService = inject(RecursoService);
 
-  
   ngOnInit(): void {
-this.tipoSalaService.getTiposSala().subscribe({
-    next: (tipos) => {
-      const tipoEncontrado = tipos.find(t => 
-        t.tipoSalaNome.trim().toUpperCase().replace(/\s/g, '') === "SALADEAULA" // Dica: cuidado com espaços
-      );
-      
-      this.salaDeAulaTipo = tipoEncontrado;
-      if (this.salaDeAulaTipo) {
-        this.form.get('tipoSalaId')?.setValue(this.salaDeAulaTipo.tipoSalaId);
-      }
-    },
-    error: (err) => console.error('Erro ao carregar tipos de sala', err),
-  });
+    this.tipoSalaService.getTiposSala().subscribe({
+      next: (tipos) => {
+        const tipoEncontrado = tipos.find(
+          (t) => t.tipoSalaNome.trim().toUpperCase().replace(/\s/g, '') === 'SALADEAULA', // Dica: cuidado com espaços
+        );
+
+        this.salaDeAulaTipo = tipoEncontrado;
+        if (this.salaDeAulaTipo) {
+          this.form.get('tipoSalaId')?.setValue(this.salaDeAulaTipo.tipoSalaId);
+        }
+      },
+      error: (err) => console.error('Erro ao carregar tipos de sala', err),
+    });
 
     this.recursoService.getRecursos().subscribe({
-        next: (recursos) => {
-            this.recursosDisponiveis = recursos;
-        },
-        error: (err) => console.error('Erro ao carregar recursos', err),
+      next: (recursos) => {
+        this.recursosDisponiveis = recursos;
+      },
+      error: (err) => console.error('Erro ao carregar recursos', err),
     });
   }
 
   form: FormGroup = this.fb.group({
-    tipoSalaId: [{value: 1, disabled: true}, Validators.required],
+    tipoSalaId: [{ value: 1, disabled: true }, Validators.required],
     salaNome: ['', Validators.required],
     salaCapacidade: ['', Validators.required],
     piso: ['', Validators.required],
@@ -65,7 +63,6 @@ this.tipoSalaService.getTiposSala().subscribe({
     salaObservacoes: [''],
     equipamentos: this.fb.array([]),
   });
-
 
   get equipamentosFA(): FormArray {
     return this.form.get('equipamentos') as FormArray;

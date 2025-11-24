@@ -12,6 +12,7 @@ import { DisciplinaService } from '../../../services/disciplina/disciplina.servi
 import { SalaService } from '../../../services/sala/sala.service';
 import type { CriarEventoFormulario } from '../../../types/agendamentoEvento.type';
 import { FormatUtils } from '../../../utils/format.utils';
+import type { CriarAgendamentoAulaFormulario } from '../../../types/util.types';
 
 @Component({
   selector: 'app-smart-scheduling-form',
@@ -80,7 +81,7 @@ export class SmartSchedulingForm implements OnInit {
     return this._dateArray;
   }
 
-  @Output() scheduleSubmit = new EventEmitter<any>();
+  @Output() scheduleSubmit = new EventEmitter<CriarAgendamentoAulaFormulario>();
   @Output() batchSubmit = new EventEmitter<CriarEventoFormulario[]>();
 
   ngOnInit(): void {

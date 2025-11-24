@@ -19,7 +19,6 @@ export class RecurringSchedulingForm {
 
   disciplinas = input<Disciplina[]>([]);
   locais = input<Sala[]>([]);
-
   horarios = input<JanelaHorario[]>([]);
   isLoading = input<boolean>(false);
   scheduleSubmit = output<SchedulingFormValue>();

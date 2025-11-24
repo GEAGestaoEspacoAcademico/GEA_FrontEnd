@@ -14,7 +14,7 @@
           name="search"
           [(ngModel)]="searchTerm"
           (input)="onSearchChange()"
-          placeholder="Buscar funcionário..."
+          placeholder="Buscar"
           aria-label="Buscar funcionário"
         />
 
@@ -22,7 +22,7 @@
           <mat-icon svgIcon="filter"></mat-icon>
         </button>
       </form>
-      <button type="button" class="add-btn" (click)="onNovoFuncionario()">
+      <button type="button" class="add-btn" routerLink="/secretaria/cadastrar-funcionario">
         <mat-icon>add_circle_outline</mat-icon>
           Novo Funcionário
       </button>
@@ -43,19 +43,19 @@
       </thead>
 
       <tbody>
-        @for (funcionario of data; track funcionario?.id ?? funcionario.nome ?? $index) {
+        @for (funcionario of data; track funcionario?.usuarioId ?? funcionario.usuarioNome ?? $index) {
           <tr>
-            <td>{{ funcionario.nome }}</td>
-            <td>{{ funcionario.email }}</td>
-            <td>{{ funcionario.registro }}</td>
-            <td>{{ funcionario.cargo }}</td>
+            <td>{{ funcionario.usuarioNome }}</td>
+            <td>{{ funcionario.usuarioEmail }}</td>
+            <td>{{ funcionario.usuarioId }}</td>
+            <td>{{ funcionario.cargoId }}</td>
 
             <td class="actions">
-              <button class="edit-btn" (click)="onEditFuncionario(funcionario)">
+              <button class="edit-btn" (click)="onEditUsuario(funcionario)">
                 <mat-icon svgIcon="edit"></mat-icon>
               </button>
 
-              <button class="delete-btn" (click)="onDeleteFuncionario(funcionario)">
+              <button class="delete-btn" (click)="onDeleteUsuario(funcionario)">
                 <mat-icon svgIcon="delete"></mat-icon>
               </button>
             </td>

@@ -40,10 +40,10 @@ export class EditarEspacoModal implements OnInit{
 
   this.form = this.fb.group({
     salaNome: [sala.salaNome ?? '', Validators.required],
-    salaCapacidade: [sala.capacidade ?? 0, Validators.required],
-    piso: [sala.piso ?? 0, Validators.required],
+    salaCapacidade: [sala.capacidade, Validators.required],
+    piso: [sala.pisoId, Validators.required],
     disponibilidade: [sala.disponibilidade ?? false],
-    tipoSalaId: [sala.tipoSala ?? '', Validators.required],
+    tipoSalaId: [sala.tipoSalaId ?? '', Validators.required],
     salaObservacoes: [sala.salaObservacoes ?? '']
   });
 

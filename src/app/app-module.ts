@@ -67,12 +67,12 @@ import { ScheduleDayModal } from './components/shared/schedule-day-modal/schedul
 import { SpaceManagement } from './pages/AD/space-management/space-management';
 import { A11yModule } from '@angular/cdk/a11y';
 import { Agenda } from './pages/AD/agenda/agenda';
-import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
-
 
 // AD Components
 import { SpaceManagementTable } from './components/AD/space-management-table/space-management-table';
+import { SpaceRegistrationPage } from './pages/AD/space-registration/space-registration.page';
 import { Home } from './pages/AD/home/home';
+import { EditProfessorModal } from './components/secretaria/edit-professor-modal/edit-professor-modal';
 import { ScheduleEvent } from './pages/AD/schedule-event/schedule-event';
 
 import { Secretariahome } from './pages/secretaria/secretariahome/secretariahome';
@@ -85,7 +85,9 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
 import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
-
+import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
+import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
+import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 
 @NgModule({
   declarations: [
@@ -124,22 +126,27 @@ import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
     ScheduleDayModal,
     SpaceManagementTable,
     Home,
+    EditProfessorModal,
     ScheduleEvent,
     SpaceRegistrationForm,
+    SpaceRegistrationPage,
     Home,
+    FuncionarioForm,
+    FuncionarioTable,
+    Funcionarios,
     Secretariahome,
     CreateResourceModal,
-    AgendarSalaMateria,
     SmartSchedulingForm,
     AgendamentoAula,
     AgendarAula,
     RedefinirSenha,
+    ListaEspacos,
     EditarEspacoModal,
     EspacosTable,
     FuncionarioTable,
     SalaForm,
-    ListaEspacos,
-    CadastroSala
+    CadastroSala,
+    ScheduleClass
   ],
   imports: [
     BrowserModule,
@@ -159,26 +166,29 @@ import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
     MatDatepickerModule,
     MatNativeDateModule,
     // NGRX Setup Simplificado
-    StoreModule.forRoot({
+    StoreModule.forRoot(
+      {
         auth: authReducer,
         [AGENDAMENTO_FEATURE_KEY]: agendamentoReducer,
-    }, {
+      },
+      {
         metaReducers,
-    }),
+      },
+    ),
     EffectsModule.forRoot([AuthEffects, AgendamentoEffects]),
     StoreDevtoolsModule.instrument({
-        maxAge: 25,
-        logOnly: !isDevMode(),
-        autoPause: true,
-        trace: false,
-        traceLimit: 75,
+      maxAge: 25,
+      logOnly: !isDevMode(),
+      autoPause: true,
+      trace: false,
+      traceLimit: 75,
     }),
     ServiceWorkerModule.register('ngsw-worker.js', {
-        enabled: environment.production,
-        registrationStrategy: 'registerWhenStable:30000',
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:30000',
     }),
-    A11yModule
-],
+    A11yModule,
+  ],
   providers: [provideHttpClient(withInterceptors([globalErrorInterceptor]))],
   bootstrap: [App],
 })

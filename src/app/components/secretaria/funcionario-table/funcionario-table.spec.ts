@@ -1,6 +1,5 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
-
 import { FuncionarioTable } from './funcionario-table';
 
 describe('FuncionarioTable', () => {
@@ -9,9 +8,8 @@ describe('FuncionarioTable', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FuncionarioTable]
-    })
-    .compileComponents();
+      declarations: [FuncionarioTable],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FuncionarioTable);
     component = fixture.componentInstance;
