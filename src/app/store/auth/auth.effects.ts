@@ -40,6 +40,9 @@ export class AuthEffects {
         }else if(login.user.usuarioCargo === TIPOUSUARIO.SECRETARIA){
           this.router.navigate(['secretaria/home']);
         }
+        else if(login.user.usuarioCargo === TIPOUSUARIO.COORDENADOR){
+          this.router.navigate(['/coordenacao'])
+        }
       })
     ),
     { dispatch: false }

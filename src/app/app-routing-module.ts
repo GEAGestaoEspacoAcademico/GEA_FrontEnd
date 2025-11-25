@@ -83,7 +83,7 @@ const routes: Routes = [
   data: { roles: ['COORDENADOR'] }, // Verificar nome exato da role no backend
   children: [
     { path: 'homecoord', component: Homecoord },
-    { path: '', redirectTo: 'home', pathMatch: 'full' }
+    { path: '', redirectTo: 'homecoord', pathMatch: 'full' }
   ]
 },
   {
