@@ -82,7 +82,7 @@ const routes: Routes = [
   canActivate: [RoleGuard],
   data: { roles: ['COORDENADOR'] }, // Verificar nome exato da role no backend
   children: [
-    { path: 'home', component: Homecoord },
+    { path: 'homecoord', component: Homecoord },
     { path: '', redirectTo: 'home', pathMatch: 'full' }
   ]
 },
