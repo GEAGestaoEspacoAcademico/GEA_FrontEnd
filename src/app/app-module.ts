@@ -89,6 +89,7 @@ import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario
 import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
+import { Homecoord } from './components/coordenacao/homecoord/homecoord';
 
 @NgModule({
   declarations: [
@@ -148,7 +149,8 @@ import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agen
     SalaForm,
     CadastroSala,
     ScheduleClass,
-    AgendarSalaMateria
+    AgendarSalaMateria,
+    Homecoord
   ],
   imports: [
     BrowserModule,

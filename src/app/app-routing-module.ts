@@ -24,6 +24,7 @@ import { Aulas } from './pages/AD/aulas/aulas';
 import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
+import { Homecoord } from './components/coordenacao/homecoord/homecoord';
 
 const routes: Routes = [
   {
@@ -75,6 +76,16 @@ const routes: Routes = [
       { path: 'cadastrar-funcionario', component: FuncionarioForm}
     ],
   },
+  {
+  path: 'coordenacao',
+  component: MainLayout,
+  canActivate: [RoleGuard],
+  data: { roles: ['COORDENADOR'] }, // Verificar nome exato da role no backend
+  children: [
+    { path: 'home', component: Homecoord },
+    { path: '', redirectTo: 'home', pathMatch: 'full' }
+  ]
+},
   {
     path: '',
     component: AuthLayout,
