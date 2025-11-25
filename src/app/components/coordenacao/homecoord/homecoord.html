@@ -1,1 +1,33 @@
-<p>homecoord works!</p>
+<h2 class="home-title">Painel da Coordenação</h2>
+<div class="cards-container d-flex flex-column flex-md-row" style="gap: var(--spacing-5);">
+  <app-dashboard-card
+    icon=""
+    title="Calendário Semanal Professores"
+    [routerLink]="'/coordenacao/calendario'">
+  </app-dashboard-card>
+
+  <app-dashboard-card
+    icon=""
+    title="Visualizar Espaços Acadêmicos"
+    [routerLink]="'/ad/lista-espacos'">
+  </app-dashboard-card>
+
+  <app-dashboard-card
+    icon=""
+    title="Agendar Espaços Acadêmicos"
+    [routerLink]="'/agenda'">
+  </app-dashboard-card>
+
+  <app-dashboard-card
+    icon=""
+    title="Gerenciar Agendamentos"
+    [routerLink]="'/aulas'">
+  </app-dashboard-card>
+
+  <app-dashboard-card
+    icon=""
+    title="Configurações"
+    [routerLink]="'/configuracoes'">
+  </app-dashboard-card>
+
+</div>
