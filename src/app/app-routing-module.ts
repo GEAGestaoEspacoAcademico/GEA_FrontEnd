@@ -24,6 +24,7 @@ import { Aulas } from './pages/AD/aulas/aulas';
 import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
+import { SpaceScheduleList } from './components/shared/space-schedule-list/space-schedule-list';
 
 const routes: Routes = [
   {
@@ -53,7 +54,7 @@ const routes: Routes = [
       { path: 'agendar-aula', component: ScheduleClass },
       { path: 'agendar-evento', component: ScheduleEvent },
       { path: 'lista-espacos', component: SpaceManagement },
-      { path: 'cadastrar-espaco', component:  SpaceRegistrationPage},
+      { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'cadastrar-espaco',
@@ -70,9 +71,10 @@ const routes: Routes = [
       { path: 'home', component: Secretariahome },
       { path: 'visualizar-espacos', component: ListaEspacos },
       { path: 'cadastrar-laboratorio', component: CadastroSala },
-      { path: 'agendar-sala', component: AgendarSalaMateria},
+      { path: 'agendar-sala', component: AgendarSalaMateria },
       { path: 'funcionarios', component: Funcionarios },
-      { path: 'cadastrar-funcionario', component: FuncionarioForm}
+      { path: 'cadastrar-funcionario', component: FuncionarioForm },
+      { path: 'teste', component: SpaceScheduleList },
     ],
   },
   {

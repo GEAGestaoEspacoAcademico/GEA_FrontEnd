@@ -1,7 +1,9 @@
 <div class="container-schedule">
   <div>
     @if (modoVisualizacao === 'Hoje') {
-      <h3 class="text-center w-100 mb-3">Aulas – {{ dataSelecionada | date: 'dd/MM/yyyy' }}</h3>
+      <h3 class="text-center w-100 mb-3">
+        Aulas – {{ dataSelecionada | date: 'dd/MM/yyyy' : 'UTC' }}
+      </h3>
 
       @if (salasFiltradas.length > 0) {
         @for (sala of salasFiltradas; track sala.key) {
@@ -42,6 +44,8 @@
             </ul>
           </div>
         }
+      } @else {
+        <p class="text-center text-muted">Nenhuma aula encontrada.</p>
       }
     }
     @if (modoVisualizacao === 'Semana') {}
