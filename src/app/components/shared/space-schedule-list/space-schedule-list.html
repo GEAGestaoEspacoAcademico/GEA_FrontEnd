@@ -1,0 +1,49 @@
+<div class="container-schedule">
+  <div>
+    @if (modoVisualizacao === 'Hoje') {
+      <h3 class="text-center w-100 mb-3">Aulas – {{ dataSelecionada | date: 'dd/MM/yyyy' }}</h3>
+
+      @if (salasFiltradas.length > 0) {
+        @for (sala of salasFiltradas; track sala.key) {
+          <div class="card my-4">
+            <div class="card-header fw-bold">
+              {{ getNomeSala(+sala.key) }}
+            </div>
+
+            <ul class="list-group list-group-flush">
+              @for (
+                ag of expandedSalas[+sala.key] ? sala.value : sala.value.slice(0, 3);
+                track ag.agendamentoId
+              ) {
+                <li class="list-group-item d-flex justify-content-between">
+                  <div>
+                    <strong class="captions fw-bold">Professor:</strong>
+                    <span class="disciplina-professor">
+                      {{ getProfessorPorDisciplina(ag.disciplinaId) }}</span
+                    >
+                    <br />
+                    <strong class="captions fw-bold">Disciplina:</strong>
+                    <span class="disciplina-professor"> {{ ag.disciplinaNome }}</span>
+                  </div>
+
+                  <span class="time-caption horario"> {{ ag.horaInicio }} – {{ ag.horaFim }} </span>
+                </li>
+              }
+              @if (!expandedSalas[+sala.key] && sala.value.length > 3) {
+                <li class="list-group-item text-center">
+                  <button
+                    class="btn btn-link p-0 fw-bold"
+                    (click)="expandedSalas[+sala.key] = true"
+                  >
+                    Carregar mais
+                  </button>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      }
+    }
+    @if (modoVisualizacao === 'Semana') {}
+  </div>
+</div>
