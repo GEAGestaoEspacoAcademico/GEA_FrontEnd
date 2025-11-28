@@ -21,11 +21,9 @@ import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { SpaceRegistrationPage } from './pages/AD/space-registration/space-registration.page';
 import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 import { Aulas } from './pages/AD/aulas/aulas';
-/*
-import {SpaceRegistration} from './pages/AD/spaceregistration/spaceregistration'
-import {ScheduleClass} from './pages/AD/scheduleClass/scheduleClass'
-import {ScheduleEvent} from './pages/AD/scheduleEvent/scheduleEvent'
-*/
+import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
+import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
+import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 
 const routes: Routes = [
   {
@@ -52,11 +50,10 @@ const routes: Routes = [
     children: [
       { path: 'lista-espacos', component: SpaceManagement },
       { path: 'home', component: Home },
-      // { path: 'agendar-aula', component: ScheduleClass },
+      { path: 'agendar-aula', component: ScheduleClass },
       { path: 'agendar-evento', component: ScheduleEvent },
       { path: 'lista-espacos', component: SpaceManagement },
-      // { path: 'cadastrar-espaco', component:  },
-      // { path: 'cadastrar-espaco/:id', component: AdSpaceRegistrationPage },
+      { path: 'cadastrar-espaco', component:  SpaceRegistrationPage},
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'cadastrar-espaco',
@@ -68,12 +65,14 @@ const routes: Routes = [
     path: 'secretaria',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: { roles: ['SECRETARIA', 'AUXILIAR_DOCENTE'] },
+    data: { roles: ['SECRETARIA'] },
     children: [
       { path: 'home', component: Secretariahome },
       { path: 'visualizar-espacos', component: ListaEspacos },
       { path: 'cadastrar-laboratorio', component: CadastroSala },
+      { path: 'agendar-sala', component: AgendarSalaMateria},
       { path: 'funcionarios', component: Funcionarios },
+      { path: 'cadastrar-funcionario', component: FuncionarioForm}
     ],
   },
   {

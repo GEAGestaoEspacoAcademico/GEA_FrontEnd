@@ -16,8 +16,7 @@ export class SpaceManagementTable {
   @Output() pageChange = new EventEmitter<number>();
   @Output() editSala = new EventEmitter<Sala>();
   @Output() deleteSala = new EventEmitter<Sala>();
-  @Output() clickNovoSoftware = new EventEmitter<void>();
-  @Output() clickNovoEquipamento = new EventEmitter<void>();
+  @Output() clickCriarRecurso = new EventEmitter<"SOFTWARE" | "HARDWARE">();
 
   searchTerm: string = '';
 
@@ -38,11 +37,7 @@ export class SpaceManagementTable {
       this.pageChange.emit(page);
     }
   }
-  onNovoSoftware() {
-    this.clickNovoSoftware.emit();
-  }
-
-  onNovoEquipamento() {
-    this.clickNovoEquipamento.emit();
+  onNovoRecurso(tipo: "SOFTWARE" | "HARDWARE") {
+    this.clickCriarRecurso.emit(tipo);
   }
 }

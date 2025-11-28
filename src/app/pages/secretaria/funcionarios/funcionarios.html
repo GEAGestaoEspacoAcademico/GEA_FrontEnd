@@ -1,16 +1,17 @@
 <div class="funcionario-management-container px-5">
-    <h2 class="main-title">Lista de Funcionários</h2>
+  <h2 class="main-title">Lista de Funcionários</h2>
 
-    <app-funcionario-table
-      [data]="displayedFuncionarios"
-      [currentPage]="currentPage"
-      [totalPages]="totalPages"
-      (searchChange)="onSearch($event)"
-      (pageChange)="onPageChange($event)"
-      (editUsuario)="onEditFuncionario($event)"
-      (deleteUsuario)="openDeleteModal($event)"
-      class="w-100">
-    </app-funcionario-table>
+  <app-funcionario-table
+    [data]="displayedFuncionarios"
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (searchChange)="onSearch($event)"
+    (pageChange)="onPageChange($event)"
+    (editUsuario)="onEditFuncionario($event)"
+    (deleteUsuario)="openDeleteModal($event)"
+    class="w-100"
+  >
+  </app-funcionario-table>
 </div>
 
   <app-confirmation-modal
@@ -23,3 +24,8 @@
     (onconfirm)="confirmDelete()"
     (oncancel)="closeModal()"
   ></app-confirmation-modal>
+  
+  <app-edit-professor-modal #modalEditar
+  (fechar)="listarUsuario()"
+  >
+  </app-edit-professor-modal>

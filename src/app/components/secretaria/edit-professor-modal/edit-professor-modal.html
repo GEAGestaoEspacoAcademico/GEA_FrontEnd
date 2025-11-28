@@ -1,120 +1,134 @@
 <ng-template #EditProfessor let-modal>
+  <div class="modal-header-custom">
+    <h2 class="titulo-modal">Editar</h2>
+  </div>
 
-<div class="modal-header-custom">
-  <h2 class="titulo-modal">Editar</h2>
-</div>
+  <div class="modal-body-custom">
+    <form [formGroup]="form" (ngSubmit)="salvar()" class="form-grid">
+      <div class="coluna-esquerda">
+        <div class="campo-wrapper">
+          <label for="inpNome" class="section-title">Nome completo</label>
+          <input
+            type="text"
+            id="inpNome"
+            formControlName="nome"
+            class="gea-input-field full-width"
+            placeholder="Digite o nome completo"
+          />
+          @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
+            <div class="mensagem-erro">O nome é obrigatório.</div>
+          }
+        </div>
 
-<div class="modal-body-custom">
-  <form [formGroup]="form" (ngSubmit)="salvar()" class="form-grid">
+        <div class="campo-wrapper">
+          <label for="inpEmail" class="section-title">E-mail</label>
+          <input
+            type="email"
+            id="inpEmail"
+            formControlName="email"
+            class="gea-input-field full-width"
+            placeholder="Digite o email"
+          />
+          @if (form.get('email')?.invalid && form.get('email')?.touched) {
+            <div class="mensagem-erro">O email é obrigatório</div>
+          }
+        </div>
 
-    <div class="coluna-esquerda">
-
-      <div class="campo-wrapper">
-        <label for="inpNome" class="section-title">Nome completo</label>
-        <input type="text" id="inpNome" formControlName="nome" class="gea-input-field full-width"
-          placeholder="Digite o nome completo">
-        @if (form.get('nome')?.invalid && form.get('nome')?.touched) {
-          <div class="mensagem-erro">O nome é obrigatório.</div>
+        @if (isProfessorOuCoordenador) {
+          <div class="campo-wrapper">
+            <label for="inpRegistro" class="section-title">Registro</label>
+            <input
+              type="text"
+              id="inpRegistro"
+              formControlName="registro"
+              class="gea-input-field full-width"
+              placeholder="Digite o Registro"
+            />
+            @if (form.get('registro')?.invalid && form.get('registro')?.touched) {
+              <div class="mensagem-erro">O registro é obrigatório</div>
+            }
+          </div>
         }
-      </div>
 
-      <div class="campo-wrapper">
-        <label for="inpEmail" class="section-title">E-mail</label>
-        <input type="email" id="inpEmail" formControlName="email" class="gea-input-field full-width"
-          placeholder="Digite o email">
-        @if (form.get('email')?.invalid && form.get('email')?.touched) {
-          <div class="mensagem-erro">O email é obrigatório</div>
-        }
-      </div>
-
-      <div class="campo-wrapper">
-        <label for="inpRegistro" class="section-title">Registro</label>
-        <input type="text" id="inpRegistro" formControlName="registro" class="gea-input-field full-width"
-          placeholder="Digite o Registro">
-        @if (form.get('registro')?.invalid && form.get('registro')?.touched) {
-          <div class="mensagem-erro">O registro é obrigatório</div>
-        }
-      </div>
-
-      @if (isProfessorOuCoordenador) {
         <div class="campo-wrapper">
           <label for="selCargo" class="section-title">Cargo</label>
           <select id="selCargo" formControlName="cargoId" class="gea-input-field">
             <option [ngValue]="null">Selecione o cargo</option>
-            <option [ngValue]="1">Coordenador de ADS</option>
-            <option [ngValue]="2">Coordenador de AMS</option>
-            <option [ngValue]="3">Coordenador de Meca</option>
-            <option [ngValue]="4">Coordenador de Eventos</option>
-            <option [ngValue]="5">Coordenador de GE</option>
-            <option [ngValue]="6">Coordenador de GTI</option>
+            @for (cargo of cargos; track cargo.id) {
+              <option [ngValue]="cargo.id">{{ cargo.nome }}</option>
+            }
           </select>
         </div>
-      }
-
-    </div>
-
-    @if (isProfessorOuCoordenador) {
-      <div class="coluna-direita">
-
-        <h3 class="section-title">Disciplinas</h3>
-
-        <div class="disciplinas-box">
-          @if (listaDisciplinas.length === 0) {
-            <p class="texto-vazio captions">Nenhuma disciplina vinculada.</p>
-          }
-
-          @for (disc of listaDisciplinas; track disc.disciplinaId) {
-            <div class="chip-disciplina">
-              <span>{{ disc.disciplinaNome }}</span> 
-              <button type="button" class="btn-remove" (click)="removerDisciplina(disc.disciplinaId)">✕</button>
-            </div>
-          }
-        </div>
-
-        <button type="button" class="gea-btn gea-btn-primary btn-add-full" (click)="abrirModalAdicionarDisciplina()">
-          <span class="icone-mais">⊕</span> Adicionar Disciplina
-        </button>
-
       </div>
-    }
 
-  </form>
-</div>
+      @if (isProfessorOuCoordenador) {
+        <div class="coluna-direita">
+          <h3 class="section-title">Disciplinas</h3>
 
-<div class="modal-footer-custom">
+          <div class="disciplinas-box">
+            @if (listaDisciplinas.length === 0) {
+              <p class="texto-vazio captions">Nenhuma disciplina vinculada.</p>
+            }
 
-  <button type="button" class="gea-btn gea-btn-primary btn-largo">
-    RESTAURAR SENHA
-  </button>
+            @for (disc of listaDisciplinas; track disc.disciplinaId) {
+              <div class="chip-disciplina">
+                <span>{{ disc.disciplinaNome }}</span>
+                <button
+                  type="button"
+                  class="btn-remove"
+                  (click)="removerDisciplina(disc.disciplinaId)"
+                >
+                  ✕
+                </button>
+              </div>
+            }
+          </div>
 
-  <button type="button" class="gea-btn gea-btn-primary btn-largo" (click)="salvar()" [disabled]="form.invalid">
-    SALVAR
-  </button>
+          <button
+            type="button"
+            class="gea-btn gea-btn-primary btn-add-full"
+            (click)="abrirModalAdicionarDisciplina()"
+          >
+            <span class="icone-mais">⊕</span> Adicionar Disciplina
+          </button>
+        </div>
+      }
+    </form>
+  </div>
 
-  <button type="button" class="gea-btn btn-cancelar-custom btn-largo" (click)="fecharModal()">
-    CANCELAR
-  </button>
-</div>
+  <div class="modal-footer-custom">
+    <button type="button" class="gea-btn gea-btn-primary btn-largo">RESTAURAR SENHA</button>
 
+    <button
+      type="button"
+      class="gea-btn gea-btn-primary btn-largo"
+      (click)="salvar()"
+      [disabled]="form.invalid"
+    >
+      SALVAR
+    </button>
+
+    <button type="button" class="gea-btn btn-cancelar-custom btn-largo" (click)="fecharModal()">
+      CANCELAR
+    </button>
+  </div>
 </ng-template>
 
-
 <ng-template #modalAddDisciplina let-modalDisc>
-  
   <div class="modal-header-custom">
-    <h4 class="titulo-modal" style="font-size: 1.2rem;">Nova Disciplina</h4>
+    <h4 class="titulo-modal" style="font-size: 1.2rem">Nova Disciplina</h4>
   </div>
-  
-  <div class="modal-body-custom" style="padding: 2rem;">
+
+  <div class="modal-body-custom" style="padding: 2rem">
     <div class="campo-wrapper">
       <label for="" class="section-title">Selecione a disciplina:</label>
-      
+
       <select [formControl]="disciplinaSelecionadaControl" class="gea-input-field full-width">
         <option [ngValue]="null">Selecione...</option>
-        
+
         @for (d of listaTodasDisciplinas; track d.disciplinaId) {
           <option [ngValue]="d.disciplinaId">
-             {{ d.disciplinaNome || d.disciplinaNome}}
+            {{ d.disciplinaNome || d.disciplinaNome }}
           </option>
         }
       </select>
@@ -125,12 +139,14 @@
     <button type="button" class="gea-btn btn-cancelar-custom" (click)="modalDisc.dismiss()">
       Cancelar
     </button>
-    
-    <button type="button" class="gea-btn gea-btn-primary" 
-            (click)="salvarNovaDisciplina(modalDisc)" 
-            [disabled]="disciplinaSelecionadaControl.invalid">
+
+    <button
+      type="button"
+      class="gea-btn gea-btn-primary"
+      (click)="salvarNovaDisciplina(modalDisc)"
+      [disabled]="disciplinaSelecionadaControl.invalid"
+    >
       Confirmar
     </button>
   </div>
-
 </ng-template>

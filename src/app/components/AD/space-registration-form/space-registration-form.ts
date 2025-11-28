@@ -65,7 +65,7 @@ export class SpaceRegistrationForm implements OnInit {
     tipoSalaId: ['', Validators.required],
     salaNome: ['', Validators.required],
     salaCapacidade: ['', Validators.required],
-    andarId: ['', Validators.required],
+    pisoId: ['', Validators.required],
     disponibilidade: [true],
     salaObservacoes: [''],
     equipamentos: this.fb.array([]),

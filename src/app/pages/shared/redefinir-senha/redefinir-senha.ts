@@ -23,6 +23,27 @@ export class RedefinirSenha implements OnInit {
   private readonly store = inject(Store);
   private readonly userId$: Observable<number | undefined> = this.store.select(selectUserId);
 
+  hideOldPassword = false;
+  hideNewPassword = false;
+  hideRepeatPassword = false;
+
+  btnOldVisibility = false;
+  btnNewVisibility = false;
+  btnRepeatVisibility = false; 
+
+
+  toggleOldPassword() {
+    this.hideOldPassword = !this.hideOldPassword;
+  }
+
+  toggleNewPassword() {
+    this.hideNewPassword = !this.hideNewPassword;
+  }
+
+  toggleRepeatPassword() {
+    this.hideRepeatPassword = !this.hideRepeatPassword;
+  }
+
   senhasIguais: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const novaSenha = control.get('novaSenha');
     const novaSenhaRepetida = control.get('novaSenhaRepetida');
@@ -54,6 +75,17 @@ export class RedefinirSenha implements OnInit {
 
   ngOnInit(): void {
     this.formRedefinirSenha.reset();
+    this.formRedefinirSenha.get('senhaAntiga')?.valueChanges.subscribe(value => {
+      this.btnOldVisibility = !!(value && value.trim().length > 0);
+    });
+
+    this.formRedefinirSenha.get('novaSenha')?.valueChanges.subscribe(value => {
+      this.btnNewVisibility = !!(value && value.trim().length > 0);
+    });
+
+    this.formRedefinirSenha.get('novaSenhaRepetida')?.valueChanges.subscribe(value => {
+      this.btnRepeatVisibility = !!(value && value.trim().length > 0);
+    });
   }
 
   async alterarSenha() {

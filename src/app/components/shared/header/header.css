@@ -84,6 +84,13 @@
 }
 .icon-arrow {
   height: auto;
+  transform: scaleX(-1);
+  &:hover{
+    cursor: pointer;
+  }
+}
+.highlight-title{
+  font-size: 2rem;
 }
 
 .header a,

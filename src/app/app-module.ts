@@ -87,6 +87,10 @@ import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 import { VisualizarAulaDesktop } from './pages/professor/visualizar-aula-desktop/visualizar-aula-desktop';
 import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
+import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
+import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
+import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
+import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 
 @NgModule({
   declarations: [
@@ -130,6 +134,7 @@ import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
     SpaceRegistrationForm,
     SpaceRegistrationPage,
     Home,
+    FuncionarioForm,
     FuncionarioTable,
     Funcionarios,
     Secretariahome,
@@ -138,13 +143,15 @@ import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
     AgendamentoAula,
     AgendarAula,
     RedefinirSenha,
-    SalaForm,
-    EspacosTable,
-    EditarEspacoModal,
     ListaEspacos,
+    EditarEspacoModal,
+    EspacosTable,
     FuncionarioTable,
+    SalaForm,
     CadastroSala,
     VisualizarAulaDesktop,
+    ScheduleClass,
+    AgendarSalaMateria
   ],
   imports: [
     BrowserModule,

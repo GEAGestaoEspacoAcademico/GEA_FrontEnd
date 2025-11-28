@@ -34,8 +34,4 @@ export class FuncionarioTable {
   onDeleteUsuario(item: GetUsuarioResponse) {
     this.deleteUsuario.emit(item);
   }
-
-  onNovoUsuario() {
-    this.clickNovoUsuario.emit();
-  }
 }

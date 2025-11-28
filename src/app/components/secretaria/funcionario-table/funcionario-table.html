@@ -14,7 +14,7 @@
           name="search"
           [(ngModel)]="searchTerm"
           (input)="onSearchChange()"
-          placeholder="Buscar funcionário..."
+          placeholder="Buscar"
           aria-label="Buscar funcionário"
         />
 
@@ -22,7 +22,7 @@
           <mat-icon svgIcon="filter"></mat-icon>
         </button>
       </form>
-      <button type="button" class="add-btn" (click)="onNovoUsuario()">
+      <button type="button" class="add-btn" routerLink="/secretaria/cadastrar-funcionario">
         <mat-icon>add_circle_outline</mat-icon>
           Novo Funcionário
       </button>
@@ -48,7 +48,7 @@
             <td>{{ funcionario.usuarioNome }}</td>
             <td>{{ funcionario.usuarioEmail }}</td>
             <td>{{ funcionario.usuarioId }}</td>
-            <td>{{ funcionario.usuarioNome }}</td>
+            <td>{{ funcionario.cargoNome }}</td>
 
             <td class="actions">
               <button class="edit-btn" (click)="onEditUsuario(funcionario)">

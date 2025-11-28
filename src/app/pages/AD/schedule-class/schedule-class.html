@@ -1,0 +1,23 @@
+<div class="container agendarEvento">
+  <h2>Selecione o dia da aula</h2>
+  @if(isLoadingCriarAula){
+    <div class="text-center my-4"><mat-spinner diameter="50"></mat-spinner></div>
+  } @else{  
+    <div class="d-flex w-100 align-itens-center justify-content-around">
+      <app-multi-date-selector
+      class="w-50"
+      (doubleClick)="abirModalDetalhe($event)"
+      (selecaoChange)="pegarDias($event)"
+      ></app-multi-date-selector>
+      <app-smart-scheduling-form
+      class="w-25"
+      mode="aula"
+      [singleDate]="data"
+      (scheduleSubmit)="salvarAgendamentoAula($event)"
+      ></app-smart-scheduling-form>
+    </div>
+  }
+<app-schedule-day-modal
+#scheduleModal
+></app-schedule-day-modal>
+</div>

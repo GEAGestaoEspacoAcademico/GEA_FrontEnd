@@ -10,7 +10,7 @@ import type { Recurso } from '../../models/Recurso.model';
 })
 export class RecursoService {
   private http = inject(HttpClient);
-  
+
   private baseUrl = environment.apiUrl + "/recursos";
 
   public getRecursoPorId(recursoId: number): Observable<Recurso>{
@@ -20,20 +20,20 @@ export class RecursoService {
   public editRecurso(recursoId: number, recurso: AtualizarRecursoRequest): Observable<Recurso>{
     return this.http.put<Recurso>(`${this.baseUrl}/${recursoId}`, recurso)
   }
-  
+
   public deleteRecurso(recursoId: number): Observable<void>{
     return this.http.delete<void>(`${this.baseUrl}/${recursoId}`)
   }
-  
+
   public getRecursos(): Observable<Recurso[]>{
     return this.http.get<Recurso[]>(this.baseUrl);
   }
-  
+
   public criarRecurso(recurso: AtualizarRecursoRequest): Observable<Recurso>{
     return this.http.post<Recurso>(this.baseUrl, recurso)
   }
 
   public getRecursoPorTipo(tipoId: number): Observable<Recurso>{
-    return this.http.get<Recurso>(`${this.baseUrl}/${tipoId}`)
+    return this.http.get<Recurso>(`${this.baseUrl}/tipo/${tipoId}`)
   }
 }

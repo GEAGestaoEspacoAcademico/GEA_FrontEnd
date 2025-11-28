@@ -5,14 +5,16 @@
 >
   <div class="card-line border-bottom">
 
-    <header class="d-flex justify-content-between align-items-start row-top">
+    <header class="d-flex justify-content-between align-items-start row-top gap-3">
+      
       <h3 id="{{ 'class-title-' + agendamentoData.agendamentoAulaId }}" class="section-title text-neutral-900 mb-0">
         {{ agendamentoData.cursoNome }}
       </h3>
 
-      <time class="time-primary fw-semibold text-end mb-0" aria-label="Horário">
+      <time class="time-primary fw-semibold text-end mb-0 text-nowrap flex-shrink-0" aria-label="Horário">
         {{ agendamentoData.horaInicio | slice:0:5 }} - {{ agendamentoData.horaFim | slice:0:5 }}
       </time>
+
     </header>
 
     <div class="d-flex justify-content-between align-items-start row-mid">

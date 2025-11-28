@@ -24,18 +24,18 @@
         <form [formGroup]="loginForm" class="form">
           <div class="form-floating mb-3">
             <input
-              type="email"
+              type="text"
               class="form-control"
               id="userInput"
               formControlName="user"
               placeholder=""
             />
-            <label for="userInput">E-mail</label>
+            <label for="userInput">Login</label>
 
             @if (loginForm.get('user')?.touched && loginForm.get('user')?.invalid) {
               <div class="text-danger mt-1 small">
                 @if (loginForm.get('user')?.hasError('required')) {
-                  E-mail é obrigatório.
+                  Login é obrigatório.
                 }
               </div>
             }
@@ -67,8 +67,8 @@
               @if (hidePassword) {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   fill="currentColor"
                   class="bi bi-eye-slash"
                   viewBox="0 0 16 16"
@@ -89,8 +89,8 @@
               @if (!hidePassword) {
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   fill="currentColor"
                   class="bi bi-eye"
                   viewBox="0 0 16 16"
@@ -117,7 +117,7 @@
           @if (loginForm.invalid) {
             <div class="text-danger mt-1 small">
               @if (loginForm.getError('infoInvalid')) {
-                E-mail ou senha inválidos
+                Usuario ou senha inválidos.
               }
             </div>
           }

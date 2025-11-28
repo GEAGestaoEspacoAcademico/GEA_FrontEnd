@@ -8,11 +8,21 @@
     (pageChange)="onPageChange($event)"
     (editSala)="onEditSala($event)"
     (deleteSala)="openDeleteModal($event)"
+    (clickCriarRecurso)="criarEquipamento($event)"
     class="w-100"
     >
   </app-space-management-table>
 </div>
 
+<app-create-resource-modal
+#criarRecursoId
+(create)="criarRecurso($event)"
+></app-create-resource-modal>
+
+<app-editar-espaco-modal 
+  #editModal 
+  (clickEdit)="onModalEdit($event)">
+</app-editar-espaco-modal>
 
 <app-confirmation-modal
   #confirmDeleteModal

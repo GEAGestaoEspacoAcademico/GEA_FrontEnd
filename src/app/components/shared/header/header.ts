@@ -1,10 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { type Observable } from 'rxjs';
+import { switchMap, take, type Observable } from 'rxjs';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 import { selectUserCargo } from '../../../store/auth/auth.selectors';
 import { AuthActions } from '../../../store/auth/auth.actions';
 import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 /**
  * Componente de UI responsável por exbir o header da aplicação
@@ -22,6 +23,7 @@ export class Header {
   private store = inject(Store);
   private headerTitleService = inject(HeaderTitleService);
   private location = inject(Location);
+  private router = inject(Router)
 
   public cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
 
@@ -34,6 +36,30 @@ export class Header {
   goBack(): void {
     this.location.back();
   }
+
+voltarHome() {
+  this.cargo$
+    .pipe(
+      take(1)
+    )
+    .subscribe((cargo) => {
+      switch (cargo) {
+        case 'AUXILIAR_DOCENTE':
+          this.router.navigate(['ad/home']);
+          break;
+        
+        case 'PROFESSOR':
+          this.router.navigate(['aulas']);
+          break;
+        case 'SECRETARIA':
+          this.router.navigate(['secretaria/home']);  
+          break
+        default:
+          this.router.navigate(['/login']);
+          break;
+      }
+    });
+}
 
   showBackButton$ = this.headerTitleService.showBackButton$;
 }

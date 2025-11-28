@@ -19,7 +19,7 @@
                     <mat-label>Disciplina</mat-label>
                     <mat-select formControlName="disciplina">
                         @for (d of disciplinas; track d.disciplinaId) {
-                        <mat-option [value]="d">{{d.disciplinaNome}}</mat-option>
+                        <mat-option [value]="d.disciplinaId">{{d.disciplinaNome}}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
