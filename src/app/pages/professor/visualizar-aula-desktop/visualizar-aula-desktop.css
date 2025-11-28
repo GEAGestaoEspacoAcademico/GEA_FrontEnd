@@ -1,0 +1,18 @@
+.schedule-list-container {
+  background-color: #fff;
+  border: 1px solid #dee2e6; 
+  border-radius: 8px;   
+  overflow: hidden;
+  max-width: 900px; 
+  margin: 0 auto;
+  
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+:host ::ng-deep .schedule-item {
+  border-bottom: 1px solid #dee2e6;
+}
+
+:host ::ng-deep .schedule-item:last-child {
+  border-bottom: none;
+}
