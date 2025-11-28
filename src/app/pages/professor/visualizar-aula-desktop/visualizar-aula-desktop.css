@@ -1,4 +1,4 @@
 :host ::ng-deep .gea-btn {
-    background-color: #F21E18;
+    background-color: var(--color-primary-500);
     margin: 2,5rem;
 }

@@ -88,9 +88,9 @@ import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
 import { VisualizarAulaDesktop } from './pages/professor/visualizar-aula-desktop/visualizar-aula-desktop';
 import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
-import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
+import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aula';
 
 @NgModule({
   declarations: [
@@ -151,7 +151,8 @@ import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agen
     CadastroSala,
     VisualizarAulaDesktop,
     ScheduleClass,
-    AgendarSalaMateria
+    AgendarSalaMateria,
+    VisualizarAula
   ],
   imports: [
     BrowserModule,
