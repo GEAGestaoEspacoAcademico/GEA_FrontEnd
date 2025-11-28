@@ -1,6 +1,7 @@
 export interface AgendamentoAula {
   agendamentoAulaId: number
   usuarioNome: string
+  salaId: number,
   salaNome: string
   disciplinaId: number
   disciplinaNome: string
@@ -9,6 +10,7 @@ export interface AgendamentoAula {
   professorNome: string
   data: string
   diaDaSemana: string
+  janelaHorarioId: number,
   horaInicio: string
   horaFim: string
   isEvento: boolean

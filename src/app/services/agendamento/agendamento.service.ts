@@ -13,9 +13,9 @@ import type { CriarEventoRequest} from '../../types/agendamentoEvento.type';
   providedIn: 'root',
 })
 export class AgendamentoService {
-  private http = inject(HttpClient);
-  private baseUrl = environment.apiUrl + '/agendamentos';
-  
+  private readonly http = inject(HttpClient);
+  private readonly baseUrl = environment.apiUrl + '/agendamentos';
+
   //AULA
   public getAgendamentoAulaPorId(agendamentoAulaId: number): Observable<AgendamentoAula>{
     return this.http.get<AgendamentoAula>(`${this.baseUrl}/aulas/${agendamentoAulaId}`)
@@ -24,7 +24,7 @@ export class AgendamentoService {
   public editAgendamentoAula(agendamentoAulaId: number, agendamento: AgendamentoAulaEditarRequest): Observable<Agendamento> {
     return this.http.put<Agendamento>(`${this.baseUrl}/aulas/${agendamentoAulaId}`, agendamento);
   }
-  
+
   public deleteAgendamentoAula(agendamentoAulaId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/aulas/${agendamentoAulaId}`);
   }
@@ -44,26 +44,26 @@ export class AgendamentoService {
   public criarAgendamentoAulaRecorrente(agendamento: AgendamentoRecorrente): Observable<AgendamentoRecorrente>{
     return this.http.post<AgendamentoRecorrente>(`${this.baseUrl}/aulas/recorrencia`, agendamento);
   }
-  
+
   public getAgendamentos(): Observable<Agendamento[]>{
     return this.http.get<Agendamento[]>(this.baseUrl);
   }
-  
+
   public getAgendamentoPorData(data: string): Observable<Agendamento[]> {
     return this.http.get<Agendamento[]>(`${this.baseUrl}/${data}`);
   }
-  
+
   public getAgendamentosPorfessor(professorId: number): Observable<AgendamentoAula[]> {
     return this.http.get<AgendamentoAula[]>(`${this.baseUrl}/aulas/professor/${professorId}`);
   }
 
   //EVENTO
-  
+
   public getAgendamentosEvento(): Observable<AgendamentoEvento[]>{
     return this.http.get<AgendamentoEvento[]>(`${this.baseUrl}/eventos`);
   }
 
   public criarAgendamentoEvento(agendamentoEvento: CriarEventoRequest): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/eventos`, agendamentoEvento);
-  }  
+  }
 }
