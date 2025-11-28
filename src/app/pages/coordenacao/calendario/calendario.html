@@ -1,0 +1,61 @@
+<div class="container">
+  <h1 class="titulo">Calendário</h1>
+
+  <div class="busca-container">
+    <input
+      type="text"
+      placeholder="Buscar professor..."
+      list="lista-professores"
+      [(ngModel)]="filtroTexto"
+      (input)="filtrarProfessores(filtroTexto)"
+    />
+
+    <datalist id="lista-professores">
+      @for (prof of professoresFiltrados; track prof.usuarioId) {
+        <option [value]="prof.professorNome"></option>
+      }
+    </datalist>
+  </div>
+
+  @if (professorSelecionado) {
+    <div class="card-professor">
+      <div class="header">Professor</div>
+
+      <div class="body">
+        <h3>{{ professorSelecionado.professorNome }}</h3>
+
+        <p><strong>Email:</strong> {{ professorSelecionado.professorEmail }}</p>
+
+        <p><strong>Registro:</strong> {{ professorSelecionado.registroProfessor }}</p>
+      </div>
+    </div>
+  }
+
+  @if (professorSelecionado) {
+    <div class="controle-modo">
+      <a
+        href="javascript:void(0)"
+        [class.active]="modoVisualizacao === 'Hoje'"
+        (click)="alterarModo('Hoje')"
+      >
+        Hoje /
+      </a>
+
+      <a
+        href="javascript:void(0)"
+        [class.active]="modoVisualizacao === 'Semana'"
+        (click)="alterarModo('Semana')"
+      >
+        Semana
+      </a>
+    </div>
+  }
+
+  @if (professorSelecionado) {
+    <app-space-schedule-list
+      [dataSelecionada]="dataSelecionada"
+      [modoVisualizacao]="modoVisualizacao"
+      [filtroTexto]="filtroTexto"
+    ></app-space-schedule-list>
+  }
+</div>
