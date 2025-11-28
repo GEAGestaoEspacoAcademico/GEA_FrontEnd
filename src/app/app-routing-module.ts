@@ -77,6 +77,15 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'coordenacao',
+    component: MainLayout,
+    canActivate: [RoleGuard],
+    data: {roles: ['COORDENADOR']},
+    children: [
+      //Rotas
+    ]
+  },
+  {
     path: '',
     component: AuthLayout,
     children: [
