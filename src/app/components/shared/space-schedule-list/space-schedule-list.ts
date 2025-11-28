@@ -13,13 +13,15 @@ import ProfessorService from '../../../services/professor/professor.service';
   styleUrl: './space-schedule-list.css',
 })
 export class SpaceScheduleList implements OnInit {
-  @Input() dataSelecionada: Date = new Date('2025-12-15');
-  @Input() modoVisualizacao: 'Hoje' | 'Semana' = 'Hoje';
-  @Input() filtroTexto: string = '';
+  @Input() dataSelecionada: Date = new Date();
+  @Input() modoVisualizacao!: 'Hoje' | 'Semana';
+  @Input() filtroTexto!: string;
 
   salas: Sala[] = [];
   agendamentos: Agendamento[] = [];
   agendamentosPorSala: Record<number, Agendamento[]> = {};
+  agendamentosPorDia: Record<string, Record<number, Agendamento[]>> = {};
+  diasSemana: Array<{ data: Date; iso: string; nome: string }> = [];
   professorPorDisciplina: Record<number, string> = {};
   expandedSalas: Record<number, boolean> = {};
 
@@ -49,14 +51,45 @@ export class SpaceScheduleList implements OnInit {
   }
 
   carregarDados() {
+    if (this.modoVisualizacao === 'Hoje') {
+      this.carregarHoje();
+    } else {
+      this.carregarSemana();
+    }
+  }
+
+  private carregarHoje() {
     const data = this.formatarData(this.dataSelecionada);
+
     forkJoin({
       salas: this.salaService.getSalas(),
       agendamentos: this.agendamentoService.getAgendamentoPorData(data),
     }).subscribe(({ salas, agendamentos }) => {
       this.salas = salas;
       this.agendamentos = agendamentos;
-      this.agruparPorSala();
+
+      this.agendamentosPorSala = this.agruparPorSala(this.agendamentos ?? []);
+    });
+  }
+
+  private carregarSemana() {
+    this.calcularSemana();
+
+    forkJoin({
+      salas: this.salaService.getSalas(),
+      dias: forkJoin(
+        this.diasSemana.map((d) => this.agendamentoService.getAgendamentoPorData(d.iso)),
+      ),
+    }).subscribe(({ salas, dias }) => {
+      this.salas = salas;
+
+      this.agendamentosPorDia = {};
+
+      dias.forEach((ags, i) => {
+        const iso = this.diasSemana[i].iso;
+
+        this.agendamentosPorDia[iso] = this.agruparPorSala(ags);
+      });
     });
   }
 
@@ -74,15 +107,40 @@ export class SpaceScheduleList implements OnInit {
     return sala!.salaNome;
   }
 
-  agruparPorSala() {
-    this.agendamentosPorSala = {};
+  private agruparPorSala(lista: Agendamento[]) {
+    const map: Record<number, Agendamento[]> = {};
 
-    for (const sala of this.salas) {
-      const ags = this.agendamentos.filter((a) => a.sala.salaId === sala.salaId);
-
-      if (ags.length > 0) {
-        this.agendamentosPorSala[sala.salaId] = ags;
+    for (const ag of lista) {
+      const salaId = ag.sala.salaId;
+      if (!map[salaId]) {
+        map[salaId] = [];
       }
+      map[salaId].push(ag);
+    }
+
+    return map;
+  }
+
+  private calcularSemana() {
+    const base = new Date(this.dataSelecionada);
+    const diaSemana = base.getDay();
+
+    const segunda = new Date(base);
+    segunda.setDate(base.getDate() - ((diaSemana + 6) % 7));
+
+    this.diasSemana = [];
+
+    for (let i = 0; i < 6; i++) {
+      const d = new Date(segunda);
+      d.setDate(segunda.getDate() + i);
+
+      const iso = d.toISOString().split('T')[0];
+
+      this.diasSemana.push({
+        data: d,
+        iso,
+        nome: d.toLocaleDateString('pt-BR', { weekday: 'long' }),
+      });
     }
   }
 

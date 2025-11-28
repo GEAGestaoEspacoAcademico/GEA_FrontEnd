@@ -74,7 +74,6 @@ const routes: Routes = [
       { path: 'agendar-sala', component: AgendarSalaMateria },
       { path: 'funcionarios', component: Funcionarios },
       { path: 'cadastrar-funcionario', component: FuncionarioForm },
-      { path: 'teste', component: SpaceScheduleList },
     ],
   },
   {
