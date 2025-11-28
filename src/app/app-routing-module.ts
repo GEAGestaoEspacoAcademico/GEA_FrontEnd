@@ -53,7 +53,7 @@ const routes: Routes = [
       { path: 'agendar-aula', component: ScheduleClass },
       { path: 'agendar-evento', component: ScheduleEvent },
       { path: 'lista-espacos', component: SpaceManagement },
-      { path: 'cadastrar-espaco', component:  SpaceRegistrationPage},
+      { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'cadastrar-espaco',
@@ -70,10 +70,19 @@ const routes: Routes = [
       { path: 'home', component: Secretariahome },
       { path: 'visualizar-espacos', component: ListaEspacos },
       { path: 'cadastrar-laboratorio', component: CadastroSala },
-      { path: 'agendar-sala', component: AgendarSalaMateria},
+      { path: 'agendar-sala', component: AgendarSalaMateria },
       { path: 'funcionarios', component: Funcionarios },
-      { path: 'cadastrar-funcionario', component: FuncionarioForm}
+      { path: 'cadastrar-funcionario', component: FuncionarioForm },
     ],
+  },
+  {
+    path: 'coordenacao',
+    component: MainLayout,
+    canActivate: [RoleGuard],
+    data: {roles: ['COORDENADOR']},
+    children: [
+      //Rotas
+    ]
   },
   {
     path: '',

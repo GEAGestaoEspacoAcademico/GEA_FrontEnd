@@ -90,6 +90,7 @@ import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
 import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
+import { SpaceScheduleList } from './components/shared/space-schedule-list/space-schedule-list';
 import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aula';
 
 @NgModule({
@@ -122,6 +123,7 @@ import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aul
     SmartSchedulingForm,
     DashboardCard,
     AddItemModal,
+    SpaceScheduleList,
     // AD Components
     MultiDateSelector,
     DashboardCard,
