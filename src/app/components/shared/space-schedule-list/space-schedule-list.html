@@ -1,0 +1,114 @@
+<div class="container-schedule">
+  <div>
+    @if (modoVisualizacao === 'Hoje') {
+      <h3 class="text-center w-100 mb-3">
+        Aulas – {{ dataSelecionada | date: 'dd/MM/yyyy' : 'UTC' }}
+      </h3>
+
+      @if (salasFiltradas.length > 0) {
+        @for (sala of salasFiltradas; track sala.key) {
+          <div class="card my-4">
+            <div class="card-header fw-bold">
+              {{ getNomeSala(+sala.key) }}
+            </div>
+
+            <ul class="list-group list-group-flush">
+              @for (
+                ag of expandedSalas[+sala.key] ? sala.value : sala.value.slice(0, 3);
+                track ag.agendamentoId
+              ) {
+                <li class="list-group-item d-flex justify-content-between">
+                  <div>
+                    <strong class="captions fw-bold">Professor:</strong>
+                    <span class="disciplina-professor">
+                      {{ getProfessorPorDisciplina(ag.disciplinaId) }}</span
+                    >
+                    <br />
+                    <strong class="captions fw-bold">Disciplina:</strong>
+                    <span class="disciplina-professor"> {{ ag.disciplinaNome }}</span>
+                  </div>
+
+                  <span class="time-caption horario"> {{ ag.horaInicio }} – {{ ag.horaFim }} </span>
+                </li>
+              }
+              @if (sala.value.length > 3 && !expandedSalas[+sala.key]) {
+                <li class="list-group-item text-center">
+                  <button class="btn btn-link p-0" (click)="expandedSalas[+sala.key] = true">
+                    Carregar mais
+                  </button>
+                </li>
+              }
+
+              @if (expandedSalas[+sala.key]) {
+                <li class="list-group-item text-center">
+                  <button class="btn btn-link p-0" (click)="expandedSalas[+sala.key] = false">
+                    Mostrar menos
+                  </button>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+      } @else {
+        <p class="text-center text-muted">Nenhuma aula encontrada.</p>
+      }
+    }
+    @if (modoVisualizacao === 'Semana') {
+      @for (dia of diasSemana; track dia.iso) {
+        <h3 class="text-center my-4 text-capitalize">
+          {{ dia.nome }} – {{ dia.data | date: 'dd/MM/yyyy' }}
+        </h3>
+
+        @if (agendamentosPorDia[dia.iso]) {
+          @for (sala of agendamentosPorDia[dia.iso] | keyvalue; track sala.key) {
+            @if (getNomeSala(+sala.key).toLowerCase().includes(filtroTexto.toLowerCase())) {
+              <div class="card my-3">
+                <div class="card-header fw-bold">
+                  {{ getNomeSala(+sala.key) }}
+                </div>
+
+                <ul class="list-group list-group-flush">
+                  @for (
+                    ag of expandedSalas[+sala.key] ? sala.value : sala.value.slice(0, 3);
+                    track ag.agendamentoId
+                  ) {
+                    <li class="list-group-item d-flex justify-content-between">
+                      <div>
+                        <strong class="captions">Professor:</strong>
+                        {{ getProfessorPorDisciplina(ag.disciplinaId) }} <br />
+
+                        <strong class="captions">Disciplina:</strong>
+                        {{ ag.disciplinaNome }}
+                      </div>
+
+                      <span class="time-caption horario">
+                        {{ ag.horaInicio }} – {{ ag.horaFim }}
+                      </span>
+                    </li>
+                  }
+                  @if (sala.value.length > 3 && !expandedSalas[+sala.key]) {
+                    <li class="list-group-item text-center">
+                      <button class="btn btn-link p-0" (click)="expandedSalas[+sala.key] = true">
+                        Carregar mais
+                      </button>
+                    </li>
+                  }
+
+                  @if (expandedSalas[+sala.key]) {
+                    <li class="list-group-item text-center">
+                      <button class="btn btn-link p-0" (click)="expandedSalas[+sala.key] = false">
+                        Mostrar menos
+                      </button>
+                    </li>
+                  }
+                </ul>
+              </div>
+            }
+          }
+        } @else {
+          <p class="text-center text-muted">Nenhuma aula encontrada para este dia.</p>
+        }
+      }
+    }
+  </div>
+</div>

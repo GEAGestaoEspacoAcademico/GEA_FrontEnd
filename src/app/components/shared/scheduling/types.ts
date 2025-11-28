@@ -8,11 +8,12 @@ export interface Field {
   placeholder?: string;
   options?: Option[];
   defaultValue?: string | number;
+  disabled?: boolean; // <--- ADICIONADO: A nova propriedade
   validators?: {
     required?: boolean;
     minLength?: number;
     maxLength?: number;
-    pattern?: string; // para regex
+    pattern?: string;
     errorMessages?: Record<string, string>;
   }
   isloading?: boolean  
