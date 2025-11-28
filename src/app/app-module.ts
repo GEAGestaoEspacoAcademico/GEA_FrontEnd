@@ -148,7 +148,7 @@ import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agen
     SalaForm,
     CadastroSala,
     ScheduleClass,
-    AgendarSalaMateria
+    AgendarSalaMateria,
   ],
   imports: [
     BrowserModule,
