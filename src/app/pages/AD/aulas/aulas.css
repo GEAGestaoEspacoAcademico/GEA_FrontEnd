@@ -3,7 +3,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 10px 0;
+  padding: 0.625rem 0;
 }
 
 :host ::ng-deep .day-item {
@@ -13,7 +13,7 @@
   transition: all 0.2s ease;
 }
 
-@media (max-width: 991px) {
+@media (max-width: 61.9375rem) {
   :host ::ng-deep .day-selector {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
@@ -29,11 +29,11 @@
   }
 }
 
-@media (min-width: 992px) {
+@media (min-width: 62rem) {
   :host ::ng-deep .day-selector {
     overflow-x: auto;
     margin: 0 auto;
-    max-width: 1200px;
+    max-width: 75rem;
 
     :host ::ng-deep .day-selector::-webkit-scrollbar-track {
       background: transparent;
@@ -41,7 +41,7 @@
 
     :host ::ng-deep .day-selector::-webkit-scrollbar-thumb {
       background-color: #ccc;
-      border-radius: 4px;
+      border-radius: 0.3rem;
     }
 
     :host ::ng-deep .day-selector::-webkit-scrollbar-thumb:hover {
