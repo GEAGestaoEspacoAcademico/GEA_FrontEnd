@@ -22,7 +22,6 @@ import { Router } from '@angular/router';
 export class Header {
   private store = inject(Store);
   private headerTitleService = inject(HeaderTitleService);
-  private location = inject(Location);
   private router = inject(Router)
 
   public cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
@@ -33,9 +32,7 @@ export class Header {
     this.store.dispatch(AuthActions.logout());
   }
 
-  goBack(): void {
-    this.location.back();
-  }
+
 
 voltarHome() {
   this.cargo$
