@@ -4,13 +4,13 @@
       <app-title-highlightt title="Configurações"></app-title-highlightt>
     </div>
     <div class="d-flex flex-column">
-      <div class="d-flex flex-row">
+      <div class="d-flex flex-row btn-houver">
         <div class="line mt-3"></div>
-        <a class="subtitle p-1" routerLink="/redefinir-senha">Alterar Senha</a>
+        <a class="subtitle p-1 cursor-pointer" routerLink="/redefinir-senha">Alterar Senha</a>
       </div>
-      <div class="d-flex flex-row">
+      <div class="d-flex flex-row gap-2 btn-houver">
         <div class="line mt-3"></div>
-        <a tabindex="0" class="subtitle p-1" (click)="openModal()" (keypress)="openModal()"
+        <a tabindex="0" class="subtitle cursor-pointer" (click)="openModal()" (keypress)="openModal()"
           >Logout</a
         >
         <mat-icon svgIcon="logout" class="icon-logout"></mat-icon>
@@ -18,10 +18,10 @@
     </div>
   </div>
 </div>
-<div class="container informations">
+<div class="container informations mt-3">
   <app-title-highlightt title="Informações"></app-title-highlightt>
   <dl>
-    <div class="d-flex flex-row gap-1">
+    <div class="d-flex flex-row gap-1 mt-2">
       <dt>Nome:</dt>
       @if (user$ | async; as user) {
         <dd>{{ user.usuarioNome }}</dd>
