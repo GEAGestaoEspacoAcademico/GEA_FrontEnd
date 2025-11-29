@@ -82,7 +82,7 @@
   display: inline-block;
   vertical-align: middle;
 }
-.icon-arrow {
+.home {
   height: auto;
   transform: scaleX(-1);
   &:hover{
