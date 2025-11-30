@@ -24,6 +24,7 @@ import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aula';
+import { Calendario } from './pages/coordenacao/calendario/calendario';
 
 const routes: Routes = [
   {
@@ -81,7 +82,7 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: {roles: ['COORDENADOR']},
     children: [
-      //Rotas
+      {path: 'espacos-academicos', component: Calendario}
     ]
   },
   {

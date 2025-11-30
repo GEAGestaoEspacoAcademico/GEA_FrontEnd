@@ -87,8 +87,8 @@ export class SpaceScheduleList implements OnInit {
 
       dias.forEach((ags, i) => {
         const iso = this.diasSemana[i].iso;
-
-        this.agendamentosPorDia[iso] = this.agruparPorSala(ags);
+        const lista = Array.isArray(ags) ? ags : [];
+        this.agendamentosPorDia[iso] = this.agruparPorSala(lista);
       });
     });
   }
@@ -110,12 +110,21 @@ export class SpaceScheduleList implements OnInit {
   private agruparPorSala(lista: Agendamento[]) {
     const map: Record<number, Agendamento[]> = {};
 
+    if (!Array.isArray(lista)) {
+      console.warn('agruparPorSala recebeu valor inválido:', lista);
+      return map;
+    }
+
     for (const ag of lista) {
+      if (!ag?.sala?.salaId) {
+        continue;
+      }
+
       const salaId = ag.sala.salaId;
+
       if (!map[salaId]) {
         map[salaId] = [];
       }
-      map[salaId].push(ag);
     }
 
     return map;
