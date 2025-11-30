@@ -93,6 +93,8 @@ import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agen
 import { SpaceScheduleList } from './components/shared/space-schedule-list/space-schedule-list';
 import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aula';
 import { Homecoord } from './pages/coordenacao/homecoord/homecoord';
+import { Calendario } from './pages/coordenacao/calendario/calendario';
+import { ProfessorScheduleList } from './components/coordenacao/professor-schedule-list/professor-schedule-list';
 
 @NgModule({
   declarations: [
@@ -156,7 +158,9 @@ import { Homecoord } from './pages/coordenacao/homecoord/homecoord';
     ScheduleClass,
     AgendarSalaMateria,
     VisualizarAula,
-    Homecoord
+    Homecoord,
+    Calendario,
+    ProfessorScheduleList
   ],
   imports: [
     BrowserModule,

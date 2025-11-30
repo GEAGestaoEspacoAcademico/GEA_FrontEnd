@@ -25,6 +25,7 @@ import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aula';
 import { Homecoord } from './pages/coordenacao/homecoord/homecoord';
+import { Calendario } from './pages/coordenacao/calendario/calendario';
 
 const routes: Routes = [
   {
@@ -56,10 +57,7 @@ const routes: Routes = [
       { path: 'lista-espacos', component: SpaceManagement },
       { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      {
-        path: 'cadastrar-espaco',
-        component: SpaceRegistrationPage,
-      },
+      { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
     ],
   },
   {
@@ -83,7 +81,8 @@ const routes: Routes = [
     data: {roles: ['COORDENADOR']},
     children: [
       {path: 'homecoord', component: Homecoord},
-      {path: '', redirectTo: 'homecoord', pathMatch: 'full' },
+      {path: 'espacos-academicos', component: Calendario},
+      {path: '', redirectTo: 'homecoord', pathMatch: 'full' }
     ]
   },
   {
