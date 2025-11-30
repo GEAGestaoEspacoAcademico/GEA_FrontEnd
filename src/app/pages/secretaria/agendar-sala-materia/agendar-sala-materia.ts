@@ -104,9 +104,9 @@ export class AgendarSalaMateria implements OnInit {
         this.horariosDisponiveis = res;
         this.isLoadingHorarios = false;
       },
-      error: () => {
+      error: (err) => {
         this.isLoadingHorarios = false;
-        this.statusMessage.set('Erro ao buscar horários.');
+        this.snackbarService.showError(err);
       }
     });
   }
@@ -147,10 +147,14 @@ export class AgendarSalaMateria implements OnInit {
     ).subscribe({
       next: () => {
         this.snackbarService.showSuccess('Agendamento realizado com Sucesso!');
-        window.location.reload();
+
+        setTimeout(() => {
+          window.location.reload();
+          sessionStorage.clear();
+        }, 1000);
       },
       error: (err) => {
-        this.snackbarService.showError('Falha ao realizar agendamento.');
+        this.snackbarService.showError(err);
       }
     });
   }
@@ -160,7 +164,7 @@ export class AgendarSalaMateria implements OnInit {
       this.formularioEvento = form;
       this.modalAviso.open();
     } else {
-      console.error('Formulário inválido recebido.');
+      this.snackbarService.showError('Formulário recebido inválido.');
     }
   }
 
