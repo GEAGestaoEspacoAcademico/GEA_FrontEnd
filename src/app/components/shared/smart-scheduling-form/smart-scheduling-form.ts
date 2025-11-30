@@ -47,7 +47,7 @@ export class SmartSchedulingForm implements OnInit {
   eventoForm!: FormGroup;
   eventBatch: any[] = [];
 
-  
+
   @Input() mode: 'aula' | 'evento' = 'aula';
 
   @Input()
@@ -70,7 +70,7 @@ export class SmartSchedulingForm implements OnInit {
     console.log("LOTE DE DATAS RECEBIDO: ", values);
     this._dateArray = values || [];
     if (this._dateArray.length > 0) {
-      const dataReferencia = this._dateArray[0]; 
+      const dataReferencia = this._dateArray[0];
       this.getHorariosDisponiveis(dataReferencia);
     } else {
       this.listaHorarios = [];
@@ -152,7 +152,7 @@ export class SmartSchedulingForm implements OnInit {
     if (temArray) {
       this.dateArray.forEach(data => {
         this.eventBatch.push({
-          date: data, 
+          date: data,
           nomeEvento: config.nomeEvento,
           local: config.local,
           inicio: config.inicio,
@@ -182,7 +182,7 @@ export class SmartSchedulingForm implements OnInit {
     if (this.eventBatch.length === 0) { return; }
     const payloadAgrupado: CriarEventoFormulario[] = [];
     this.eventBatch.forEach(item => {
-    let grupoExistente = payloadAgrupado.find(g => 
+    let grupoExistente = payloadAgrupado.find(g =>
       g.eventoNome === item.nomeEvento && g.salaId === Number(item.local)
     );
 
@@ -212,17 +212,18 @@ export class SmartSchedulingForm implements OnInit {
   }
 
 
+
   getHorariosDisponiveis(date: Date): void {
     const dataString = date.toISOString().substring(0, 10);
 
-    this.serviceHorario.getJanelaHorarioPorData(dataString).subscribe({
-      next: (janelas: JanelaHorario[]) => {
-        this.listaHorarios = janelas;
-      },
-      error: (err) => {
-        this.listaHorarios = [];
-      }
-    });
+    // this.serviceHorario.getJanelaHorarioPorData(dataString).subscribe({
+    //   next: (janelas: JanelaHorario[]) => {
+    //     this.listaHorarios = janelas;
+    //   },
+    //   error: (err) => {
+    //     this.listaHorarios = [];
+    //   }
+    // });
   }
 
   getCursosProfessor() {

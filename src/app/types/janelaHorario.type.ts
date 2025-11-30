@@ -9,3 +9,8 @@ export interface CriarJanelaHorarioRequest {
   horaInicio: string,
   horaFim: string
 }
+
+export interface JanelasHorarioPorDataRequest{
+  data: string,
+  salaId: number,
+}

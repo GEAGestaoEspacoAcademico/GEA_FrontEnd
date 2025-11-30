@@ -218,14 +218,14 @@ mat-chip button mat-icon {
   font-weight: bold;
 }
 
-select:disabled {
+select:disabled, input:disabled {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 
   background-image: none;
 
-  background-color: #E6E6E6;
+  background-color: #bbbaba !important;
   opacity: 1;
   color: var(--color-neutral-900);
 }

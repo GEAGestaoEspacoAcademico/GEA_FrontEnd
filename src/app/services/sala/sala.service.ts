@@ -55,8 +55,8 @@ export class SalaService {
     return this.http.post<BuscarRecomendacaoResponse[]>(`${this.baseUrl}/recomendacoes`, data)
   }
 
-  public getSalaDisponivel(): Observable<BuscarSalaDisponivel>{
-    return this.http.get<BuscarSalaDisponivel>(`${this.baseUrl}/disponiveis`)
+  public getSalaDisponivel(): Observable<BuscarSalaDisponivel[]>{
+    return this.http.get<BuscarSalaDisponivel[]>(`${this.baseUrl}/disponiveis`)
   }
 
   //!MÉTODO TEMPORARIO SUJEITO A MUIDANÇAS
