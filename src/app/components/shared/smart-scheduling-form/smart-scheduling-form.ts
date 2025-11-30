@@ -13,6 +13,7 @@ import { SalaService } from '../../../services/sala/sala.service';
 import type { CriarEventoFormulario } from '../../../types/agendamentoEvento.type';
 import { FormatUtils } from '../../../utils/format.utils';
 import type { CriarAgendamentoAulaFormulario } from '../../../types/util.types';
+import type { JanelasHorarioPorDataRequest } from '../../../types/janelaHorario.type';
 
 @Component({
   selector: 'app-smart-scheduling-form',
@@ -20,16 +21,13 @@ import type { CriarAgendamentoAulaFormulario } from '../../../types/util.types';
   templateUrl: './smart-scheduling-form.html',
   styleUrl: './smart-scheduling-form.css'
 })
-
 export class SmartSchedulingForm implements OnInit {
 
-  // --- Injeção de Dependência ---
   private fb = inject(FormBuilder);
   private serviceHorario = inject(JanelasHorarioService);
   private serviceCurso = inject(CursoService);
   private serviceSala = inject(SalaService);
   private serviceDisciplina = inject(DisciplinaService);
-
 
   private _singleDate: Date | null = null;
   private _dateArray: Date[] = [];
@@ -47,7 +45,6 @@ export class SmartSchedulingForm implements OnInit {
   eventoForm!: FormGroup;
   eventBatch: any[] = [];
 
-
   @Input() mode: 'aula' | 'evento' = 'aula';
 
   @Input()
@@ -55,7 +52,7 @@ export class SmartSchedulingForm implements OnInit {
     this._singleDate = date;
 
     if (this._singleDate) {
-      this.getHorariosDisponiveis(this._singleDate);
+      this.buscarJanelasHorario();
     } else {
       this.limparSelecoesDeHorario();
     }
@@ -67,11 +64,9 @@ export class SmartSchedulingForm implements OnInit {
 
   @Input()
   set dateArray(values: Date[]) {
-    console.log("LOTE DE DATAS RECEBIDO: ", values);
     this._dateArray = values || [];
     if (this._dateArray.length > 0) {
-      const dataReferencia = this._dateArray[0];
-      this.getHorariosDisponiveis(dataReferencia);
+      this.buscarJanelasHorario();
     } else {
       this.listaHorarios = [];
     }
@@ -86,9 +81,8 @@ export class SmartSchedulingForm implements OnInit {
 
   ngOnInit(): void {
     this.buildForms();
-    this.getCursosProfessor();
-    this.getDisciplinas();
-    this.getSalas();
+    this.setupListeners(); 
+    this.carregarDadosAuxiliares(); 
   }
 
   buildForms() {
@@ -108,6 +102,67 @@ export class SmartSchedulingForm implements OnInit {
     });
   }
 
+  setupListeners() {
+    this.aulaForm.get('local')?.valueChanges.subscribe(() => {
+      this.buscarJanelasHorario();
+    });
+
+    this.eventoForm.get('local')?.valueChanges.subscribe(() => {
+      this.buscarJanelasHorario();
+    });
+  }
+
+  carregarDadosAuxiliares() {
+    this.getCursosProfessor();
+    this.getDisciplinas();
+    this.getSalas();
+  }
+
+
+  buscarJanelasHorario(): void {
+    let dataReferencia: Date | null = null;
+    
+    if (this._singleDate) {
+      dataReferencia = this._singleDate;
+    } else if (this._dateArray && this._dateArray.length > 0) {
+      dataReferencia = this._dateArray[0];
+    }
+    let salaId = null;
+
+    if(this.mode === "aula"){
+      salaId = this.aulaForm.get('local')?.value;
+    }else{
+      salaId = this.eventoForm.get('local')?.value;
+    }
+
+    if (!dataReferencia || !salaId) {
+      this.listaHorarios = [];
+      return;
+    }
+
+    const dataString = dataReferencia.toISOString().substring(0, 10);
+
+    const buscarJanelaHorarioRequest: JanelasHorarioPorDataRequest = {
+      data: dataString,
+      salaId
+    }
+
+    this.serviceHorario.getJanelaHorarioPorData(buscarJanelaHorarioRequest).subscribe({
+      next: (janelas: JanelaHorario[]) => {
+        this.listaHorarios = janelas;
+      },
+      error: (err) => {
+        console.error('Erro ao buscar janelas', err);
+        this.listaHorarios = [];
+      }
+    });
+  }
+
+  getHorariosDisponiveis(date: Date): void {
+    this._singleDate = date; 
+    this.buscarJanelasHorario();
+  }
+
   limparSelecoesDeHorario() {
     if (this.aulaForm || this.eventoForm) {
       this.horarios = [];
@@ -116,6 +171,7 @@ export class SmartSchedulingForm implements OnInit {
       this.aulaForm?.get('horario')?.setValue('');
       this.eventoForm?.get('inicio')?.setValue('');
       this.eventoForm?.get('fim')?.setValue('');
+      this.listaHorarios = [];
     }
   }
 
@@ -131,6 +187,7 @@ export class SmartSchedulingForm implements OnInit {
 
     setTimeout(() => {
       this.aulaForm.reset();
+      this.listaHorarios = [];
     }, 2000);
   }
 
@@ -181,19 +238,20 @@ export class SmartSchedulingForm implements OnInit {
   submitBatch() {
     if (this.eventBatch.length === 0) { return; }
     const payloadAgrupado: CriarEventoFormulario[] = [];
+    
     this.eventBatch.forEach(item => {
-    let grupoExistente = payloadAgrupado.find(g =>
-      g.eventoNome === item.nomeEvento && g.salaId === Number(item.local)
-    );
+      let grupoExistente = payloadAgrupado.find(g =>
+        g.eventoNome === item.nomeEvento && g.salaId === Number(item.local)
+      );
 
-    if (!grupoExistente) {
-      grupoExistente = {
-        eventoNome: item.nomeEvento,
-        salaId: Number(item.local),
-        dias: []
-      };
-      payloadAgrupado.push(grupoExistente);
-    }
+      if (!grupoExistente) {
+        grupoExistente = {
+          eventoNome: item.nomeEvento,
+          salaId: Number(item.local),
+          dias: []
+        };
+        payloadAgrupado.push(grupoExistente);
+      }
 
       const dataFormatada = FormatUtils.formatDateForInput(new Date(item.date))
 
@@ -204,26 +262,10 @@ export class SmartSchedulingForm implements OnInit {
       });
     });
 
-    console.log("Payload Formatado:", payloadAgrupado); // Para você conferir no console
     this.batchSubmit.emit(payloadAgrupado);
 
     this.eventBatch = [];
     this.eventoForm.reset();
-  }
-
-
-
-  getHorariosDisponiveis(date: Date): void {
-    const dataString = date.toISOString().substring(0, 10);
-
-    // this.serviceHorario.getJanelaHorarioPorData(dataString).subscribe({
-    //   next: (janelas: JanelaHorario[]) => {
-    //     this.listaHorarios = janelas;
-    //   },
-    //   error: (err) => {
-    //     this.listaHorarios = [];
-    //   }
-    // });
   }
 
   getCursosProfessor() {
