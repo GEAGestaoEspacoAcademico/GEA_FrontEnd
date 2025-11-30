@@ -1,33 +1,37 @@
 <h2 class="home-title">Home</h2>
-<div class="cards-container d-flex flex-column flex-md-row" style="gap: var(--spacing-5);">
-  <app-dashboard-card
-    iconName="calendar"
-    title="Calendário Semanal Professores"
-    [routerLink]="'/coordenacao/calendario'">
-  </app-dashboard-card>
 
-  <app-dashboard-card
-    iconName="home"
-    title="Visualizar Espaços Acadêmicos"
-    [routerLink]="'/ad/lista-espacos'">
-  </app-dashboard-card>
+<div class="home-wrapper">
+  <div class="cards-container">
 
-  <app-dashboard-card
-    iconName="add-circle"
-    title="Agendar Espaços Acadêmicos"
-    [routerLink]="'/agenda'">
-  </app-dashboard-card>
+    <app-dashboard-card
+      iconName="calendar"
+      title="Calendário Semanal Professores"
+      [routerLink]="'/coordenacao/calendario'">
+    </app-dashboard-card>
 
-  <app-dashboard-card
-    iconName="list"
-    title="Gerenciar Agendamentos"
-    [routerLink]="'/aulas'">
-  </app-dashboard-card>
+    <app-dashboard-card
+      iconName="home"
+      title="Visualizar Espaços Acadêmicos"
+      [routerLink]="'/ad/lista-espacos'">
+    </app-dashboard-card>
 
-  <app-dashboard-card
-    iconName="settings"
-    title="Configurações"
-    [routerLink]="'/configuracoes'">
-  </app-dashboard-card>
+    <app-dashboard-card
+      iconName="add-circle"
+      title="Agendar Espaços Acadêmicos"
+      [routerLink]="'/agenda'">
+    </app-dashboard-card>
 
+    <app-dashboard-card
+      iconName="list"
+      title="Gerenciar Agendamentos"
+      [routerLink]="'/aulas'">
+    </app-dashboard-card>
+
+    <app-dashboard-card
+      iconName="settings"
+      title="Configurações"
+      [routerLink]="'/configuracoes'">
+    </app-dashboard-card>
+
+  </div>
 </div>
