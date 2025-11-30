@@ -11,7 +11,7 @@ import type { Sala } from '../../../models/sala.model';
 import type { Datas, JanelaHorario } from '../../../models/janelasHorario.model';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../../../store/auth/auth.selectors';
-import { filter, finalize, switchMap, take } from 'rxjs';
+import { filter, switchMap, take } from 'rxjs';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import type { MultiDateSelector } from '../../../components/shared/multi-date-selector/multi-date-selector';
 import type { RecurringSchedulingForm } from '../../../components/shared/recurring-scheduling-form/recurring-scheduling-form';
@@ -151,7 +151,6 @@ export class AgendarSalaMateria implements OnInit {
       },
       error: (err) => {
         this.snackbarService.showError('Falha ao realizar agendamento.');
-        console.log(err);
       }
     });
   }
@@ -170,7 +169,6 @@ export class AgendarSalaMateria implements OnInit {
       this.postDataRecorrente(this.formularioEvento);
     } else {
       this.snackbarService.showError('Dados do formulário não encontrados. Tente novamente.');
-      console.error('Erro: formularioEvento é nulo ou indefinido.');
     }
   }
 }
