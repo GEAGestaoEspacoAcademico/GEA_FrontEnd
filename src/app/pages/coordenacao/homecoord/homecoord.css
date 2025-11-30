@@ -1,0 +1,43 @@
+.home-wrapper {
+  padding: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cards-container {
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  
+  flex-direction: column;
+  align-items: center;
+}
+
+.cards-container app-dashboard-card {
+  width: 100%;
+  display: flex; 
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .cards-container {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+  }
+
+  .cards-container app-dashboard-card {
+    width: auto;
+    display: block;
+  }
+}
+.home-title {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
+  color: #2b2b2b;
+}

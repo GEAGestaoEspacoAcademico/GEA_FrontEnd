@@ -1,31 +1,59 @@
 .dashboard-card {
-  width: 15rem;
-  height: 15rem;
-  background-color: var(--color-surface-disabled); 
-  border-radius: 0.5rem; 
-  color: black; 
   display: flex;
-  flex-direction: column;
-  padding: var(--spacing-4);
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 6rem;
+  background-color: #BBC4C8;
+  border-radius: 0.75rem;
+  padding: 0 1rem;
+  gap: 1rem;
+  color: #2E3538;
   text-decoration: none;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s, background-color 0.2s;
+  cursor: pointer;
+  box-sizing: border-box; 
 }
 
 .dashboard-card:hover {
-  background-color: #acb9be;
+  background-color: #A9B2B6;
 }
 
 .card-icon {
-  color: black;
-  width: 4rem;
-  height: 4rem;
-  margin-bottom: 0.5rem; 
+  width: 2.5rem;
+  height: 2.5rem;
+  color: #2E3538;
 }
 
 .card-title {
-  font-size: 1.5rem;
-  font-weight: 500;
-  color: #333; 
-  text-align: center; 
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: left;
+  line-height: 1.2;
+  color: #2E3538;
+}
+
+@media (min-width: 768px) {
+  .dashboard-card {
+    width: 15rem;
+    height: 15rem;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .card-icon {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+    text-align: center;
+    width: 100%;
+  }
 }

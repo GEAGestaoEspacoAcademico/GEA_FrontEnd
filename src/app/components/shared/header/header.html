@@ -67,7 +67,8 @@
             </nav>
           } @else if (
             cargo?.toUpperCase() === 'AUXILIAR_ADMINISTRATIVO' ||
-            cargo?.toUpperCase() === 'SECRETARIA'
+            cargo?.toUpperCase() === 'SECRETARIA' ||
+            cargo?.toUpperCase() === 'COORDENADOR'
           ) {
             <h2 class="page-title" aria-live="polite">
               {{ title$ | async }}
