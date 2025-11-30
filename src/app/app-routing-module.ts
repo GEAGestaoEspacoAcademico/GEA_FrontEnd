@@ -24,6 +24,7 @@ import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aula';
+import { Homecoord } from './components/coordenacao/homecoord/homecoord';
 
 const routes: Routes = [
   {
@@ -81,7 +82,8 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: {roles: ['COORDENADOR']},
     children: [
-      //Rotas
+      {path: 'homecoord', component: Homecoord},
+      {path: '', redirectTo: 'homecoord', pathMatch: 'full' },
     ]
   },
   {
