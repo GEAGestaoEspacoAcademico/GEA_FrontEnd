@@ -1,3 +1,4 @@
+import type { OnInit} from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { take, switchMap, throwError } from 'rxjs';
@@ -8,6 +9,7 @@ import { selectUserId } from '../../../store/auth/auth.selectors';
 import type { AgendamentoAulaCriarADRequest } from '../../../types/agendamentoAula.type';
 import type { CriarAgendamentoAulaFormulario } from '../../../types/util.types';
 import { FormatUtils } from '../../../utils/format.utils';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-schedule-class',
@@ -15,7 +17,8 @@ import { FormatUtils } from '../../../utils/format.utils';
   templateUrl: './schedule-class.html',
   styleUrl: './schedule-class.css'
 })
-export class ScheduleClass {
+export class ScheduleClass implements OnInit{
+  private headerService = inject(HeaderTitleService);
   data: Date = new Date();
   isLoadingCriarAula = false;
   private agendamentoService = inject(AgendamentoService)
@@ -23,10 +26,14 @@ export class ScheduleClass {
   private store = inject(Store)
 
   usuarioId$ = this.store.select(selectUserId)
-
-
+  
+  
   @ViewChild("scheduleModal") scheduleModal!: ScheduleDayModal;
   
+  ngOnInit(): void {
+    this.headerService.setTitle('Agendar Aula')
+    this.headerService.showBack()
+  }
 
   pegarDias(dias: Date[]){
     this.data = dias[0]
