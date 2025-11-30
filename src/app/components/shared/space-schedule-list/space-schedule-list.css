@@ -1,0 +1,94 @@
+.search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--color-default-white);
+  border: 1px solid #ddd;
+  border-radius: 0.75rem;
+  padding: 0.25rem 0.75rem;
+  max-width: 25rem;
+  flex-grow: 0;
+}
+
+.search-bar input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  text-align: start;
+}
+
+.search-bar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.25rem;
+  transform: scale(1);
+  transition: transform 0.15s;
+}
+
+.search-bar button:hover {
+  color: var(--color-neutral-900);
+  transform: scale(1.1);
+}
+
+.search-bar mat-icon {
+  font-size: 1rem;
+}
+
+.icon-search {
+  margin-right: 1rem;
+}
+
+.container-schedule {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.modo-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.modo-btn {
+  background: none;
+  border: none;
+  font-style: italic;
+  color: var(--color-neutral-500);
+  text-decoration: underline transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.modo-btn.ativo {
+  color: var(--color-feedback-error);
+  text-decoration: underline var(--color-feedback-error);
+}
+
+.card-header {
+  color: var(--color-default-white);
+  background-color: var(--color-feedback-error);
+  text-align: center;
+  border: 1px solid #6b6b6b;
+}
+
+.list-group-item {
+  padding: 15px 16px;
+  font-size: 0.95rem;
+}
+
+.captions {
+  color: var(--color-neutral-900);
+}
+
+.time-caption {
+  color: var(--color-primary-700);
+  font-weight: normal;
+}
+
+.disciplina-professor {
+  font-size: 0.75rem;
+  font-family: var(--font-family-primary);
+  color: var(--color-neutral-300);
+}

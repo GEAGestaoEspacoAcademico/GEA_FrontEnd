@@ -20,11 +20,11 @@ import { ListaEspacos } from './pages/secretaria/lista-espacos/lista-espacos';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { SpaceRegistrationPage } from './pages/AD/space-registration/space-registration.page';
 import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
-import { Aulas } from './pages/AD/aulas/aulas';
 import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 import { Homecoord } from './components/coordenacao/homecoord/homecoord';
+import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aula';
 
 const routes: Routes = [
   {
@@ -34,7 +34,7 @@ const routes: Routes = [
     data: { roles: ['PROFESSOR'] },
     children: [
       { path: 'agenda', component: AgendarAula },
-      { path: 'aulas', component: Aulas },
+      { path: 'aulas', component: VisualizarAula },
       { path: 'configuracoes', component: Configuracoes },
       { path: 'aulas/alterar/:id', component: EditarAula },
       { path: 'adhome', component: Home },
@@ -54,7 +54,7 @@ const routes: Routes = [
       { path: 'agendar-aula', component: ScheduleClass },
       { path: 'agendar-evento', component: ScheduleEvent },
       { path: 'lista-espacos', component: SpaceManagement },
-      { path: 'cadastrar-espaco', component:  SpaceRegistrationPage},
+      { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       {
         path: 'cadastrar-espaco',
@@ -71,9 +71,9 @@ const routes: Routes = [
       { path: 'home', component: Secretariahome },
       { path: 'visualizar-espacos', component: ListaEspacos },
       { path: 'cadastrar-laboratorio', component: CadastroSala },
-      { path: 'agendar-sala', component: AgendarSalaMateria},
+      { path: 'agendar-sala', component: AgendarSalaMateria },
       { path: 'funcionarios', component: Funcionarios },
-      { path: 'cadastrar-funcionario', component: FuncionarioForm}
+      { path: 'cadastrar-funcionario', component: FuncionarioForm },
     ],
   },
   {
@@ -86,6 +86,14 @@ const routes: Routes = [
     { path: '', redirectTo: 'homecoord', pathMatch: 'full' }
   ]
 },
+    path: 'coordenacao',
+    component: MainLayout,
+    canActivate: [RoleGuard],
+    data: {roles: ['COORDENADOR']},
+    children: [
+      //Rotas
+    ]
+  },
   {
     path: '',
     component: AuthLayout,

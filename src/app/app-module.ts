@@ -85,11 +85,14 @@ import { CreateResourceModal } from './components/modals/create-resource-modal/c
 import { AgendarAula } from './pages/professor/agendar-aula/agendar-aula';
 import { CadastroSala } from './pages/secretaria/cadastro-sala/cadastro-sala';
 import { RedefinirSenha } from './pages/shared/redefinir-senha/redefinir-senha';
-import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
+import { VisualizarAulaDesktop } from './pages/professor/visualizar-aula-desktop/visualizar-aula-desktop';
 import { Funcionarios } from './pages/secretaria/funcionarios/funcionarios';
+import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario-form';
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 import { Homecoord } from './components/coordenacao/homecoord/homecoord';
+import { SpaceScheduleList } from './components/shared/space-schedule-list/space-schedule-list';
+import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aula';
 
 @NgModule({
   declarations: [
@@ -121,6 +124,7 @@ import { Homecoord } from './components/coordenacao/homecoord/homecoord';
     SmartSchedulingForm,
     DashboardCard,
     AddItemModal,
+    SpaceScheduleList,
     // AD Components
     MultiDateSelector,
     DashboardCard,
@@ -148,9 +152,11 @@ import { Homecoord } from './components/coordenacao/homecoord/homecoord';
     FuncionarioTable,
     SalaForm,
     CadastroSala,
+    VisualizarAulaDesktop,
     ScheduleClass,
     AgendarSalaMateria,
     Homecoord
+    VisualizarAula
   ],
   imports: [
     BrowserModule,
