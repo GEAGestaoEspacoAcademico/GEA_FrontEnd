@@ -92,7 +92,7 @@ import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 import { SpaceScheduleList } from './components/shared/space-schedule-list/space-schedule-list';
 import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aula';
-import { Homecoord } from './components/coordenacao/homecoord/homecoord';
+import { Homecoord } from './pages/coordenacao/homecoord/homecoord';
 
 @NgModule({
   declarations: [
