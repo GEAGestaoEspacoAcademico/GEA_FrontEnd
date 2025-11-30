@@ -39,8 +39,6 @@ export class AuthEffects {
           this.router.navigate(['/aulas']);
         }else if(login.user.usuarioCargo === TIPOUSUARIO.SECRETARIA){
           this.router.navigate(['secretaria/home']);
-        }else if(login.user.usuarioCargo === TIPOUSUARIO.COORDENADOR){
-          this.router.navigate(['coordenacao/espacos-academicos'])
         }
         else if(login.user.usuarioCargo === TIPOUSUARIO.COORDENADOR){
           this.router.navigate(['/coordenacao'])

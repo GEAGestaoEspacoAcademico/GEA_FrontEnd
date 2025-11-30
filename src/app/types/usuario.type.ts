@@ -13,7 +13,7 @@ export interface AtualizarUsuarioAdminResquest {
 }
 
 export interface AlterarSenhaUsuarioRequest {
-  senhaAtual: string;       
+  senhaAtual: string;
   novaSenha: string;
   repetirNovaSenha: string;
 }

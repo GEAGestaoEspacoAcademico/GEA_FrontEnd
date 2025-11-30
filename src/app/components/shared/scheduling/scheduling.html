@@ -61,11 +61,9 @@
                 @for (selectedValue of form.get(field.name)?.value; track selectedValue) {
                   <mat-chip (removed)="onChipRemoved(field, selectedValue)">
                     {{ getOptionLabel(field.options, selectedValue) }}
-                    @if (!field.disabled) {
-                      <button matChipRemove>
-                        <mat-icon>cancel</mat-icon>
-                      </button>
-                    }
+                    <button matChipRemove>
+                      <mat-icon>cancel</mat-icon>
+                    </button>
                   </mat-chip>
                 }
               </mat-chip-grid>
@@ -79,7 +77,6 @@
                 [matAutocomplete]="auto"
                 [matChipInputFor]="chipGrid"
                 class="simple-input"
-                [readonly]="field.disabled"
               />
 
               <mat-autocomplete #auto="matAutocomplete" (optionSelected)="softwareSelected($event, field)">
@@ -129,43 +126,40 @@
               @for (control of getEquipmentControls(field.name); track $index) {
                 <mat-chip (removed)="removeEquipment(field, $index)">
                   {{ control.value.label }} (Qtd: {{ control.value.quantity }})
-                  @if (!field.disabled) {
-                    <button matChipRemove>
-                      <mat-icon>cancel</mat-icon>
-                    </button>
-                  }
+                  <button matChipRemove>
+                    <mat-icon>cancel</mat-icon>
+                  </button>
                 </mat-chip>
               }
             </mat-chip-grid>
           </div>
-          @if (!field.disabled) {
-            <div class="equipment-add-form" [formGroup]="equipmentAddForm">
-              <input
-                type="text"
-                id="equipment-input"
-                placeholder="Adicionar equipamento"
-                matInput
-                formControlName="equipment"
-                [matChipInputFor]="equipamentChipGrid"
-                [matAutocomplete]="equipmentAuto"
-                class="simple-input equipment-name-input" />
-              <mat-autocomplete #equipmentAuto="matAutocomplete" [displayWith]="displayEquipment">
-                @for (option of filteredEquipments | async; track option.value) {
-                  <mat-option [value]="option">{{ option.label }}</mat-option>
-                }
-              </mat-autocomplete>
 
-              <input
-                type="number"
-                formControlName="quantity"
-                placeholder="Qtd"
-                class="simple-input equipment-qty-input" />
+          <div class="equipment-add-form" [formGroup]="equipmentAddForm">
+            <input
+              type="text"
+              id="equipment-input"
+              placeholder="Adicionar equipamento"
+              matInput
+              formControlName="equipment"
+              [matChipInputFor]="equipamentChipGrid"
+              [matAutocomplete]="equipmentAuto"
+              class="simple-input equipment-name-input" />
+            <mat-autocomplete #equipmentAuto="matAutocomplete" [displayWith]="displayEquipment">
+              @for (option of filteredEquipments | async; track option.value) {
+                <mat-option [value]="option">{{ option.label }}</mat-option>
+              }
+            </mat-autocomplete>
 
-              <button type="button" (click)="addEquipment(field)" [disabled]="equipmentAddForm.invalid" class="add-button">
-                Adicionar
-              </button>
-            </div>
-          }
+            <input
+              type="number"
+              formControlName="quantity"
+              placeholder="Qtd"
+              class="simple-input equipment-qty-input" />
+
+            <button type="button" (click)="addEquipment(field)" [disabled]="equipmentAddForm.invalid" class="add-button">
+              Adicionar
+            </button>
+          </div>
         </div>
       }
 

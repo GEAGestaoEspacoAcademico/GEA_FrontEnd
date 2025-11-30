@@ -77,23 +77,12 @@ export class Scheduling implements OnInit {
     const controls: Record<string, any> = {};
     this.fields.forEach(field => {
       const validators = this.buildValidators(field.validators);
-      const controlState = {
-        value: field.type === 'multi-select' ? (field.defaultValue ?? []) : (field.defaultValue ?? ''),
-        disabled: !!field.disabled // Força ser booleano
-      };
 
       if (field.type === 'equipment-select') {
-        const arrayControl = this.fb.array([]);
-        if (field.disabled) {
-          arrayControl.disable();
-        }
         controls[field.name] = this.fb.array([]);
       } else {
-        controls[field.name] = new FormControl(controlState, validators);
-      }
-
-      if (field.type === 'multi-select' && field.disabled) {
-        this.softwareCtrl.disable();
+        const initialValue = field.type === 'multi-select' ? (field.defaultValue ?? []) : (field.defaultValue ?? '');
+        controls[field.name] = new FormControl(initialValue, validators);
       }
     });
     this.form = this.fb.group(controls);
@@ -103,11 +92,6 @@ export class Scheduling implements OnInit {
 
     const equipmentField = this.fields.find(f => f.type === 'equipment-select');
     this.filteredEquipments = this.setupAutocomplete(this.equipmentAddForm.get('equipment') as FormControl, equipmentField?.options);
-  
-    const equipField = this.fields.find(f => f.type === 'equipment-select');
-    if (equipField?.disabled) {
-      this.equipmentAddForm.disable();
-    }
   }
 
   /**

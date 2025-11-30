@@ -217,15 +217,3 @@ mat-chip button mat-icon {
   font-size: 1.2rem;
   font-weight: bold;
 }
-
-select:disabled {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-
-  background-image: none;
-
-  background-color: #E6E6E6;
-  opacity: 1;
-  color: var(--color-neutral-900);
-}

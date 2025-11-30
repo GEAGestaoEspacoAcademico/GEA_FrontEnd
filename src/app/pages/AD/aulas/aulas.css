@@ -1,51 +1,20 @@
 :host ::ng-deep .day-selector {
   justify-content: flex-start !important;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 0.625rem 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-left: var(--spacing-3);
+  padding-right: var(--spacing-3);
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--spacing-3);
+  scrollbar-width: none;
+  /* Para IE e Edge */
+  -ms-overflow-style: none;
+}
+.day-selector::-webkit-scrollbar {
+  display: none;
 }
 
 :host ::ng-deep .day-item {
   flex: 0 0 auto;
-  scroll-snap-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-@media (max-width: 61.9375rem) {
-  :host ::ng-deep .day-selector {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding-left: var(--spacing-3, 1rem);
-    padding-right: var(--spacing-3, 1rem);
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-
-  :host ::ng-deep .day-selector::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-@media (min-width: 62rem) {
-  :host ::ng-deep .day-selector {
-    overflow-x: auto;
-    margin: 0 auto;
-    max-width: 75rem;
-
-    :host ::ng-deep .day-selector::-webkit-scrollbar-track {
-      background: transparent;
-    }
-
-    :host ::ng-deep .day-selector::-webkit-scrollbar-thumb {
-      background-color: #ccc;
-      border-radius: 0.3rem;
-    }
-
-    :host ::ng-deep .day-selector::-webkit-scrollbar-thumb:hover {
-      background-color: #aaa;
-    }
-  }
+  scroll-snap-align: start;
 }
