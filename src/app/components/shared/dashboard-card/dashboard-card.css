@@ -19,7 +19,6 @@
 
 .dashboard-card:hover {
   background-color: #A9B2B6;
-  transform: translateY(-3px);
 }
 
 .card-icon {
