@@ -43,3 +43,16 @@ ul {
   padding-left: 1rem;
   padding-right: 1rem;
 }
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.btn-houver:hover{
+  .cursor-pointer, .icon-logout{
+    color: var(--color-neutral-300) !important;
+  }
+  .line{
+    background-color: var(--color-neutral-300) !important;
+  }
+}
