@@ -24,6 +24,7 @@ import { FuncionarioForm } from './pages/secretaria/funcionario-form/funcionario
 import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aula';
+import { EspacosAcademicos } from './pages/shared/espacos-academicos/espacos-academicos';
 import { Homecoord } from './pages/coordenacao/homecoord/homecoord';
 import { Calendario } from './pages/coordenacao/calendario/calendario';
 
@@ -78,11 +79,12 @@ const routes: Routes = [
     path: 'coordenacao',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: {roles: ['COORDENADOR']},
+    data: {roles: ['COORDENADOR', 'AUXILIAR_DOCENTE']},
     children: [
-      {path: 'homecoord', component: Homecoord},
-      {path: 'espacos-academicos', component: Calendario},
-      {path: '', redirectTo: 'homecoord', pathMatch: 'full' }
+      { path: 'visualizar-espaco', component: EspacosAcademicos},
+      { path: 'homecoord', component: Homecoord},
+      { path: 'calendario', component: Calendario},
+      { path: '', redirectTo: 'homecoord', pathMatch: 'full' }
     ]
   },
   {

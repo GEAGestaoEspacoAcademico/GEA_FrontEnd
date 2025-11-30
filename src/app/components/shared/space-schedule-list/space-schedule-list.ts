@@ -13,8 +13,18 @@ import ProfessorService from '../../../services/professor/professor.service';
   styleUrl: './space-schedule-list.css',
 })
 export class SpaceScheduleList implements OnInit {
+  private _modoVisualizacao: 'Hoje' | 'Semana' = 'Hoje';
   @Input() dataSelecionada: Date = new Date();
-  @Input() modoVisualizacao!: 'Hoje' | 'Semana';
+
+  
+  @Input()
+  set modoVisualizacao(valor: 'Hoje' | 'Semana') {
+    this._modoVisualizacao = valor;
+    this.carregarDados(); 
+  }
+  get modoVisualizacao(): 'Hoje' | 'Semana' {
+    return this._modoVisualizacao;
+  }
   @Input() filtroTexto!: string;
 
   salas: Sala[] = [];
@@ -82,7 +92,7 @@ export class SpaceScheduleList implements OnInit {
       ),
     }).subscribe(({ salas, dias }) => {
       this.salas = salas;
-
+      console.log(dias)
       this.agendamentosPorDia = {};
 
       dias.forEach((ags, i) => {

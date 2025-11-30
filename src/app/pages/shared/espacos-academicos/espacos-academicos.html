@@ -1,0 +1,46 @@
+<section class="space-container" aria-labelledby="title-espacos">
+ 
+    <header class="page-header">
+      <h1 id="title-espacos">Espaços acadêmicos</h1>
+   
+      <form class="search-bar" (submit)="$event.preventDefault()">
+        <mat-icon class="icon-search" svgIcon="search"></mat-icon>
+        <input
+          type="search"
+          placeholder="Pesquisar sala..."
+          [(ngModel)]="textoPesquisa"
+          name="pesquisa"
+          aria-label="Pesquisar sala"
+        />
+      </form>
+   
+      <div class="mode-toggle">
+        <button
+          type="button"
+          class="mode-btn"
+          [class.active]="modoVisualizacao === 'Hoje'"
+          (click)="setModo('Hoje')"
+        >
+          Hoje
+        </button>
+   
+        <span class="divider">/</span>
+   
+        <button
+          type="button"
+          class="mode-btn"
+          [class.active]="modoVisualizacao === 'Semana'"
+          (click)="setModo('Semana')"
+        >
+          Semana
+        </button>
+      </div>
+    </header>
+   
+    <app-space-schedule-list
+      [dataSelecionada]="dataSelecionada"
+      [modoVisualizacao]="modoVisualizacao"
+      [filtroTexto]="textoPesquisa"
+    ></app-space-schedule-list>
+  </section>
+   
