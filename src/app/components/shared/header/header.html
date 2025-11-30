@@ -29,7 +29,7 @@
             ></mat-icon>
             <span class="visually-hidden">Notificações</span>
           </a>
-          <mat-icon svgIcon="details-arrow" class="icon-arrow" (click)="goBack()"></mat-icon>
+          <mat-icon svgIcon="home" class="home" (click)="navigateToHome()"></mat-icon>
         </div>
       } @else {
         <div class="header-center-content">
@@ -67,7 +67,8 @@
             </nav>
           } @else if (
             cargo?.toUpperCase() === 'AUXILIAR_ADMINISTRATIVO' ||
-            cargo?.toUpperCase() === 'SECRETARIA'
+            cargo?.toUpperCase() === 'SECRETARIA' ||
+            cargo?.toUpperCase() === 'COORDENADOR'
           ) {
             <h2 class="page-title" aria-live="polite">
               {{ title$ | async }}

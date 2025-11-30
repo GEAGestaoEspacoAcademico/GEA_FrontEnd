@@ -11,11 +11,12 @@ import type { Sala } from '../../../models/sala.model';
 import type { Datas, JanelaHorario } from '../../../models/janelasHorario.model';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../../../store/auth/auth.selectors';
-import { filter, finalize, switchMap, take } from 'rxjs';
+import { filter, switchMap, take } from 'rxjs';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import type { MultiDateSelector } from '../../../components/shared/multi-date-selector/multi-date-selector';
 import type { RecurringSchedulingForm } from '../../../components/shared/recurring-scheduling-form/recurring-scheduling-form';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
+import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 
 @Component({
   selector: 'app-agendar-sala-materia',
@@ -36,19 +37,20 @@ export class AgendarSalaMateria implements OnInit {
 
   @ViewChild('calendario') calendario!: MultiDateSelector;
   @ViewChild('formulario') formulario!: RecurringSchedulingForm;
+  @ViewChild('meuModalAviso') modalAviso!: ConfirmationModal;
 
-  // Estado de Dados (Variáveis simples para o template)
   disciplinas: Disciplina[] = [];
   locais: Sala[] = [];
   horariosDisponiveis: JanelaHorario[] = [];
   selectedRecurringDates: Date[] = [];
 
-  // Estado de UI
   isLoadingHorarios = false;
   isSaving = false;
   statusMessage = signal('Bem-vindo. Selecione datas no calendário.');
   statusClass = signal('bg-blue-50 text-blue-900 border-blue-200');
   diaSemana: string = "";
+  currentSalaId: number | null = null;
+  formularioEvento: any;
 
   constructor() {
     this.iconRegistryService.registerIcons();
@@ -64,12 +66,19 @@ export class AgendarSalaMateria implements OnInit {
   }
 
   carregarDadosIniciais() {
-    this.disciplinaService.getDisciplinas().subscribe(res => {this.disciplinas = res;});
-    this.salaService.getSalas().subscribe(res => {this.locais = res;});
+    this.disciplinaService.getDisciplinas().subscribe(res => { this.disciplinas = res; });
+    this.salaService.getSalas().subscribe(res => { this.locais = res; });
   }
 
-  getDiaSemana(dia: string){
+  getDiaSemana(dia: string) {
     this.diaSemana = dia;
+  }
+
+  onSalaIdChange(id: number | null) {
+    this.currentSalaId = id;
+    if (this.selectedRecurringDates.length > 0) {
+      this.buscarHorarios();
+    }
   }
 
   onDaysSelected(dates: Date[]) {
@@ -79,15 +88,15 @@ export class AgendarSalaMateria implements OnInit {
       this.buscarHorarios();
     } else {
       this.horariosDisponiveis = [];
-      this.statusMessage.set('Selecione datas para ver horários.');
-      this.statusClass.set('bg-blue-50 text-blue-900 border-blue-200');
     }
   }
 
-buscarHorarios() {
+  buscarHorarios() {
     const listaDatas = this.selectedRecurringDates.map(d => d.toISOString().split('T')[0]);
+
     const payload: Datas = {
-      datas: listaDatas
+      datas: listaDatas,
+      salaId: this.currentSalaId
     };
 
     this.janelaHorarioService.postJanelasHorarioPorDatas(payload).subscribe({
@@ -95,31 +104,30 @@ buscarHorarios() {
         this.horariosDisponiveis = res;
         this.isLoadingHorarios = false;
       },
-      error: () => {
+      error: (err) => {
         this.isLoadingHorarios = false;
-        this.statusMessage.set('Erro ao buscar horários.');
+        this.snackbarService.showError(err);
       }
     });
   }
 
-    resetScreen() {
+  resetScreen() {
     this.selectedRecurringDates = [];
     this.horariosDisponiveis = [];
     this.diaSemana = '';
   }
 
 
-  postDataRecorrente(formData: any) { 
-    this.isSaving = true;
-
+  postDataRecorrente(formData: any) {
     const janelasIds = this.horariosDisponiveis
       .filter((_, i) => formData.horarios[i])
       .map(h => h.janelasHorarioId);
 
-    const datasOrdenadas = [...this.selectedRecurringDates].sort((a, b) => a.getTime() - b.getTime());
+    const dataInicioRaw = formData.dataInicio;
+    const dataFimRaw = formData.dataFim;
 
-    const dataInicio = datasOrdenadas[0].toISOString().split('T')[0];
-    const dataFim = datasOrdenadas[datasOrdenadas.length - 1].toISOString().split('T')[0];
+    const dataInicio = new Date(dataInicioRaw).toISOString().split('T')[0];
+    const dataFim = new Date(dataFimRaw).toISOString().split('T')[0];
 
     this.store.select(selectUserId).pipe(
       filter((userId: any): userId is number => !!userId),
@@ -134,18 +142,37 @@ buscarHorarios() {
           disciplinaId: formData.disciplina,
           salaId: formData.local
         };
-
         return this.agendamentoService.criarAgendamentoAulaRecorrente(recorrenciaBody);
-      }),finalize(() => {
-        this.resetScreen(); 
       })
     ).subscribe({
       next: () => {
         this.snackbarService.showSuccess('Agendamento realizado com Sucesso!');
+
+        setTimeout(() => {
+          window.location.reload();
+          sessionStorage.clear();
+        }, 1000);
       },
       error: (err) => {
-        this.snackbarService.showError('Falha ao realizar agendamento.');
+        this.snackbarService.showError(err);
       }
     });
+  }
+
+  confimarAgendamento(form: any) {
+    if (form) {
+      this.formularioEvento = form;
+      this.modalAviso.open();
+    } else {
+      this.snackbarService.showError('Formulário recebido inválido.');
+    }
+  }
+
+  fazerAcao(): void {
+    if (this.formularioEvento) {
+      this.postDataRecorrente(this.formularioEvento);
+    } else {
+      this.snackbarService.showError('Dados do formulário não encontrados. Tente novamente.');
+    }
   }
 }

@@ -22,7 +22,6 @@ import { Router } from '@angular/router';
 export class Header {
   private store = inject(Store);
   private headerTitleService = inject(HeaderTitleService);
-  private location = inject(Location);
   private router = inject(Router)
 
   public cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
@@ -33,33 +32,55 @@ export class Header {
     this.store.dispatch(AuthActions.logout());
   }
 
-  goBack(): void {
-    this.location.back();
+
+
+  voltarHome() {
+    this.cargo$
+      .pipe(
+        take(1)
+      )
+      .subscribe((cargo) => {
+        switch (cargo) {
+          case 'AUXILIAR_DOCENTE':
+            this.router.navigate(['ad/home']);
+            break;
+
+          case 'PROFESSOR':
+            this.router.navigate(['aulas']);
+            break;
+          case 'SECRETARIA':
+            this.router.navigate(['secretaria/home']);
+            break
+          default:
+            this.router.navigate(['/login']);
+            break;
+        }
+      });
   }
 
-voltarHome() {
-  this.cargo$
-    .pipe(
-      take(1)
-    )
-    .subscribe((cargo) => {
-      switch (cargo) {
-        case 'AUXILIAR_DOCENTE':
-          this.router.navigate(['ad/home']);
-          break;
-        
-        case 'PROFESSOR':
-          this.router.navigate(['aulas']);
-          break;
+  public navigateToHome(): void {
+    this.cargo$.pipe(take(1)).subscribe(cargo => {
+      let route = '/';
+      switch (cargo?.toUpperCase()) {
         case 'SECRETARIA':
-          this.router.navigate(['secretaria/home']);  
-          break
-        default:
-          this.router.navigate(['/login']);
+          route = '/secretaria/home';
           break;
+        case 'AUXILIAR_DOCENTE':
+        case 'AD':
+          route = '/ad/home';
+          break;
+        case 'COORDENADOR':
+          route = '/coordenacao/home';
+          break;
+        case 'PROFESSOR':
+          route = '/aulas';
+          break;
+        default:
+          route = '/login';
       }
+      this.router.navigate([route]);
     });
-}
+  }
 
   showBackButton$ = this.headerTitleService.showBackButton$;
 }

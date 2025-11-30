@@ -25,13 +25,15 @@ import { ScheduleClass } from './pages/AD/schedule-class/schedule-class';
 import { AgendarSalaMateria } from './pages/secretaria/agendar-sala-materia/agendar-sala-materia';
 import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aula';
 import { EspacosAcademicos } from './pages/shared/espacos-academicos/espacos-academicos';
+import { Homecoord } from './pages/coordenacao/homecoord/homecoord';
+import { Calendario } from './pages/coordenacao/calendario/calendario';
 
 const routes: Routes = [
   {
     path: '',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: { roles: ['PROFESSOR'] },
+    data: { roles: ['PROFESSOR', 'COORDENADOR'] },
     children: [
       { path: 'agenda', component: AgendarAula },
       { path: 'aulas', component: VisualizarAula },
@@ -56,10 +58,7 @@ const routes: Routes = [
       { path: 'lista-espacos', component: SpaceManagement },
       { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
-      {
-        path: 'cadastrar-espaco',
-        component: SpaceRegistrationPage,
-      },
+      { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
     ],
   },
   {
@@ -82,7 +81,10 @@ const routes: Routes = [
     canActivate: [RoleGuard],
     data: {roles: ['COORDENADOR', 'AUXILIAR_DOCENTE']},
     children: [
-      { path: 'visualizar-espaco', component: EspacosAcademicos}
+      { path: 'visualizar-espaco', component: EspacosAcademicos},
+      { path: 'homecoord', component: Homecoord},
+      { path: 'calendario', component: Calendario},
+      { path: '', redirectTo: 'homecoord', pathMatch: 'full' }
     ]
   },
   {

@@ -82,7 +82,7 @@
   display: inline-block;
   vertical-align: middle;
 }
-.icon-arrow {
+.home {
   height: auto;
   transform: scaleX(-1);
   &:hover{
@@ -170,7 +170,7 @@
 
 @media (max-width: 767px) {
   .page-title {
-    display: block;
+    display: none;
     font-size: 1.125rem;
   }
 

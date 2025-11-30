@@ -14,4 +14,5 @@ export interface SlotHorario {
 
 export interface Datas {
   datas: string[];
+  salaId: number | null;
 }
