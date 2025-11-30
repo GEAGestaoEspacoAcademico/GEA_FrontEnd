@@ -22,6 +22,7 @@ export class RecurringSchedulingForm {
   horarios = input<JanelaHorario[]>([]);
   isLoading = input<boolean>(false);
   scheduleSubmit = output<SchedulingFormValue>();
+  localChange = output<number | null>();
 
   listDisciplinas: Disciplina[] = [];
   listLocais: Sala[] = [];
@@ -29,7 +30,9 @@ export class RecurringSchedulingForm {
   form: FormGroup = this.fb.group({
     disciplina: ['', Validators.required],
     local: ['', Validators.required],
-    horarios: this.fb.array([], this.minSelectedCheckboxes(1))
+    horarios: this.fb.array([], this.minSelectedCheckboxes(1)),
+    dataInicio: ['', Validators.required],
+    dataFim: ['', Validators.required]
   });
 
   get horariosFormArray(): FormArray { return this.form.get('horarios') as FormArray; }
@@ -39,6 +42,10 @@ export class RecurringSchedulingForm {
       const lista = this.horarios();
       this.horariosFormArray.clear();
       lista.forEach(() => this.horariosFormArray.push(new FormControl(false)));
+    });
+
+    this.form.get('local')?.valueChanges.subscribe(valor => {
+      this.localChange.emit(valor);
     });
   }
 
