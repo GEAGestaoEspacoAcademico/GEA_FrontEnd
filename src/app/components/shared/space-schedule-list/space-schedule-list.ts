@@ -92,7 +92,6 @@ export class SpaceScheduleList implements OnInit {
       ),
     }).subscribe(({ salas, dias }) => {
       this.salas = salas;
-      console.log(dias)
       this.agendamentosPorDia = {};
 
       dias.forEach((ags, i) => {
@@ -135,6 +134,8 @@ export class SpaceScheduleList implements OnInit {
       if (!map[salaId]) {
         map[salaId] = [];
       }
+
+      map[salaId].push(ag);
     }
 
     return map;
