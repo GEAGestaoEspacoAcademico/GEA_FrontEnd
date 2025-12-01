@@ -27,6 +27,7 @@ import { VisualizarAula } from './pages/professor/visualizar-aula/visualizar-aul
 import { EspacosAcademicos } from './pages/shared/espacos-academicos/espacos-academicos';
 import { Homecoord } from './pages/coordenacao/homecoord/homecoord';
 import { Calendario } from './pages/coordenacao/calendario/calendario';
+import { Agendamentos } from './pages/AD/agendamentos/agendamentos';
 
 const routes: Routes = [
   {
@@ -59,13 +60,14 @@ const routes: Routes = [
       { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
       { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
+      {path: 'agendamentos', component: Agendamentos}
     ],
   },
   {
     path: 'secretaria',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: { roles: ['SECRETARIA'] },
+    data: { roles: ['SECRETARIA', 'AUXILIAR_DOCENTE'] },
     children: [
       { path: 'home', component: Secretariahome },
       { path: 'visualizar-espacos', component: ListaEspacos },

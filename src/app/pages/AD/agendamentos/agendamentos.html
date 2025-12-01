@@ -1,0 +1,25 @@
+<div class="container-fluid mt-4">
+    <div class="row justify-content-center">
+
+        <div class="col-12 col-md-5 col-lg-4 mb-4">
+            <app-multi-date-selector [modo]="'dias'" (selecaoChange)="selecaoChange($event)">
+            </app-multi-date-selector>
+        </div>
+
+        <div class="col-12 col-md-7 col-lg-6">
+            <app-daily-schedule-list [dataSelecionada]="dataAtual" [agendamentos]="listaAgendamentos"
+                 (ondelete)="handleExclusao($event)" (onedit)="handleEdicao($event)">
+            </app-daily-schedule-list>
+
+            <div class="d-grid gap-2 mt-4">
+                <button class="btn btn-danger py-2 fw-bold shadow-sm" (click)="navegarParaNovoRecorrente()">
+                    Novo Agendamento Recorrente
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <app-confirmation-modal #meuModalAviso mode="aviso" title="Confirmar Ação"
+        message="Você tem certeza que deseja fazer isso?" confirmText="Sim, tenho certeza"
+        (onconfirm)="fazerAcao()"></app-confirmation-modal>
+</div>

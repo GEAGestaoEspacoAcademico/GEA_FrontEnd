@@ -33,7 +33,7 @@ export class AgendarSalaMateria implements OnInit {
   private pushNotificationService = inject(PushNotificationService);
   private store = inject(Store);
   private snackbarService = inject(SnackBarService);
-  private headerService = inject(HeaderTitleService)
+  private headerService = inject(HeaderTitleService);
 
   @ViewChild('calendario') calendario!: MultiDateSelector;
   @ViewChild('formulario') formulario!: RecurringSchedulingForm;
@@ -46,8 +46,6 @@ export class AgendarSalaMateria implements OnInit {
 
   isLoadingHorarios = false;
   isSaving = false;
-  statusMessage = signal('Bem-vindo. Selecione datas no calendário.');
-  statusClass = signal('bg-blue-50 text-blue-900 border-blue-200');
   diaSemana: string = "";
   currentSalaId: number | null = null;
   formularioEvento: any;
