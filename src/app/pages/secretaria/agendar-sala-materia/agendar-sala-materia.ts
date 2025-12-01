@@ -1,5 +1,5 @@
 import type { OnInit } from '@angular/core';
-import { Component, inject, signal, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
 import { SalaService } from '../../../services/sala/sala.service';
 import { JanelasHorarioService } from '../../../services/janelas-horario/janelas-horario.service';
