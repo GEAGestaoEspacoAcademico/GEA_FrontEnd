@@ -12,9 +12,11 @@ import type { Disciplina } from '../../../models/disciplina.model';
 })
 export class RecurringSchedulingForm {
   formatTime(inicio: string, fim: string): string {
-    return `${inicio} - ${fim}`;
-  }
+    const inicioSemSegundos = inicio.substring(0, 5);
+    const fimSemSegundos = fim.substring(0, 5);
 
+    return `${inicioSemSegundos} - ${fimSemSegundos}`;
+  }
   private fb = inject(FormBuilder);
 
   disciplinas = input<Disciplina[]>([]);

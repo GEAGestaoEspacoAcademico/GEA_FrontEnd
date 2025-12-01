@@ -96,6 +96,8 @@ import { EspacosAcademicos } from './pages/shared/espacos-academicos/espacos-aca
 import { Homecoord } from './pages/coordenacao/homecoord/homecoord';
 import { Calendario } from './pages/coordenacao/calendario/calendario';
 import { ProfessorScheduleList } from './components/coordenacao/professor-schedule-list/professor-schedule-list';
+import { Agendamentos } from './pages/AD/agendamentos/agendamentos';
+import { DailyScheduleList } from './components/shared/daily-schedule-list/daily-schedule-list';
 
 @NgModule({
   declarations: [
@@ -162,7 +164,9 @@ import { ProfessorScheduleList } from './components/coordenacao/professor-schedu
     EspacosAcademicos,
     Homecoord,
     Calendario,
-    ProfessorScheduleList
+    ProfessorScheduleList,
+    Agendamentos,
+    DailyScheduleList
   ],
   imports: [
     BrowserModule,

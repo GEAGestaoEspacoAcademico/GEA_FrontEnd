@@ -41,4 +41,17 @@ export interface AgendamentoAulaCriarADRequest {
 export interface AgendamentoAulaCriarADReponse extends AgendamentoAula{
   //DESABILITADO O ESLINT PARA QUE POSSA DEIXAR AQUI VAZIO, A FIM DE EXPANSÃO FUTURA
 }
+export interface AgendamentoData {
+  agendamentoId: number,
+  sala: [
+    salaId: number,
+    salaNome: string
+  ],
+  data: string,
+  horaInicio: string,
+  horaFim: string,
+  disciplinaId: number,
+  disciplinaNome: string,
+  isEvento: boolean
+}
 
