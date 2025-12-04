@@ -9,7 +9,7 @@ import { MatCalendar, type MatCalendarCellCssClasses } from '@angular/material/d
   styleUrl: './multi-date-selector.css'
 })
 export class MultiDateSelector implements OnInit {
-  private cdr = inject(ChangeDetectorRef)
+  dataMinima: Date = new Date();
 
   @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
 
@@ -26,6 +26,7 @@ export class MultiDateSelector implements OnInit {
   datasSelecionadas: Date[] = [];
 
   ngOnInit(): void {
+    this.dataMinima.setHours(0, 0, 0, 0);
     this.datasSelecionadas = [...this.initialSelectedDates]
   }
 
