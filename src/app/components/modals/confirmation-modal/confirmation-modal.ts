@@ -5,6 +5,9 @@ import type { Sala } from '../../../models/sala.model';
 import { SalaService } from '../../../services/sala/sala.service';
 import type { AgendarForm } from '../../../types/agendar';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
+import type { JanelaHorario } from '../../../models/janelasHorario.model';
+import { switchMap } from 'rxjs';
+import { JanelasHorarioService } from '../../../services/janelas-horario/janelas-horario.service';
 
 /**
  * Componente de modal genérico e reutilizável para confirmação,
@@ -54,6 +57,7 @@ export class ConfirmationModal{
   private modalService = inject(NgbModal);
   private salaService = inject(SalaService);
   private snackbarService = inject(SnackBarService)
+  private janelaHorarioService = inject(JanelasHorarioService);
   
   /**
    * Define o modo de operação do modal.
@@ -68,9 +72,6 @@ export class ConfirmationModal{
 
  /** (Opcional) A mensagem principal a ser exibida no corpo do modal (modos 'aviso' e 'feedback'). */
   @Input() message!: string;
-
- /** (Opcional) Os dados da sala para serem exibidos no modo 'detalhes'. */
-  @Input() salaRecomendadaId!: number;
 
  /** (Opcional) Texto customizado para o botão de confirmação (default: 'Confirmar'). */
   @Input() confirmText: string = 'Confirmar';
@@ -95,19 +96,27 @@ export class ConfirmationModal{
   @ViewChild('ConfirmationModal')
   modalTemplate!: TemplateRef<ConfirmationModal>;
   detalhesSala: Sala | undefined;
+  janelaHorario!: JanelaHorario;
 
   /**
    * Método PÚBLICO. Deve ser chamado pelo componente pai para abrir o modal.
+   * @param salaidRecmoendadao
    * @example
    * // No componente pai:
    * this.meuModal.open();
    */
-  public open(): void {
+  public open(salaidRecmoendadao?: number): void {
     if (this.mode === 'detalhes') {
-      if (this.salaRecomendadaId) {
-        this.salaService.getSalaPorId(this.salaRecomendadaId).subscribe({
-          next: s => {
-            this.detalhesSala = s;
+      if (salaidRecmoendadao) {
+        this.salaService.getSalaPorId(salaidRecmoendadao)
+        .pipe(
+          switchMap(sala => {
+            this.detalhesSala = sala;
+            return this.janelaHorarioService.getJanelaHorarioPorId(this.formData.janelaHorarioId)
+          })
+        ).subscribe({
+          next: jh => {
+            this.janelaHorario = jh;
             this.abrirInstaciaModal();
           },
           error: e => this.snackbarService.showError(e.message || 'Erro ao buscar detalhes de sala')

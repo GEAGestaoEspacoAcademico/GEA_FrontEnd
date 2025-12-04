@@ -14,7 +14,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importe aqui
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 
 // NGRX Imports
 import { StoreModule } from '@ngrx/store';
@@ -209,7 +209,10 @@ import { DailyScheduleList } from './components/shared/daily-schedule-list/daily
     }),
     A11yModule,
   ],
-  providers: [provideHttpClient(withInterceptors([globalErrorInterceptor]))],
+  providers: [
+    provideHttpClient(withInterceptors([globalErrorInterceptor])),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+  ],
   bootstrap: [App],
 })
 export class AppModule {}

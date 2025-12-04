@@ -223,7 +223,7 @@ export class Agenda implements OnInit {
 
   openInfoModal(id: number) {
     this.idSalaRecomendadaAtual = id;
-    this.classInfoModal.open();
+    this.classInfoModal.open(id);
   }
 
 agendarAula() {
@@ -236,7 +236,7 @@ agendarAula() {
         salaId: Number(this.idSalaRecomendadaAtual),
         disciplinaId: Number(this.submittedData.disciplinaId),
         data: this.submittedData.data,
-        janelasHorarioId: this.submittedData.janelaHorarioId,
+        janelasHorarioId: Number(this.submittedData.janelaHorarioId),
         isEvento: false,
         quantidade: Number(this.submittedData.qtdAulas)
       };
