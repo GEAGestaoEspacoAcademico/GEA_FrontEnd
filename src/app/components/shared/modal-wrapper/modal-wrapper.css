@@ -18,3 +18,13 @@
 .highlight-title {
   color: var(--color-default-white);
 }
+
+.button-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.close-icon {
+  color: var(--color-default-white);
+}
