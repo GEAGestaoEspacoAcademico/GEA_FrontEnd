@@ -1,5 +1,5 @@
 .space-table-container {
-  width: 100%;  
+  width: 100%;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
@@ -26,7 +26,7 @@
   border: 1px solid #ddd;
   border-radius: 0.75rem;
   padding: 0rem 0.75rem;
-  width: 25rem; 
+  width: 20rem;
   flex-grow: 0;
 }
 
@@ -133,9 +133,8 @@
   cursor: pointer;
   padding: 0.25rem;
   border-radius: 0.5rem;
-  transition: background 0.15s ease;
   transform: scale(1);
-  transition: duration 0.3s;
+  transition: background 0.15s ease, transform 0.3s ease;
 }
 
 .actions button:hover {
@@ -162,6 +161,12 @@
   align-items: center;
   gap: 0.4rem;
   padding-top: 0.5rem;
+}
+
+.actions-buttons {
+  display: flex;
+  justify-content: end;
+  gap: 2rem;
 }
 
 .pagination button {
@@ -204,9 +209,9 @@
 
 .add-btn {
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 0.3rem;
+  align-items: center;
+  gap: 1rem;
   background-color: #b71c1c;
   color: white;
   font-weight: 600;

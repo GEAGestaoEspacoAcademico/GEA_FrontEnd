@@ -26,7 +26,7 @@
     border: 1px solid #ddd;
     border-radius: 0.75rem;
     padding: 0rem 0.75rem;
-    max-width: 25rem; 
+    width: 25rem; 
     flex-grow: 0;
   }
   
@@ -219,6 +219,8 @@
     line-height: normal;
   }
   
-  .add-btn:hover {
-    background-color: #8a1313;
+  .add-btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    background-color: var(--color-primary-100);
   }

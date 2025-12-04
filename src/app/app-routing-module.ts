@@ -28,6 +28,8 @@ import { EspacosAcademicos } from './pages/shared/espacos-academicos/espacos-aca
 import { Homecoord } from './pages/coordenacao/homecoord/homecoord';
 import { Calendario } from './pages/coordenacao/calendario/calendario';
 import { Agendamentos } from './pages/AD/agendamentos/agendamentos';
+import { ListarCursos } from './pages/secretaria/listar-cursos/listar-cursos';
+import { ListarDisciplinas } from './pages/secretaria/listar-disciplinas/listar-disciplinas';
 
 const commonRoutes: Routes = [
   { path: 'aulas', component: VisualizarAula },
@@ -78,6 +80,8 @@ const routes: Routes = [
       { path: 'agendar-sala', component: AgendarSalaMateria },
       { path: 'funcionarios', component: Funcionarios },
       { path: 'cadastrar-funcionario', component: FuncionarioForm },
+      { path: 'listar-cursos', component: ListarCursos},
+      {path: 'listar-disciplinas', component: ListarDisciplinas}
     ],
   },
   {
