@@ -1,0 +1,107 @@
+<section class="space-table-container" aria-labelledby="espacos-title">
+  <header class="table-header">
+    <div class="header-controls">
+      <form class="search-bar" role="search" (submit)="$event.preventDefault()">
+        <label for="searchInput" class="visually-hidden">Buscar pelo nome</label>
+        <mat-icon class="icon-search" svgIcon="search"></mat-icon>
+        <input
+          id="searchInput"
+          type="search"
+          name="search"
+          [(ngModel)]="searchTerm"
+          (input)="onSearchChange()"
+          placeholder="Buscar pelo nome do curso"
+          aria-label="Buscar pelo nome do curso"
+        />
+
+        <button type="button" aria-label="Aplicar Opções de Filtro da Busca">
+          <mat-icon class="icon-filter" svgIcon="filter"></mat-icon>
+        </button>
+      </form>
+      <div class="actions-buttons">
+        <a class="add-btn" routerLink="/secretaria/listar-disciplinas"> Listar disciplinas </a>
+        <button type="button" class="add-btn" (click)="adicionarCurso()">
+          <mat-icon>add_circle_outline</mat-icon>
+          Novo Curso
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="table-wrapper" aria-labelledby="espacos-title">
+    <table class="space-table">
+      <thead>
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Sigla</th>
+          <th scope="col">Coordenador(a)</th>
+          <th scope="col">Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        @if (cursos.length === 0) {
+          <tr>
+            <td colspan="5" class="no-data">Nenhum curso encontrado.</td>
+          </tr>
+        } @else {
+          @for (curso of cursos; track curso.cursoId) {
+            <tr>
+              <td>{{ curso.cursoNome }}</td>
+              <td>{{ curso.cursoSigla }}</td>
+              <td>{{ curso.coordenadorNome.replace('Coord.', '') }}</td>
+              <td class="actions">
+                <button
+                  type="button"
+                  class="edit-btn"
+                  (click)="onEdit(curso)"
+                  aria-label="Editar {{ curso.cursoNome }}"
+                >
+                  <mat-icon svgIcon="edit" aria-hidden="true"></mat-icon>
+                  <span class="visually-hidden">Editar</span>
+                </button>
+                <button
+                  type="button"
+                  class="delete-btn"
+                  (click)="onDelete(curso)"
+                  aria-label="Excluir {{ curso.cursoNome }}"
+                >
+                  <mat-icon svgIcon="delete" aria-hidden="true"></mat-icon>
+                  <span class="visually-hidden">Excluir</span>
+                </button>
+              </td>
+            </tr>
+          }
+        }
+      </tbody>
+    </table>
+  </section>
+
+  <nav class="pagination" aria-label="Navegação de páginas" role="navigation">
+    <button
+      type="button"
+      (click)="goToPage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+      aria-label="Página anterior"
+    >
+      &lt;
+    </button>
+
+    <button
+      type="button"
+      (click)="goToPage(currentPage)"
+      aria-label="Página atual {{ currentPage }}"
+      class="active"
+    >
+      {{ currentPage }}
+    </button>
+
+    <button
+      type="button"
+      (click)="goToPage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+      aria-label="Próxima página"
+    >
+      &gt;
+    </button>
+  </nav>
+</section>

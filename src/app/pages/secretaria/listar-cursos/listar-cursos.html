@@ -1,0 +1,23 @@
+<div class="space-management-container">
+  <h2 class="main-title">Lista de cursos</h2>
+  <app-cursos-table
+    [cursos]="(cursos$ | async) || []"
+    [totalPages]="totalPages"
+    [currentPage]="currentPage"
+    [isLoading]="isLoading"
+    (searchChange)="onSearch($event)"
+    (pageChange)="onPageChange($event)"
+    (editClick)="onEdit($event)"
+    (deleteClick)="onDelete($event)"
+    (clickAdicionarEquipamento)="adicionarCurso()"
+    >
+  </app-cursos-table>
+</div>
+
+<app-confirmation-modal
+  #deleteModal
+  mode="aviso"
+  title="Excluir Curso"
+  message="Tem certeza que deseja excluir este curso? Esta ação não pode ser desfeita."
+  (onconfirm)="confirmDelete()">
+</app-confirmation-modal>
