@@ -86,6 +86,6 @@ export class Agendamentos implements OnInit {
   }
 
   navegarParaNovoRecorrente(): void {
-    this.router.navigate(['/secretaria/agendar-sala']);
+    this.router.navigate(['/ad/agendar-aula']);
   }
 }

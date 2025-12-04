@@ -29,17 +29,21 @@ import { Homecoord } from './pages/coordenacao/homecoord/homecoord';
 import { Calendario } from './pages/coordenacao/calendario/calendario';
 import { Agendamentos } from './pages/AD/agendamentos/agendamentos';
 
+const commonRoutes: Routes = [
+  { path: 'aulas', component: VisualizarAula },
+  { path: 'configuracoes', component: Configuracoes },
+  { path: 'aulas/alterar/:id', component: EditarAula },
+  { path: 'agenda', component: AgendarAula },
+];
+
 const routes: Routes = [
   {
     path: '',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: { roles: ['PROFESSOR', 'COORDENADOR'] },
+    data: { roles: ['PROFESSOR'] },
     children: [
-      { path: 'agenda', component: AgendarAula },
-      { path: 'aulas', component: VisualizarAula },
-      { path: 'configuracoes', component: Configuracoes },
-      { path: 'aulas/alterar/:id', component: EditarAula },
+      ...commonRoutes,
       { path: 'adhome', component: Home },
       { path: 'notificacoes', component: Notificacoes },
       { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -56,18 +60,17 @@ const routes: Routes = [
       { path: 'home', component: Home },
       { path: 'agendar-aula', component: ScheduleClass },
       { path: 'agendar-evento', component: ScheduleEvent },
-      { path: 'lista-espacos', component: SpaceManagement },
       { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
-      { path: '', redirectTo: 'home', pathMatch: 'full' },
       { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
-      {path: 'agendamentos', component: Agendamentos}
+      { path: 'agendamentos', component: Agendamentos},
+      { path: '', redirectTo: 'home', pathMatch: 'full' }
     ],
   },
   {
     path: 'secretaria',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: { roles: ['SECRETARIA', 'AUXILIAR_DOCENTE'] },
+    data: { roles: ['SECRETARIA'] },
     children: [
       { path: 'home', component: Secretariahome },
       { path: 'visualizar-espacos', component: ListaEspacos },
@@ -81,10 +84,11 @@ const routes: Routes = [
     path: 'coordenacao',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: {roles: ['COORDENADOR', 'AUXILIAR_DOCENTE']},
+    data: {roles: ['COORDENADOR']},
     children: [
+      ...commonRoutes,
       { path: 'visualizar-espaco', component: EspacosAcademicos},
-      { path: 'homecoord', component: Homecoord},
+      { path: 'home', component: Homecoord},
       { path: 'calendario', component: Calendario},
       { path: '', redirectTo: 'homecoord', pathMatch: 'full' }
     ]
