@@ -48,6 +48,7 @@ export class IconRegistryService {
     this.addIcon('search', 'search.svg');
     this.addIcon('feedback-email', 'feedback-email.svg');
     this.addIcon('clock', 'clock.svg');
+    this.addIcon('curso-disciplina', 'curso-disciplina.svg');
   }
   /**
    * Insere um novo icone no projeto
