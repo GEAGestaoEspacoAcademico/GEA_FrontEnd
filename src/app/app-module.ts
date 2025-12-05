@@ -98,6 +98,10 @@ import { Calendario } from './pages/coordenacao/calendario/calendario';
 import { ProfessorScheduleList } from './components/coordenacao/professor-schedule-list/professor-schedule-list';
 import { Agendamentos } from './pages/AD/agendamentos/agendamentos';
 import { DailyScheduleList } from './components/shared/daily-schedule-list/daily-schedule-list';
+import { ListarCursos } from './pages/secretaria/listar-cursos/listar-cursos';
+import { ListarDisciplinas } from './pages/secretaria/listar-disciplinas/listar-disciplinas';
+import { CursosTable } from './components/secretaria/cursos-table/cursos-table';
+import { DisciplinasTable } from './components/secretaria/disciplinas-table/disciplinas-table';
 import { ModalWrapper } from './components/shared/modal-wrapper/modal-wrapper';
 import { CursoForm } from './components/secretaria/curso-form/curso-form';
 
@@ -170,6 +174,10 @@ import { CursoForm } from './components/secretaria/curso-form/curso-form';
     ProfessorScheduleList,
     Agendamentos,
     DailyScheduleList,
+    ListarDisciplinas,
+    CursosTable,
+    DisciplinasTable,
+    ListarCursos,
     CursoForm,
   ],
   imports: [

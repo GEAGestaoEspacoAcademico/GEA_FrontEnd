@@ -3,14 +3,13 @@ import { Component, inject, ViewChild } from '@angular/core';
 import { AuthActions } from '../../../store/auth/auth.actions';
 import { Store } from '@ngrx/store';
 import type { Usuario } from '../../../models/usuario.model';
-import { filter, map, switchMap, type Observable } from 'rxjs';
-import { selectCurrentUser } from '../../../store/auth/auth.selectors';
+import { filter, map, switchMap, take, type Observable } from 'rxjs';
+import { selectCurrentUser, selectUserCargo } from '../../../store/auth/auth.selectors';
 import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import type { Disciplina } from '../../../models/disciplina.model';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 import ProfessorService from '../../../services/professor/professor.service';
-import type { EditProfessorModal } from '../../../components/secretaria/edit-professor-modal/edit-professor-modal';
 
 @Component({
   selector: 'app-configuracoes',
@@ -26,6 +25,7 @@ export class Configuracoes implements OnInit {
 
   user$: Observable<Usuario | null> = this.store.select(selectCurrentUser);
   disciplinas$!: Observable<Disciplina[]>;
+  cargo$: Observable<string | undefined> = this.store.select(selectUserCargo)
 
   ngOnInit(): void {
     this.headerService.setTitle('Configurações');
@@ -37,6 +37,16 @@ export class Configuracoes implements OnInit {
         return this.professorService.getDisciplinasDoProfessor(professorId);
       }),
     );
+    this.cargo$
+      .pipe(take(1))
+      .subscribe((cargo) => {
+        if (cargo === 'COORDENADOR') {
+          this.headerService.setTitle("")
+          this.headerService.showBack()
+        } else {
+          this.headerService.hideBack();
+        }
+    });
   }
 
   @ViewChild('ConfirmationModal')

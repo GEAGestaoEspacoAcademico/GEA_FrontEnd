@@ -11,7 +11,8 @@
   justify-content: space-between;
 
   img{
-    padding-left: var(--spacing-4);
+    margin: var(--spacing-4);
+    width: 6.125rem;
   }
 }
 
@@ -166,7 +167,7 @@ a:hover{
   .logo-fatec {
     display: block;
     margin: auto;
-    width: 35%;
+    width: 20px;
     margin-top: var(--spacing-6);
   }
 

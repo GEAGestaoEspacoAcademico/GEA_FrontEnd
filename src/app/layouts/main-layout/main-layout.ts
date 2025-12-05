@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { selectUserCargo } from '../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-main-layout',
@@ -7,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrl: './main-layout.css'
 })
 export class MainLayout {
+  private store = inject(Store);
+
+
+  cargo$ = this.store.select(selectUserCargo)
 
 }

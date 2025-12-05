@@ -21,19 +21,19 @@
 
     <div class="schedule-list-container mt-4">
       
-      <app-class-info-card
-        *ngFor="let agendamento of agendamentosDoDiaSelecionado$ | async"
-        [agendamentoData]="agendamento"
-        (delete)="requestCancelConfirmation($event)"
-        (alterar)="handleViewAgendamento($event)"
-        class="d-block schedule-item"
-      >
-      </app-class-info-card>
+      @for(agendamento of agendamentosDoDiaSelecionado$ | async; track agendamento){
+        <app-class-info-card
+          [agendamentoData]="agendamento"
+          (delete)="requestCancelConfirmation($event)"
+          (alterar)="handleViewAgendamento($event)"
+          class="d-block schedule-item"
+        ></app-class-info-card>
+      }
 
       @if (!(agendamentosDoDiaSelecionado$ | async)?.length) {
-         <div class="p-4 text-center text-secondary">
+          <div class="p-4 text-center text-secondary">
             Sem aulas para este dia.
-         </div>
+          </div>
       }
       
     </div>

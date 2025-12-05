@@ -51,9 +51,17 @@ export class Agenda implements OnInit {
   idSalaRecomendadaAtual!: number
 
   ngOnInit(): void {
-    this.headerService.setTitle('Agenda');
-    this.headerService.hideBack();
+    this.headerService.setTitle('');
     this.loadDataAndBuildForm();
+    this.cargo$
+    .pipe(take(1))
+    .subscribe((cargo) => {
+      if (cargo === 'COORDENADOR') {
+        this.headerService.showBack()
+      } else {
+        this.headerService.hideBack();
+      }
+    });
   }
 
   private loadDataAndBuildForm(): void {
