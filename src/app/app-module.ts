@@ -98,6 +98,7 @@ import { Calendario } from './pages/coordenacao/calendario/calendario';
 import { ProfessorScheduleList } from './components/coordenacao/professor-schedule-list/professor-schedule-list';
 import { Agendamentos } from './pages/AD/agendamentos/agendamentos';
 import { DailyScheduleList } from './components/shared/daily-schedule-list/daily-schedule-list';
+import { SpaceFilter } from './components/shared/space-filter/space-filter';
 
 @NgModule({
   declarations: [
@@ -166,7 +167,8 @@ import { DailyScheduleList } from './components/shared/daily-schedule-list/daily
     Calendario,
     ProfessorScheduleList,
     Agendamentos,
-    DailyScheduleList
+    DailyScheduleList,
+    SpaceFilter
   ],
   imports: [
     BrowserModule,

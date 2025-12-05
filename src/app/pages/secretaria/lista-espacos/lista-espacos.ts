@@ -1,5 +1,5 @@
-import type { OnInit} from '@angular/core';
-import { Component, inject, ViewChild} from '@angular/core';
+import type { OnInit } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 import type { EditarEspacoModal } from '../../../components/modals/editar-espaco-modal/editar-espaco-modal';
 import type { Sala } from '../../../models/sala.model';
@@ -11,76 +11,106 @@ import { HeaderTitleService } from '../../../services/header-title/header-title.
 import type { CriarRecursoRequest } from '../../../types/recurso.type';
 import type { CreateResourceModal } from '../../../components/modals/create-resource-modal/create-resource-modal';
 import { RecursoService } from '../../../services/recurso/recurso.service';
+import type { SpaceFilterType } from '../../../types/space-filter.type';
 
 @Component({
   selector: 'app-lista-espacos',
   standalone: false,
   templateUrl: './lista-espacos.html',
-  styleUrl: './lista-espacos.css'
+  styleUrl: './lista-espacos.css',
 })
-export class ListaEspacos implements OnInit{
+export class ListaEspacos implements OnInit {
   @ViewChild('deleteModal') deleteModal!: ConfirmationModal;
   @ViewChild('editModal') editModal!: EditarEspacoModal;
   @ViewChild('criarRecursoId') criarRecursoModal!: CreateResourceModal;
 
   salaSelecionada!: Sala | null;
-  salaIdEditar!: number; 
+  salaIdEditar!: number;
 
   private salaService = inject(SalaService);
-  private snackBarService = inject(SnackBarService)
-  private headerService = inject(HeaderTitleService)
-  private recursoService = inject(RecursoService)
+  private snackBarService = inject(SnackBarService);
+  private headerService = inject(HeaderTitleService);
+  private recursoService = inject(RecursoService);
 
   espacos$ = new BehaviorSubject<Sala[]>([]);
   isLoading = false;
+  mostrarFiltro = false;
 
   totalPages = 1;
   currentPage = 1;
   searchTerm = '';
 
+  filtrosAtivos: SpaceFilterType = {
+    tipos: [],
+    pisos: [],
+    status: [],
+  };
+
   ngOnInit() {
     this.carregarEspacos();
-    this.headerService.setTitle('Lista de Espaços Acadêmicos')
-    this.headerService.showBack()
+    this.headerService.setTitle('Lista de Espaços Acadêmicos');
+    this.headerService.showBack();
   }
 
   carregarEspacos() {
     this.isLoading = true;
 
     this.salaService.getSalas().subscribe({
-      next: (sala) => {
-        let filtrados = sala;
+      next: (salas) => {
+        let filtrados = salas;
 
-        if(this.searchTerm.trim() !== '') {
+        if (this.searchTerm.trim() !== '') {
           const term = this.searchTerm.toLowerCase();
-          filtrados = sala.filter(s =>
-            s.salaNome.toLowerCase().includes(term)
+          filtrados = filtrados.filter((s) => s.salaNome.toLowerCase().includes(term));
+        }
+
+        if (this.filtrosAtivos.tipos.length) {
+          filtrados = filtrados.filter((s) => this.filtrosAtivos.tipos.includes(s.tipoSalaId));
+        }
+
+        if (this.filtrosAtivos.pisos.length > 0) {
+          filtrados = filtrados.filter((s) => this.filtrosAtivos.pisos.includes(s.piso.pisoNome));
+        }
+
+        if (this.filtrosAtivos.status.length) {
+          filtrados = filtrados.filter((s) =>
+            this.filtrosAtivos.status.includes(s.disponibilidade ? 'DISPONIVEL' : 'INDISPONIVEL'),
           );
         }
 
         const itensPorPagina = 10;
         const start = (this.currentPage - 1) * itensPorPagina;
 
-        this.totalPages =Math.ceil(filtrados.length / itensPorPagina);
+        this.totalPages = Math.ceil(filtrados.length / itensPorPagina);
         this.espacos$.next(filtrados.slice(start, start + itensPorPagina));
       },
-      complete: () => (this.isLoading = false)
+      complete: () => (this.isLoading = false),
     });
   }
 
-  adicionarEquipamento(){
-    this.criarRecursoModal.open('SOFTWARE')
+  onFilterChange(filtro: SpaceFilterType) {
+    this.filtrosAtivos = filtro;
+    this.currentPage = 1;
+    this.carregarEspacos();
   }
 
-  criarRecurso(recurso: { type: string; name: string }){  
+  toggleFiltro() {
+    this.mostrarFiltro = !this.mostrarFiltro;
+  }
+
+  adicionarEquipamento() {
+    this.criarRecursoModal.open('SOFTWARE');
+  }
+
+  criarRecurso(recurso: { type: string; name: string }) {
     const corpoCriarRecurso: CriarRecursoRequest = {
       recursoNome: recurso.name,
-      recursoTipoId: recurso.type === 'SOFTWARE' ? 2 : 1
-    }
+      recursoTipoId: recurso.type === 'SOFTWARE' ? 2 : 1,
+    };
     this.recursoService.criarRecurso(corpoCriarRecurso).subscribe({
-      next: () => this.snackBarService.showSuccess("Recurso criado com sucesso"),
-      error: () => this.snackBarService.showError("Erro ao crari recurso")
-    })
+      next: () => this.snackBarService.showSuccess('Recurso criado com sucesso'),
+      error: () => this.snackBarService.showError('Erro ao crari recurso'),
+    });
   }
 
   onSearch(term: string) {
@@ -100,26 +130,28 @@ export class ListaEspacos implements OnInit{
   }
 
   confirmDelete() {
-    if(!this.salaSelecionada) {return}
+    if (!this.salaSelecionada) {
+      return;
+    }
 
     this.salaService.deleteSala(this.salaSelecionada.salaId).subscribe({
-      next: () => this.carregarEspacos()
+      next: () => this.carregarEspacos(),
     });
   }
 
   onEdit(sala: Sala): void {
-    this.salaIdEditar = sala.salaId
+    this.salaIdEditar = sala.salaId;
     this.editModal.open(sala);
   }
 
   onModalEdit(sala: AtualizarSalaRequest): void {
-    if(this.salaIdEditar){
+    if (this.salaIdEditar) {
       this.salaService.editSala(this.salaIdEditar, sala).subscribe({
         next: () => {
-          this.snackBarService.showSuccess("Sala atualizada com sucesso")
-          this.carregarEspacos()
-        }
-      })
+          this.snackBarService.showSuccess('Sala atualizada com sucesso');
+          this.carregarEspacos();
+        },
+      });
     }
   }
 }
