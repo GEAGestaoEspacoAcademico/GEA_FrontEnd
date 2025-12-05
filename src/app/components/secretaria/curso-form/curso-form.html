@@ -21,7 +21,7 @@
             formControlName="coordenadorId"
             class="gea-input-field justify-content-end"
           >
-            <option value="">Selecione...</option>
+            <option value="0">Selecione...</option>
 
             @for (c of coordenadores; track c.coordenadorUsuarioId) {
               <option [value]="c.coordenadorUsuarioId">

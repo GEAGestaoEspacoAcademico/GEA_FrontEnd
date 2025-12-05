@@ -104,6 +104,7 @@ import { CursosTable } from './components/secretaria/cursos-table/cursos-table';
 import { DisciplinasTable } from './components/secretaria/disciplinas-table/disciplinas-table';
 import { ModalWrapper } from './components/shared/modal-wrapper/modal-wrapper';
 import { CursoForm } from './components/secretaria/curso-form/curso-form';
+import { DisciplinaForm } from './components/secretaria/disciplina-form/disciplina-form';
 
 @NgModule({
   declarations: [
@@ -179,6 +180,7 @@ import { CursoForm } from './components/secretaria/curso-form/curso-form';
     DisciplinasTable,
     ListarCursos,
     CursoForm,
+    DisciplinaForm,
   ],
   imports: [
     BrowserModule,

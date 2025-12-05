@@ -5,7 +5,12 @@ import { DisciplinaService } from '../../../services/disciplina/disciplina.servi
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 import { BehaviorSubject } from 'rxjs';
-import type { AtualizarDisciplinaRequest, CriarDisciplinaRequest } from '../../../types/disciplina.model';
+import type {
+  AtualizarDisciplinaRequest,
+  CriarDisciplinaRequest,
+} from '../../../types/disciplina.model';
+import { DisciplinaForm } from '../../../components/secretaria/disciplina-form/disciplina-form';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-listar-disciplinas',
@@ -17,6 +22,7 @@ export class ListarDisciplinas implements OnInit {
   disciplinaSelecionado!: Disciplina | null;
   disciplinaIdParaEditar!: number;
 
+  private readonly dialog = inject(MatDialog);
   private readonly disciplinaService = inject(DisciplinaService);
   private readonly snackBarService = inject(SnackBarService);
   private readonly headerService = inject(HeaderTitleService);
@@ -56,8 +62,21 @@ export class ListarDisciplinas implements OnInit {
     });
   }
 
-  adicionarDisciplina() {
-    //chamar modal
+  manipularDisciplina(disciplina?: Disciplina) {
+    const dialogRef = this.dialog.open(DisciplinaForm, {});
+
+    const instance = dialogRef.componentInstance;
+
+    instance.title = disciplina ? 'Editar Disciplina' : 'Nova Disciplina';
+    instance.disciplina = disciplina ?? null;
+
+    instance.saved.subscribe(() => {
+      dialogRef.close();
+    });
+
+    instance.closed.subscribe(() => {
+      dialogRef.close();
+    });
   }
 
   criarDisciplina(disciplina: Disciplina) {
@@ -100,6 +119,7 @@ export class ListarDisciplinas implements OnInit {
 
   onEdit(disciplina: Disciplina): void {
     this.disciplinaIdParaEditar = disciplina.disciplinaId;
+    this.manipularDisciplina(disciplina);
   }
 
   onModalEdit(disciplina: AtualizarDisciplinaRequest): void {
