@@ -6,6 +6,8 @@ import type { OnInit } from '@angular/core';
 import { Component, inject } from '@angular/core';
 import type { Curso } from '../../../models/curso.model';
 import type { AtualizarCursoRequest, CriarCursoRequest } from '../../../types/curso';
+import { CursoForm } from '../../../components/secretaria/curso-form/curso-form';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-listar-cursos',
@@ -17,6 +19,7 @@ export class ListarCursos implements OnInit {
   cursoSelecionado!: Curso | null;
   cursoIdParaEditar!: number;
 
+  private readonly dialog = inject(MatDialog);
   private readonly cursoService = inject(CursoService);
   private readonly snackBarService = inject(SnackBarService);
   private readonly headerService = inject(HeaderTitleService);
@@ -56,8 +59,21 @@ export class ListarCursos implements OnInit {
     });
   }
 
-  adicionarCurso() {
-    //chamar modal
+  manipularCurso(curso?: Curso) {
+    const dialogRef = this.dialog.open(CursoForm, {});
+
+    const instance = dialogRef.componentInstance;
+
+    instance.title = curso ? 'Editar Curso' : 'Novo Curso';
+    instance.curso = curso ?? null;
+
+    instance.saved.subscribe(() => {
+      dialogRef.close();
+    });
+
+    instance.closed.subscribe(() => {
+      dialogRef.close();
+    });
   }
 
   criarCurso(curso: Curso) {
@@ -100,6 +116,7 @@ export class ListarCursos implements OnInit {
 
   onEdit(curso: Curso): void {
     this.cursoIdParaEditar = curso.cursoId;
+    this.manipularCurso(curso);
   }
 
   onModalEdit(curso: AtualizarCursoRequest): void {
