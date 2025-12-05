@@ -1,5 +1,5 @@
 .modal-geral {
-  max-width: 32.75rem;
+  width: 32.75rem;
   box-shadow: 0 0 0.5rem 0 var(--color-default-black);
   border-radius: 0.313rem;
   overflow: hidden;
@@ -7,24 +7,15 @@
 
 .header-modal {
   background-color: var(--color-primary-500);
-  max-height: 5.25rem;
+  height: 5.25rem;
 }
 
 .body-modal {
   background-color: var(--color-surface-base);
-  max-height: 23.188rem;
+  height: 23.188rem;
+  padding: 2.25rem;
 }
 
 .highlight-title {
-  color: var(--color-default-white);
-}
-
-.button-close {
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.close-icon {
   color: var(--color-default-white);
 }
