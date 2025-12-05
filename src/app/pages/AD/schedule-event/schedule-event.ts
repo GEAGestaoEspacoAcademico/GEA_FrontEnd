@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { selectUserId } from '../../../store/auth/auth.selectors';
 import { forkJoin, switchMap, take, throwError } from 'rxjs';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
+import { MultiDateSelector } from '../../../components/shared/multi-date-selector/multi-date-selector';
 
 @Component({
   selector: 'app-schedule-event',
@@ -27,6 +28,7 @@ export class ScheduleEvent implements OnInit{
   
   
   @ViewChild("scheduleModal") scheduleModal!: ScheduleDayModal;
+  @ViewChild(MultiDateSelector) dateSelector!: MultiDateSelector;
   
   ngOnInit(): void {
     this.headerService.setTitle('Agendar Evento')
@@ -38,7 +40,6 @@ export class ScheduleEvent implements OnInit{
   }
 
   salvarAgendamentos(eventos: CriarEventoFormulario[]){
-    console.log("[AGENDAR EVENTO] data: ", eventos)
     this.isLoadingCriarEvento = true;
     if(!eventos) {return;}
     this.usuarioId$.pipe(
@@ -59,9 +60,12 @@ export class ScheduleEvent implements OnInit{
       })
     ).subscribe({
       next: (respostas) => {
-        console.log('Todos os eventos foram criados:', respostas);
         this.isLoadingCriarEvento = false;
-        this.snackBarService.showSuccess(`${respostas.length} eventos criados com sucesso!`);
+        this.snackBarService.showSuccess(`${respostas.length} evento criado com sucesso!`);
+        this.datasSelecionadas = [];
+        if (this.dateSelector) {
+          this.dateSelector.limparSelecao();
+        }
       },
       error: (erro) => {
         console.error('Erro ao salvar lote:', erro);

@@ -14,7 +14,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner'; // Importe aqui
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
 
 // NGRX Imports
 import { StoreModule } from '@ngrx/store';
@@ -99,6 +99,10 @@ import { ProfessorScheduleList } from './components/coordenacao/professor-schedu
 import { Agendamentos } from './pages/AD/agendamentos/agendamentos';
 import { DailyScheduleList } from './components/shared/daily-schedule-list/daily-schedule-list';
 import { SpaceFilter } from './components/shared/space-filter/space-filter';
+import { ListarCursos } from './pages/secretaria/listar-cursos/listar-cursos';
+import { ListarDisciplinas } from './pages/secretaria/listar-disciplinas/listar-disciplinas';
+import { CursosTable } from './components/secretaria/cursos-table/cursos-table';
+import { DisciplinasTable } from './components/secretaria/disciplinas-table/disciplinas-table';
 
 @NgModule({
   declarations: [
@@ -169,6 +173,10 @@ import { SpaceFilter } from './components/shared/space-filter/space-filter';
     Agendamentos,
     DailyScheduleList,
     SpaceFilter
+    ListarDisciplinas,
+    CursosTable,
+    DisciplinasTable,
+    ListarCursos
   ],
   imports: [
     BrowserModule,
@@ -211,7 +219,10 @@ import { SpaceFilter } from './components/shared/space-filter/space-filter';
     }),
     A11yModule,
   ],
-  providers: [provideHttpClient(withInterceptors([globalErrorInterceptor]))],
+  providers: [
+    provideHttpClient(withInterceptors([globalErrorInterceptor])),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+  ],
   bootstrap: [App],
 })
 export class AppModule {}

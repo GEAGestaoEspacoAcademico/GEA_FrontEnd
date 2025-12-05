@@ -28,7 +28,7 @@
         </p>
       </div>
 
-      @if (agendamentoData.data) {
+      @if (agendamentoData.data && agendamentoData.data >= currentDate) {
         <div class="actions d-flex flex-column align-items-end text-end">
           <button
             type="button"

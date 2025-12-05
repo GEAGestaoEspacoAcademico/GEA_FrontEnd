@@ -82,7 +82,7 @@ export class AgendarSalaMateria implements OnInit {
   onDaysSelected(dates: Date[]) {
     this.selectedRecurringDates = dates;
 
-    if (dates.length > 0) {
+    if (dates.length > 0 && this.currentSalaId) {
       this.buscarHorarios();
     } else {
       this.horariosDisponiveis = [];

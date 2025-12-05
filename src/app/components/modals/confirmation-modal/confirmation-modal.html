@@ -44,35 +44,37 @@
         </div>
       }
       @if (mode === 'detalhes' && detalhesSala) {
-        <div class="d-flex flex-column text-center">
-            <div class="align-items-center">
-              <div class="time-caption time-caption-small">
-                {{ detalhesSala.salaNome }}
-                <hr class="hr-lg" />
-              </div>
-              <div class="time-caption time-caption-small">
-                {{ formData.data }}
-                <hr class="hr-lg" />
-              </div>
-              <div class="time-caption time-caption-small">
-                {{ formData.janelaHorarioId }}
-                <hr class="hr-lg" />
-              </div>
-              <div class="time-caption time-caption-small">
-                {{ formData.capacidade }}
-                <hr class="hr-sm" />
-              </div>
-              <div>
-                <div class="time-caption observation-text time-caption-small">Observações</div>
-                  <div class="time-caption time-caption-small">
-                    <hr class="hr-lg" />
-                    {{ detalhesSala.salaObservacoes }}
-                  </div>
-              </div>
-            </div>
+        <div class="details-list-container">
+          <dl class="details-list">
+            <dt>Local:</dt>
+            <dd>{{ detalhesSala.salaNome }}</dd>
+
+            <dt>Data:</dt>
+            <dd>{{ formData.data| date: 'dd/MM/yyyy' }}</dd> 
+
+            <dt>Qtd aulas:</dt>
+            <dd>{{ formData.qtdAulas }}</dd>
+
+            <dt>Horário:</dt>
+            <dd>{{ janelaHorario.horaInicio + ' - ' + janelaHorario.horaFim }}</dd>
+
+            <dt>Capacidade:</dt>
+            <dd>{{ detalhesSala.capacidade }}</dd>
+
+            <dt class="border border-0">Equipamentos:</dt>
+            <dd class="border border-0">
+              @for(recurso of formData.recursos; track recurso.id ){
+                <p>{{recurso.label}}</p>
+              } 
+            </dd>
+
+            <dt class="observation-text text-center">Observações</dt> 
+            <dd>{{ detalhesSala.salaObservacoes }}</dd>
+
+          </dl>
         </div>
 
-        <button class="gea-btn-primary lg-button mt-2" (click)="onModalConfirm()">
+        <button class="gea-btn-primary lg-button my-2" (click)="onModalConfirm()">
           {{ confirmText }}
         </button>
       }

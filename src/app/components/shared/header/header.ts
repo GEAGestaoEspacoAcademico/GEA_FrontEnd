@@ -51,6 +51,9 @@ export class Header {
           case 'SECRETARIA':
             this.router.navigate(['secretaria/home']);
             break
+          case 'COORDENACAO':
+            this.router.navigate(['coordenacao/home'])
+            break;
           default:
             this.router.navigate(['/login']);
             break;

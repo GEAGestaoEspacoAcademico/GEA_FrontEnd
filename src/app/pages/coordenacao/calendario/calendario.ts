@@ -4,6 +4,7 @@ import { FormControl } from '@angular/forms';
 import type { Professor } from '../../../models/professor.model';
 import ProfessorService from '../../../services/professor/professor.service';
 import { debounceTime } from 'rxjs';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-calendario',
@@ -22,6 +23,7 @@ export class Calendario implements OnInit {
   mostrarLista = false;
 
   private professorService = inject(ProfessorService);
+  private titleService = inject(HeaderTitleService)
 
   ngOnInit(): void {
     this.professorService.getProfessores().subscribe((res) => {
@@ -32,6 +34,9 @@ export class Calendario implements OnInit {
     this.search.valueChanges.pipe(debounceTime(200)).subscribe((valor) => {
       this.filtrarProfessores(valor ?? '');
     });
+
+    this.titleService.showBack()
+    this.titleService.setTitle("")
   }
 
   filtrarProfessores(valor: string): void {

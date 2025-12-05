@@ -1,0 +1,7 @@
+.space-management-container{
+  margin-left: var(--spacing-11);
+  margin-right: var(--spacing-11);
+  h2{
+    margin-bottom: 1.813rem;
+  }
+}

@@ -2,7 +2,7 @@ import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import type { Day } from '../../../components/shared/day-selector/day-selector';
 import { Router } from '@angular/router';
-import { map, type Observable } from 'rxjs';
+import { map, take, type Observable } from 'rxjs';
 import {
   selectTodasOsAgendamentos,
   selectAgendamentoLoading,
@@ -14,6 +14,7 @@ import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { FormatUtils } from '../../../utils/format.utils';
 import type { AgendamentoAula } from '../../../models/agendamentoAula.model';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
+import { selectUserCargo } from '../../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-aulas',
@@ -37,6 +38,7 @@ export class Aulas implements OnInit {
   loading$: Observable<boolean> = this.store.select(selectAgendamentoLoading);
 
   agendamentosDoDiaSelecionado$!: Observable<AgendamentoAula[]>;
+  cargo$: Observable<string | undefined> = this.store.select(selectUserCargo)
 
   @ViewChild('confirmCancelModel') confirmModal!: ConfirmationModal;
   agendamentoToCancelId: number | null = null;
@@ -48,6 +50,16 @@ export class Aulas implements OnInit {
     this.activeDayId = FormatUtils.toId(new Date());
     this.generateDaysForMonth();
     this.updateAgendamentosForActivyDay();
+    this.cargo$
+      .pipe(take(1))
+      .subscribe((cargo) => {
+        if (cargo === 'COORDENADOR') {
+          this.headerService.setTitle("")
+          this.headerService.showBack()
+        } else {
+          this.headerService.hideBack();
+        }
+      });
   }
 
   onMonthNavigate(direction: 'previous' | 'next'): void {

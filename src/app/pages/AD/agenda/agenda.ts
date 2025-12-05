@@ -51,9 +51,17 @@ export class Agenda implements OnInit {
   idSalaRecomendadaAtual!: number
 
   ngOnInit(): void {
-    this.headerService.setTitle('Agenda');
-    this.headerService.hideBack();
+    this.headerService.setTitle('');
     this.loadDataAndBuildForm();
+    this.cargo$
+    .pipe(take(1))
+    .subscribe((cargo) => {
+      if (cargo === 'COORDENADOR') {
+        this.headerService.showBack()
+      } else {
+        this.headerService.hideBack();
+      }
+    });
   }
 
   private loadDataAndBuildForm(): void {
@@ -223,7 +231,7 @@ export class Agenda implements OnInit {
 
   openInfoModal(id: number) {
     this.idSalaRecomendadaAtual = id;
-    this.classInfoModal.open();
+    this.classInfoModal.open(id);
   }
 
 agendarAula() {
@@ -236,7 +244,7 @@ agendarAula() {
         salaId: Number(this.idSalaRecomendadaAtual),
         disciplinaId: Number(this.submittedData.disciplinaId),
         data: this.submittedData.data,
-        janelasHorarioId: this.submittedData.janelaHorarioId,
+        janelasHorarioId: Number(this.submittedData.janelaHorarioId),
         isEvento: false,
         quantidade: Number(this.submittedData.qtdAulas)
       };

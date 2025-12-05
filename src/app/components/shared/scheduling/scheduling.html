@@ -36,7 +36,7 @@
             [id]="field.name" 
             [formControlName]="field.name" 
             class="form-control captions">
-            <option [value]="">{{ field.placeholder || 'Selecione...' }}</option>
+            <option value="">{{ field.placeholder || 'Selecione' }}</option>
             @for (option of field.options; track $index) {
               <option [value]="option.value">{{ option.label }}</option>
             }
@@ -138,8 +138,7 @@
               }
             </mat-chip-grid>
           </div>
-          @if (!field.disabled) {
-            <div class="equipment-add-form" [formGroup]="equipmentAddForm">
+            <div class="equipment-add-form" [formGroup]="equipmentAddForm" [style.display]="field.disabled ? 'none' : 'block'">
               <input
                 type="text"
                 id="equipment-input"
@@ -148,7 +147,8 @@
                 formControlName="equipment"
                 [matChipInputFor]="equipamentChipGrid"
                 [matAutocomplete]="equipmentAuto"
-                class="simple-input equipment-name-input" />
+                class="simple-input equipment-name-input" 
+                [readonly]="field.disabled"/>
               <mat-autocomplete #equipmentAuto="matAutocomplete" [displayWith]="displayEquipment">
                 @for (option of filteredEquipments | async; track option.value) {
                   <mat-option [value]="option">{{ option.label }}</mat-option>
@@ -165,7 +165,6 @@
                 Adicionar
               </button>
             </div>
-          }
         </div>
       }
 

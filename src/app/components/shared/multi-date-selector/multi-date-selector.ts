@@ -9,12 +9,12 @@ import { MatCalendar, type MatCalendarCellCssClasses } from '@angular/material/d
   styleUrl: './multi-date-selector.css'
 })
 export class MultiDateSelector implements OnInit {
-  private cdr = inject(ChangeDetectorRef)
+  dataMinima: Date = new Date();
 
   @ViewChild(MatCalendar) calendar!: MatCalendar<Date>;
 
   @Input() initialSelectedDates: Date[] = []
-  @Input() modo: 'dias' | 'reccorente' = 'dias';
+  @Input() modo: 'dias' | 'reccorente' | 'dia' = 'dia';
   @Output() selecaoChange = new EventEmitter<Date[]>();
   @Output() diaDaSemana = new EventEmitter<string>();
   @Output() doubleClick = new EventEmitter<Date>();
@@ -26,6 +26,7 @@ export class MultiDateSelector implements OnInit {
   datasSelecionadas: Date[] = [];
 
   ngOnInit(): void {
+    this.dataMinima.setHours(0, 0, 0, 0);
     this.datasSelecionadas = [...this.initialSelectedDates]
   }
 
@@ -68,13 +69,40 @@ export class MultiDateSelector implements OnInit {
   }
 
   private handleSingleClick(date: Date): void {
-    if (this.modo === 'reccorente') {
-      this.aplicaSelecaoRecorrente(date);
-    } else {
-      this.aplicaSelecaoUnica(date);
+    switch(this.modo){
+      case 'dia':
+        this.aplicaSelecaoUnicaExclusiva(date);
+        break;
+      case 'reccorente':
+        this.aplicaSelecaoRecorrenteExclusiva(date);
+        break;
+      case 'dias':
+        default:
+        this.aplicaSelecaoMultipla(date);
+      break;
     }
 
     this.atulizarSelecaoMudar();
+  }
+
+  private aplicaSelecaoUnicaExclusiva(date: Date): void {
+    const index = this.findDateIndex(date);
+
+    if (index > -1) {
+      this.datasSelecionadas = [];
+    } else {
+      this.datasSelecionadas = [date];
+    }
+  }
+
+  private aplicaSelecaoMultipla(date: Date): void {
+    const index = this.findDateIndex(date);
+
+    if (index === -1) {
+      this.datasSelecionadas.push(date);
+    } else {
+      this.datasSelecionadas.splice(index, 1);
+    }
   }
 
   private findDateIndex(dateToFind: Date): number {
@@ -91,17 +119,8 @@ export class MultiDateSelector implements OnInit {
     const diaDaSemanaPortugues = this.datasSelecionadas[0].toLocaleDateString('pt-BR', { weekday: 'long' })
     this.diaDaSemana.emit(diaDaSemanaPortugues.split('-')[0])
   }
-  private aplicaSelecaoUnica(date: Date): void {
-    const index = this.findDateIndex(date);
 
-    if (index === -1) {
-      this.datasSelecionadas.push(date);
-    } else {
-      this.datasSelecionadas.splice(index, 1);
-    }
-  }
-
-  private aplicaSelecaoRecorrente(clickedDate: Date): void {
+  private aplicaSelecaoRecorrenteExclusiva(clickedDate: Date): void {
     const targetDay = clickedDate.getDay();
     const targetMonth = clickedDate.getMonth();
     const targetYear = clickedDate.getFullYear();
@@ -115,23 +134,13 @@ export class MultiDateSelector implements OnInit {
       }
       cursor.setDate(cursor.getDate() + 1);
     }
-
-    const allAlreadySelected = datesInMonth.every(d => this.findDateIndex(d) !== -1);
-
-    if (allAlreadySelected) {
-      this.datasSelecionadas = this.datasSelecionadas.filter(existing => {
-        const isSameMonth = existing.getMonth() === targetMonth && existing.getFullYear() === targetYear;
-        const isSameWeekDay = existing.getDay() === targetDay;
-
-        return !(isSameMonth && isSameWeekDay);
-      });
-
-    } else {
-      datesInMonth.forEach(newDate => {
-        if (this.findDateIndex(newDate) === -1) {
-          this.datasSelecionadas.push(newDate);
-        }
-      });
-    }
+    this.datasSelecionadas = [...datesInMonth];
   }
+
+  public limparSelecao(): void {
+  this.datasSelecionadas = [];
+  this.atulizarSelecaoMudar();
+  this.calendar.activeDate = new Date();
+  this.calendar.updateTodaysDate();
+}
 }
