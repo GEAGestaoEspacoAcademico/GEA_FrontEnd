@@ -1,6 +1,6 @@
-export interface Curso   {
-  cursoId: number,
-  cursoNome: string,
-  coordenadorId: string,
-  cursoSigla: string
+export interface Curso {
+  cursoId: number;
+  cursoNome: string;
+  coordenadorId: number;
+  cursoSigla: string;
 }

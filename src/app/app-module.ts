@@ -99,6 +99,7 @@ import { ProfessorScheduleList } from './components/coordenacao/professor-schedu
 import { Agendamentos } from './pages/AD/agendamentos/agendamentos';
 import { DailyScheduleList } from './components/shared/daily-schedule-list/daily-schedule-list';
 import { ModalWrapper } from './components/shared/modal-wrapper/modal-wrapper';
+import { CursoForm } from './components/secretaria/curso-form/curso-form';
 
 @NgModule({
   declarations: [
@@ -169,6 +170,7 @@ import { ModalWrapper } from './components/shared/modal-wrapper/modal-wrapper';
     ProfessorScheduleList,
     Agendamentos,
     DailyScheduleList,
+    CursoForm,
   ],
   imports: [
     BrowserModule,
