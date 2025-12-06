@@ -1,4 +1,4 @@
-<ng-template #editarEspacoModalTemplate let-modal>
+<ng-template #editarEspacoModalTemplate let-modal class="geral">
   <div class="modal-geral" role="dialog" aria-modal="true">
 
     <div class="header-modal">
@@ -36,11 +36,11 @@
           <div class="indisponivel-row">
             <label class="checkbox-container">
               <input type="checkbox" formControlName="disponibilidade">
-              
-              <span class="status-dot" 
+
+              <span class="status-dot"
                     [ngClass]="form.get('disponibilidade')?.value ? 'neutral-dot' : 'red-dot'">
               </span>
-              
+
               <span class="ind-text">
                 {{ form.get('disponibilidade')?.value ? 'Sala Disponível' : 'Sala Indisponível' }}
               </span>
@@ -52,8 +52,8 @@
     </div>
 
     <div class="footer-modal">
-      <button class="btn-edit" 
-              type="button" 
+      <button class="btn-edit"
+              type="button"
               (click)="form.disabled ? onModalEdit() : onModalSave()">
         {{ form.disabled ? 'Editar' : 'Salvar' }}
       </button>
