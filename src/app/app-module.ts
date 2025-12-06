@@ -22,9 +22,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { authReducer } from './store/auth/auth.reducer';
 import { AuthEffects } from './store/auth/auth.effects';
-import { agendamentoReducer } from './store/agendamento/agendamento.reducer';
-import { AgendamentoEffects } from './store/agendamento/agendamento.effects';
-import { AGENDAMENTO_FEATURE_KEY } from './store/agendamento/agendamento.selectors';
 
 // App Specific Imports
 import { AppRoutingModule } from './app-routing-module';
@@ -189,13 +186,12 @@ import { DailyScheduleList } from './components/shared/daily-schedule-list/daily
     StoreModule.forRoot(
       {
         auth: authReducer,
-        [AGENDAMENTO_FEATURE_KEY]: agendamentoReducer,
       },
       {
         metaReducers,
       },
     ),
-    EffectsModule.forRoot([AuthEffects, AgendamentoEffects]),
+    EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),
