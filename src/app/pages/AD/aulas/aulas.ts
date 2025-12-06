@@ -32,11 +32,12 @@ export class Aulas implements OnInit {
   activeDayId!: string;
   monthToDisplay!: string;
   
-  todasAulasProfessor: AgendamentoAula[] = [];
+  aulasCorrentes: AgendamentoAula[] = [];
   agendamentosDoDiaSelecionado$ = new BehaviorSubject<AgendamentoAula[]>([]);
   isLoading = false;
 
   cargo$: Observable<string | undefined> = this.store.select(selectUserCargo)
+  cargoUsuario: string = "";
   usuarioId$: Observable<number | undefined> = this.store.select(selectUserId);
 
   @ViewChild('confirmCancelModel') confirmModal!: ConfirmationModal;
@@ -48,23 +49,23 @@ export class Aulas implements OnInit {
     
     this.activeDayId = FormatUtils.toId(new Date());
     this.generateDaysForMonth();
-
-    this.carregarAulas()
-    
-    // this.updateAgendamentosForActivyDay();
     this.cargo$
-      .pipe(take(1))
-      .subscribe((cargo) => {
-        if (cargo === 'COORDENADOR') {
-          this.headerService.setTitle("")
-          this.headerService.showBack()
-        } else {
-          this.headerService.hideBack();
+    .pipe(take(1))
+    .subscribe((cargo) => {
+      if(!cargo) {return} 
+      this.cargoUsuario = cargo;
+      if (cargo === 'COORDENADOR') {
+        this.headerService.setTitle("")
+        this.headerService.showBack()
+        this.carregarAulasCoordenador();
+      } else {
+        this.headerService.hideBack();
+        this.carregarAulasProfessor()
         }
       });
   }
 
-  carregarAulas(){
+  carregarAulasProfessor(){
     this.usuarioId$.pipe(
       filter((id) => !!id), 
       take(1), 
@@ -72,9 +73,16 @@ export class Aulas implements OnInit {
         return this.agendamentoService.getAgendamentosPorfessor(usuarioId!); 
       })
     ).subscribe({
-      next: (agendamento) => this.todasAulasProfessor = agendamento,
+      next: (agendamento) => this.aulasCorrentes = agendamento,
       error: (_) => this.snackBarService.showError("Erro ao carregar agendametos")
     });
+  }
+
+  carregarAulasCoordenador(){
+    this.agendamentoService.getAgendamentoAula().subscribe({
+      next: (agendamentos) => this.aulasCorrentes = agendamentos,
+      error: (_) => this.snackBarService.showError("Erro ao carregar agendamentso para Coordenador")
+    })
   }
 
   onMonthNavigate(direction: 'previous' | 'next'): void {
@@ -97,7 +105,7 @@ export class Aulas implements OnInit {
   }
 
   private filtrarAulasDiaAtual() {
-    const aulasdoDia = this.todasAulasProfessor.filter(aula => {
+    const aulasdoDia = this.aulasCorrentes.filter(aula => {
       return aula.data === this.activeDayId
     })
 
@@ -114,7 +122,7 @@ export class Aulas implements OnInit {
     this.agendamentoService.deleteAgendamentoAula(this.agendamentoToCancelId).subscribe({
       next: () => {
         this.snackBarService.showSuccess("Agendamento cancelado com sucesso")
-        this.todasAulasProfessor = this.todasAulasProfessor.filter(a => a.agendamentoAulaId !== this.agendamentoToCancelId);
+        this.aulasCorrentes = this.aulasCorrentes.filter(a => a.agendamentoAulaId !== this.agendamentoToCancelId);
         this.filtrarAulasDiaAtual();
         
         this.agendamentoToCancelId = null;
