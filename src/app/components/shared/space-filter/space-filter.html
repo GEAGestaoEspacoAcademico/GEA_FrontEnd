@@ -1,0 +1,45 @@
+<aside class="filter-card" role="dialog" aria-label="Filtro de espaços">
+  <form [formGroup]="filterForm">
+
+    <section class="filter-section">
+      <h3>Tipo de Espaço</h3>
+      <fieldset>
+        @for (tipo of tiposSala; track tipo?.tipoSalaId ?? $index; let i = $index) {
+          <label>
+            <input type="checkbox" [formControl]="tiposArray.at(i)" />
+            {{ tipo.tipoSalaNome }}
+          </label>
+        }
+      </fieldset>
+    </section>
+
+    <section class="filter-section">
+      <h3>Piso</h3>
+      <fieldset>
+        @for (piso of pisos; track piso?.pisoId; let i = $index) {
+          <label>
+            <input type="checkbox" [formControl]="pisosArray.at(i)" />
+            {{ piso.pisoNome }}
+          </label>
+        }
+      </fieldset>
+    </section>
+
+    <section class="filter-section">
+      <h3>Disponibilidade</h3>
+      <fieldset>
+        @for (opcao of OPCOES_DISPONIBILIDADE; track opcao.value ?? $index; let i = $index) {
+          <label>
+            <input type="checkbox" [formControl]="statusArray.at(i)" />
+            {{ opcao.label }}
+          </label>
+        }
+      </fieldset>
+    </section>
+
+    <footer class="actions">
+      <button type="button" class="btn-clear" (click)="limpar()">Limpar</button>
+      <button type="button" class="btn-apply" (click)="aplicar()">Aplicar</button>
+    </footer>
+  </form>
+</aside>

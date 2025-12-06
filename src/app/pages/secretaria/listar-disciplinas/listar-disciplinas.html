@@ -1,0 +1,26 @@
+<div class="space-management-container">
+  <h2 class="main-title">Lista de disciplinas</h2>
+  <app-disciplinas-table
+    [disciplinas]="(disciplinas$ | async) || []"
+    [totalPages]="totalPages"
+    [currentPage]="currentPage"
+    [isLoading]="isLoading"
+    [cursos]="cursos"
+    (searchChange)="onSearch($event)"
+    (pageChange)="onPageChange($event)"
+    (editClick)="onEdit($event)"
+    (deleteClick)="onDelete($event)"
+    (selecionaCurso)="onSelecionaCurso($event)"
+    (clickAdicionarDisciplina)="adicionarDisciplina()"
+    >
+  </app-disciplinas-table>
+</div>
+
+<app-confirmation-modal
+  #deleteModal
+  mode="aviso"
+  title="Excluir Disciplina"
+  message="Tem certeza que deseja excluir esta disciplina? Esta ação não pode ser desfeita."
+  (onconfirm)="confirmDelete()"
+>
+</app-confirmation-modal>

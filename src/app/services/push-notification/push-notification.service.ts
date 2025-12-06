@@ -13,7 +13,7 @@ export class PushNotificationService {
 
   public inscreverNotificacao(): void {
     if(!this.swPush.isEnabled){
-      this.snackBarService.showError("Service Worker ou Push Messaging não estão habilitados.")
+      // this.snackBarService.showError("Service Worker ou Push Messaging não estão habilitados.")
       return;
     }
     this.swPush.requestSubscription({

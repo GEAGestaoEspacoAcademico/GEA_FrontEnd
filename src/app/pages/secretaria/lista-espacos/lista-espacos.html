@@ -1,5 +1,10 @@
 <div class="space-management-container">
-  <h2 class="main-title">List de espaços Acadêmicos</h2>
+  <h2 class="main-title">Lista de espaços Acadêmicos</h2>
+
+  @if (mostrarFiltro) {
+    <app-space-filter (filterChange)="onFilterChange($event)"></app-space-filter>
+  }
+
   <app-espacos-table
     [data]="(espacos$ | async) || []"
     [totalPages]="totalPages"
@@ -10,25 +15,23 @@
     (editClick)="onEdit($event)"
     (deleteClick)="onDelete($event)"
     (clickAdicionarEquipamento)="adicionarEquipamento()"
-    >
+    (filterToggle)="toggleFiltro()"
+  >
   </app-espacos-table>
 </div>
 
-<app-editar-espaco-modal 
-  #editModal 
-  (clickEdit)="onModalEdit($event)">
-</app-editar-espaco-modal>
+<app-editar-espaco-modal #editModal (clickEdit)="onModalEdit($event)"> </app-editar-espaco-modal>
 
 <app-create-resource-modal
-#criarRecursoId
-(create)="criarRecurso($event)"
+  #criarRecursoId
+  (create)="criarRecurso($event)"
 ></app-create-resource-modal>
 
-
-<app-confirmation-modal 
-  #deleteModal 
-  mode="aviso" 
+<app-confirmation-modal
+  #deleteModal
+  mode="aviso"
   title="Excluir Espaço"
   message="Tem certeza que deseja excluir este espaço? Esta ação não pode ser desfeita."
-  (onconfirm)="confirmDelete()">
+  (onconfirm)="confirmDelete()"
+>
 </app-confirmation-modal>
