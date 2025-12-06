@@ -7,6 +7,7 @@ import { DisciplinaService } from '../../../services/disciplina/disciplina.servi
 import type { CriarDisciplinaRequest } from '../../../types/disciplina.model';
 import type { Disciplina } from '../../../models/disciplina.model';
 import { SEMESTRES } from '../../../models/enums/semestres.enum';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-disciplina-form',
@@ -17,6 +18,7 @@ import { SEMESTRES } from '../../../models/enums/semestres.enum';
 export class DisciplinaForm implements OnInit {
   private cursoService = inject(CursoService);
   private disciplinaService = inject(DisciplinaService);
+  private snackbarService = inject(SnackBarService)
 
   @Input() title!: string;
   @Input() disciplina: Disciplina | null = null;
@@ -29,9 +31,9 @@ export class DisciplinaForm implements OnInit {
   isEditMode = false;
 
   disciplinaForm = new FormGroup({
-    nome: new FormControl('', Validators.required),
+    disciplinaNome: new FormControl('', Validators.required),
     cursoNome: new FormControl(0, Validators.required),
-    semestre: new FormControl('', Validators.required),
+    disciplinaSemestre: new FormControl('', Validators.required),
   });
 
   ngOnInit(): void {
@@ -42,9 +44,9 @@ export class DisciplinaForm implements OnInit {
 
       if (this.disciplina && this.isEditMode) {
         this.disciplinaForm.patchValue({
-          nome: this.disciplina.disciplinaNome,
+          disciplinaNome: this.disciplina.disciplinaNome,
           cursoNome: Number(this.disciplina.cursoNome),
-          semestre: this.disciplina.disciplinaSemestre,
+          disciplinaSemestre: this.disciplina.disciplinaSemestre,
         });
       }
     });
@@ -58,17 +60,28 @@ export class DisciplinaForm implements OnInit {
     const v = this.disciplinaForm.value;
 
     const payload: CriarDisciplinaRequest = {
-      disciplinaNome: v.nome as string,
+      disciplinaNome: v.disciplinaNome as string,
       cursoId: v.cursoNome as number,
-      disciplinaSemestre: v.semestre as string,
+      disciplinaSemestre: v.disciplinaSemestre as string,
     };
 
     if (this.isEditMode && this.disciplina) {
-      this.disciplinaService
-        .editDisciplina(this.disciplina.disciplinaId, payload)
-        .subscribe(() => this.saved.emit());
+      this.disciplinaService.editDisciplina(this.disciplina.disciplinaId, payload).subscribe({
+          next: () => {
+            this.saved.emit()
+            this.snackbarService.showSuccess("Sucesso ao editar disciplina")
+          },
+          error: () => this.snackbarService.showError("Erro ao editar disciplina")
+        }
+      );
     } else {
-      this.disciplinaService.criarDisciplina(payload).subscribe(() => this.saved.emit());
+      this.disciplinaService.criarDisciplina(payload).subscribe({
+        next: () => {
+          this.saved.emit();
+          this.snackbarService.showSuccess("Sucesso ao criar uma disciplina")
+        },
+        error: () => this.snackbarService.showError("Erro ao editar uma disciplina")
+      })
     }
   }
 

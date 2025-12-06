@@ -16,7 +16,7 @@ export class DisciplinasTable {
   @Input() isLoading: boolean = false;
 
   @Output() searchChange = new EventEmitter<string>();
-  @Output() selecionaCurso = new EventEmitter<string>();
+  @Output() selecionaCurso = new EventEmitter<string | null>();
   @Output() pageChange = new EventEmitter<number>();
   @Output() editClick = new EventEmitter<Disciplina>();
   @Output() deleteClick = new EventEmitter<Disciplina>();
@@ -26,9 +26,6 @@ export class DisciplinasTable {
   cursoSelecionado: string | null = null;
 
   emitirSelecao(){
-
-
-    if(!this.cursoSelecionado) {return;}
     this.selecionaCurso.emit(this.cursoSelecionado)
   }
 

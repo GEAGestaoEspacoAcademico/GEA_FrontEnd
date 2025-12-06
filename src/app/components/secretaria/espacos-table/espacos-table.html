@@ -22,12 +22,6 @@
           <mat-icon class="icon-filter" svgIcon="filter"></mat-icon>
         </button>
       </form>
-      <div class="actions-buttons">
-        <button type="button" class="add-btn" (click)="adicionarEquipamento()">
-          <mat-icon>add_circle_outline</mat-icon>
-          Novo Equipamento
-        </button>
-      </div>
     </div>
   </header>
 
@@ -38,6 +32,7 @@
           <th scope="col">Nome</th>
           <th scope="col">Piso</th>
           <th scope="col">Tipo de Espaço</th>
+          <th scope="col">Disponível</th>
           <th scope="col">Ações</th>
         </tr>
       </thead>
@@ -47,6 +42,7 @@
             <td>{{ sala.salaNome }}</td>
             <td>{{ sala.piso }}</td>
             <td>{{ sala.tipoSala }}</td>
+            <td>{{ sala.disponibilidade ? 'Sim' : 'Não'}}</td>
             <td class="actions">
               <button
                 type="button"

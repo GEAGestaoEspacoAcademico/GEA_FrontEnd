@@ -1,5 +1,5 @@
 import type { OnInit } from '@angular/core';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import type { Disciplina } from '../../../models/disciplina.model';
 import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import type { AtualizarDisciplinaRequest, CriarDisciplinaRequest } from '../../../types/disciplina.model';
 import { CursoService } from '../../../services/curso/curso.service';
 import type { Curso } from '../../../models/curso.model';
+import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 
 @Component({
   selector: 'app-listar-disciplinas',
@@ -27,6 +28,8 @@ export class ListarDisciplinas implements OnInit {
   private readonly cursoService = inject(CursoService);
   private readonly snackBarService = inject(SnackBarService);
   private readonly headerService = inject(HeaderTitleService);
+
+  @ViewChild('deleteModal') deleteModal!: ConfirmationModal;
 
   disciplinas$ = new BehaviorSubject<Disciplina[]>([]);
   isLoading = false;
@@ -49,7 +52,7 @@ export class ListarDisciplinas implements OnInit {
     this.disciplinaService.getDisciplinas().subscribe({
       next: (disciplinas) => {
         let filtrados = disciplinas;
-
+        console.log("Filtro nome: " + this.filtroCursoNome)
         if (this.filtroCursoNome) {
           filtrados = filtrados.filter((d) => d.cursoNome === this.filtroCursoNome);
         }
@@ -93,14 +96,14 @@ export class ListarDisciplinas implements OnInit {
     })
   }
 
-  onSelecionaCurso(cursonome: string) {
-    this.filtroCursoNome = cursonome; // 1. Guarda o ID na memória
-    this.currentPage = 1;    // 2. Volta para a página 1 (boa prática de UX ao filtrar)
-    this.carregarDisciplinas(); // 3. Roda a lógica de listagem novamente
+  onSelecionaCurso(cursonome: string | null) {
+    this.filtroCursoNome = cursonome; 
+    this.currentPage = 1;    
+    this.carregarDisciplinas();
   }
 
   adicionarDisciplina() {
-    //chamar modal
+    this.manipularDisciplina()
   }
 
   criarDisciplina(disciplina: Disciplina) {
@@ -128,7 +131,7 @@ export class ListarDisciplinas implements OnInit {
 
   onDelete(disciplina: Disciplina) {
     this.disciplinaSelecionado = disciplina;
-    //chamar modal
+    this.deleteModal.open()
   }
 
   confirmDelete() {
@@ -144,17 +147,6 @@ export class ListarDisciplinas implements OnInit {
   onEdit(disciplina: Disciplina): void {
     this.disciplinaIdParaEditar = disciplina.disciplinaId;
     this.manipularDisciplina(disciplina);
-  }
-
-  onModalEdit(disciplina: AtualizarDisciplinaRequest): void {
-    // if (this.disciplinaIdEditar) {
-    //   this.disciplinaService.editDisciplina(this.disciplinaIdEditar, disciplina).subscribe({
-    //     next: () => {
-    //       this.snackBarService.showSuccess('Disciplina atualizada com sucesso');
-    //       this.carregarDisciplinas();
-    //     },
-    //   });
-    // }
   }
 
 

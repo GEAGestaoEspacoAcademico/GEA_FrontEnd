@@ -6,6 +6,7 @@ import type { Coordenador } from '../../../models/coordenador.model';
 import type { Curso } from '../../../models/curso.model';
 import { CursoService } from '../../../services/curso/curso.service';
 import type { CriarCursoRequest } from '../../../types/curso';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-curso-form',
@@ -16,6 +17,7 @@ import type { CriarCursoRequest } from '../../../types/curso';
 export class CursoForm implements OnInit {
   private cursoService = inject(CursoService);
   private coordenadorService = inject(CoordenadorService);
+  private snackbarService = inject(SnackBarService);
 
   @Input() title!: string;
   @Input() curso: Curso | null = null;
@@ -62,9 +64,22 @@ export class CursoForm implements OnInit {
     };
 
     if (this.isEditMode && this.curso) {
-      this.cursoService.editCurso(this.curso.cursoId, payload).subscribe(() => this.saved.emit());
+      this.cursoService.editCurso(this.curso.cursoId, payload).subscribe({
+          next: () => {
+            this.saved.emit()
+            this.snackbarService.showSuccess("Sucesso ao editar curso")
+          },
+          error: () => this.snackbarService.showError("Erro ao editar curso")
+        }
+      );
     } else {
-      this.cursoService.criarCurso(payload).subscribe(() => this.saved.emit());
+      this.cursoService.criarCurso(payload).subscribe({
+        next: () => {
+          this.saved.emit();
+          this.snackbarService.showSuccess("Sucesso ao criar um curso")
+        },
+        error: () => this.snackbarService.showError("Erro ao criar um curso")
+      })
     }
   }
 
