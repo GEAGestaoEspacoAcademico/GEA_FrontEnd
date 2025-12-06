@@ -1,5 +1,5 @@
 import type { OnInit } from '@angular/core';
-import { Component, inject, viewChild, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import type { Sala } from '../../../models/sala.model';
 import { SalaService } from '../../../services/sala/sala.service';
 import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
@@ -10,6 +10,7 @@ import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import type { CreateResourceModal } from '../../../components/modals/create-resource-modal/create-resource-modal';
 import { RecursoService } from '../../../services/recurso/recurso.service';
 import type { CriarRecursoRequest } from '../../../types/recurso.type';
+import type { SpaceFilterType } from '../../../types/space-filter.type';
 
 @Component({
   selector: 'app-space-management',
@@ -37,6 +38,14 @@ export class SpaceManagement implements OnInit {
   totalPages: number = 1;
   searchTerm: string = '';
   pageSize: number = 7;
+
+  filtrosAtivos: SpaceFilterType = {
+    tipos: [],
+    pisos: [],
+    status: [],
+  };
+
+  mostrarFiltro: boolean = false; 
 
   ngOnInit(): void {
     this.carregarSalas()
@@ -111,12 +120,50 @@ export class SpaceManagement implements OnInit {
     this.salaParaDeletar = null;
   }
 
+  onFilterChange(filtro: SpaceFilterType) {
+    this.filtrosAtivos = filtro;
+    this.currentPage = 1;
+    this.carregarSalas();
+  }
+
+  toggleFiltro() {
+    this.mostrarFiltro = !this.mostrarFiltro;
+  }
+
   atualizarDataVisualizada(): void {
     let filtrada = this.masterSalaList;
 
     if (this.searchTerm.trim() !== '') {
       const term = this.searchTerm.toLowerCase();
       filtrada = filtrada.filter((s) => s.salaNome.toLowerCase().includes(term));
+    }
+
+    if (this.filtrosAtivos.tipos?.length) {
+      filtrada = filtrada.filter((s) => this.filtrosAtivos.tipos.includes(s.tipoSalaId));
+    }
+
+    if (this.filtrosAtivos.pisos?.length) {
+      const pisosLower = this.filtrosAtivos.pisos.map(p => p.toLowerCase());
+
+      const getPisoName = (s: any): string => {
+        if (!s) {return ''};
+        if (typeof s.piso === 'string') {return s.piso};
+        if (s.piso?.nome) {return s.piso.nome};
+        if (s.piso?.pisoNome) {return s.piso.pisoNome};
+        if (s.pisoNome) {return s.pisoNome};
+        return '';
+      };
+
+      filtrada = filtrada.filter((s) => {
+        const nomePiso = getPisoName(s).toLowerCase();
+        return !!nomePiso && pisosLower.includes(nomePiso);
+      });
+    }
+
+    if (this.filtrosAtivos.status?.length) {
+      filtrada = filtrada.filter((s) =>
+        this.filtrosAtivos.status.includes(s.disponibilidade ? 'DISPONIVEL' : 'INDISPONIVEL'),
+      );
     }
 
     this.totalPages = Math.ceil(filtrada.length / this.pageSize) || 1;

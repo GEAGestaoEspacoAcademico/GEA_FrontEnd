@@ -1,3 +1,5 @@
+import type { Piso } from "./piso";
+
 export interface Sala {
   salaId: number,
   salaNome: string,
@@ -6,6 +8,6 @@ export interface Sala {
   tipoSalaId: number,
   tipoSala: string,
   pisoId: number,
-  piso: string
+  piso: Piso,
   salaObservacoes: string
 }

@@ -14,19 +14,23 @@
           aria-label="Buscar pelo nome do espaço"
         />
 
-        <button type="button" aria-label="Aplicar Opções de Filtro da Busca">
+        <button
+          type="button"
+          aria-label="Aplicar Opções de Filtro da Busca"
+          (click)="toggleFiltro()"
+        >
           <mat-icon class="icon-filter" svgIcon="filter"></mat-icon>
         </button>
       </form>
       <div class="action-buttons">
         <button type="button" class="add-btn" (click)="onNovoRecurso('SOFTWARE')">
           <mat-icon>add_circle_outline</mat-icon>
-            Novo Software
+          Novo Software
         </button>
 
         <button type="button" class="add-btn" (click)="onNovoRecurso('HARDWARE')">
           <mat-icon>add_circle_outline</mat-icon>
-            Novo Equipamento
+          Novo Equipamento
         </button>
       </div>
     </div>
@@ -54,15 +58,15 @@
                 class="edit-btn"
                 (click)="onEditSala(sala)"
                 aria-label="Editar {{ sala.salaNome }}"
-                >
+              >
                 <mat-icon svgIcon="edit" aria-hidden="true"></mat-icon>
                 <span class="visually-hidden">Editar</span>
               </button>
               <button
-              type="button"
-              class="delete-btn"
-              (click)="onDeleteSala(sala)"
-              aria-label="Excluir {{ sala.salaNome }}"
+                type="button"
+                class="delete-btn"
+                (click)="onDeleteSala(sala)"
+                aria-label="Excluir {{ sala.salaNome }}"
               >
                 <mat-icon svgIcon="delete" aria-hidden="true"></mat-icon>
                 <span class="visually-hidden">Excluir</span>
@@ -72,20 +76,14 @@
         }
         @if (data.length === 0) {
           <tr>
-            <td colspan="5" class="no-data" role="status">
-              Nenhum espaço encontrado.
-            </td>
+            <td colspan="5" class="no-data" role="status">Nenhum espaço encontrado.</td>
           </tr>
         }
       </tbody>
     </table>
   </div>
 
-  <nav
-    class="pagination"
-    aria-label="Navegação de páginas"
-    role="navigation"
-    >
+  <nav class="pagination" aria-label="Navegação de páginas" role="navigation">
     <button
       type="button"
       (click)="goToPage(currentPage - 1)"
