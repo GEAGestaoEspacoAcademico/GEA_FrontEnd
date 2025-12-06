@@ -5,7 +5,7 @@ import type { Sala } from '../../../models/sala.model';
   selector: 'app-espacos-table',
   standalone: false,
   templateUrl: './espacos-table.html',
-  styleUrl: './espacos-table.css'
+  styleUrl: './espacos-table.css',
 })
 export class EspacosTable {
   @Input() data: Sala[] = [];
@@ -17,12 +17,17 @@ export class EspacosTable {
   @Output() pageChange = new EventEmitter<number>();
   @Output() editClick = new EventEmitter<Sala>();
   @Output() deleteClick = new EventEmitter<Sala>();
-  @Output() clickAdicionarEquipamento = new EventEmitter<void>()
+  @Output() clickAdicionarEquipamento = new EventEmitter<void>();
+  @Output() filterToggle = new EventEmitter<void>();
 
   searchTerm: string = '';
 
   onSearchChange(): void {
     this.searchChange.emit(this.searchTerm.trim());
+  }
+
+  toggleFiltro(): void {
+    this.filterToggle.emit();
   }
 
   onEdit(sala: Sala): void {
@@ -39,7 +44,7 @@ export class EspacosTable {
     }
   }
 
-  adicionarEquipamento(){
-    this.clickAdicionarEquipamento.emit()
+  adicionarEquipamento() {
+    this.clickAdicionarEquipamento.emit();
   }
 }

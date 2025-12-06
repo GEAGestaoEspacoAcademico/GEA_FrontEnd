@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import type { Disciplina } from '../../../models/disciplina.model';
+import type { Curso } from '../../../models/curso.model';
 
 @Component({
   selector: 'app-disciplinas-table',
@@ -9,17 +10,27 @@ import type { Disciplina } from '../../../models/disciplina.model';
 })
 export class DisciplinasTable {
   @Input() disciplinas: Disciplina[] = [];
+  @Input() cursos: Curso[] = [];
   @Input() totalPages: number = 1;
   @Input() currentPage: number = 1;
   @Input() isLoading: boolean = false;
 
   @Output() searchChange = new EventEmitter<string>();
+  @Output() selecionaCurso = new EventEmitter<string>();
   @Output() pageChange = new EventEmitter<number>();
   @Output() editClick = new EventEmitter<Disciplina>();
   @Output() deleteClick = new EventEmitter<Disciplina>();
   @Output() clickAdicionarDisciplina = new EventEmitter<void>();
 
   searchTerm: string = '';
+  cursoSelecionado: string | null = null;
+
+  emitirSelecao(){
+
+
+    if(!this.cursoSelecionado) {return;}
+    this.selecionaCurso.emit(this.cursoSelecionado)
+  }
 
   onSearchChange(): void {
     this.searchChange.emit(this.searchTerm.trim());

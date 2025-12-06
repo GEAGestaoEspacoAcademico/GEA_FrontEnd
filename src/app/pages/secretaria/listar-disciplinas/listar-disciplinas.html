@@ -5,10 +5,12 @@
     [totalPages]="totalPages"
     [currentPage]="currentPage"
     [isLoading]="isLoading"
+    [cursos]="cursos"
     (searchChange)="onSearch($event)"
     (pageChange)="onPageChange($event)"
     (editClick)="onEdit($event)"
     (deleteClick)="onDelete($event)"
+    (selecionaCurso)="onSelecionaCurso($event)"
     (clickAdicionarEquipamento)="adicionarDisciplina()"
     >
   </app-disciplinas-table>

@@ -6,6 +6,8 @@ import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 import { BehaviorSubject } from 'rxjs';
 import type { AtualizarDisciplinaRequest, CriarDisciplinaRequest } from '../../../types/disciplina.model';
+import { CursoService } from '../../../services/curso/curso.service';
+import type { Curso } from '../../../models/curso.model';
 
 @Component({
   selector: 'app-listar-disciplinas',
@@ -16,13 +18,16 @@ import type { AtualizarDisciplinaRequest, CriarDisciplinaRequest } from '../../.
 export class ListarDisciplinas implements OnInit {
   disciplinaSelecionado!: Disciplina | null;
   disciplinaIdParaEditar!: number;
+  cursos: Curso[] = [];
 
   private readonly disciplinaService = inject(DisciplinaService);
+  private readonly cursoService = inject(CursoService);
   private readonly snackBarService = inject(SnackBarService);
   private readonly headerService = inject(HeaderTitleService);
 
   disciplinas$ = new BehaviorSubject<Disciplina[]>([]);
   isLoading = false;
+  filtroCursoNome: string | null = null;
 
   totalPages = 1;
   currentPage = 1;
@@ -30,6 +35,7 @@ export class ListarDisciplinas implements OnInit {
 
   ngOnInit() {
     this.carregarDisciplinas();
+    this.carregarCursos();
     this.headerService.setTitle('Disciplinas');
     this.headerService.showBack();
   }
@@ -40,6 +46,10 @@ export class ListarDisciplinas implements OnInit {
     this.disciplinaService.getDisciplinas().subscribe({
       next: (disciplinas) => {
         let filtrados = disciplinas;
+
+        if (this.filtroCursoNome) {
+          filtrados = filtrados.filter((d) => d.cursoNome === this.filtroCursoNome);
+        }
 
         if (this.searchTerm.trim() !== '') {
           const term = this.searchTerm.toLowerCase();
@@ -54,6 +64,20 @@ export class ListarDisciplinas implements OnInit {
       },
       complete: () => (this.isLoading = false),
     });
+  }
+
+  carregarCursos(){
+    this.isLoading = true;
+
+    this.cursoService.getCursos().subscribe({
+      next: (cursos) => this.cursos = cursos
+    })
+  }
+
+  onSelecionaCurso(cursonome: string) {
+    this.filtroCursoNome = cursonome; // 1. Guarda o ID na memória
+    this.currentPage = 1;    // 2. Volta para a página 1 (boa prática de UX ao filtrar)
+    this.carregarDisciplinas(); // 3. Roda a lógica de listagem novamente
   }
 
   adicionarDisciplina() {
@@ -112,4 +136,6 @@ export class ListarDisciplinas implements OnInit {
     //   });
     // }
   }
+
+
 }
