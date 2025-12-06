@@ -5,10 +5,10 @@
   min-height: 28.875rem;
 
   .card-body{
-             padding: var(--spacing-5) /*top*/
-             var(--spacing-4) /*right*/
-             var(--spacing-2) /*bottom*/
-             var(--spacing-4) /*left*/ !important;
+    padding: var(--spacing-5) /*top*/
+    var(--spacing-1) /*right*/
+    var(--spacing-2) /*bottom*/
+    var(--spacing-1) /*left*/ !important;
   }
 }
 
@@ -17,18 +17,14 @@
 }
 
 .btn-cancelar, .btn-danger{
-  margin-top: var(--spacing-4);
-  border-radius: var(--spacing-4);
   padding: var(--spacing-3) !important;
+  font-size: 0.78rem !important;
+  font-weight: var(--font-weight-bold);
 }
 
 .btn-cancelar{
   border-color: var(--color-primary-500);
   color:  var(--color-primary-500);
-}
-
-.btn-danger:active {
-  background-color: #600806 !important;
 }
 
 .btn-danger:hover {
@@ -101,6 +97,10 @@ h3 {
   font-size: 1.625rem;
 }
 
+input{
+  padding: 0.2rem !important;
+}
+
 @media (min-width: 768px) {
 
   .mobile-title, .ml, .btn-cancelar{
@@ -155,7 +155,6 @@ h3 {
   }
 
   .btn-danger{
-    margin-top: var(--spacing-2);
     border-radius: var(--spacing-2);
   }
 

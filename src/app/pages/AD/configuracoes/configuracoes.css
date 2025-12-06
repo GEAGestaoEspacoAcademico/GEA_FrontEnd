@@ -44,15 +44,39 @@ ul {
   padding-right: 1rem;
 }
 
-.cursor-pointer {
-    cursor: pointer !important;
+.houver{
+  min-width: 34% !important;
 }
 
-.btn-houver:hover{
-  .cursor-pointer, .icon-logout{
-    color: var(--color-neutral-300) !important;
-  }
+.config-principal{
+  min-width: 20% !important;
+  max-width: 20% !important;
+  margin-bottom: 1rem;
+}
+
+.config-secondario{
+  min-width: 30% !important;
+  margin: 0 !important;
+}
+
+.option-alterar-senha:hover, .option-logout:hover{
+  min-width: 60% !important;
+  cursor: pointer;
+  color: var(--color-neutral-300) !important;
   .line{
     background-color: var(--color-neutral-300) !important;
+  }
+  .subtitle{
+    color: var(--color-neutral-300) !important;
+  }
+}
+
+.content-secondario, .sub-content-principal{
+  padding: 0.3rem 0 0 0.5rem !important;
+}
+
+@media(max-width: 768px) {
+  .content-principal{
+    width: 12rem !important;
   }
 }

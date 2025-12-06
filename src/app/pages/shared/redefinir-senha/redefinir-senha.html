@@ -3,7 +3,7 @@
     <h1 class="desktop-title fw-bold mb-4">Redefinir senha</h1>
     <h3 class="mb-4 p-2 text-center ml">Redefinir senha</h3>
     <form [formGroup]="formRedefinirSenha" class="d-flex flex-column gap-3">
-      
+
       <div class="form-floating position-relative">
         <input
           [type]="hideOldPassword ? 'text' : 'password'"
@@ -129,12 +129,12 @@
 
     <div class="row align-items-center justify-content-between mt-4">
       <div class="col-6 col-md-12">
-        <button class="btn btn-danger w-100 fw-bold py-2" (click)="validarSenhas()">
+        <button class="btn btn-danger w-100 py-2" (click)="validarSenhas()" nome="alterar-senha">
           ALTERAR SENHA
         </button>
       </div>
       <div class="col-6">
-        <a class="btn btn-cancelar w-100 fw-bold py-2" routerLink="/configuracoes"> CANCELAR </a>
+        <a class="btn btn-cancelar w-100 py-2" routerLink="/configuracoes"> CANCELAR </a>
       </div>
     </div>
   </div>
