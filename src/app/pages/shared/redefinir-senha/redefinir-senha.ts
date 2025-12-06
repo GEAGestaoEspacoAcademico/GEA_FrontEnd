@@ -9,6 +9,7 @@ import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../../../store/auth/auth.selectors';
 import { switchMap, take, type Observable } from 'rxjs';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-redefinir-senha',
@@ -21,6 +22,7 @@ export class RedefinirSenha implements OnInit {
   private readonly router = inject(Router);
   private readonly UsuarioService = inject(UsuarioService);
   private readonly store = inject(Store);
+  private readonly headerTitle = inject(HeaderTitleService);
   private readonly userId$: Observable<number | undefined> = this.store.select(selectUserId);
 
   hideOldPassword = false;
@@ -29,7 +31,7 @@ export class RedefinirSenha implements OnInit {
 
   btnOldVisibility = false;
   btnNewVisibility = false;
-  btnRepeatVisibility = false; 
+  btnRepeatVisibility = false;
 
 
   toggleOldPassword() {
@@ -78,6 +80,9 @@ export class RedefinirSenha implements OnInit {
     this.formRedefinirSenha.get('senhaAntiga')?.valueChanges.subscribe(value => {
       this.btnOldVisibility = !!(value && value.trim().length > 0);
     });
+
+    this.headerTitle.setTitle("");
+    this.headerTitle.showBack();
 
     this.formRedefinirSenha.get('novaSenha')?.valueChanges.subscribe(value => {
       this.btnNewVisibility = !!(value && value.trim().length > 0);
