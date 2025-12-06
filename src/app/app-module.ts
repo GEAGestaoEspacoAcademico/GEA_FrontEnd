@@ -172,7 +172,7 @@ import { DisciplinasTable } from './components/secretaria/disciplinas-table/disc
     ProfessorScheduleList,
     Agendamentos,
     DailyScheduleList,
-    SpaceFilter
+    SpaceFilter,
     ListarDisciplinas,
     CursosTable,
     DisciplinasTable,
