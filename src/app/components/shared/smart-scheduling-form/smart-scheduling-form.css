@@ -32,12 +32,18 @@ mat-icon {
     border: 0.063 solid var(--color-neutral-300);
     border-radius: var(--spacing-2);
     padding: var(--spacing-4);
-
-    width: fit-content;
     margin-top: var(--spacing-4);
     margin-left: 1.5%;
 }
+.list-group{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
+.list-group-item{
+    width: 50%;
+}
 h3 {
     margin-top: var(--spacing-4);
 }

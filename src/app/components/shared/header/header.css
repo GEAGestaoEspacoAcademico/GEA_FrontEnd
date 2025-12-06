@@ -1,9 +1,8 @@
 .header {
   background: linear-gradient(to right, rgba(135, 12, 8, 0), #870c08);
   background-color: var(--color-primary-900);
-  padding: 0 var(--spacing-4);
+  padding: 0 var(--spacing-6);
   height: 4.625rem;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -38,7 +37,7 @@
 }
 
 .nav-links {
-  display: none;
+  display: none; 
   gap: var(--spacing-4, 1rem);
   align-items: center;
 }
@@ -49,15 +48,13 @@
   padding: 0.5rem 0.625rem;
   border-radius: 0.25rem;
   font-size: 0.9rem;
-  transition:
-    transform 0.2s ease,
-    opacity 0.2s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
 .page-title {
   display: none;
   margin: 0;
-  font-size: 1.25rem;
+  font-size: 1.125rem; 
   font-weight: 700;
   color: var(--color-default-white);
   text-align: center;
@@ -72,7 +69,7 @@
 .header-right-icons {
   display: flex;
   align-items: center;
-  gap: var(--spacing-2);
+  gap: 0.5rem; 
 }
 
 .icon-notification-medium,
@@ -82,14 +79,16 @@
   display: inline-block;
   vertical-align: middle;
 }
+
 .home {
   height: auto;
   transform: scaleX(-1);
-  &:hover{
+  &:hover {
     cursor: pointer;
   }
 }
-.highlight-title{
+
+.highlight-title {
   font-size: 2rem;
 }
 
@@ -141,6 +140,7 @@
 @media (min-width: 768px) {
   .header {
     justify-content: space-between;
+    padding: 0 var(--spacing-10);
   }
 
   .header-center-content {
@@ -165,20 +165,5 @@
   .nav-links .nav-item:hover {
     transform: scale(1.05);
     opacity: 0.95;
-  }
-}
-
-@media (max-width: 767px) {
-  .page-title {
-    display: none;
-    font-size: 1.125rem;
-  }
-
-  .nav-links {
-    display: none;
-  }
-
-  .header-right-icons {
-    gap: 0.5rem;
   }
 }

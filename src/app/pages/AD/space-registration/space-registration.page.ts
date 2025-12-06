@@ -24,7 +24,7 @@ export class SpaceRegistrationPage implements OnInit{
   private readonly headerService = inject(HeaderTitleService);
 
   ngOnInit(): void {
-    this.headerService.setTitle('Lista de Espaços Acadêmicos')
+    this.headerService.setTitle('Cadastro de Laboratório')
     this.headerService.showBack()
   }
 
