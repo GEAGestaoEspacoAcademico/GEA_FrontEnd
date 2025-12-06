@@ -9,8 +9,8 @@
     (pageChange)="onPageChange($event)"
     (editClick)="onEdit($event)"
     (deleteClick)="onDelete($event)"
-    (clickAdicionarEquipamento)="adicionarCurso()"
-    >
+    (clickAdicionarCurso)="manipularCurso()"
+  >
   </app-cursos-table>
 </div>
 
@@ -19,5 +19,6 @@
   mode="aviso"
   title="Excluir Curso"
   message="Tem certeza que deseja excluir este curso? Esta ação não pode ser desfeita."
-  (onconfirm)="confirmDelete()">
+  (onconfirm)="confirmDelete()"
+>
 </app-confirmation-modal>
