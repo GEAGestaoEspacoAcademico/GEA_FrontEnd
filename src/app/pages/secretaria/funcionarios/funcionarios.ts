@@ -5,6 +5,7 @@ import { UsuarioService } from '../../../services/usuario/usuario.service';
 import type { GetUsuarioResponse } from '../../../types/usuario.type';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 import type { EditProfessorModal } from '../../../components/secretaria/edit-professor-modal/edit-professor-modal';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-funcionarios',
@@ -18,6 +19,7 @@ export class Funcionarios implements OnInit {
 
   private usuarioService = inject(UsuarioService);
   private headerService = inject(HeaderTitleService)
+  private snackbarService = inject(SnackBarService);
 
   funcionarioParaDeletar!: GetUsuarioResponse | null;
 
@@ -62,8 +64,9 @@ export class Funcionarios implements OnInit {
         );
         this.listarUsuario();
         this.funcionarioParaDeletar = null;
+        this.snackbarService.showSuccess("Funcionário deletado com sucesso")
       },
-      error: (err) => console.error('Erro ao deletar funcionário:', err),
+      error: (_) => this.snackbarService.showError('Erro ao deletar funcionário:'),
     });
   }
 
