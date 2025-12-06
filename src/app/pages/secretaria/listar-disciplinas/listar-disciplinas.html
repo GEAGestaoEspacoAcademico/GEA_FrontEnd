@@ -11,7 +11,7 @@
     (editClick)="onEdit($event)"
     (deleteClick)="onDelete($event)"
     (selecionaCurso)="onSelecionaCurso($event)"
-    (clickAdicionarEquipamento)="adicionarDisciplina()"
+    (clickAdicionarDisciplina)="adicionarDisciplina()"
     >
   </app-disciplinas-table>
 </div>
@@ -19,7 +19,8 @@
 <app-confirmation-modal
   #deleteModal
   mode="aviso"
-  title="Excluir Espaço"
-  message="Tem certeza que deseja excluir este espaço? Esta ação não pode ser desfeita."
-  (onconfirm)="confirmDelete()">
+  title="Excluir Disciplina"
+  message="Tem certeza que deseja excluir esta disciplina? Esta ação não pode ser desfeita."
+  (onconfirm)="confirmDelete()"
+>
 </app-confirmation-modal>

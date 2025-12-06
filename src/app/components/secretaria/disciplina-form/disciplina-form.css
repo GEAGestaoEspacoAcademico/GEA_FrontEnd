@@ -1,0 +1,38 @@
+.subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.gea-input-field {
+  width: 12.313rem;
+  height: 2.25rem;
+  padding: 0px 1rem;
+  text-align: start;
+  font-size: 0.875rem;
+  border: 0.2px solid var(--color-default-black);
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:hover {
+    box-shadow: none;
+  }
+}
+
+.gea-btn-primary {
+  width: 11.375rem;
+  height: 2.75rem;
+  font-size: 1.5rem;
+  border-radius: 0.25rem;
+}
+
+.gea-btn-primary.cancelar {
+  color: var(--color-default-black);
+  background-color: #d9d9d9;
+}
+
+.gea-btn-primary.salvar {
+  color: var(--color-default-white);
+  background-color: var(--color-primary-300);
+}

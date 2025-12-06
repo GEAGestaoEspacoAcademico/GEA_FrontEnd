@@ -1,0 +1,42 @@
+<app-modal-wrapper [title]="curso ? 'Editar Curso' : 'Novo Curso'">
+  <form [formGroup]="cursoForm" (ngSubmit)="salvar()">
+    <div class="col">
+      <div class="row">
+        <label for="nome" class="subtitle d-flex justify-content-between">
+          Nome do Curso:
+          <input id="nome" formControlName="nome" type="text" class="gea-input-field" />
+        </label>
+      </div>
+      <div class="row">
+        <label for="sigla" class="subtitle d-flex justify-content-between">
+          Sigla:
+          <input id="sigla" formControlName="sigla" type="text" class="gea-input-field" />
+        </label>
+      </div>
+      <div class="row mb-3">
+        <label for="coordenadorId" class="subtitle d-flex justify-content-between">
+          Coordenador:
+          <select
+            id="coordenadorId"
+            formControlName="coordenadorId"
+            class="gea-input-field justify-content-end"
+          >
+            <option value="0">Selecione...</option>
+
+            @for (c of coordenadores; track c.coordenadorUsuarioId) {
+              <option [value]="c.coordenadorUsuarioId">
+                {{ c.coordenadorNome }}
+              </option>
+            }
+          </select>
+        </label>
+      </div>
+      <div class="row d-flex justify-content-between">
+        <button class="gea-btn-primary cancelar col-5" type="button" (click)="cancelar()">
+          Cancelar
+        </button>
+        <button type="submit" class="gea-btn-primary salvar col-5">Salvar</button>
+      </div>
+    </div>
+  </form>
+</app-modal-wrapper>
