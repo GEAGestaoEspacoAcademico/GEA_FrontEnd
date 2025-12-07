@@ -2,7 +2,7 @@
   <div class="d-flex justify-content-center align-itens-center aula-form">
     <form [formGroup]="aulaForm" class="form">
       <div class="row g-3">
-        <div class="col-6">
+        <div class="col-6" (click)="verificarPreRequisitos()" (keydown.enter)="verificarPreRequisitos()" tabindex="0">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Local</mat-label>
             <mat-select formControlName="local">
@@ -78,11 +78,11 @@
             <input matInput formControlName="nomeEvento" />
           </mat-form-field>
         </div>
-
-        <div class="col-6">
+        
+        <div class="col-6" (click)="verificarPreRequisitos()" (keydown.enter)="verificarPreRequisitos()" tabindex="0">
           <mat-form-field appearance="outline" class="w-100">
             <mat-label>Local</mat-label>
-            <mat-select formControlName="local">
+            <mat-select formControlName="local" >
               @for (sala of salas; track sala.salaId) {
                 <mat-option [value]="sala.salaId">{{ sala.salaNome }}</mat-option>
               }

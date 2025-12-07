@@ -28,6 +28,7 @@ import type { MatAutocompleteSelectedEvent } from '@angular/material/autocomplet
 })
 export class Scheduling implements OnInit {
   /** Referência injetada ao FormBuilder para criação de formulários. */
+  
   private fb = inject(FormBuilder);
 
   /** A configuração (array de Field) que define a estrutura do formulário. */
@@ -57,6 +58,8 @@ export class Scheduling implements OnInit {
   /** Observable (stream) de opções filtradas para o autocomplete de "Equipamentos". */
   public filteredEquipments: Observable<Option[]> | undefined;
 
+  dataMinima: string = '';
+
   /**
    * Inicializa os shells vazios do FormGroup para evitar
    * erros de template antes do ngOnInit.
@@ -74,6 +77,9 @@ export class Scheduling implements OnInit {
    * Configura os validadores e inicializa os FormArrays e Observables de autocomplete.
    */
   ngOnInit(): void {
+    const hoje = new Date();
+    this.dataMinima = hoje.toISOString().split('T')[0];
+    
     const controls: Record<string, any> = {};
     this.fields.forEach((field) => {
       const validators = this.buildValidators(field.validators);

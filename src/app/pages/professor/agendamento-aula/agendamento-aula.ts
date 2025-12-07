@@ -25,7 +25,6 @@ import type { ConfirmationModal } from '../../../components/modals/confirmation-
 import type { AgendamentoAulaCriarRequest } from '../../../types/agendamentoAula.type';
 import { AgendamentoService } from '../../../services/agendamento/agendamento.service';
 import { FormatUtils } from '../../../utils/format.utils';
-import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-agendamento-aula',
@@ -62,7 +61,12 @@ export class AgendamentoAula implements OnInit {
   horarios: JanelaHorario[] = [];
   tiposSala: TipoSala[] = [];
 
+  dataMinima: string = ''
+
   ngOnInit(): void {
+    const hoje = new Date()
+    this.dataMinima = hoje.toISOString().split('T')[0];
+    
     this.form = this.fb.group({
       data: [this.getData(), Validators.required],
       janelaHorarioId: [null, Validators.required],

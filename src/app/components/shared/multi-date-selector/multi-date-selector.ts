@@ -158,4 +158,9 @@ export class MultiDateSelector implements OnInit {
     this.calendar.activeDate = new Date();
     this.calendar.updateTodaysDate();
   }
+
+  filtroDias = (data: Date | null): boolean => {
+    const dia = (data || new Date()).getDay();
+    return dia !== 0;
+  }
 }
