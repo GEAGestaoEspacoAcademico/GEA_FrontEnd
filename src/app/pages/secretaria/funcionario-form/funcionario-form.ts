@@ -11,10 +11,9 @@ import type { CriarSecretariaRequest } from '../../../types/secretaria.type';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 import { AuxiliarDocenteService } from '../../../services/auxiliar-docente/auxiliar-docente.service';
 
-import { of, type Observable } from 'rxjs';
+import { type Observable } from 'rxjs';
 import type { CriarAuxiliarDocenteRequest } from '../../../models/auxiliarDocente.model';
 import ProfessorService from '../../../services/professor/professor.service';
-import { CriarProfessorRequest } from '../../../types/professor.types';
 
 
 
