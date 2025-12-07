@@ -25,6 +25,7 @@ import type { ConfirmationModal } from '../../../components/modals/confirmation-
 import type { AgendamentoAulaCriarRequest } from '../../../types/agendamentoAula.type';
 import { AgendamentoService } from '../../../services/agendamento/agendamento.service';
 import { FormatUtils } from '../../../utils/format.utils';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-agendamento-aula',
@@ -67,6 +68,7 @@ export class AgendamentoAula implements OnInit {
       janelaHorarioId: [null, Validators.required],
       tipoSalaId: [null, Validators.required],
       capacidade: [null],
+      qtdAulas: [null, Validators.required],
       disciplinaId: [null, Validators.required],
       equipamentosArray: this.fb.array([]),
       softwaresArray: this.fb.array([]),
