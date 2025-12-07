@@ -1,5 +1,6 @@
-.modal-overlay, .modal-container, .backdrop {
-  position: fixed;
+.modal-overlay,
+.modal-container,
+.backdrop {
   inset: 0;
   width: 100vw;
   height: 100vh;
@@ -8,7 +9,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .header-modal {
@@ -52,7 +53,10 @@
   gap: 1.25rem;
 }
 
-.col-left,
+.col-left {
+  flex: 0 0 30%;
+}
+
 .col-right {
   flex: 1;
   display: flex;
@@ -151,4 +155,43 @@
   color: white;
   padding: 0.625rem;
   font-weight: 700;
+}
+
+.chip-display-area-row mat-chip-grid {
+  border: 1px solid var(--color-default-black);
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  padding: 0.625rem;
+  min-height: 8.688rem;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  display: block;
+}
+
+.gea-btn-primary.Adicionar {
+  color: var(--color-default-white);
+  border-radius: 4px;
+  border: 1px solid var(--color-default-black);
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  height: auto;
+}
+
+.resources-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  width: 100%;
+}
+
+.resource-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.diabled-button{
+  background-color: #aaa;
 }

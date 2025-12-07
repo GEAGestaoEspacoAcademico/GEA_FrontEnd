@@ -22,14 +22,14 @@ export class SpaceManagement implements OnInit {
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmationModal;
   @ViewChild('editModal') editModal!: EditarEspacoModal;
   @ViewChild('criarRecursoId') criarRecursoModal!: CreateResourceModal;
-  
+
   salaParaDeletar!: Sala | null;
-  salaIdEditar!: number
+  salaIdEditar!: number;
 
   private salaService = inject(SalaService);
-  private recursoService = inject(RecursoService)
+  private recursoService = inject(RecursoService);
   private headerService = inject(HeaderTitleService);
-  private snackBarService = inject(SnackBarService)
+  private snackBarService = inject(SnackBarService);
 
   masterSalaList: Sala[] = [];
   displayedSalas: Sala[] = [];
@@ -48,50 +48,45 @@ export class SpaceManagement implements OnInit {
   mostrarFiltro: boolean = false; 
 
   ngOnInit(): void {
-    this.carregarSalas()
-    this.headerService.setTitle('Lista de Espaços Acadêmicos')
-    this.headerService.showBack()
+    this.carregarSalas();
+    this.headerService.setTitle('Lista de Espaços Acadêmicos');
+    this.headerService.showBack();
   }
 
-  criarRecurso(recurso: { type: string; name: string }){
-
+  criarRecurso(recurso: { type: string; name: string }) {
     const corpoCriarRecurso: CriarRecursoRequest = {
       recursoNome: recurso.name,
-      recursoTipoId: recurso.type === 'SOFTWARE' ? 2 : 1
-    }
+      recursoTipoId: recurso.type === 'SOFTWARE' ? 2 : 1,
+    };
     this.recursoService.criarRecurso(corpoCriarRecurso).subscribe({
-      next: () => this.snackBarService.showSuccess("Recurso criado com sucesso"),
-      error: () => this.snackBarService.showError("Erro ao crari recurso")
-    })
+      next: () => this.snackBarService.showSuccess('Recurso criado com sucesso'),
+      error: () => this.snackBarService.showError('Erro ao crari recurso'),
+    });
   }
 
   carregarSalas() {
     this.salaService.getSalas().subscribe({
-      next: (labs) => {
+      next: (labs: Sala[]) => {
         this.masterSalaList = labs;
+
         this.atualizarDataVisualizada();
+        console.warn(this.masterSalaList.length);
       },
       error: (err) => console.error('Erro ao carregar laboratórios:', err),
     });
   }
   onEditSala(sala: Sala): void {
-    this.salaIdEditar = sala.salaId
+    this.salaIdEditar = sala.salaId;
     this.editModal.open(sala);
   }
 
   onModalEdit(sala: AtualizarSalaRequest): void {
-    if(this.salaIdEditar){
-      this.salaService.editSala(this.salaIdEditar, sala).subscribe({
-        next: () => {
-          this.snackBarService.showSuccess("Sala atualizada com sucesso")
-          this.carregarSalas()
-        }
-      })
-    }
+    this.snackBarService.showSuccess('Sala atualizada com sucesso');
+    this.carregarSalas();
   }
 
-  criarEquipamento(tipo: 'SOFTWARE' | 'HARDWARE'){
-    this.criarRecursoModal.open(tipo)
+  criarEquipamento(tipo: 'SOFTWARE' | 'HARDWARE') {
+    this.criarRecursoModal.open(tipo);
   }
 
   openDeleteModal(sala: Sala) {

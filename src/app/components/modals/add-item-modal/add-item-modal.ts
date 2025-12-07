@@ -21,7 +21,11 @@ export class AddItemModal {
 
   @Input() recursosDisponiveis: Recurso[] = [];
 
-  @Output() itemAdd = new EventEmitter<{ recursoId: number; name: string; quantity: number | null }>();
+  @Output() itemAdd = new EventEmitter<{
+    recursoId: number;
+    name: string;
+    quantity: number | null;
+  }>();
 
   @ViewChild('itemModal')
   modalTemplate!: TemplateRef<AddItemModal>;
@@ -39,24 +43,25 @@ export class AddItemModal {
   });
 
   onSubmit() {
-    if (this.novoItem.invalid) {return};
+    if (this.novoItem.invalid) {
+      return;
+    }
 
     const recursoIdString = this.novoItem.value.recursoId;
     const recursoId: number = Number(recursoIdString);
-    const recursoSelecionado = this.recursosDisponiveis.find(r => r.id === recursoId);
+    const recursoSelecionado = this.recursosDisponiveis.find((r) => r.id === recursoId);
 
-    if (!recursoSelecionado) {return};
+    if (!recursoSelecionado) {
+      return;
+    }
 
     const item = {
       recursoId: recursoSelecionado.id,
       name: recursoSelecionado.nome,
-      quantity: this.novoItem.value.quantity ?? 1
+      quantity: this.novoItem.value.quantity ?? 1,
     };
-  
+
     this.itemAdd.emit(item);
-    this.itemModal.dismissAll();
     this.novoItem.reset({ recursoId: '', quantity: 1 });
   }
-  
-  
 }
