@@ -3,18 +3,19 @@
   <app-title-highlightt title="Aulas"></app-title-highlightt>
   <button class="gea-btn me-3" routerLink="/agenda">Agendar</button>
 </div>
-@if (loading$ | async) {
+@if (isLoading) {
   <div class="d-flex justify-content-center align-items-center mt-4">
     <mat-spinner diameter="50"></mat-spinner>
   </div>
 }
 
-@if ((loading$ | async) === false) {
+@if (isLoading === false) {
   <div class="container my-3">
     <app-day-selector
       class="w-100 d-block mb-4"
       [currentMonthName]="monthToDisplay"
       [days]="days"
+      [diasSelecionados]="aulasCorrentes"
       [activeDayId]="activeDayId"
       (dayChange)="onDayChange($event)"
       (monthChange)="onMonthNavigate($event)"

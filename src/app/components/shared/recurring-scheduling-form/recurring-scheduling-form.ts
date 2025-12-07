@@ -3,6 +3,7 @@ import { type AbstractControl, FormArray, FormBuilder, FormControl, type FormGro
 import type { JanelaHorario } from '../../../models/janelasHorario.model';
 import type { Sala } from '../../../models/sala.model';
 import type { Disciplina } from '../../../models/disciplina.model';
+import { FormatUtils } from '../../../utils/format.utils';
 
 @Component({
   selector: 'app-recurring-scheduling-form',
@@ -11,12 +12,11 @@ import type { Disciplina } from '../../../models/disciplina.model';
   styleUrl: './recurring-scheduling-form.css'
 })
 export class RecurringSchedulingForm {
-  formatTime(inicio: string, fim: string): string {
-    const inicioSemSegundos = inicio.substring(0, 5);
-    const fimSemSegundos = fim.substring(0, 5);
 
-    return `${inicioSemSegundos} - ${fimSemSegundos}`;
+  formatarTempo(inicio: string, fim: string): string {
+    return FormatUtils.formatTime(inicio, fim)
   }
+  
   private fb = inject(FormBuilder);
 
   disciplinas = input<Disciplina[]>([]);

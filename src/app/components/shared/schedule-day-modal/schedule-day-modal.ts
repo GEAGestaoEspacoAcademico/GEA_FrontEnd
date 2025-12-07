@@ -5,6 +5,7 @@ import { AgendamentoService } from '../../../services/agendamento/agendamento.se
 import { FormatUtils } from '../../../utils/format.utils';
 import type { Agendamento } from '../../../models/agendamento.model';
 import type { SlotHorario } from '../../../models/janelasHorario.model';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-schedule-day-modal',
@@ -24,6 +25,7 @@ export class ScheduleDayModal {
 
   private modalService = inject(NgbModal);
   private agendamentoService = inject(AgendamentoService);
+  private snackbarService = inject(SnackBarService);
 
   buscarAgendamentos(): void {
     this.loading = true;
@@ -37,6 +39,7 @@ export class ScheduleDayModal {
       },
       error: (err) => {
         console.error('Erro ao buscar agendamentos:', err);
+        this.snackbarService.showError("Erro ao buscar agendamentos")
         this.agendamento = [];
         this.loading = false;
       },

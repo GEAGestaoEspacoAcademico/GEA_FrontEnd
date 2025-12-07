@@ -76,4 +76,11 @@ export class FormatUtils {
     horario = this.normalizeHour(horario)
     return `${horario}:00`
   }
+
+  static formatTime(inicio: string, fim: string): string {
+    const inicioSemSegundos = inicio.substring(0, 5);
+    const fimSemSegundos = fim.substring(0, 5);
+
+    return `${inicioSemSegundos} - ${fimSemSegundos}`;
+  }
 }

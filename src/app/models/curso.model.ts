@@ -3,6 +3,5 @@ export interface Curso   {
   cursoNome: string,
   coordenadorId: number,
   coordenadorNome: string,
-  usuarioId: number,
   cursoSigla: string
 }

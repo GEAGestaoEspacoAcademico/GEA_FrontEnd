@@ -29,8 +29,8 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Início</mat-label>
                     <mat-select formControlName="inicio">
-                        @for (hInicio of listaHorarios; track hInicio.janelasHorarioId) {
-                        <mat-option [value]="hInicio.horaInicio">{{ hInicio.horaInicio.slice(0, 5) }}</mat-option>
+                        @for (hInicio of horariosDisponiveisInicio; track $index) {
+                        <mat-option [value]="formatarHorario(hInicio)">{{hInicio}}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -40,8 +40,8 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Fim</mat-label>
                     <mat-select formControlName="fim">
-                        @for (hFim of listaHorarios; track hFim.janelasHorarioId) {
-                        <mat-option [value]="hFim.horaFim">{{ hFim.horaFim.slice(0, 5) }}</mat-option>
+                        @for (hFim of horariosDisponiveisFim; track $index) {
+                        <mat-option [value]="formatarHorario(hFim)">{{ formatarHorario(hFim)}}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -97,8 +97,8 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Início</mat-label>
                     <mat-select formControlName="inicio">
-                        @for (hInicio of listaHorarios; track hInicio.janelasHorarioId) {
-                        <mat-option [value]="hInicio.horaInicio">{{ hInicio.horaInicio.slice(0, 5) }}</mat-option>
+                        @for (hInicio of horariosDisponiveisInicio; track $index) {
+                        <mat-option [value]="formatarHorario(hInicio)">{{ formatarHorario(hInicio) }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>
@@ -108,8 +108,8 @@
                 <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Fim</mat-label>
                     <mat-select formControlName="fim">
-                        @for (hFim of listaHorarios; track hFim.janelasHorarioId) {
-                        <mat-option [value]="hFim.horaFim">{{ hFim.horaFim.slice(0, 5) }}</mat-option>
+                        @for (hFim of horariosDisponiveisFim; track $index) {
+                            <mat-option [value]="formatarHorario(hFim)">{{ formatarHorario(hFim) }}</mat-option>
                         }
                     </mat-select>
                 </mat-form-field>

@@ -17,11 +17,16 @@ export class SpaceManagementTable {
   @Output() editSala = new EventEmitter<Sala>();
   @Output() deleteSala = new EventEmitter<Sala>();
   @Output() clickCriarRecurso = new EventEmitter<"SOFTWARE" | "HARDWARE">();
+  @Output() filterToggle = new EventEmitter<void>();
 
   searchTerm: string = '';
 
   onSearchChange() {
     this.searchChange.emit(this.searchTerm.trim());
+  }
+
+  toggleFiltro(): void {
+    this.filterToggle.emit();
   }
 
   onEditSala(sala: Sala) {

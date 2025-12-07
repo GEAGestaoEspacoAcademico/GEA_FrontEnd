@@ -31,7 +31,8 @@
         [ngClass]="{
           'active text-danger fw-bold border border-danger': day.id === activeDayId,
           'text-secondary': day.id !== activeDayId,
-          'disable': day.id < currentDay
+          'disable': day.id < currentDay,
+          'border border-danger': temAgendamento(day) && day.id !== activeDayId
         }"
         (click)="selectDay(day.id)"
         [attr.aria-pressed]="day.id === activeDayId"
@@ -39,6 +40,10 @@
       >
         <div class="day-date fs-5">{{ day.date }}</div>
         <div class="day-week text-lowercase">{{ day.dayOfWeek }}</div>
+
+        @if(temAgendamento(day)) {
+          <span class="badge bola rounded-circle p-1 d-block mx-auto mt-1" style="width: 6px; height: 6px;"></span>
+        }
       </button>
     </nav>
   </div>

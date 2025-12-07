@@ -22,9 +22,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { authReducer } from './store/auth/auth.reducer';
 import { AuthEffects } from './store/auth/auth.effects';
-import { agendamentoReducer } from './store/agendamento/agendamento.reducer';
-import { AgendamentoEffects } from './store/agendamento/agendamento.effects';
-import { AGENDAMENTO_FEATURE_KEY } from './store/agendamento/agendamento.selectors';
 
 // App Specific Imports
 import { AppRoutingModule } from './app-routing-module';
@@ -98,10 +95,14 @@ import { Calendario } from './pages/coordenacao/calendario/calendario';
 import { ProfessorScheduleList } from './components/coordenacao/professor-schedule-list/professor-schedule-list';
 import { Agendamentos } from './pages/AD/agendamentos/agendamentos';
 import { DailyScheduleList } from './components/shared/daily-schedule-list/daily-schedule-list';
+import { SpaceFilter } from './components/shared/space-filter/space-filter';
 import { ListarCursos } from './pages/secretaria/listar-cursos/listar-cursos';
 import { ListarDisciplinas } from './pages/secretaria/listar-disciplinas/listar-disciplinas';
 import { CursosTable } from './components/secretaria/cursos-table/cursos-table';
 import { DisciplinasTable } from './components/secretaria/disciplinas-table/disciplinas-table';
+import { ModalWrapper } from './components/shared/modal-wrapper/modal-wrapper';
+import { CursoForm } from './components/secretaria/curso-form/curso-form';
+import { DisciplinaForm } from './components/secretaria/disciplina-form/disciplina-form';
 
 @NgModule({
   declarations: [
@@ -134,6 +135,7 @@ import { DisciplinasTable } from './components/secretaria/disciplinas-table/disc
     DashboardCard,
     AddItemModal,
     SpaceScheduleList,
+    ModalWrapper,
     // AD Components
     MultiDateSelector,
     DashboardCard,
@@ -171,10 +173,13 @@ import { DisciplinasTable } from './components/secretaria/disciplinas-table/disc
     ProfessorScheduleList,
     Agendamentos,
     DailyScheduleList,
+    SpaceFilter,
     ListarDisciplinas,
     CursosTable,
     DisciplinasTable,
-    ListarCursos
+    ListarCursos,
+    CursoForm,
+    DisciplinaForm,
   ],
   imports: [
     BrowserModule,
@@ -197,13 +202,12 @@ import { DisciplinasTable } from './components/secretaria/disciplinas-table/disc
     StoreModule.forRoot(
       {
         auth: authReducer,
-        [AGENDAMENTO_FEATURE_KEY]: agendamentoReducer,
       },
       {
         metaReducers,
       },
     ),
-    EffectsModule.forRoot([AuthEffects, AgendamentoEffects]),
+    EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),
@@ -219,7 +223,7 @@ import { DisciplinasTable } from './components/secretaria/disciplinas-table/disc
   ],
   providers: [
     provideHttpClient(withInterceptors([globalErrorInterceptor])),
-    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' }
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
   ],
   bootstrap: [App],
 })

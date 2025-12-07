@@ -71,7 +71,7 @@
                             <div
                                 class="d-flex justify-content-between align-items-center p-2 bg-white border rounded h-100">
                                 <label [for]="'h-' + i" class="horario-label m-0 flex-grow-1">
-                                    {{ formatTime(janela.horaInicio, janela.horaFim) }}
+                                    {{ formatarTempo(janela.horaInicio, janela.horaFim) }}
                                 </label>
 
                                 <input [formControlName]="i" [id]="'h-' + i" type="checkbox"

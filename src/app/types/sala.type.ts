@@ -77,12 +77,8 @@ export interface BuscarRecomendacaoRequest {
 }
 
 export interface BuscarRecomendacaoResponse {
-  salaId: number;
-  salaNome: string;
-  capacidade: number;
-  piso: number;
-  disponibilidade: boolean;
-  tipoSala: string;
+  recomendacoes: Sala[],
+  outrasOpcoes: Sala[]
 }
 
 // GET salas/disponíveis

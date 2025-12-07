@@ -1,0 +1,52 @@
+<app-modal-wrapper [title]="disciplina ? 'Editar Disciplina' : 'Nova Disciplina'">
+  <form [formGroup]="disciplinaForm" (ngSubmit)="salvar()">
+    <div class="col">
+      <div class="row">
+        <label for="nome" class="subtitle d-flex justify-content-between">
+          Nome da Disciplina:
+          <input id="nome" formControlName="disciplinaNome" type="text" class="gea-input-field" />
+        </label>
+      </div>
+      <div class="row">
+        <label for="Semestre" class="subtitle d-flex justify-content-between">
+          Semestre:
+          <select
+            id="Semestre"
+            formControlName="disciplinaSemestre"
+            class="gea-input-field justify-content-end"
+          >
+            <option value="">Selecione...</option>
+            @for (semestre of semestres; track semestre) {
+              <option [value]="semestre">
+                {{ semestre }}
+              </option>
+            }
+          </select>
+        </label>
+      </div>
+      <div class="row mb-3">
+        <label for="cursoNome" class="subtitle d-flex justify-content-between">
+          Curso:
+          <select
+            id="cursoNome"
+            formControlName="cursoNome"
+            class="gea-input-field justify-content-end"
+          >
+            <option value="0" disabled>Selecione...</option>
+            @for (c of cursos; track c.cursoId) {
+              <option [value]="c.cursoId">
+                {{ c.cursoNome }}
+              </option>
+            }
+          </select>
+        </label>
+      </div>
+      <div class="row d-flex justify-content-between">
+        <button class="gea-btn-primary cancelar col-5" type="button" (click)="cancelar()">
+          Cancelar
+        </button>
+        <button type="submit" class="gea-btn-primary salvar col-5">Salvar</button>
+      </div>
+    </div>
+  </form>
+</app-modal-wrapper>

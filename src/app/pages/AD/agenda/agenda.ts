@@ -19,6 +19,7 @@ import type { BuscarRecomendacaoRequest, BuscarRecomendacaoResponse } from "../.
 import { FormatUtils } from "../../../utils/format.utils";
 import type { Option } from "../../../types/utils.types"
 import ProfessorService from "../../../services/professor/professor.service";
+import { Scheduling } from "../../../components/shared/scheduling/scheduling";
 
 @Component({
   selector: 'app-agenda',
@@ -39,6 +40,7 @@ export class Agenda implements OnInit {
 
   @ViewChild('sucessModal') sucessModal!: ConfirmationModal;
   @ViewChild('classInfoModal') classInfoModal!: ConfirmationModal;
+  @ViewChild(Scheduling) formulario!: Scheduling;
 
   cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
   
@@ -47,7 +49,7 @@ export class Agenda implements OnInit {
   isRecomendacaoLoading: boolean = false;
   submittedData!: AgendarForm;
   formFields: Field[] | undefined;
-  salasRecomendadas: BuscarRecomendacaoResponse[] = []
+  salasRecomendadas: BuscarRecomendacaoResponse | null = null;
   idSalaRecomendadaAtual!: number
 
   ngOnInit(): void {
@@ -234,30 +236,32 @@ export class Agenda implements OnInit {
     this.classInfoModal.open(id);
   }
 
-agendarAula() {
-  this.store.select(selectUserId).pipe(
-    filter(Boolean),
-    take(1),
-    switchMap(userId => {
-      const corpoCriarAgendamento: AgendamentoAulaCriarRequest = {
-        usuarioId: userId,
-        salaId: Number(this.idSalaRecomendadaAtual),
-        disciplinaId: Number(this.submittedData.disciplinaId),
-        data: this.submittedData.data,
-        janelasHorarioId: Number(this.submittedData.janelaHorarioId),
-        isEvento: false,
-        quantidade: Number(this.submittedData.qtdAulas)
-      };
-      return this.agendamentoService.criarAgendamentoAula(corpoCriarAgendamento);
-    })
-  ).subscribe({
-    next: (_) => {
-      this.snackbarService.showSuccess("Agendamento feito com sucesso");
-    },
-    error: (err) => {
-      console.error("Erro ao criar agendamento:", err);
-      this.snackbarService.showError("Falha ao agendar. Tente novamente.");
-    }
-  });
-}
+  agendarAula() {
+    this.store.select(selectUserId).pipe(
+      filter(Boolean),
+      take(1),
+      switchMap(userId => {
+        const corpoCriarAgendamento: AgendamentoAulaCriarRequest = {
+          usuarioId: userId,
+          salaId: Number(this.idSalaRecomendadaAtual),
+          disciplinaId: Number(this.submittedData.disciplinaId),
+          data: this.submittedData.data,
+          janelasHorarioId: Number(this.submittedData.janelaHorarioId),
+          isEvento: false,
+          quantidade: Number(this.submittedData.qtdAulas)
+        };
+        return this.agendamentoService.criarAgendamentoAula(corpoCriarAgendamento);
+      })
+    ).subscribe({
+      next: (_) => {
+        this.snackbarService.showSuccess("Agendamento feito com sucesso");
+        this.formulario.resetarFormulario()
+        this.salasRecomendadas = null;
+      },
+      error: (err) => {
+        console.error("Erro ao criar agendamento:", err);
+        this.snackbarService.showError("Falha ao agendar. Tente novamente.");
+      }
+    });
+  }
 }

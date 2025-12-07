@@ -115,7 +115,7 @@ export class ConfirmationModal{
           error: e => this.snackbarService.showError(e.message || 'Erro ao buscar detalhes de sala')
         });
       } else {
-        console.error("Modal 'detalhes' foi aberto sem um 'salaRecomendadaId'.");
+        this.snackbarService.showError("Modal 'detalhes' foi aberto sem um 'salaRecomendadaId'.")
       }
     }
     else {

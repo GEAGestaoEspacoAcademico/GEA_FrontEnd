@@ -240,6 +240,10 @@ export class Scheduling implements OnInit {
     }
   }
 
+  public resetarFormulario() {
+    this.form.reset()
+  }
+
   /**
    * (Público - Template) Busca o 'label' de uma opção com base em seu 'value'.
    * Usado para exibir os 'chips' do multi-select de software.

@@ -49,10 +49,10 @@ export class SalaService {
     return this.http.post<AdicionarRecursoSalaResponse>(`${this.baseUrl}/${salaId}/recursos`, recurso)
   }
 
-  public getRecomendacao(data: BuscarRecomendacaoRequest): Observable<BuscarRecomendacaoResponse[]>{
+  public getRecomendacao(data: BuscarRecomendacaoRequest): Observable<BuscarRecomendacaoResponse>{
     data.horarios.horaFim = FormatUtils.colocarSegundos(data.horarios.horaFim)
     data.horarios.horaInicio = FormatUtils.colocarSegundos(data.horarios.horaInicio)
-    return this.http.post<BuscarRecomendacaoResponse[]>(`${this.baseUrl}/recomendacoes`, data)
+    return this.http.post<BuscarRecomendacaoResponse>(`${this.baseUrl}/recomendacoes`, data)
   }
 
   public getSalaDisponivel(): Observable<BuscarSalaDisponivel[]>{
