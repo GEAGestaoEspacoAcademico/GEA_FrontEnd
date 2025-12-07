@@ -52,7 +52,6 @@ export class ListarDisciplinas implements OnInit {
     this.disciplinaService.getDisciplinas().subscribe({
       next: (disciplinas) => {
         let filtrados = disciplinas;
-        console.log("Filtro nome: " + this.filtroCursoNome)
         if (this.filtroCursoNome) {
           filtrados = filtrados.filter((d) => d.cursoNome === this.filtroCursoNome);
         }

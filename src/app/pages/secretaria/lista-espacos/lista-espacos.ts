@@ -57,7 +57,7 @@ export class ListaEspacos implements OnInit {
 
     this.salaService.getSalas().subscribe({
       next: (salas) => {
-        let filtrados = salas;
+        let filtrados = salas.filter(s => s.tipoSalaId === 1);
 
         if (this.searchTerm.trim() !== '') {
           const term = this.searchTerm.toLowerCase();
