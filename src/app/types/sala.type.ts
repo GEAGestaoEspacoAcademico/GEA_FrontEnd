@@ -49,6 +49,14 @@ export interface BuscarRecursoSalaResponse {
   quantidade: number;
 }
 
+// GET /salas/{salaId}/recursos
+export interface BuscarRecursoSalaResponseArray {
+  idRecurso: number;
+  nomeRecurso: string;
+  tipoRecurso: string;
+  quantidadeRecurso: number;
+}
+
 // POST /salas/{salaId}/recursos
 
 export interface RecursoAdiconarSala {

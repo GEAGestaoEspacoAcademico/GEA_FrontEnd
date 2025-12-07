@@ -10,19 +10,16 @@
     (deleteSala)="openDeleteModal($event)"
     (clickCriarRecurso)="criarEquipamento($event)"
     class="w-100"
-    >
+  >
   </app-space-management-table>
 </div>
 
 <app-create-resource-modal
-#criarRecursoId
-(create)="criarRecurso($event)"
+  #criarRecursoId
+  (create)="criarRecurso($event)"
 ></app-create-resource-modal>
 
-<app-editar-espaco-modal 
-  #editModal 
-  (clickEdit)="onModalEdit($event)">
-</app-editar-espaco-modal>
+<app-editar-espaco-modal #editModal (clickEdit)="onModalEdit($event)"> </app-editar-espaco-modal>
 
 <app-confirmation-modal
   #confirmDeleteModal
@@ -34,3 +31,5 @@
   (onconfirm)="confirmDelete()"
   (oncancel)="closeModal()"
 ></app-confirmation-modal>
+
+<app-add-item-modal #itemModal></app-add-item-modal>
