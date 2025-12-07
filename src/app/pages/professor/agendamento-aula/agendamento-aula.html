@@ -55,19 +55,19 @@
 
         <div class="row mb-3">
           <label for="qtdAulas" class="col-4 subtitle">Quantidade aulas:</label>
-              <select
-                id="qtdAulas"
-                formControlName="qtdAulas"
-                class="gea-input-field medium select-big-icon"
-              >
-                <option [value]="null">Selecione a quantidade</option>
-                <option [value]="1">1 Aula</option>
-                <option [value]="2">2 Aulas</option>
-                <option [value]="3">3 Aulas</option>
-                <option [value]="4">4 Aulas</option>
-                <option [value]="5">5 Aulas</option>
-                <option [value]="6">6 Aulas</option>
-              </select>
+          <select
+            id="qtdAulas"
+            formControlName="qtdAulas"
+            class="gea-input-field medium select-big-icon"
+          >
+            <option [value]="null">Selecione a quantidade</option>
+            <option [value]="1">1 Aula</option>
+            <option [value]="2">2 Aulas</option>
+            <option [value]="3">3 Aulas</option>
+            <option [value]="4">4 Aulas</option>
+            <option [value]="5">5 Aulas</option>
+            <option [value]="6">6 Aulas</option>
+          </select>
         </div>
 
         <div class="row mb-3">
@@ -88,7 +88,6 @@
                 class="gea-input-field medium select-big-icon"
               >
                 <option [value]="null">Selecione uma Disciplina</option>
-
                 @for (d of disciplinas; track d.disciplinaId) {
                   <option [value]="d.disciplinaId">{{ d.disciplinaNome }}</option>
                 }
@@ -96,13 +95,16 @@
             }
           }
         </div>
+        
         <div class="row">
-          <button class="gea-btn gea-btn-primary buscar" (click)="handleBuscarRecomendacoes()">
+          <button class="gea-btn gea-btn-primary buscar mb-3" (click)="handleBuscarRecomendacoes()">
             Buscar
           </button>
         </div>
       </div>
+
       <div class="col-6">
+        
         <div class="row mb-3">
           <label for="equipamentoSelect" class="col-auto subtitle">Equipamento:</label>
           <select
@@ -123,6 +125,7 @@
             }
           </select>
         </div>
+
         <div class="row">
           <label for="qtdInput" class="col-auto subtitle">Qtd:</label>
           <div class="col-auto">
@@ -145,12 +148,12 @@
           </div>
         </div>
 
-        <div class="row chip-display-area-row">
-          <mat-chip-grid #chipGrid aria-label="Seleção de Equipamentos" class="col-sm-12">
+        <div class="row chip-display-area-row my-3">
+          <mat-chip-set #chipGrid aria-label="Seleção de Equipamentos" class="col-sm-12 caixa-selecao">
             @for (control of equipamentosArray.controls; track $index) {
-              <mat-chip-row
+              <mat-chip
                 (removed)="removerItemDoArray('equipamentosArray', $index)"
-                [removable]="true"
+                [highlighted]="true"
                 color="primary"
                 selected
               >
@@ -158,10 +161,11 @@
                 <button matChipRemove aria-label="Remover item">
                   <mat-icon>cancel</mat-icon>
                 </button>
-              </mat-chip-row>
+              </mat-chip>
             }
-          </mat-chip-grid>
+          </mat-chip-set>
         </div>
+
         <div class="row">
           <label for="Software" class="col-auto subtitle">Software:</label>
           <select
@@ -188,12 +192,13 @@
             </button>
           </div>
         </div>
-        <div class="row chip-display-area-row">
-          <mat-chip-grid #softwareChipGrid aria-label="Seleção de Softwares" class="col-sm-12">
+
+        <div class="row chip-display-area-row my-3">
+          <mat-chip-set #softwareChipGrid aria-label="Seleção de Softwares" class="col-sm-12 caixa-selecao">
             @for (control of softwaresArray.controls; track $index) {
-              <mat-chip-row
+              <mat-chip
                 (removed)="removerItemDoArray('softwaresArray', $index)"
-                [removable]="true"
+                [highlighted]="true"
                 color="warn"
                 selected
               >
@@ -201,50 +206,53 @@
                 <button matChipRemove>
                   <mat-icon>cancel</mat-icon>
                 </button>
-              </mat-chip-row>
+              </mat-chip>
             }
-          </mat-chip-grid>
+          </mat-chip-set>
         </div>
+
       </div>
     </div>
   </form>
 </div>
-<div class="container-forms container-fluid">
-  <div class="row">
-    <div class="col-4">
-      <app-title-highlightt title="Baseado no Seu perfil"></app-title-highlightt>
-      @if (isRecomendacaoLoading) {
-        <mat-spinner></mat-spinner>
-      } @else if (salasRecomendadas) {
-        <div class="row">
-          @for (sala of salasRecomendadas.recomendacoes; track sala.salaId) {
-            <app-romm-information-component
-              [labData]="sala"
-              (ConfirmSchedule)="openInfoModal($event)"
-              class="mb-3"
-            ></app-romm-information-component>
-          }
-        </div>
-      }
-    </div>
-    <div class="col-4">
-      <app-title-highlightt title="Outras Opções"></app-title-highlightt>
-      @if (isRecomendacaoLoading) {
-        <mat-spinner></mat-spinner>
-      } @else if (salasRecomendadas) {
-        <div class="row">
-          @for (sala of salasRecomendadas.outrasOpcoes; track sala.salaId) {
-            <app-romm-information-component
-              [labData]="sala"
-              (ConfirmSchedule)="openInfoModal($event)"
-              class="mb-3"
-            ></app-romm-information-component>
-          }
-        </div>
-      }
+@if(salasRecomendadas){
+  <div class="container-forms container-fluid">
+    <div class="row">
+      <div class="col-4">
+        <app-title-highlightt title="Baseado no Seu perfil"></app-title-highlightt>
+        @if (isRecomendacaoLoading) {
+          <mat-spinner></mat-spinner>
+        } @else if (salasRecomendadas) {
+          <div class="row">
+            @for (sala of salasRecomendadas.recomendacoes; track sala.salaId) {
+              <app-romm-information-component
+                [labData]="sala"
+                (ConfirmSchedule)="openInfoModal($event)"
+                class="mb-3"
+              ></app-romm-information-component>
+            }
+          </div>
+        }
+      </div>
+      <div class="col-4">
+        <app-title-highlightt title="Outras Opções"></app-title-highlightt>
+        @if (isRecomendacaoLoading) {
+          <mat-spinner></mat-spinner>
+        } @else if (salasRecomendadas) {
+          <div class="row">
+            @for (sala of salasRecomendadas.outrasOpcoes; track sala.salaId) {
+              <app-romm-information-component
+                [labData]="sala"
+                (ConfirmSchedule)="openInfoModal($event)"
+                class="mb-3"
+              ></app-romm-information-component>
+            }
+          </div>
+        }
+      </div>
     </div>
   </div>
-</div>
+}
 
 <app-confirmation-modal
   #classInfoModal

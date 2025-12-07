@@ -140,7 +140,7 @@ export class AgendamentoAula implements OnInit {
     this.equipamentosArray.push(novoItemControl);
 
     this.equipamentoSelectControl.reset(null);
-    this.quantidadeControl.setValue(null);
+    this.quantidadeControl.setValue(1);
   }
 
   adicionarSoftwareSelecionado(): void {
@@ -268,7 +268,13 @@ export class AgendamentoAula implements OnInit {
         next: (_) => {
 
           this.snackBarService.showSuccess('Agendamento feito com sucesso');
-          this.form.reset();
+          this.form.reset({
+            data: this.getData(),
+          });
+
+          this.equipamentosArray.clear();
+          this.softwaresArray.clear();
+          
           this.salasRecomendadas = null;
         },
         error: (err) => {

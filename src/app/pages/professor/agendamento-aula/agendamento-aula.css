@@ -114,3 +114,9 @@
   margin-bottom: 0;
   font-size: 1.1rem !important;
 }
+
+.caixa-selecao{
+  padding: 1rem;
+  border: 1px var(--color-default-black) solid;
+  border-radius: 8px;
+}
