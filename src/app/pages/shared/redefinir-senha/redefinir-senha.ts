@@ -33,7 +33,6 @@ export class RedefinirSenha implements OnInit {
   btnNewVisibility = false;
   btnRepeatVisibility = false;
 
-
   toggleOldPassword() {
     this.hideOldPassword = !this.hideOldPassword;
   }
@@ -67,7 +66,11 @@ export class RedefinirSenha implements OnInit {
   formRedefinirSenha = new FormGroup(
     {
       senhaAntiga: new FormControl('', [Validators.required]),
-      novaSenha: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      novaSenha: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        this.senhaSegura(),
+      ]),
       novaSenhaRepetida: new FormControl('', [Validators.required]),
     },
     {
@@ -75,20 +78,53 @@ export class RedefinirSenha implements OnInit {
     },
   );
 
+  private senhaSegura(): ValidatorFn {
+    return (input: AbstractControl): ValidationErrors | null => {
+      const value = input.value;
+
+      if (!value) {
+        return null;
+      }
+
+      const temLetraMaiscula = /[A-Z]+/.test(value);
+      const temLetraMinuscula = /[a-z]+/.test(value);
+      const temNumero = /\d+/.test(value);
+      const temCaracterEspecial = /[^a-zA-Z0-9]/.test(value);
+
+      const senhaValida = temLetraMaiscula && temLetraMinuscula && temNumero && temCaracterEspecial;
+
+      if (!senhaValida) {
+        return {
+          senha: {
+            temLetraMaiscula: temLetraMaiscula,
+            temLetraMinuscula: temLetraMinuscula,
+            temNumero: temNumero,
+            temCaracterEspecial: temCaracterEspecial,
+          },
+        };
+      }
+      return null;
+    };
+  }
+
+  get errosDeSenhaSegura() {
+    return this.formRedefinirSenha.get('novaSenha')?.errors?.['senha'];
+  }
+
   ngOnInit(): void {
     this.formRedefinirSenha.reset();
-    this.formRedefinirSenha.get('senhaAntiga')?.valueChanges.subscribe(value => {
+    this.formRedefinirSenha.get('senhaAntiga')?.valueChanges.subscribe((value) => {
       this.btnOldVisibility = !!(value && value.trim().length > 0);
     });
 
-    this.headerTitle.setTitle("");
+    this.headerTitle.setTitle('');
     this.headerTitle.showBack();
 
-    this.formRedefinirSenha.get('novaSenha')?.valueChanges.subscribe(value => {
+    this.formRedefinirSenha.get('novaSenha')?.valueChanges.subscribe((value) => {
       this.btnNewVisibility = !!(value && value.trim().length > 0);
     });
 
-    this.formRedefinirSenha.get('novaSenhaRepetida')?.valueChanges.subscribe(value => {
+    this.formRedefinirSenha.get('novaSenhaRepetida')?.valueChanges.subscribe((value) => {
       this.btnRepeatVisibility = !!(value && value.trim().length > 0);
     });
   }

@@ -24,7 +24,7 @@ export class ListaEspacos implements OnInit{
   @ViewChild('criarRecursoId') criarRecursoModal!: CreateResourceModal;
 
   salaSelecionada!: Sala | null;
-  salaIdEditar!: number; 
+  salaIdEditar!: number;
 
   private salaService = inject(SalaService);
   private snackBarService = inject(SnackBarService)
@@ -72,7 +72,7 @@ export class ListaEspacos implements OnInit{
     this.criarRecursoModal.open('SOFTWARE')
   }
 
-  criarRecurso(recurso: { type: string; name: string }){  
+  criarRecurso(recurso: { type: string; name: string }){
     const corpoCriarRecurso: CriarRecursoRequest = {
       recursoNome: recurso.name,
       recursoTipoId: recurso.type === 'SOFTWARE' ? 2 : 1
@@ -103,7 +103,14 @@ export class ListaEspacos implements OnInit{
     if(!this.salaSelecionada) {return}
 
     this.salaService.deleteSala(this.salaSelecionada.salaId).subscribe({
-      next: () => this.carregarEspacos()
+      next: () => {
+        this.carregarEspacos()
+        this.snackBarService.showSuccess("Sala deletada com sucesso!");
+      },
+      error: (erro) =>{
+        console.log(erro);
+        this.snackBarService.showError("Erro ao deletar sala!");
+      }
     });
   }
 

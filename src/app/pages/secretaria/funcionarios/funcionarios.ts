@@ -5,6 +5,7 @@ import { UsuarioService } from '../../../services/usuario/usuario.service';
 import type { GetUsuarioResponse } from '../../../types/usuario.type';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 import type { EditProfessorModal } from '../../../components/secretaria/edit-professor-modal/edit-professor-modal';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-funcionarios',
@@ -16,8 +17,9 @@ export class Funcionarios implements OnInit {
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmationModal;
   @ViewChild('modalEditar') modalEditar!: EditProfessorModal;
 
-  private usuarioService = inject(UsuarioService);
-  private headerService = inject(HeaderTitleService)
+  private readonly usuarioService = inject(UsuarioService);
+  private readonly headerService = inject(HeaderTitleService);
+  private readonly snackBar = inject(SnackBarService);
 
   funcionarioParaDeletar!: GetUsuarioResponse | null;
 
@@ -61,9 +63,13 @@ export class Funcionarios implements OnInit {
           (f) => f.usuarioId !== this.funcionarioParaDeletar!.usuarioId,
         );
         this.listarUsuario();
+        this.snackBar.showSuccess("Usuário deletado com sucesso!");
         this.funcionarioParaDeletar = null;
       },
-      error: (err) => console.error('Erro ao deletar funcionário:', err),
+      error: (err) => {
+        console.error('Erro ao deletar funcionário:', err);
+        this.snackBar.showError("Erro ao deletar usuário");
+      }
     });
   }
 

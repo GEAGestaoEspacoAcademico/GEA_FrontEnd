@@ -21,7 +21,7 @@ export class SpaceManagement implements OnInit {
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmationModal;
   @ViewChild('editModal') editModal!: EditarEspacoModal;
   @ViewChild('criarRecursoId') criarRecursoModal!: CreateResourceModal;
-  
+
   salaParaDeletar!: Sala | null;
   salaIdEditar!: number
 
@@ -101,9 +101,13 @@ export class SpaceManagement implements OnInit {
           (s) => s.salaId !== this.salaParaDeletar!.salaId,
         );
         this.atualizarDataVisualizada();
+        this.snackBarService.showSuccess("Sala deletada com sucesso!");
         this.salaParaDeletar = null;
       },
-      error: (err) => console.error('Erro ao deletar sala:', err),
+      error: (err) => {
+        console.error('Erro ao deletar sala:', err);
+        this.snackBarService.showError("Erro ao deletar sala.")
+      }
     });
   }
 

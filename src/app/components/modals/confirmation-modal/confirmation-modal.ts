@@ -58,7 +58,7 @@ export class ConfirmationModal{
   private salaService = inject(SalaService);
   private snackbarService = inject(SnackBarService)
   private janelaHorarioService = inject(JanelasHorarioService);
-  
+
   /**
    * Define o modo de operação do modal.
    * - `aviso`: Mostra mensagem, botões de confirmar/cancelar.
@@ -78,10 +78,10 @@ export class ConfirmationModal{
 
   /** (Opcional) Texto customizado para o botão de cancelar/fechar (default: 'Cancelar'). */
   @Input() cancelText: string = 'Cancelar';
-  
+
   /** (Opcional) Um link de roteador (routerLink) para ser usado por um botão no template. */
   @Input() routerLink: string = ' ';
-  
+
   @Input() formData!: AgendarForm;
   /**
    * Evento emitido quando o usuário clica no botão de confirmação.
@@ -98,13 +98,6 @@ export class ConfirmationModal{
   detalhesSala: Sala | undefined;
   janelaHorario!: JanelaHorario;
 
-  /**
-   * Método PÚBLICO. Deve ser chamado pelo componente pai para abrir o modal.
-   * @param salaidRecmoendadao
-   * @example
-   * // No componente pai:
-   * this.meuModal.open();
-   */
   public open(salaidRecmoendadao?: number): void {
     if (this.mode === 'detalhes') {
       if (salaidRecmoendadao) {
@@ -124,7 +117,7 @@ export class ConfirmationModal{
       } else {
         console.error("Modal 'detalhes' foi aberto sem um 'salaRecomendadaId'.");
       }
-    } 
+    }
     else {
       this.abrirInstaciaModal();
     }
