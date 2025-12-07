@@ -57,6 +57,8 @@ export class FuncionarioForm implements OnInit {
     this.form = this.fb.group({
       nomeCompleto: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
+      login: ['', [Validators.required, Validators.minLength(3)]],
+      senha: ['', [Validators.required, Validators.minLength(3)]],
       perfil: [this.PERFIL_PROFESSOR, Validators.required],
     });
     this.atualizarEstruturaFormulario(this.form.get('perfil')?.value as string);
@@ -94,14 +96,6 @@ export class FuncionarioForm implements OnInit {
       this.form.removeControl('area');
     }
 
-    if (formControls['login']) {
-      this.form.removeControl('login');
-    }
-
-    if (formControls['senha']) {
-      this.form.removeControl('senha');
-    }
-
     if (formControls['disciplinas']) {
       if (!isProfessor) {
         (this.form.get('disciplinas') as FormArray).clear();
@@ -128,18 +122,6 @@ export class FuncionarioForm implements OnInit {
             this.fb.array([]),
           );
         }
-      }
-
-      if (isProfessor || isAuxiliar) {
-        this.form.addControl(
-          'login',
-          this.fb.control('', Validators.required),
-        );
-
-        this.form.addControl(
-          'senha',
-          this.fb.control('', Validators.required),
-        );
       }
     }
 
@@ -241,11 +223,14 @@ export class FuncionarioForm implements OnInit {
 
       case this.PERFIL_SECRETARIA:
         payload = {
+          login: login,
           nome: nomeCompleto,
           email: email,
+          senha: senha,
           matricula: registro,
         } as CriarSecretariaRequest;
 
+        debugger;
         observableSalvar = this.secretariaService.cadastrar(payload);
         mensagemSucesso = 'Secretaria cadastrada com sucesso!';
         break;
