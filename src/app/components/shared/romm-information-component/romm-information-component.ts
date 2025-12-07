@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import type { BuscarRecomendacaoResponse } from '../../../types/sala.type';
+import type { Sala } from '../../../models/sala.model';
 
 
 /**
@@ -23,7 +24,7 @@ export class RommInformationComponent {
    * Os dados da sala/laboratório (RoomData) que serão
    * exibidos neste componente.
    */
-  @Input() labData!: BuscarRecomendacaoResponse;
+  @Input() labData!: Sala;
 
   /**
    * Evento emitido quando o usuário executa a ação de confirmação
