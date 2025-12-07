@@ -155,10 +155,7 @@ export class RedefinirSenha implements OnInit {
         .subscribe({
           next: () => {
             this.snackbarService.showSuccess('Senha alterada com sucesso!');
-
-            setTimeout(() => {
-              this.router.navigate(['/home']);
-            }, 1000);
+            this.formRedefinirSenha.reset();
           },
           error: (err) => {
             console.error('Erro ao alterar senha:', err);
