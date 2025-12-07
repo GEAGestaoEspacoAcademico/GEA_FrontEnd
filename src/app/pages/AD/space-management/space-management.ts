@@ -57,9 +57,11 @@ export class SpaceManagement implements OnInit {
 
   carregarSalas() {
     this.salaService.getSalas().subscribe({
-      next: (labs) => {
+      next: (labs: Sala[]) => {
         this.masterSalaList = labs;
+
         this.atualizarDataVisualizada();
+        console.warn(this.masterSalaList.length);
       },
       error: (err) => console.error('Erro ao carregar laboratórios:', err),
     });

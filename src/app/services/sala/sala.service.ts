@@ -50,7 +50,9 @@ export class SalaService {
   }
 
   public getSalas(): Observable<Sala[]> {
-    return this.http.get<Sala[]>(this.baseUrl);
+    return this.http
+      .get<SalaPageable>(`${this.baseUrl}?limit=50`)
+      .pipe(map((response) => response.conteudo));
   }
 
   public criarSala(sala: CriarSalaRequest): Observable<CriarSalaResponse> {
@@ -114,4 +116,9 @@ export class SalaService {
 
     return keywords.some((k) => combined.includes(k));
   }
+}
+
+interface SalaPageable {
+  conteudo: Sala[];
+  numeroDaPagina: number;
 }

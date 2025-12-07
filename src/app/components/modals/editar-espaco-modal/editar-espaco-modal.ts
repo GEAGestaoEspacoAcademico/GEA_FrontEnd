@@ -14,9 +14,9 @@ import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
 import type { TipoSala } from '../../../models/tipoSala.mode';
 import { SalaService } from '../../../services/sala/sala.service';
 import type { AddItemModal } from '../add-item-modal/add-item-modal';
-import type { Observable } from 'rxjs';
-import { forkJoin, of, switchMap } from 'rxjs';
+import { concatMap, forkJoin, of } from 'rxjs';
 import { RecursoService } from '../../../services/recurso/recurso.service';
+import type { Recurso } from '../../../models/Recurso.model';
 
 @Component({
   selector: 'app-editar-espaco-modal',
@@ -36,9 +36,21 @@ export class EditarEspacoModal implements OnInit {
 
   @ViewChild('addItemModal') addItemModal!: AddItemModal;
 
+  modalTitle: string = '';
+  modalLabel: string = '';
+  showQuantity: boolean = true;
+  recursosDisponiveisFiltrados: Recurso[] = [];
+  private todosRecursos: Recurso[] = [];
+
   ngOnInit(): void {
     this.tipoSalaService.getTiposSala().subscribe({
       next: (salas) => (this.tipoSalaOpcoes = salas),
+    });
+    this.recursoService.getRecursos().subscribe({
+      next: (recursos) => {
+        this.todosRecursos = recursos;
+      },
+      error: (err) => console.error('Erro ao carregar recursos do sistema', err),
     });
   }
 
@@ -64,7 +76,6 @@ export class EditarEspacoModal implements OnInit {
     this.salaService.getRecursosSalaPorIdArray(this.salaId).subscribe({
       next: (recursosSala) => {
         this.recursosSala = recursosSala;
-        console.log(this.recursosSala);
       },
     });
 
@@ -100,42 +111,35 @@ export class EditarEspacoModal implements OnInit {
     this.form.enable();
 
     const rawValues = this.form.getRawValue();
-
     const updatedData: AtualizarSalaRequest = {
       salaNome: rawValues.salaNome,
-      salaCapacidade: rawValues.salaCapacidade,
+      salaCapacidade: Number(rawValues.salaCapacidade),
       pisoId: Number(rawValues.piso),
       tipoSalaId: Number(rawValues.tipoSalaId),
-
       disponibilidade: rawValues.disponibilidade,
       salaObservacoes: rawValues.salaObservacoes,
     };
-
-    const operacoesDeRecursos: Array<Observable<any>> = [];
-
-    if (this.recursosParaDeletar.length > 0) {
-      const delecoes = this.recursosParaDeletar.map((recursoId) =>
-        this.salaService.deleteRecursoSala(this.salaId, recursoId),
-      );
-      operacoesDeRecursos.push(...delecoes);
-    }
-
-    if (this.recursosParaAdicionar.length > 0) {
-      const requestBody: AdicionarRecursoSalaRequest = {
-        listaDeRecursosParaAdicionar: this.recursosParaAdicionar,
-      };
-      const adicao = this.salaService.adicionarRecursoEmSala(this.salaId, requestBody);
-      operacoesDeRecursos.push(adicao);
-    }
-
     this.salaService
       .editSala(this.salaId, updatedData)
       .pipe(
-        switchMap(() => {
-          if (operacoesDeRecursos.length === 0) {
-            return of(null);
+        concatMap(() => {
+          if (this.recursosParaDeletar.length > 0) {
+            const delecoes = this.recursosParaDeletar.map((id) =>
+              this.salaService.deleteRecursoSala(this.salaId, id),
+            );
+            return forkJoin(delecoes);
           }
-          return forkJoin(operacoesDeRecursos);
+          return of(null);
+        }),
+
+        concatMap(() => {
+          if (this.recursosParaAdicionar.length > 0) {
+            const requestBody: AdicionarRecursoSalaRequest = {
+              listaDeRecursosParaAdicionar: this.recursosParaAdicionar,
+            };
+            return this.salaService.adicionarRecursoEmSala(this.salaId, requestBody);
+          }
+          return of(null);
         }),
       )
       .subscribe({
@@ -188,5 +192,54 @@ export class EditarEspacoModal implements OnInit {
     }
     const tipo = this.tipoSalaOpcoes.find((t) => t.tipoSalaId === id);
     this.isLaboratorio = tipo ? /lab/i.test(tipo.tipoSalaNome) : false;
+  }
+
+  public openAddResourceModal(tipo: 'Hardware' | 'Software'): void {
+    if (tipo === 'Hardware') {
+      this.modalTitle = 'Adicionar Equipamento';
+      this.modalLabel = 'Equipamento';
+      this.showQuantity = true;
+
+      this.recursosDisponiveisFiltrados = this.todosRecursos.filter(
+        (r) => r.tipoRecurso === 'Hardware',
+      );
+    } else {
+      this.modalTitle = 'Adicionar Software';
+      this.modalLabel = 'Software';
+      this.showQuantity = false;
+      this.recursosDisponiveisFiltrados = this.todosRecursos.filter(
+        (r) => r.tipoRecurso === 'Software',
+      );
+    }
+
+    this.addItemModal.open();
+  }
+
+  public onItemAdded(event: { recursoId: number; name: string; quantity: number | null }): void {
+    const quantidade = event.quantity ?? 1;
+
+    const existe = this.recursosSala.find((r) => r.idRecurso === event.recursoId);
+    if (existe) {
+      alert('Este recurso já está na lista desta sala.');
+      return;
+    }
+
+    const itemBackend: RecursoAdiconarSala = {
+      recursoId: event.recursoId,
+      quantidadeRecurso: quantidade,
+    };
+    this.recursosParaAdicionar.push(itemBackend);
+
+    const recursoOriginal = this.todosRecursos.find((r) => r.id === event.recursoId);
+    const tipoRecurso = recursoOriginal ? recursoOriginal.tipoRecurso : 'Hardware';
+
+    const novoRecursoVisual: BuscarRecursoSalaResponseArray = {
+      idRecurso: event.recursoId,
+      nomeRecurso: event.name,
+      tipoRecurso: tipoRecurso,
+      quantidadeRecurso: quantidade,
+    };
+
+    this.recursosSala.push(novoRecursoVisual);
   }
 }

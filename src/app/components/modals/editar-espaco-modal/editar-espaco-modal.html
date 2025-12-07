@@ -11,7 +11,7 @@
           <div class="col-left">
             <label for="iNome" class="label-small"
               >Nome:
-              <input class="input-small" id="iNome" formControlName="salaNome" />
+              <input class="input-small short-input" id="iNome" formControlName="salaNome" />
             </label>
 
             <label for="" class="label-small mt-12"
@@ -37,7 +37,14 @@
               <div class="resource-column">
                 <div class="resource-label">
                   <span>Equipamentos:</span>
-                  <button id="BtnEquipamento" class="gea-btn-primary Adicionar">Novo Equip.</button>
+                  <button
+                    id="BtnEquipamento"
+                    class="gea-btn-primary Adicionar"
+                    (click)="openAddResourceModal('Hardware')"
+                    [disabled]="form.disabled"
+                  >
+                    Novo Equip.
+                  </button>
                 </div>
 
                 <div class="chip-display-area-row">
@@ -45,7 +52,7 @@
                     @for (recurso of recursosSala; track recurso.idRecurso) {
                       @if (recurso.tipoRecurso !== 'Software') {
                         <mat-chip-row
-                          [removable]="true"
+                          [removable]="!form.disabled"
                           color="warn"
                           selected
                           (removed)="removeRecurso(recurso)"
@@ -58,9 +65,7 @@
                         </mat-chip-row>
                       }
                     } @empty {
-                      <p class="text-muted" style="font-size: 0.8rem; padding: 0.5rem">
-                        Nenhum equipamento.
-                      </p>
+                      <p class="text-muted" class="captions">Nenhum equipamento.</p>
                     }
                   </mat-chip-grid>
                 </div>
@@ -70,7 +75,14 @@
                 <div class="resource-column">
                   <div class="resource-label">
                     <span>Softwares:</span>
-                    <button id="BtnSoftware" class="gea-btn-primary Adicionar">Novo Soft.</button>
+                    <button
+                      id="BtnSoftware"
+                      class="gea-btn-primary Adicionar"
+                      (click)="openAddResourceModal('Software')"
+                      [disabled]="form.disabled"
+                    >
+                      Novo Software.
+                    </button>
                   </div>
 
                   <div class="chip-display-area-row">
@@ -78,7 +90,7 @@
                       @for (recurso of recursosSala; track recurso.idRecurso) {
                         @if (recurso.tipoRecurso === 'Software') {
                           <mat-chip-row
-                            [removable]="true"
+                            [removable]="!form.disabled"
                             color="primary"
                             selected
                             (removed)="removeRecurso(recurso)"
@@ -90,9 +102,7 @@
                           </mat-chip-row>
                         }
                       } @empty {
-                        <p class="text-muted" style="font-size: 0.8rem; padding: 0.5rem">
-                          Nenhum software.
-                        </p>
+                        <p class="text-muted" class="captions">Nenhum software.</p>
                       }
                     </mat-chip-grid>
                   </div>
@@ -135,3 +145,13 @@
     </div>
   </div>
 </ng-template>
+
+<app-add-item-modal
+  #addItemModal
+  [title]="modalTitle"
+  [nameLabel]="modalLabel"
+  [showQuantityField]="showQuantity"
+  [recursosDisponiveis]="recursosDisponiveisFiltrados"
+  (itemAdd)="onItemAdded($event)"
+>
+</app-add-item-modal>
