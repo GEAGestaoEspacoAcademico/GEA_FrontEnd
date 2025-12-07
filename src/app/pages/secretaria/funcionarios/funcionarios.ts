@@ -20,10 +20,11 @@ export class Funcionarios implements OnInit {
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmationModal;
   @ViewChild('modalEditar') modalEditar!: EditProfessorModal;
 
-  private usuarioService = inject(UsuarioService);
-  private headerService = inject(HeaderTitleService)
-  private store = inject(Store);
-  private snackbarService = inject(SnackBarService);
+  private readonly store = inject(Store);
+  private readonly snackbarService = inject(SnackBarService);
+  private readonly usuarioService = inject(UsuarioService);
+  private readonly headerService = inject(HeaderTitleService);
+  private readonly snackBar = inject(SnackBarService);
 
   funcionarioParaDeletar!: GetUsuarioResponse | null;
   currentUserId$: Observable<number | undefined> = this.store.select(selectUserId);
@@ -83,10 +84,14 @@ export class Funcionarios implements OnInit {
           (f) => f.usuarioId !== this.funcionarioParaDeletar!.usuarioId,
         );
         this.listarUsuario();
+        this.snackBar.showSuccess("Usuário deletado com sucesso!");
         this.funcionarioParaDeletar = null;
         this.snackbarService.showSuccess("Funcionário deletado com sucesso")
       },
-      error: (_) => this.snackbarService.showError('Erro ao deletar funcionário:'),
+      error: (err) => {
+        console.error('Erro ao deletar funcionário:', err);
+        this.snackBar.showError("Erro ao deletar usuário");
+      }
     });
   }
 

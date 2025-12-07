@@ -9,6 +9,7 @@ import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { Store } from '@ngrx/store';
 import { selectUserId } from '../../../store/auth/auth.selectors';
 import { switchMap, take, type Observable } from 'rxjs';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 
 @Component({
   selector: 'app-redefinir-senha',
@@ -21,6 +22,7 @@ export class RedefinirSenha implements OnInit {
   private readonly router = inject(Router);
   private readonly UsuarioService = inject(UsuarioService);
   private readonly store = inject(Store);
+  private readonly headerTitle = inject(HeaderTitleService);
   private readonly userId$: Observable<number | undefined> = this.store.select(selectUserId);
 
   hideOldPassword = false;
@@ -29,8 +31,7 @@ export class RedefinirSenha implements OnInit {
 
   btnOldVisibility = false;
   btnNewVisibility = false;
-  btnRepeatVisibility = false; 
-
+  btnRepeatVisibility = false;
 
   toggleOldPassword() {
     this.hideOldPassword = !this.hideOldPassword;
@@ -65,7 +66,11 @@ export class RedefinirSenha implements OnInit {
   formRedefinirSenha = new FormGroup(
     {
       senhaAntiga: new FormControl('', [Validators.required]),
-      novaSenha: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      novaSenha: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        this.senhaSegura(),
+      ]),
       novaSenhaRepetida: new FormControl('', [Validators.required]),
     },
     {
@@ -73,17 +78,53 @@ export class RedefinirSenha implements OnInit {
     },
   );
 
+  private senhaSegura(): ValidatorFn {
+    return (input: AbstractControl): ValidationErrors | null => {
+      const value = input.value;
+
+      if (!value) {
+        return null;
+      }
+
+      const temLetraMaiscula = /[A-Z]+/.test(value);
+      const temLetraMinuscula = /[a-z]+/.test(value);
+      const temNumero = /\d+/.test(value);
+      const temCaracterEspecial = /[^a-zA-Z0-9]/.test(value);
+
+      const senhaValida = temLetraMaiscula && temLetraMinuscula && temNumero && temCaracterEspecial;
+
+      if (!senhaValida) {
+        return {
+          senha: {
+            temLetraMaiscula: temLetraMaiscula,
+            temLetraMinuscula: temLetraMinuscula,
+            temNumero: temNumero,
+            temCaracterEspecial: temCaracterEspecial,
+          },
+        };
+      }
+      return null;
+    };
+  }
+
+  get errosDeSenhaSegura() {
+    return this.formRedefinirSenha.get('novaSenha')?.errors?.['senha'];
+  }
+
   ngOnInit(): void {
     this.formRedefinirSenha.reset();
-    this.formRedefinirSenha.get('senhaAntiga')?.valueChanges.subscribe(value => {
+    this.formRedefinirSenha.get('senhaAntiga')?.valueChanges.subscribe((value) => {
       this.btnOldVisibility = !!(value && value.trim().length > 0);
     });
 
-    this.formRedefinirSenha.get('novaSenha')?.valueChanges.subscribe(value => {
+    this.headerTitle.setTitle('');
+    this.headerTitle.showBack();
+
+    this.formRedefinirSenha.get('novaSenha')?.valueChanges.subscribe((value) => {
       this.btnNewVisibility = !!(value && value.trim().length > 0);
     });
 
-    this.formRedefinirSenha.get('novaSenhaRepetida')?.valueChanges.subscribe(value => {
+    this.formRedefinirSenha.get('novaSenhaRepetida')?.valueChanges.subscribe((value) => {
       this.btnRepeatVisibility = !!(value && value.trim().length > 0);
     });
   }
@@ -114,7 +155,7 @@ export class RedefinirSenha implements OnInit {
         .subscribe({
           next: () => {
             this.snackbarService.showSuccess('Senha alterada com sucesso!');
-            this.router.navigate(['/home']);
+            this.formRedefinirSenha.reset();
           },
           error: (err) => {
             console.error('Erro ao alterar senha:', err);

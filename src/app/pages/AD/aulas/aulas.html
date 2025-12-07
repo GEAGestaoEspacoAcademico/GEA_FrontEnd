@@ -1,5 +1,7 @@
-<div class="mt-2">
+<div class="px-4">
+<div class="d-flex justify-content-between mt-2">
   <app-title-highlightt title="Aulas"></app-title-highlightt>
+  <button class="gea-btn me-3" routerLink="/agenda">Agendar</button>
 </div>
 @if (isLoading) {
   <div class="d-flex justify-content-center align-items-center mt-4">
@@ -10,7 +12,7 @@
 @if (isLoading === false) {
   <div class="container my-3">
     <app-day-selector
-      class="w-100 d-block mb-4" 
+      class="w-100 d-block mb-4"
       [currentMonthName]="monthToDisplay"
       [days]="days"
       [diasSelecionados]="aulasCorrentes"
@@ -20,8 +22,8 @@
     >
     </app-day-selector>
 
-    <div class="schedule-list-container mt-4">
-      
+    <div class="schedule-list-container px-3">
+
       @for(agendamento of agendamentosDoDiaSelecionado$ | async; track agendamento){
         <app-class-info-card
           [agendamentoData]="agendamento"
@@ -36,10 +38,11 @@
             Sem aulas para este dia.
           </div>
       }
-      
+
     </div>
   </div>
 }
+</div>
 
 <app-confirmation-modal
   #confirmCancelModel

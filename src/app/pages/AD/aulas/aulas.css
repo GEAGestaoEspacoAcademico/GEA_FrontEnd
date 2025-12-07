@@ -18,7 +18,7 @@
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scroll-snap-type: x mandatory;
-    padding-left: var(--spacing-3, 1rem);
+    padding-left: 0;
     padding-right: var(--spacing-3, 1rem);
     scrollbar-width: none;
     -ms-overflow-style: none;
@@ -27,12 +27,21 @@
   :host ::ng-deep .day-selector::-webkit-scrollbar {
     display: none;
   }
+
+  :host ::ng-deep .gea-btn {
+    display: none !important;
+  }
 }
+
+.container{
+  padding-left: 0 !important;
+}
+
 
 @media (min-width: 62rem) {
   :host ::ng-deep .day-selector {
     overflow-x: auto;
-    margin: 0 auto;
+    margin: auto;
     max-width: 75rem;
 
     :host ::ng-deep .day-selector::-webkit-scrollbar-track {
@@ -47,5 +56,21 @@
     :host ::ng-deep .day-selector::-webkit-scrollbar-thumb:hover {
       background-color: #aaa;
     }
+  }
+
+  .schedule-list-container{
+    margin: auto;
+  }
+
+  :host ::ng-deep .gea-btn {
+    background-color: var(--color-primary-500);
+    padding: 0.8rem !important;
+    width: 6rem !important;
+  }
+
+  .gea-btn:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    background-color: var(--color-primary-700);
   }
 }

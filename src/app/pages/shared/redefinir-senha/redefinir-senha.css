@@ -1,14 +1,14 @@
 .card-senha {
-  background-color: #f9f9fb;
+  background-color: #F8F8FF;
   border-top-left-radius: 2.188rem !important;
   border-top-right-radius: 2.188rem !important;
   min-height: 28.875rem;
 
   .card-body{
-             padding: var(--spacing-5) /*top*/
-             var(--spacing-4) /*right*/
-             var(--spacing-2) /*bottom*/
-             var(--spacing-4) /*left*/ !important;
+    padding: var(--spacing-5) /*top*/
+    var(--spacing-1) /*right*/
+    var(--spacing-2) /*bottom*/
+    var(--spacing-1) /*left*/ !important;
   }
 }
 
@@ -17,18 +17,14 @@
 }
 
 .btn-cancelar, .btn-danger{
-  margin-top: var(--spacing-4);
-  border-radius: var(--spacing-4);
   padding: var(--spacing-3) !important;
+  font-size: 0.78rem !important;
+  font-weight: var(--font-weight-bold);
 }
 
 .btn-cancelar{
   border-color: var(--color-primary-500);
   color:  var(--color-primary-500);
-}
-
-.btn-danger:active {
-  background-color: #600806 !important;
 }
 
 .btn-danger:hover {
@@ -155,7 +151,6 @@ h3 {
   }
 
   .btn-danger{
-    margin-top: var(--spacing-2);
     border-radius: var(--spacing-2);
   }
 
@@ -169,4 +164,8 @@ h3 {
   .btn-voltar:hover{
     color: var(--color-primary-300);
   }
+}
+
+.lista-de-erros {
+  padding-left: 1rem;
 }

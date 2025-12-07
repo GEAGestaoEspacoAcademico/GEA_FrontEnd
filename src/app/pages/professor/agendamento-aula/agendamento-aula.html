@@ -5,7 +5,7 @@
 <div class="container-forms container-fluid">
   <form [formGroup]="form">
     <div class="row">
-      <div class="col-5">
+      <div class="col-6">
         <div class="row mb-3">
           <label for="data" class="col-4 subtitle">Data:</label>
           <input type="date" id="data" formControlName="data" class="gea-input-field medium" />
@@ -83,7 +83,7 @@
           </button>
         </div>
       </div>
-      <div class="col-7">
+      <div class="col-6">
         <div class="row mb-3">
           <label for="equipamentoSelect" class="col-auto subtitle">Equipamento:</label>
           <select
@@ -126,7 +126,7 @@
           </div>
         </div>
 
-        <div class="row chip-display-area-row mb-2">
+        <div class="row chip-display-area-row">
           <mat-chip-grid #chipGrid aria-label="Seleção de Equipamentos" class="col-sm-12">
             @for (control of equipamentosArray.controls; track $index) {
               <mat-chip-row

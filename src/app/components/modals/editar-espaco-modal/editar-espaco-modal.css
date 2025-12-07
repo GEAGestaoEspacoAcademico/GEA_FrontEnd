@@ -44,6 +44,7 @@
   padding: 1.25rem;
   display: flex;
   flex-direction: column;
+  overflow: hidden !important;
 }
 
 .form-grid {
@@ -130,14 +131,14 @@
 }
 
 .footer-modal {
-  padding: 1rem;
+  padding-bottom: 1rem;
   display: flex;
   justify-content: center;
   gap: 1.25rem;
 }
 
 .btn-edit {
-  min-width: 11.25rem;
+  min-width: 8rem;
   background: #e5e5e5;
   border: 1px solid #aaa;
   padding: 0.625rem;
@@ -145,10 +146,40 @@
 }
 
 .btn-cancel {
-  min-width: 10rem;
+  min-width: 8rem;
   background: var(--color-primary-300);
   border: 1px solid var(--color-primary-500);
   color: white;
   padding: 0.625rem;
   font-weight: 700;
+  border-radius: 1rem;
+}
+
+.btn-cancel, .btn-edit{
+  border-radius: 1rem;
+}
+
+.btn-cancel:hover{
+  background-color: var(--color-primary-700) !important;
+}
+
+.btn-edit:hover{
+  background-color: var(--color-surface-disabled) !important;
+}
+
+.btn-edit:hover, .btn-cancel:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.input-small{
+  width: 75% !important;
+}
+
+input[type="number"]{
+  width: 22% !important;
+}
+
+select[formControlName="piso"] {
+  width: 40% !important;
 }
