@@ -14,6 +14,7 @@ import { AuxiliarDocenteService } from '../../../services/auxiliar-docente/auxil
 import { of, type Observable } from 'rxjs';
 import type { CriarAuxiliarDocenteRequest } from '../../../models/auxiliarDocente.model';
 import ProfessorService from '../../../services/professor/professor.service';
+import { CriarProfessorRequest } from '../../../types/professor.types';
 
 
 
@@ -42,6 +43,9 @@ export class FuncionarioForm implements OnInit {
   disciplinasDisponiveis: Disciplina[] = [];
   disciplinaSelecionada: Disciplina | null = null;
 
+  hidePassword: boolean = false;
+  btnVisibility: boolean = false;
+
   public readonly PERFIL_PROFESSOR = 'PROFESSOR';
   public readonly PERFIL_SECRETARIA = 'SECRETARIA';
   public readonly PERFIL_AUXILIAR_DOCENTE = 'AUXILIAR_DOCENTE';
@@ -67,8 +71,15 @@ export class FuncionarioForm implements OnInit {
     this.disciplinaService.getDisciplinas().subscribe({
       next: (data) => (this.disciplinasDisponiveis = data),
     });
+
+    this.form.get('senha')?.valueChanges.subscribe(value => {
+      this.btnVisibility = !!(value && value.trim().length > 0);
+    });
   }
 
+  changeVisibility() {
+    this.hidePassword = !this.hidePassword;
+  }
 
   private atualizarEstruturaFormulario(perfil: string): void {
     const formControls = this.form.controls;
@@ -82,6 +93,14 @@ export class FuncionarioForm implements OnInit {
 
     if (formControls['area']) {
       this.form.removeControl('area');
+    }
+
+    if (formControls['login']) {
+      this.form.removeControl('login');
+    }
+
+    if (formControls['senha']) {
+      this.form.removeControl('senha');
     }
 
     if (formControls['disciplinas']) {
@@ -204,23 +223,18 @@ export class FuncionarioForm implements OnInit {
     switch (perfil) {
       case this.PERFIL_PROFESSOR:
         {
-          const disciplinasPayload = this.disciplinas.value.map((d: Disciplina) => ({
-            disciplinaId: d.disciplinaId,
-            disciplinaNome: d.disciplinaNome,
-          }));
-
-          debugger;
+          const disciplinasPayload: number[] = this.disciplinas.value.map((d: Disciplina) => d.disciplinaId);
 
           payload = {
             login: login,
             nome: nomeCompleto,
             email: email,
-            registro: registro,
-            disciplinas: disciplinasPayload,
-            senha: senha
+            senha: senha,
+            registroProfessor: registro,
+            disciplinasId: disciplinasPayload,
           };
 
-          debugger;
+
           observableSalvar = this.professorService.criarProfessor(payload);
           mensagemSucesso = 'Professor cadastrado com sucesso!';
           break;

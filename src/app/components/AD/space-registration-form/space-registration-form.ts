@@ -9,6 +9,7 @@ import type { TipoSala } from '../../../models/tipoSala.mode';
 import { RecursoService } from '../../../services/recurso/recurso.service';
 import type { AddItemModalData } from '../../../types/additemmodal';
 import type { CriarSalaFormulario } from '../../../types/util.types';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-space-registration-form',
@@ -29,6 +30,7 @@ export class SpaceRegistrationForm implements OnInit {
 
   private readonly fb = inject(FormBuilder);
   private readonly tipoSalaService = inject(TipoSalaService);
+  private readonly snackBarService = inject(SnackBarService)
   private readonly recursoService = inject(RecursoService);
 
   atualizarListaDisponivel() {
@@ -46,14 +48,14 @@ export class SpaceRegistrationForm implements OnInit {
           (t) => t.tipoSalaNome.trim().toUpperCase().replaceAll(/\s/g, '') !== 'SALADEAULA',
         );
       },
-      error: (err) => console.error('Erro ao carregar tipos de sala', err),
+      error: (_) => this.snackBarService.showError('Erro ao carregar tipos de sala'),
     });
 
     this.recursoService.getRecursos().subscribe({
       next: (recursos) => {
         this.recursosDisponiveis = recursos;
       },
-      error: (err) => console.error('Erro ao carregar recursos', err),
+      error: (_) => this.snackBarService.showError('Erro ao carregar recursos'),
     });
 
     this.equipamentosFA.valueChanges.subscribe(() => {

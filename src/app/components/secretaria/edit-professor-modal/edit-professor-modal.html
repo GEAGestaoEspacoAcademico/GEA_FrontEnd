@@ -49,16 +49,6 @@
             }
           </div>
         }
-
-        <div class="campo-wrapper">
-          <label for="selCargo" class="section-title">Cargo</label>
-          <select id="selCargo" formControlName="cargoId" class="gea-input-field">
-            <option [ngValue]="null">Selecione o cargo</option>
-            @for (cargo of cargos; track cargo.id) {
-              <option [ngValue]="cargo.id">{{ cargo.nome }}</option>
-            }
-          </select>
-        </div>
       </div>
 
       @if (isProfessorOuCoordenador) {

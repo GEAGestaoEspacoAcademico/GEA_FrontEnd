@@ -3,9 +3,12 @@ import { CursoService } from '../../../services/curso/curso.service';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 import type { OnInit } from '@angular/core';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import type { Curso } from '../../../models/curso.model';
 import type { AtualizarCursoRequest, CriarCursoRequest } from '../../../types/curso';
+import { CursoForm } from '../../../components/secretaria/curso-form/curso-form';
+import { MatDialog } from '@angular/material/dialog';
+import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 
 @Component({
   selector: 'app-listar-cursos',
@@ -17,6 +20,9 @@ export class ListarCursos implements OnInit {
   cursoSelecionado!: Curso | null;
   cursoIdParaEditar!: number;
 
+  @ViewChild("deleteModal") deleteModal!: ConfirmationModal;
+
+  private readonly dialog = inject(MatDialog);
   private readonly cursoService = inject(CursoService);
   private readonly snackBarService = inject(SnackBarService);
   private readonly headerService = inject(HeaderTitleService);
@@ -56,8 +62,23 @@ export class ListarCursos implements OnInit {
     });
   }
 
-  adicionarCurso() {
-    //chamar modal
+  manipularCurso(curso?: Curso) {
+    const dialogRef = this.dialog.open(CursoForm, {});
+
+    const instance = dialogRef.componentInstance;
+
+    instance.title = curso ? 'Editar Curso' : 'Novo Curso';
+    instance.curso = curso ?? null;
+
+    instance.saved.subscribe(() => {
+      dialogRef.close();
+      this.carregarCursos();
+    });
+
+    instance.closed.subscribe(() => {
+      dialogRef.close();
+      this.carregarCursos();
+    });
   }
 
   criarCurso(curso: Curso) {
@@ -85,7 +106,7 @@ export class ListarCursos implements OnInit {
 
   onDelete(curso: Curso) {
     this.cursoSelecionado = curso;
-    //chamar modal
+    this.deleteModal.open()
   }
 
   confirmDelete() {
@@ -100,16 +121,7 @@ export class ListarCursos implements OnInit {
 
   onEdit(curso: Curso): void {
     this.cursoIdParaEditar = curso.cursoId;
+    this.manipularCurso(curso);
   }
-
-  onModalEdit(curso: AtualizarCursoRequest): void {
-    // if (this.cursoIdEditar) {
-    //   this.cursoService.editCurso(this.cursoIdEditar, curso).subscribe({
-    //     next: () => {
-    //       this.snackBarService.showSuccess('Curso atualizado com sucesso');
-    //       this.carregarCursos();
-    //     },
-    //   });
-    // }
-  }
+  
 }
