@@ -15,11 +15,10 @@ import { HeaderTitleService } from '../../../services/header-title/header-title.
   templateUrl: './cadastro-sala.html',
   styleUrl: './cadastro-sala.css',
 })
-export class CadastroSala implements OnInit{
-
+export class CadastroSala implements OnInit {
   ngOnInit(): void {
-    this.headerService.setTitle('Cadastro de Sala')
-    this.headerService.showBack()
+    this.headerService.setTitle('Cadastro de Sala');
+    this.headerService.showBack();
   }
   isSaving = false;
 
@@ -27,7 +26,7 @@ export class CadastroSala implements OnInit{
   private snackbar = inject(SnackBarService);
   private router = inject(Router);
   private location = inject(Location);
-  private headerService = inject(HeaderTitleService)
+  private headerService = inject(HeaderTitleService);
 
   onSave(formValue: CriarSalaFormulario) {
     this.isSaving = true;

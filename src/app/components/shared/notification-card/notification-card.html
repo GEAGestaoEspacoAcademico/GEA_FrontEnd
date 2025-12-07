@@ -1,14 +1,20 @@
-<article class="notification-card border-top border-bottom border-dark" role="article" aria-label="Notificação">
+<article
+  class="notification-card border-top border-bottom border-dark"
+  role="article"
+  aria-label="Notificação"
+>
   <div class="section-title text-neutral-900 mb-1" aria-hidden="false">
     {{ source }}
   </div>
 
-  <header class="d-flex justify-content-between align-items-baseline mb-1" role="group" aria-label="Título e data da notificação">
+  <header
+    class="d-flex justify-content-between align-items-baseline mb-1"
+    role="group"
+    aria-label="Título e data da notificação"
+  >
     <h3 class="title-primary m-0">{{ title }}</h3>
 
-    <time
-      class="date text-end"
-      [attr.datetime]="(date | date:'yyyy-MM-dd')">
+    <time class="date text-end" [attr.datetime]="date | date: 'yyyy-MM-dd'">
       {{ date | date: 'dd/MM/yyyy' }}
     </time>
   </header>

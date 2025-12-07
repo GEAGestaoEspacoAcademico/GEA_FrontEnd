@@ -6,12 +6,12 @@ import { HeaderTitleService } from '../../../services/header-title/header-title.
   selector: 'app-homecoord',
   standalone: false,
   templateUrl: './homecoord.html',
-  styleUrl: './homecoord.css'
+  styleUrl: './homecoord.css',
 })
-export class Homecoord implements OnInit{
-  private titleService = inject(HeaderTitleService)
-  
+export class Homecoord implements OnInit {
+  private titleService = inject(HeaderTitleService);
+
   ngOnInit(): void {
-    this.titleService.hideBack()
+    this.titleService.hideBack();
   }
 }

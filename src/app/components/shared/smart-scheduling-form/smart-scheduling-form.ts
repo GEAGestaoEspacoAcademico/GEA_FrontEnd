@@ -19,10 +19,9 @@ import type { JanelasHorarioPorDataRequest } from '../../../types/janelaHorario.
   selector: 'app-smart-scheduling-form',
   standalone: false,
   templateUrl: './smart-scheduling-form.html',
-  styleUrl: './smart-scheduling-form.css'
+  styleUrl: './smart-scheduling-form.css',
 })
 export class SmartSchedulingForm implements OnInit {
-
   private fb = inject(FormBuilder);
   private serviceHorario = inject(JanelasHorarioService);
   private serviceCurso = inject(CursoService);
@@ -82,8 +81,8 @@ export class SmartSchedulingForm implements OnInit {
 
   ngOnInit(): void {
     this.buildForms();
-    this.setupListeners(); 
-    this.carregarDadosAuxiliares(); 
+    this.setupListeners();
+    this.carregarDadosAuxiliares();
   }
 
   buildForms() {
@@ -92,7 +91,7 @@ export class SmartSchedulingForm implements OnInit {
       fim: ['', Validators.required],
       local: ['', Validators.required],
       disciplina: ['', Validators.required],
-      solicitante: ['', Validators.required]
+      solicitante: ['', Validators.required],
     });
 
     this.eventoForm = this.fb.group({
@@ -111,7 +110,7 @@ export class SmartSchedulingForm implements OnInit {
     this.eventoForm.get('local')?.valueChanges.subscribe(() => {
       this.buscarJanelasHorario();
     });
-    
+
     this.aulaForm.get('inicio')?.valueChanges.subscribe((horarioInicio) => {
       this.atualizarHorariosFim(horarioInicio, 'aula');
     });
@@ -127,10 +126,12 @@ export class SmartSchedulingForm implements OnInit {
     this.getSalas();
   }
 
-  formatarHorario(horario: string){
-    return FormatUtils.formatHour(horario)
+  formatarHorario(horario: string) {
+    if (horario === null || horario === '') {
+      return '';
+    }
+    return FormatUtils.formatHour(horario);
   }
-
 
   buscarJanelasHorario(): void {
     if (!this.aulaForm || !this.eventoForm) {
@@ -138,7 +139,7 @@ export class SmartSchedulingForm implements OnInit {
     }
 
     let dataReferencia: Date | null = null;
-    
+
     if (this._singleDate) {
       dataReferencia = this._singleDate;
     } else if (this._dateArray && this._dateArray.length > 0) {
@@ -146,9 +147,9 @@ export class SmartSchedulingForm implements OnInit {
     }
     let salaId = null;
 
-    if(this.mode === "aula"){
+    if (this.mode === 'aula') {
       salaId = this.aulaForm.get('local')?.value;
-    }else if(this.mode === "evento"){
+    } else if (this.mode === 'evento') {
       salaId = this.eventoForm.get('local')?.value;
     }
 
@@ -161,26 +162,26 @@ export class SmartSchedulingForm implements OnInit {
 
     const buscarJanelaHorarioRequest: JanelasHorarioPorDataRequest = {
       data: dataString,
-      salaId
-    }
+      salaId,
+    };
 
     this.serviceHorario.getJanelaHorarioPorData(buscarJanelaHorarioRequest).subscribe({
       next: (janelas: JanelaHorario[]) => {
         this.listaHorarios = janelas;
-        const iniciosUnicos = new Set(janelas.map(j => j.horaInicio)); 
+        const iniciosUnicos = new Set(janelas.map((j) => j.horaInicio));
         this.horariosDisponiveisInicio = Array.from(iniciosUnicos).sort();
-        
+
         this.horariosDisponiveisFim = [];
       },
       error: (err) => {
         console.error('Erro ao buscar janelas', err);
         this.listaHorarios = [];
-      }
+      },
     });
   }
 
   getHorariosDisponiveis(date: Date): void {
-    this._singleDate = date; 
+    this._singleDate = date;
     this.buscarJanelasHorario();
   }
 
@@ -197,11 +198,13 @@ export class SmartSchedulingForm implements OnInit {
   }
 
   submitAula() {
-    if (this.aulaForm.invalid) { return };
+    if (this.aulaForm.invalid) {
+      return;
+    }
 
     const payload = {
       ...this.aulaForm.value,
-      date: this.singleDate
+      date: this.singleDate,
     };
 
     this.scheduleSubmit.emit(payload);
@@ -221,21 +224,21 @@ export class SmartSchedulingForm implements OnInit {
     const temSingle = !!this.singleDate;
 
     if (!temArray && !temSingle) {
-      console.warn("Nenhuma data selecionada para adicionar o evento.");
+      console.warn('Nenhuma data selecionada para adicionar o evento.');
       return;
     }
 
     const config = this.eventoForm.value;
 
     if (temArray) {
-      this.dateArray.forEach(data => {
+      this.dateArray.forEach((data) => {
         this.eventBatch.push({
           date: data,
           nomeEvento: config.nomeEvento,
           local: config.local,
           inicio: config.inicio,
           fim: config.fim,
-          todosHorarios: config.todosHorarios
+          todosHorarios: config.todosHorarios,
         });
       });
     } else if (temSingle) {
@@ -245,7 +248,7 @@ export class SmartSchedulingForm implements OnInit {
         local: config.local,
         inicio: config.inicio,
         fim: config.fim,
-        todosHorarios: config.todosHorarios
+        todosHorarios: config.todosHorarios,
       });
     }
 
@@ -257,29 +260,31 @@ export class SmartSchedulingForm implements OnInit {
   }
 
   submitBatch() {
-    if (this.eventBatch.length === 0) { return; }
+    if (this.eventBatch.length === 0) {
+      return;
+    }
     const payloadAgrupado: CriarEventoFormulario[] = [];
-    
-    this.eventBatch.forEach(item => {
-      let grupoExistente = payloadAgrupado.find(g =>
-        g.eventoNome === item.nomeEvento && g.salaId === Number(item.local)
+
+    this.eventBatch.forEach((item) => {
+      let grupoExistente = payloadAgrupado.find(
+        (g) => g.eventoNome === item.nomeEvento && g.salaId === Number(item.local),
       );
 
       if (!grupoExistente) {
         grupoExistente = {
           eventoNome: item.nomeEvento,
           salaId: Number(item.local),
-          dias: []
+          dias: [],
         };
         payloadAgrupado.push(grupoExistente);
       }
 
-      const dataFormatada = FormatUtils.formatDateForInput(new Date(item.date))
+      const dataFormatada = FormatUtils.formatDateForInput(new Date(item.date));
 
       grupoExistente.dias.push({
         dia: dataFormatada,
         horaInicio: item.inicio,
-        horaFim: item.fim
+        horaFim: item.fim,
       });
     });
 
@@ -294,7 +299,9 @@ export class SmartSchedulingForm implements OnInit {
       next: (cursos: Curso[]) => {
         this.cursos = cursos;
       },
-      error: () => { this.cursos = []; }
+      error: () => {
+        this.cursos = [];
+      },
     });
   }
 
@@ -303,7 +310,9 @@ export class SmartSchedulingForm implements OnInit {
       next: (disciplinas: Disciplina[]) => {
         this.disciplinas = disciplinas;
       },
-      error: () => { this.disciplinas = []; }
+      error: () => {
+        this.disciplinas = [];
+      },
     });
   }
 
@@ -312,7 +321,9 @@ export class SmartSchedulingForm implements OnInit {
       next: (salas: Sala[]) => {
         this.salas = salas;
       },
-      error: () => { this.salas = []; }
+      error: () => {
+        this.salas = [];
+      },
     });
   }
   atualizarHorariosFim(inicioSelecionado: string, modo: 'aula' | 'evento') {
@@ -321,8 +332,8 @@ export class SmartSchedulingForm implements OnInit {
       return;
     }
 
-    const todosFins = this.listaHorarios.map(j => j.horaFim);
-    const finsValidos = todosFins.filter(fim => fim > inicioSelecionado);
+    const todosFins = this.listaHorarios.map((j) => j.horaFim);
+    const finsValidos = todosFins.filter((fim) => fim > inicioSelecionado);
     this.horariosDisponiveisFim = Array.from(new Set(finsValidos)).sort();
 
     const form = modo === 'aula' ? this.aulaForm : this.eventoForm;
@@ -333,6 +344,5 @@ export class SmartSchedulingForm implements OnInit {
     }
 
     this.cdr.detectChanges();
-    
   }
 }

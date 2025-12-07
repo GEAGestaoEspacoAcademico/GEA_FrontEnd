@@ -8,8 +8,6 @@ import { Component } from '@angular/core';
   selector: 'app-tab-bar',
   standalone: false,
   templateUrl: './tab-bar.html',
-  styleUrl: './tab-bar.css'
+  styleUrl: './tab-bar.css',
 })
-export class TabBar {
-
-}
+export class TabBar {}

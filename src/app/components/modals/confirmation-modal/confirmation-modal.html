@@ -1,7 +1,6 @@
 <ng-template #ConfirmationModal let-modal>
   <div class="modal-geral">
     <div class="header-modal">
-      
       @if (mode === 'aviso') {
         <mat-icon svgIcon="alert" class="icon-warn"></mat-icon>
         <div class="section-title w-100 text-center">{{ title }}</div>
@@ -50,7 +49,7 @@
             <dd>{{ detalhesSala.salaNome }}</dd>
 
             <dt>Data:</dt>
-            <dd>{{ formData.data| date: 'dd/MM/yyyy' }}</dd> 
+            <dd>{{ formData.data | date: 'dd/MM/yyyy' }}</dd>
 
             <dt>Qtd aulas:</dt>
             <dd>{{ formData.qtdAulas }}</dd>
@@ -63,14 +62,13 @@
 
             <dt class="border border-0">Equipamentos:</dt>
             <dd class="border border-0">
-              @for(recurso of formData.recursos; track recurso.id ){
-                <p>{{recurso.label}}</p>
-              } 
+              @for (recurso of formData.recursos; track recurso.id) {
+                <p>{{ recurso.label }}</p>
+              }
             </dd>
 
-            <dt class="observation-text text-center">Observações</dt> 
+            <dt class="observation-text text-center">Observações</dt>
             <dd>{{ detalhesSala.salaObservacoes }}</dd>
-
           </dl>
         </div>
 
@@ -78,6 +76,6 @@
           {{ confirmText }}
         </button>
       }
-      </div>
+    </div>
   </div>
 </ng-template>

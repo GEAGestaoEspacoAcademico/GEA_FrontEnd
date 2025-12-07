@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { RecurringSchedulingForm } from './recurring-scheduling-form';
@@ -9,9 +9,8 @@ describe('RecurringSchedulingForm', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RecurringSchedulingForm]
-    })
-    .compileComponents();
+      declarations: [RecurringSchedulingForm],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RecurringSchedulingForm);
     component = fixture.componentInstance;

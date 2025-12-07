@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { AgendarAula } from './agendar-aula';
@@ -9,9 +9,8 @@ describe('AgendarAula', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AgendarAula]
-    })
-    .compileComponents();
+      declarations: [AgendarAula],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AgendarAula);
     component = fixture.componentInstance;

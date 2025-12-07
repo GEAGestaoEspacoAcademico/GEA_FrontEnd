@@ -1,7 +1,12 @@
 // src/app/guards/role.guard.ts
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import type { CanActivateFn, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import type {
+  CanActivateFn,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+} from '@angular/router';
 import { Store } from '@ngrx/store';
 import { selectAuthState, selectUserCargo } from '../store/auth/auth.selectors';
 import { filter, map, take } from 'rxjs/operators';
@@ -35,7 +40,7 @@ import { SnackBarService } from '../services/snackbar/snackbar.service';
  */
 export const RoleGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
-  _state: RouterStateSnapshot
+  _state: RouterStateSnapshot,
 ): Observable<boolean | UrlTree> => {
   const router = inject(Router);
   const store = inject(Store);
@@ -50,7 +55,7 @@ export const RoleGuard: CanActivateFn = (
   const normalizedAllowed = allowedRoles.map((r) => String(r).toUpperCase());
 
   return store.select(selectAuthState).pipe(
-    filter(authState => authState.isLoading === false),
+    filter((authState) => authState.isLoading === false),
     take(1),
     map((authState) => {
       const cargoUsuario = authState.user?.usuarioCargo;
@@ -67,6 +72,6 @@ export const RoleGuard: CanActivateFn = (
 
       snackbarService.showError('Usuário não permitido');
       return router.createUrlTree(['/login']);
-    })
+    }),
   );
 };

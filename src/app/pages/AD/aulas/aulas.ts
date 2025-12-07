@@ -21,23 +21,22 @@ import { AgendamentoService } from '../../../services/agendamento/agendamento.se
 export class Aulas implements OnInit {
   private store = inject(Store);
   private router = inject(Router);
-  private agendamentoService = inject(AgendamentoService)
-  private notificationService = inject(SnackBarService);
+  private agendamentoService = inject(AgendamentoService);
   private headerService = inject(HeaderTitleService);
-  private snackBarService = inject(SnackBarService)
+  private snackBarService = inject(SnackBarService);
 
   private currentDate = new Date();
 
   days: Day[] = [];
   activeDayId!: string;
   monthToDisplay!: string;
-  
+
   aulasCorrentes: AgendamentoAula[] = [];
   agendamentosDoDiaSelecionado$ = new BehaviorSubject<AgendamentoAula[]>([]);
   isLoading = false;
 
-  cargo$: Observable<string | undefined> = this.store.select(selectUserCargo)
-  cargoUsuario: string = "";
+  cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
+  cargoUsuario: string = '';
   usuarioId$: Observable<number | undefined> = this.store.select(selectUserId);
 
   @ViewChild('confirmCancelModel') confirmModal!: ConfirmationModal;
@@ -46,43 +45,46 @@ export class Aulas implements OnInit {
   ngOnInit(): void {
     this.headerService.setTitle('Aulas');
     this.headerService.hideBack();
-    
+
     this.activeDayId = FormatUtils.toId(new Date());
     this.generateDaysForMonth();
-    this.cargo$
-    .pipe(take(1))
-    .subscribe((cargo) => {
-      if(!cargo) {return} 
+    this.cargo$.pipe(take(1)).subscribe((cargo) => {
+      if (!cargo) {
+        return;
+      }
       this.cargoUsuario = cargo;
       if (cargo === 'COORDENADOR') {
-        this.headerService.setTitle("")
-        this.headerService.showBack()
+        this.headerService.setTitle('');
+        this.headerService.showBack();
         this.carregarAulasCoordenador();
       } else {
         this.headerService.hideBack();
-        this.carregarAulasProfessor()
-        }
-      });
-  }
-
-  carregarAulasProfessor(){
-    this.usuarioId$.pipe(
-      filter((id) => !!id), 
-      take(1), 
-      switchMap((usuarioId) => {
-        return this.agendamentoService.getAgendamentosPorfessor(usuarioId!); 
-      })
-    ).subscribe({
-      next: (agendamento) => this.aulasCorrentes = agendamento,
-      error: (_) => this.snackBarService.showError("Erro ao carregar agendametos")
+        this.carregarAulasProfessor();
+      }
     });
   }
 
-  carregarAulasCoordenador(){
+  carregarAulasProfessor() {
+    this.usuarioId$
+      .pipe(
+        filter((id) => !!id),
+        take(1),
+        switchMap((usuarioId) => {
+          return this.agendamentoService.getAgendamentosPorfessor(usuarioId!);
+        }),
+      )
+      .subscribe({
+        next: (agendamento) => (this.aulasCorrentes = agendamento),
+        error: (_) => this.snackBarService.showError('Erro ao carregar agendamentos'),
+      });
+  }
+
+  carregarAulasCoordenador() {
     this.agendamentoService.getAgendamentoAula().subscribe({
-      next: (agendamentos) => this.aulasCorrentes = agendamentos,
-      error: (_) => this.snackBarService.showError("Erro ao carregar agendamentso para Coordenador")
-    })
+      next: (agendamentos) => (this.aulasCorrentes = agendamentos),
+      error: (_) =>
+        this.snackBarService.showError('Erro ao carregar agendamentos para Coordenador'),
+    });
   }
 
   onMonthNavigate(direction: 'previous' | 'next'): void {
@@ -105,13 +107,13 @@ export class Aulas implements OnInit {
   }
 
   private filtrarAulasDiaAtual() {
-    const aulasdoDia = this.aulasCorrentes.filter(aula => {
-      return aula.data === this.activeDayId
-    })
+    const aulasdoDia = this.aulasCorrentes.filter((aula) => {
+      return aula.data === this.activeDayId;
+    });
 
-    aulasdoDia.sort((a,b) => a.horaInicio.localeCompare(b.horaInicio))
+    aulasdoDia.sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
 
-    this.agendamentosDoDiaSelecionado$.next(aulasdoDia)
+    this.agendamentosDoDiaSelecionado$.next(aulasdoDia);
   }
 
   confirmCancel(): void {
@@ -121,19 +123,20 @@ export class Aulas implements OnInit {
     this.isLoading = true;
     this.agendamentoService.deleteAgendamentoAula(this.agendamentoToCancelId).subscribe({
       next: () => {
-        this.snackBarService.showSuccess("Agendamento cancelado com sucesso")
-        this.aulasCorrentes = this.aulasCorrentes.filter(a => a.agendamentoAulaId !== this.agendamentoToCancelId);
+        this.snackBarService.showSuccess('Agendamento cancelado com sucesso');
+        this.aulasCorrentes = this.aulasCorrentes.filter(
+          (a) => a.agendamentoAulaId !== this.agendamentoToCancelId,
+        );
         this.filtrarAulasDiaAtual();
-        
+
         this.agendamentoToCancelId = null;
         this.isLoading = false;
       },
       error: (_) => {
-        this.snackBarService.showError("Erro ao cancelar o agendamento")
+        this.snackBarService.showError('Erro ao cancelar o agendamento');
         this.isLoading = false;
-      }
-    })
-    this.notificationService.showSuccess('Aula cancelada com sucesso');
+      },
+    });
   }
 
   closeModal() {
@@ -147,17 +150,6 @@ export class Aulas implements OnInit {
   handleViewAgendamento(id: number): void {
     this.router.navigate(['/aulas/alterar', id]);
   }
-  // private updateAgendamentosForActivyDay(): void {
-  //   this.agendamentosDoDiaSelecionado$ = this.agendamentos$.pipe(
-  //     map((agendamentos) => {
-  //       const agendamentosFiltrados = agendamentos.filter((agendamento) => {
-  //         const isDentroDoIntervalo = this.activeDayId === agendamento.data;
-  //         return isDentroDoIntervalo;
-  //       });
-  //       return agendamentosFiltrados.sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
-  //     }),
-  //   );
-  // }
 
   private generateDaysForMonth(): void {
     const result: Day[] = [];

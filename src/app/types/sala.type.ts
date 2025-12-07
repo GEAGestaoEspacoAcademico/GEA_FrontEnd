@@ -77,8 +77,8 @@ export interface BuscarRecomendacaoRequest {
 }
 
 export interface BuscarRecomendacaoResponse {
-  recomendacoes: Sala[],
-  outrasOpcoes: Sala[]
+  recomendacoes: Sala[];
+  outrasOpcoes: Sala[];
 }
 
 // GET salas/disponíveis

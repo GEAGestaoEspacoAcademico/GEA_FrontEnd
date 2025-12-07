@@ -25,8 +25,8 @@ export class DisciplinasTable {
   searchTerm: string = '';
   cursoSelecionado: string | null = null;
 
-  emitirSelecao(){
-    this.selecionaCurso.emit(this.cursoSelecionado)
+  emitirSelecao() {
+    this.selecionaCurso.emit(this.cursoSelecionado);
   }
 
   onSearchChange(): void {

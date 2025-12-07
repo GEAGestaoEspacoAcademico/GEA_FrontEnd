@@ -1,3 +1,3 @@
-import type { AuthLoginResponse } from "../types/authLogin.type"
+import type { AuthLoginResponse } from '../types/authLogin.type';
 
-export type Usuario = AuthLoginResponse
+export type Usuario = AuthLoginResponse;

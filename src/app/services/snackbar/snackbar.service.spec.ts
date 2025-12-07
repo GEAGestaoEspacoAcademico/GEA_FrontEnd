@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { SnackBarService } from './snackbar.service';
 
-
 describe('NotificationService', () => {
   let service: SnackBarService;
 

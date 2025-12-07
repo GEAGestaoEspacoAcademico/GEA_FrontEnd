@@ -24,12 +24,12 @@ export class SpaceManagement implements OnInit {
   @ViewChild('criarRecursoId') criarRecursoModal!: CreateResourceModal;
 
   salaParaDeletar!: Sala | null;
-  salaIdEditar!: number
+  salaIdEditar!: number;
 
   private salaService = inject(SalaService);
-  private recursoService = inject(RecursoService)
+  private recursoService = inject(RecursoService);
   private headerService = inject(HeaderTitleService);
-  private snackBarService = inject(SnackBarService)
+  private snackBarService = inject(SnackBarService);
 
   masterSalaList: Sala[] = [];
   displayedSalas: Sala[] = [];
@@ -45,53 +45,52 @@ export class SpaceManagement implements OnInit {
     status: [],
   };
 
-  mostrarFiltro: boolean = false; 
+  mostrarFiltro: boolean = false;
 
   ngOnInit(): void {
-    this.carregarSalas()
-    this.headerService.setTitle('Lista de Espaços Acadêmicos')
-    this.headerService.showBack()
+    this.carregarSalas();
+    this.headerService.setTitle('Lista de Espaços Acadêmicos');
+    this.headerService.showBack();
   }
 
-  criarRecurso(recurso: { type: string; name: string }){
-
+  criarRecurso(recurso: { type: string; name: string }) {
     const corpoCriarRecurso: CriarRecursoRequest = {
       recursoNome: recurso.name,
-      recursoTipoId: recurso.type === 'SOFTWARE' ? 2 : 1
-    }
+      recursoTipoId: recurso.type === 'SOFTWARE' ? 2 : 1,
+    };
     this.recursoService.criarRecurso(corpoCriarRecurso).subscribe({
-      next: () => this.snackBarService.showSuccess("Recurso criado com sucesso"),
-      error: () => this.snackBarService.showError("Erro ao crari recurso")
-    })
+      next: () => this.snackBarService.showSuccess('Recurso criado com sucesso'),
+      error: () => this.snackBarService.showError('Erro ao crari recurso'),
+    });
   }
 
   carregarSalas() {
     this.salaService.getSalas().subscribe({
       next: (labs) => {
-        this.masterSalaList = labs.filter(l => l.tipoSalaId !== 1);
+        this.masterSalaList = labs.filter((l) => l.tipoSalaId !== 1);
         this.atualizarDataVisualizada();
       },
       error: (err) => console.error('Erro ao carregar laboratórios:', err),
     });
   }
   onEditSala(sala: Sala): void {
-    this.salaIdEditar = sala.salaId
+    this.salaIdEditar = sala.salaId;
     this.editModal.open(sala);
   }
 
   onModalEdit(sala: AtualizarSalaRequest): void {
-    if(this.salaIdEditar){
+    if (this.salaIdEditar) {
       this.salaService.editSala(this.salaIdEditar, sala).subscribe({
         next: () => {
-          this.snackBarService.showSuccess("Sala atualizada com sucesso")
-          this.carregarSalas()
-        }
-      })
+          this.snackBarService.showSuccess('Sala atualizada com sucesso');
+          this.carregarSalas();
+        },
+      });
     }
   }
 
-  criarEquipamento(tipo: 'SOFTWARE' | 'HARDWARE'){
-    this.criarRecursoModal.open(tipo)
+  criarEquipamento(tipo: 'SOFTWARE' | 'HARDWARE') {
+    this.criarRecursoModal.open(tipo);
   }
 
   openDeleteModal(sala: Sala) {
@@ -110,13 +109,13 @@ export class SpaceManagement implements OnInit {
           (s) => s.salaId !== this.salaParaDeletar!.salaId,
         );
         this.atualizarDataVisualizada();
-        this.snackBarService.showSuccess("Sala deletada com sucesso!");
+        this.snackBarService.showSuccess('Sala deletada com sucesso!');
         this.salaParaDeletar = null;
       },
       error: (err) => {
         console.error('Erro ao deletar sala:', err);
-        this.snackBarService.showError("Erro ao deletar sala.")
-      }
+        this.snackBarService.showError('Erro ao deletar sala.');
+      },
     });
   }
 
@@ -147,14 +146,24 @@ export class SpaceManagement implements OnInit {
     }
 
     if (this.filtrosAtivos.pisos?.length) {
-      const pisosLower = this.filtrosAtivos.pisos.map(p => p.toLowerCase());
+      const pisosLower = this.filtrosAtivos.pisos.map((p) => p.toLowerCase());
 
       const getPisoName = (s: any): string => {
-        if (!s) {return ''};
-        if (typeof s.piso === 'string') {return s.piso};
-        if (s.piso?.nome) {return s.piso.nome};
-        if (s.piso?.pisoNome) {return s.piso.pisoNome};
-        if (s.pisoNome) {return s.pisoNome};
+        if (!s) {
+          return '';
+        }
+        if (typeof s.piso === 'string') {
+          return s.piso;
+        }
+        if (s.piso?.nome) {
+          return s.piso.nome;
+        }
+        if (s.piso?.pisoNome) {
+          return s.piso.pisoNome;
+        }
+        if (s.pisoNome) {
+          return s.pisoNome;
+        }
         return '';
       };
 

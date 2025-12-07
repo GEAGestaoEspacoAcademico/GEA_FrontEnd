@@ -6,12 +6,10 @@ import { selectUserCargo } from '../../store/auth/auth.selectors';
   selector: 'app-main-layout',
   standalone: false,
   templateUrl: './main-layout.html',
-  styleUrl: './main-layout.css'
+  styleUrl: './main-layout.css',
 })
 export class MainLayout {
   private store = inject(Store);
 
-
-  cargo$ = this.store.select(selectUserCargo)
-
+  cargo$ = this.store.select(selectUserCargo);
 }

@@ -1,4 +1,3 @@
-
 export type FieldType = 'text' | 'date' | 'select' | 'multi-select' | 'equipment-select';
 
 export interface Field {
@@ -15,11 +14,11 @@ export interface Field {
     maxLength?: number;
     pattern?: string;
     errorMessages?: Record<string, string>;
-  }
-  isloading?: boolean  
+  };
+  isloading?: boolean;
 }
 
-export interface Option{
-  value: string | number,
-  label: string
+export interface Option {
+  value: string | number;
+  label: string;
 }

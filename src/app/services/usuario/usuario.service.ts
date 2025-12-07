@@ -43,10 +43,12 @@ export class UsuarioService {
   }
 
   public enviarEmailRedefinirSenha(email: EnviarEmailRequest): Observable<EnviarEmailResponse> {
-    return this.http.post<EnviarEmailResponse>(`${this.baseUrl}/resetPassword`, email)
+    return this.http.post<EnviarEmailResponse>(`${this.baseUrl}/resetPassword`, email);
   }
 
-  public alterarSenhaEsquecida(corpoEsqueciSenha: AlterarSenhaEsquecidaRequest): Observable<string>{
-    return this.http.patch<string>(`${this.baseUrl}/alterarSenha`, corpoEsqueciSenha)
+  public alterarSenhaEsquecida(
+    corpoEsqueciSenha: AlterarSenhaEsquecidaRequest,
+  ): Observable<string> {
+    return this.http.patch<string>(`${this.baseUrl}/alterarSenha`, corpoEsqueciSenha);
   }
 }

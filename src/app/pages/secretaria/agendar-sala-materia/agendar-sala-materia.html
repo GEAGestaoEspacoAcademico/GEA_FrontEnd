@@ -2,17 +2,30 @@
 
 <div class="row justify-content-center">
   <div class="col-6 col-sm-5">
-    <app-multi-date-selector [modo]="'reccorente'" (selecaoChange)="onDaysSelected($event)"
-      (diaDaSemana)="getDiaSemana($event)">
+    <app-multi-date-selector
+      [modo]="'reccorente'"
+      (selecaoChange)="onDaysSelected($event)"
+      (diaDaSemana)="getDiaSemana($event)"
+    >
     </app-multi-date-selector>
   </div>
   <div class="col-4 mt-5">
-    <app-recurring-scheduling-form [disciplinas]="this.disciplinas" [locais]="this.locais"
-      [horarios]="this.horariosDisponiveis" (localChange)="onSalaIdChange($event)"
-      (scheduleSubmit)="confimarAgendamento($event)">
+    <app-recurring-scheduling-form
+      [disciplinas]="this.disciplinas"
+      [locais]="this.locais"
+      [horarios]="this.horariosDisponiveis"
+      (localChange)="onSalaIdChange($event)"
+      (scheduleSubmit)="confimarAgendamento($event)"
+    >
     </app-recurring-scheduling-form>
   </div>
 
-  <app-confirmation-modal #meuModalAviso mode="aviso" title="Confirmar Ação"
-    message="Você tem certeza que deseja fazer isso?" confirmText="Sim, tenho certeza" (onconfirm)="fazerAcao()"></app-confirmation-modal>
+  <app-confirmation-modal
+    #meuModalAviso
+    mode="aviso"
+    title="Confirmar Ação"
+    message="Você tem certeza que deseja fazer isso?"
+    confirmText="Sim, tenho certeza"
+    (onconfirm)="fazerAcao()"
+  ></app-confirmation-modal>
 </div>

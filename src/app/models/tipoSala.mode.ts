@@ -1,4 +1,4 @@
 export interface TipoSala {
-  tipoSalaId: number,
-  tipoSalaNome: string
+  tipoSalaId: number;
+  tipoSalaNome: string;
 }

@@ -25,7 +25,7 @@ export class Configuracoes implements OnInit {
 
   user$: Observable<Usuario | null> = this.store.select(selectCurrentUser);
   disciplinas$!: Observable<Disciplina[]>;
-  cargo$: Observable<string | undefined> = this.store.select(selectUserCargo)
+  cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
 
   ngOnInit(): void {
     this.headerService.setTitle('Configurações');
@@ -37,15 +37,13 @@ export class Configuracoes implements OnInit {
         return this.professorService.getDisciplinasDoProfessor(professorId);
       }),
     );
-    this.cargo$
-      .pipe(take(1))
-      .subscribe((cargo) => {
-        if (cargo === 'COORDENADOR') {
-          this.headerService.setTitle("")
-          this.headerService.showBack()
-        } else {
-          this.headerService.hideBack();
-        }
+    this.cargo$.pipe(take(1)).subscribe((cargo) => {
+      if (cargo === 'COORDENADOR') {
+        this.headerService.setTitle('');
+        this.headerService.showBack();
+      } else {
+        this.headerService.hideBack();
+      }
     });
   }
 

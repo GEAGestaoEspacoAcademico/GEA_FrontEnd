@@ -24,7 +24,6 @@ export class Funcionarios implements OnInit {
   private readonly snackbarService = inject(SnackBarService);
   private readonly usuarioService = inject(UsuarioService);
   private readonly headerService = inject(HeaderTitleService);
-  private readonly snackBar = inject(SnackBarService);
 
   funcionarioParaDeletar!: GetUsuarioResponse | null;
   currentUserId$: Observable<number | undefined> = this.store.select(selectUserId);
@@ -39,22 +38,26 @@ export class Funcionarios implements OnInit {
   pageSize = 7;
 
   ngOnInit(): void {
-    this.headerService.setTitle('Funcionários')
-    this.headerService.showBack()
-    this.listarUsuario()
-    this.currentUserId$.pipe(
-      filter((userId) => !!userId), 
-      take(1)
-    ).subscribe({
-      next: (userId) => {
-        if(!userId) {return}
-        this.currentUserId = userId; 
-      },
-      error: (_) => this.snackbarService.showError("Erro ao carregar usuário")
-    });
+    this.headerService.setTitle('Funcionários');
+    this.headerService.showBack();
+    this.listarUsuario();
+    this.currentUserId$
+      .pipe(
+        filter((userId) => !!userId),
+        take(1),
+      )
+      .subscribe({
+        next: (userId) => {
+          if (!userId) {
+            return;
+          }
+          this.currentUserId = userId;
+        },
+        error: (_) => this.snackbarService.showError('Erro ao carregar usuário'),
+      });
   }
 
-  listarUsuario(){
+  listarUsuario() {
     this.usuarioService.listarUsuarios().subscribe({
       next: (result: GetUsuarioResponse[]) => {
         this.masterFuncionarioList = result;
@@ -65,8 +68,8 @@ export class Funcionarios implements OnInit {
   }
 
   openDeleteModal(funcionario: GetUsuarioResponse): void {
-    if(funcionario.usuarioId === this.currentUserId) {
-      this.snackbarService.showError("Não é possível excluir o seu usuário atual")
+    if (funcionario.usuarioId === this.currentUserId) {
+      this.snackbarService.showError('Não é possível excluir o seu usuário atual');
       return;
     }
     this.funcionarioParaDeletar = funcionario;
@@ -84,14 +87,14 @@ export class Funcionarios implements OnInit {
           (f) => f.usuarioId !== this.funcionarioParaDeletar!.usuarioId,
         );
         this.listarUsuario();
-        this.snackBar.showSuccess("Usuário deletado com sucesso!");
+        this.snackbarService.showSuccess('Usuário deletado com sucesso!');
         this.funcionarioParaDeletar = null;
-        this.snackbarService.showSuccess("Funcionário deletado com sucesso")
+        this.snackbarService.showSuccess('Funcionário deletado com sucesso');
       },
       error: (err) => {
         console.error('Erro ao deletar funcionário:', err);
-        this.snackBar.showError("Erro ao deletar usuário");
-      }
+        this.snackbarService.showError('Erro ao deletar usuário');
+      },
     });
   }
 
@@ -128,6 +131,6 @@ export class Funcionarios implements OnInit {
 
   onEditFuncionario(funcionario: GetUsuarioResponse): void {
     this.modalEditar.abrirInstaciaModal(funcionario.usuarioId);
-    this.listarUsuario()
+    this.listarUsuario();
   }
 }

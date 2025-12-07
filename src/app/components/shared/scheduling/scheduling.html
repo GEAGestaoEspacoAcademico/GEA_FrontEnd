@@ -2,21 +2,21 @@
   <div class="form-inputs-contain"></div>
   @for (field of fields; track field.name; let isLast = $last) {
     <div class="form-group" [class.is-last-item]="isLast">
-      <label class="d-flex aligm-items-center gap-1" [for]="field.name">{{ field.label }} 
-        @if(field.validators?.required){
+      <label class="d-flex aligm-items-center gap-1" [for]="field.name"
+        >{{ field.label }}
+        @if (field.validators?.required) {
           <span class="required">*</span>
         }
       </label>
-        
 
       @switch (field.type) {
-
         @case ('date') {
-          <input 
-            type="date" 
-            [id]="field.name" 
-            [formControlName]="field.name" 
-            class="form-control captions">
+          <input
+            type="date"
+            [id]="field.name"
+            [formControlName]="field.name"
+            class="form-control captions"
+          />
           @if (form.get(field.name); as control) {
             @if (control.invalid && (control.touched || control.dirty)) {
               <div class="error-message">
@@ -26,16 +26,13 @@
                 @if (control.hasError('minLength')) {
                   <span>{{ field.validators?.errorMessages?.['minLength'] }}</span>
                 }
-                </div>
+              </div>
             }
           }
         }
 
         @case ('select') {
-          <select 
-            [id]="field.name" 
-            [formControlName]="field.name" 
-            class="form-control captions">
+          <select [id]="field.name" [formControlName]="field.name" class="form-control captions">
             <option value="">{{ field.placeholder || 'Selecione' }}</option>
             @for (option of field.options; track $index) {
               <option [value]="option.value">{{ option.label }}</option>
@@ -50,7 +47,7 @@
                 @if (control.hasError('minLength')) {
                   <span>{{ field.validators?.errorMessages?.['minLength'] }}</span>
                 }
-                </div>
+              </div>
             }
           }
         }
@@ -82,7 +79,10 @@
                 [readonly]="field.disabled"
               />
 
-              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="softwareSelected($event, field)">
+              <mat-autocomplete
+                #auto="matAutocomplete"
+                (optionSelected)="softwareSelected($event, field)"
+              >
                 @for (option of filteredOptions | async; track option.value) {
                   <mat-option [value]="option.value">{{ option.label }}</mat-option>
                 }
@@ -98,17 +98,18 @@
                 @if (control.hasError('minLength')) {
                   <span>{{ field.validators?.errorMessages?.['minLength'] }}</span>
                 }
-                </div>
+              </div>
             }
           }
         }
 
         @case ('text') {
-          <input 
-            type="text" 
-            [id]="field.name" 
-            [formControlName]="field.name" 
-            class="form-control captions">
+          <input
+            type="text"
+            [id]="field.name"
+            [formControlName]="field.name"
+            class="form-control captions"
+          />
           @if (form.get(field.name); as control) {
             @if (control.invalid && (control.touched || control.dirty)) {
               <div class="error-message">
@@ -118,27 +119,31 @@
                 @if (control.hasError('minLength')) {
                   <span>{{ field.validators?.errorMessages?.['minLength'] }}</span>
                 }
-                </div>
+              </div>
             }
           }
         }
-      @case ('equipment-select') {
-        <div class="equipment-container">
-          <div class="chips-box">
-            <mat-chip-grid #equipamentChipGrid>
-              @for (control of getEquipmentControls(field.name); track $index) {
-                <mat-chip (removed)="removeEquipment(field, $index)">
-                  {{ control.value.label }} (Qtd: {{ control.value.quantity }})
-                  @if (!field.disabled) {
-                    <button matChipRemove>
-                      <mat-icon>cancel</mat-icon>
-                    </button>
-                  }
-                </mat-chip>
-              }
-            </mat-chip-grid>
-          </div>
-            <div class="equipment-add-form" [formGroup]="equipmentAddForm" [style.display]="field.disabled ? 'none' : 'block'">
+        @case ('equipment-select') {
+          <div class="equipment-container">
+            <div class="chips-box">
+              <mat-chip-grid #equipamentChipGrid>
+                @for (control of getEquipmentControls(field.name); track $index) {
+                  <mat-chip (removed)="removeEquipment(field, $index)">
+                    {{ control.value.label }} (Qtd: {{ control.value.quantity }})
+                    @if (!field.disabled) {
+                      <button matChipRemove>
+                        <mat-icon>cancel</mat-icon>
+                      </button>
+                    }
+                  </mat-chip>
+                }
+              </mat-chip-grid>
+            </div>
+            <div
+              class="equipment-add-form"
+              [formGroup]="equipmentAddForm"
+              [style.display]="field.disabled ? 'none' : 'block'"
+            >
               <input
                 type="text"
                 id="equipment-input"
@@ -147,8 +152,9 @@
                 formControlName="equipment"
                 [matChipInputFor]="equipamentChipGrid"
                 [matAutocomplete]="equipmentAuto"
-                class="simple-input equipment-name-input" 
-                [readonly]="field.disabled"/>
+                class="simple-input equipment-name-input"
+                [readonly]="field.disabled"
+              />
               <mat-autocomplete #equipmentAuto="matAutocomplete" [displayWith]="displayEquipment">
                 @for (option of filteredEquipments | async; track option.value) {
                   <mat-option [value]="option">{{ option.label }}</mat-option>
@@ -159,14 +165,20 @@
                 type="number"
                 formControlName="quantity"
                 placeholder="Qtd"
-                class="simple-input equipment-qty-input" />
+                class="simple-input equipment-qty-input"
+              />
 
-              <button type="button" (click)="addEquipment(field)" [disabled]="equipmentAddForm.invalid" class="add-button">
+              <button
+                type="button"
+                (click)="addEquipment(field)"
+                [disabled]="equipmentAddForm.invalid"
+                class="add-button"
+              >
                 Adicionar
               </button>
             </div>
-        </div>
-      }
+          </div>
+        }
 
         @default {
           <p>Tipo de campo não suportado: {{ field.type }}</p>
@@ -176,10 +188,10 @@
   }
 
   <div class="form-actions">
-    @if(cancelButtonText !== undefined){
-        <button type="button" class="cancel-button">
-          {{ cancelButtonText }}
-        </button>
+    @if (cancelButtonText !== undefined) {
+      <button type="button" class="cancel-button">
+        {{ cancelButtonText }}
+      </button>
     }
     <button type="submit" [disabled]="form.invalid" class="submit-button gea-btn">
       {{ submitButtonText || 'Salvar' }}

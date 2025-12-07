@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { RedefinirSenha } from './redefinir-senha';
@@ -9,9 +9,8 @@ describe('RedefinirSenha', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RedefinirSenha]
-    })
-    .compileComponents();
+      declarations: [RedefinirSenha],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RedefinirSenha);
     component = fixture.componentInstance;

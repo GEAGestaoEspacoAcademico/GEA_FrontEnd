@@ -5,7 +5,7 @@ export interface Sala {
 
 export interface Agendamento {
   agendamentoId: number;
-  sala: Sala; 
+  sala: Sala;
   data: string;
   horaInicio: string;
   horaFim: string;

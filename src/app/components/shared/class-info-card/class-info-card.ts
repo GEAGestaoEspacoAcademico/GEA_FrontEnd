@@ -6,7 +6,7 @@ import type { AgendamentoAula } from '../../../models/agendamentoAula.model';
   selector: 'app-class-info-card',
   standalone: false,
   templateUrl: './class-info-card.html',
-  styleUrl: './class-info-card.css'
+  styleUrl: './class-info-card.css',
 })
 export class ClassInfoCard {
   @Input({ required: true }) agendamentoData!: AgendamentoAula;

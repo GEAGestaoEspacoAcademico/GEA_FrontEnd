@@ -9,9 +9,8 @@ describe('DaySelector', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [DaySelector]
-    })
-    .compileComponents();
+      declarations: [DaySelector],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DaySelector);
     component = fixture.componentInstance;

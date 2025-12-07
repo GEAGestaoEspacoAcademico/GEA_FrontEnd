@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { MultiDateSelector } from './multi-date-selector';
@@ -9,9 +9,8 @@ describe('MultiDateSelector', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MultiDateSelector]
-    })
-    .compileComponents();
+      declarations: [MultiDateSelector],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MultiDateSelector);
     component = fixture.componentInstance;

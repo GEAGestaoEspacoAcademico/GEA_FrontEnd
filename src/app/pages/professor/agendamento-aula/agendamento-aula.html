@@ -21,7 +21,9 @@
           >
             <option [ngValue]="null">Selecione o horario</option>
             @for (h of horarios; track h.janelasHorarioId) {
-              <option [value]="h.janelasHorarioId">{{formatarTempo(h.horaInicio, h.horaFim)}}</option>
+              <option [value]="h.janelasHorarioId">
+                {{ formatarTempo(h.horaInicio, h.horaFim) }}
+              </option>
             }
           </select>
         </div>
@@ -196,7 +198,7 @@
       <app-title-highlightt title="Baseado no Seu perfil"></app-title-highlightt>
       @if (isRecomendacaoLoading) {
         <mat-spinner></mat-spinner>
-      } @else if(salasRecomendadas){
+      } @else if (salasRecomendadas) {
         <div class="row">
           @for (sala of salasRecomendadas.recomendacoes; track sala.salaId) {
             <app-romm-information-component
@@ -212,7 +214,7 @@
       <app-title-highlightt title="Outras Opções"></app-title-highlightt>
       @if (isRecomendacaoLoading) {
         <mat-spinner></mat-spinner>
-      } @else if (salasRecomendadas){
+      } @else if (salasRecomendadas) {
         <div class="row">
           @for (sala of salasRecomendadas.outrasOpcoes; track sala.salaId) {
             <app-romm-information-component
@@ -227,11 +229,11 @@
   </div>
 </div>
 
-  <app-confirmation-modal
-    #classInfoModal
-    mode="detalhes"
-    [formData]="submittedData"
-    title="Detalhes"
-    (onconfirm)="agendarAula()"
-  >
-  </app-confirmation-modal>
+<app-confirmation-modal
+  #classInfoModal
+  mode="detalhes"
+  [formData]="submittedData"
+  title="Detalhes"
+  (onconfirm)="agendarAula()"
+>
+</app-confirmation-modal>

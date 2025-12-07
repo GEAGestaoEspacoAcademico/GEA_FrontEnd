@@ -30,7 +30,7 @@ export class SpaceRegistrationForm implements OnInit {
 
   private readonly fb = inject(FormBuilder);
   private readonly tipoSalaService = inject(TipoSalaService);
-  private readonly snackBarService = inject(SnackBarService)
+  private readonly snackBarService = inject(SnackBarService);
   private readonly recursoService = inject(RecursoService);
 
   atualizarListaDisponivel() {

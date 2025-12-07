@@ -136,8 +136,8 @@
         ) {
           <div class="text-danger small">
             @if (formRedefinirSenha.get('novaSenha')?.hasError('required')) {
-                <p>O campo 'Nova senha' é obrigatório.</p>
-              }
+              <p>O campo 'Nova senha' é obrigatório.</p>
+            }
             <ul class="lista-de-erros">
               @if (formRedefinirSenha.get('novaSenha')?.hasError('minlength')) {
                 <li>Falta ter no mínimo 8 caracteres</li>

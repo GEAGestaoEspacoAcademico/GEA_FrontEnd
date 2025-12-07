@@ -24,7 +24,7 @@ import type { MatAutocompleteSelectedEvent } from '@angular/material/autocomplet
   selector: 'app-scheduling',
   standalone: false,
   templateUrl: './scheduling.html',
-  styleUrl: './scheduling.css'
+  styleUrl: './scheduling.css',
 })
 export class Scheduling implements OnInit {
   /** Referência injetada ao FormBuilder para criação de formulários. */
@@ -34,7 +34,7 @@ export class Scheduling implements OnInit {
   @Input() fields: Field[] = [];
 
   /** O texto a ser exibido no botão principal de submit. */
-  @Input() submitButtonText: string = "Salvar";
+  @Input() submitButtonText: string = 'Salvar';
 
   /** (Opcional) Texto do botão de cancelamento. Se indefinido, o botão não é exibido. */
   @Input() cancelButtonText: string | undefined;
@@ -65,7 +65,7 @@ export class Scheduling implements OnInit {
     this.form = this.fb.group({});
     this.equipmentAddForm = this.fb.group({
       equipment: [null, Validators.required],
-      quantity: [1, [Validators.required, Validators.min(1)]]
+      quantity: [1, [Validators.required, Validators.min(1)]],
     });
   }
 
@@ -75,11 +75,12 @@ export class Scheduling implements OnInit {
    */
   ngOnInit(): void {
     const controls: Record<string, any> = {};
-    this.fields.forEach(field => {
+    this.fields.forEach((field) => {
       const validators = this.buildValidators(field.validators);
       const controlState = {
-        value: field.type === 'multi-select' ? (field.defaultValue ?? []) : (field.defaultValue ?? ''),
-        disabled: !!field.disabled // Força ser booleano
+        value:
+          field.type === 'multi-select' ? (field.defaultValue ?? []) : (field.defaultValue ?? ''),
+        disabled: !!field.disabled, // Força ser booleano
       };
 
       if (field.type === 'equipment-select') {
@@ -98,13 +99,16 @@ export class Scheduling implements OnInit {
     });
     this.form = this.fb.group(controls);
 
-    const softwareField = this.fields.find(f => f.type === 'multi-select');
+    const softwareField = this.fields.find((f) => f.type === 'multi-select');
     this.filteredOptions = this.setupAutocomplete(this.softwareCtrl, softwareField?.options);
 
-    const equipmentField = this.fields.find(f => f.type === 'equipment-select');
-    this.filteredEquipments = this.setupAutocomplete(this.equipmentAddForm.get('equipment') as FormControl, equipmentField?.options);
-  
-    const equipField = this.fields.find(f => f.type === 'equipment-select');
+    const equipmentField = this.fields.find((f) => f.type === 'equipment-select');
+    this.filteredEquipments = this.setupAutocomplete(
+      this.equipmentAddForm.get('equipment') as FormControl,
+      equipmentField?.options,
+    );
+
+    const equipField = this.fields.find((f) => f.type === 'equipment-select');
     if (equipField?.disabled) {
       this.equipmentAddForm.disable();
     }
@@ -116,13 +120,19 @@ export class Scheduling implements OnInit {
    * @param options A lista completa de opções para filtrar.
    * @returns Um Observable<Option[]> com as opções filtradas.
    */
-  private setupAutocomplete(control: FormControl, options: Option[] | undefined): Observable<Option[]> {
+  private setupAutocomplete(
+    control: FormControl,
+    options: Option[] | undefined,
+  ): Observable<Option[]> {
     return control.valueChanges.pipe(
       startWith(''),
-      map(value => {
-        const filterValue = typeof value === 'string' ? value.toLowerCase() : value?.label.toLowerCase() || '';
-        return options ? options.filter(option => option.label.toLowerCase().includes(filterValue)) : [];
-      })
+      map((value) => {
+        const filterValue =
+          typeof value === 'string' ? value.toLowerCase() : value?.label.toLowerCase() || '';
+        return options
+          ? options.filter((option) => option.label.toLowerCase().includes(filterValue))
+          : [];
+      }),
     );
   }
 
@@ -143,16 +153,20 @@ export class Scheduling implements OnInit {
    * @param field O objeto Field correspondente ao 'equipment-select'.
    */
   public addEquipment(field: Field): void {
-    if (this.equipmentAddForm.invalid) { return; }
+    if (this.equipmentAddForm.invalid) {
+      return;
+    }
 
     const equipmentArray = this.form.get(field.name) as FormArray;
     const { equipment, quantity } = this.equipmentAddForm.value;
 
-    equipmentArray.push(this.fb.group({
-      id: [equipment.value],
-      label: [equipment.label],
-      quantity: [quantity]
-    }));
+    equipmentArray.push(
+      this.fb.group({
+        id: [equipment.value],
+        label: [equipment.label],
+        quantity: [quantity],
+      }),
+    );
 
     this.equipmentAddForm.reset({ equipment: null, quantity: 1 });
     const equipmentInput = document.getElementById('equipment-input') as HTMLInputElement;
@@ -236,12 +250,12 @@ export class Scheduling implements OnInit {
     if (this.form.valid) {
       this.formSubmit.emit(this.form.value);
     } else {
-      console.error("Formulário inválido!", this.form.value);
+      console.error('Formulário inválido!', this.form.value);
     }
   }
 
   public resetarFormulario() {
-    this.form.reset()
+    this.form.reset();
   }
 
   /**
@@ -255,7 +269,7 @@ export class Scheduling implements OnInit {
     if (!options) {
       return '';
     }
-    const option = options.find(opt => opt.value === value);
+    const option = options.find((opt) => opt.value === value);
     return option ? option.label : '';
   }
 
@@ -269,7 +283,7 @@ export class Scheduling implements OnInit {
     const control = this.form.get(field.name);
     if (control) {
       const currentValues: string[] = control.value || [];
-      const newValues = currentValues.filter(value => value !== valueToRemove);
+      const newValues = currentValues.filter((value) => value !== valueToRemove);
       control.setValue(newValues);
     }
   }

@@ -5,7 +5,7 @@ import type { Curso } from '../../../models/curso.model';
   selector: 'app-cursos-table',
   standalone: false,
   templateUrl: './cursos-table.html',
-  styleUrl: './cursos-table.css'
+  styleUrl: './cursos-table.css',
 })
 export class CursosTable {
   @Input() cursos: Curso[] = [];

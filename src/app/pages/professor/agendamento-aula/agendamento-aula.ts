@@ -41,7 +41,7 @@ export class AgendamentoAula implements OnInit {
   private fb = inject(FormBuilder);
   private snackBarService = inject(SnackBarService);
   private salaService = inject(SalaService);
-  private agendamentoService= inject(AgendamentoService)
+  private agendamentoService = inject(AgendamentoService);
 
   public form!: FormGroup;
 
@@ -240,35 +240,38 @@ export class AgendamentoAula implements OnInit {
   }
 
   agendarAula() {
-    this.store.select(selectUserId).pipe(
-      filter(Boolean),
-      take(1),
-      switchMap(userId => {
-        const corpoCriarAgendamento: AgendamentoAulaCriarRequest = {
-          usuarioId: userId,
-          salaId: Number(this.idSalaRecomendadaAtual),
-          disciplinaId: Number(this.submittedData.disciplinaId),
-          data: this.submittedData.data,
-          janelasHorarioId: Number(this.submittedData.janelaHorarioId),
-          isEvento: false,
-          quantidade: Number(this.submittedData.qtdAulas)
-        };
-        return this.agendamentoService.criarAgendamentoAula(corpoCriarAgendamento);
-      })
-    ).subscribe({
-      next: (_) => {
-        this.snackBarService.showSuccess("Agendamento feito com sucesso");
-        this.form.reset()
-        this.salasRecomendadas = null;
-      },
-      error: (err) => {
-        console.error("Erro ao criar agendamento:", err);
-        this.snackBarService.showError("Falha ao agendar. Tente novamente.");
-      }
-    });
+    this.store
+      .select(selectUserId)
+      .pipe(
+        filter(Boolean),
+        take(1),
+        switchMap((userId) => {
+          const corpoCriarAgendamento: AgendamentoAulaCriarRequest = {
+            usuarioId: userId,
+            salaId: Number(this.idSalaRecomendadaAtual),
+            disciplinaId: Number(this.submittedData.disciplinaId),
+            data: this.submittedData.data,
+            janelasHorarioId: Number(this.submittedData.janelaHorarioId),
+            isEvento: false,
+            quantidade: Number(this.submittedData.qtdAulas),
+          };
+          return this.agendamentoService.criarAgendamentoAula(corpoCriarAgendamento);
+        }),
+      )
+      .subscribe({
+        next: (_) => {
+          this.snackBarService.showSuccess('Agendamento feito com sucesso');
+          this.form.reset();
+          this.salasRecomendadas = null;
+        },
+        error: (err) => {
+          console.error('Erro ao criar agendamento:', err);
+          this.snackBarService.showError('Falha ao agendar. Tente novamente.');
+        },
+      });
   }
 
-  formatarTempo(inicio: string, fim: string){
+  formatarTempo(inicio: string, fim: string) {
     return FormatUtils.formatTime(inicio, fim);
   }
 }

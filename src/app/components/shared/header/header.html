@@ -3,7 +3,7 @@
   role="banner"
 >
   <button class="logo p-2" (click)="voltarHome()" aria-label="Ir para Aulas">
-    <img src="fatec-logo.png" alt="Logo fatec itu" class="icon-fatec-big"/>
+    <img src="fatec-logo.png" alt="Logo fatec itu" class="icon-fatec-big" />
     <span class="visually-hidden">Fatec — Aulas</span>
   </button>
 
@@ -95,7 +95,9 @@
           </a>
 
           @if (
-            cargo?.toUpperCase() === 'AUXILIAR_DOCENTE' || cargo?.toUpperCase() === 'SECRETARIA' || cargo?.toUpperCase() === 'COORDENADOR'
+            cargo?.toUpperCase() === 'AUXILIAR_DOCENTE' ||
+            cargo?.toUpperCase() === 'SECRETARIA' ||
+            cargo?.toUpperCase() === 'COORDENADOR'
           ) {
             <a
               (click)="logout()"

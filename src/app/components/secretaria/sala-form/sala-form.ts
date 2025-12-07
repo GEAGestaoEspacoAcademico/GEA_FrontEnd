@@ -95,7 +95,7 @@ export class SalaForm implements OnInit {
   }
 
   onSave() {
-    console.log(this.form.getRawValue())
+    console.log(this.form.getRawValue());
     this.clickSave.emit(this.form.getRawValue());
   }
 

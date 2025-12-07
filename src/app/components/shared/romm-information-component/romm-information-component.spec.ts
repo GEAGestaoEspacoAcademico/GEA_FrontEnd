@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { RommInformationComponent } from './romm-information-component';
@@ -9,9 +9,8 @@ describe('RommInformationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [RommInformationComponent]
-    })
-    .compileComponents();
+      declarations: [RommInformationComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RommInformationComponent);
     component = fixture.componentInstance;

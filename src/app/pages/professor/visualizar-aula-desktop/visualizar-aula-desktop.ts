@@ -6,6 +6,4 @@ import { Component } from '@angular/core';
   templateUrl: './visualizar-aula-desktop.html',
   styleUrl: './visualizar-aula-desktop.css',
 })
-export class VisualizarAulaDesktop {
-
-}
+export class VisualizarAulaDesktop {}

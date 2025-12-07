@@ -7,7 +7,10 @@ import { HeaderTitleService } from '../../../services/header-title/header-title.
 import { BehaviorSubject } from 'rxjs';
 import { DisciplinaForm } from '../../../components/secretaria/disciplina-form/disciplina-form';
 import { MatDialog } from '@angular/material/dialog';
-import type { AtualizarDisciplinaRequest, CriarDisciplinaRequest } from '../../../types/disciplina.model';
+import type {
+  AtualizarDisciplinaRequest,
+  CriarDisciplinaRequest,
+} from '../../../types/disciplina.model';
 import { CursoService } from '../../../services/curso/curso.service';
 import type { Curso } from '../../../models/curso.model';
 import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
@@ -87,22 +90,22 @@ export class ListarDisciplinas implements OnInit {
       dialogRef.close();
     });
   }
-  carregarCursos(){
+  carregarCursos() {
     this.isLoading = true;
 
     this.cursoService.getCursos().subscribe({
-      next: (cursos) => this.cursos = cursos
-    })
+      next: (cursos) => (this.cursos = cursos),
+    });
   }
 
   onSelecionaCurso(cursonome: string | null) {
-    this.filtroCursoNome = cursonome; 
-    this.currentPage = 1;    
+    this.filtroCursoNome = cursonome;
+    this.currentPage = 1;
     this.carregarDisciplinas();
   }
 
   adicionarDisciplina() {
-    this.manipularDisciplina()
+    this.manipularDisciplina();
   }
 
   criarDisciplina(disciplina: Disciplina) {
@@ -130,7 +133,7 @@ export class ListarDisciplinas implements OnInit {
 
   onDelete(disciplina: Disciplina) {
     this.disciplinaSelecionado = disciplina;
-    this.deleteModal.open()
+    this.deleteModal.open();
   }
 
   confirmDelete() {
@@ -147,6 +150,4 @@ export class ListarDisciplinas implements OnInit {
     this.disciplinaIdParaEditar = disciplina.disciplinaId;
     this.manipularDisciplina(disciplina);
   }
-
-
 }

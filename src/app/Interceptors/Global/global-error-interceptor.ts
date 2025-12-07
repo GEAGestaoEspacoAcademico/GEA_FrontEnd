@@ -45,7 +45,6 @@ export const globalErrorInterceptor: HttpInterceptorFn = (
       console.error('ERRO INTERCEPTADO PELA API:', error);
       const userMessage = error.error.message;
       const showErrorToast = true;
-      
 
       if (showErrorToast) {
         notificationService.showError(userMessage);

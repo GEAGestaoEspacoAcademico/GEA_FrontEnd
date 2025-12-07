@@ -213,7 +213,7 @@ export class EditProfessorModal implements OnInit {
 
       requestObservable = this.professorService.editarProfessor(id, dadosParaApi);
     } else {
-      console.log("Atualizar usuario")
+      console.log('Atualizar usuario');
       const dadosParaApi: AtualizarUsuarioAdminResquest = {
         usuarioNome: dadosForm.nome,
         usuarioEmail: dadosForm.email,

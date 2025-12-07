@@ -1,7 +1,6 @@
-
 // PUT /tipo-recurso/{idTipoRecurso}
 export interface AtualizarTipoRecursoRequest {
-  nome: string
+  nome: string;
 }
 
 //POST /tipo-recurso

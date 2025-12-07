@@ -1,18 +1,12 @@
 <form [formGroup]="form" class="form-group" (ngSubmit)="onSave()">
   <div class="line-cols">
     <div>
-    <div>
+      <div>
         <label class="field-label" for="itipodesala">Tipo de Espaço</label>
-        <input 
-            type="text" 
-            value="Sala de Aula" 
-            class="simple-input disabled" 
-            disabled 
-            readonly
-        >
-    </div>
+        <input type="text" value="Sala de Aula" class="simple-input disabled" disabled readonly />
+      </div>
 
-    <input type="hidden" formControlName="tipoSalaId">
+      <input type="hidden" formControlName="tipoSalaId" />
 
       @if (form.get('tipoSalaId')?.invalid && form.get('tipoSalaId')?.touched) {
         <span class="error-msg">Selecione o tipo de espaço.</span>
@@ -61,7 +55,9 @@
       <select
         formControlName="salaCapacidade"
         class="simple-input"
-        [class.input-error]="form.get('salaCapacidade')?.invalid && form.get('salaCapacidade')?.touched"
+        [class.input-error]="
+          form.get('salaCapacidade')?.invalid && form.get('salaCapacidade')?.touched
+        "
       >
         <option value="" disabled>Selecione</option>
         <option value="20">1-20</option>
@@ -109,8 +105,10 @@
     <button type="button" class="add-btn cancelar-btn" (click)="onCancel()">CANCELAR</button>
   </div>
 
-  <app-add-item-modal 
-    #addItemModal 
+  <app-add-item-modal
+    #addItemModal
     (itemAdd)="onItemAdded($event)"
-    [recursosDisponiveis]="recursosDisponiveis"> </app-add-item-modal>
+    [recursosDisponiveis]="recursosDisponiveis"
+  >
+  </app-add-item-modal>
 </form>

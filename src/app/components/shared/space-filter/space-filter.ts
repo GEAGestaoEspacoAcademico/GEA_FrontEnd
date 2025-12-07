@@ -59,7 +59,7 @@ export class SpaceFilter implements OnInit {
       this.tiposArray.clear();
 
       tipos.forEach(() =>
-        this.tiposArray.push(new FormControl<boolean>(false, { nonNullable: true }))
+        this.tiposArray.push(new FormControl<boolean>(false, { nonNullable: true })),
       );
     });
   }
@@ -70,7 +70,7 @@ export class SpaceFilter implements OnInit {
       this.pisosArray.clear();
 
       pisos.forEach(() =>
-        this.pisosArray.push(new FormControl<boolean>(false, { nonNullable: true }))
+        this.pisosArray.push(new FormControl<boolean>(false, { nonNullable: true })),
       );
     });
   }
@@ -79,15 +79,13 @@ export class SpaceFilter implements OnInit {
     this.statusArray.clear();
 
     this.OPCOES_DISPONIBILIDADE.forEach(() =>
-      this.statusArray.push(new FormControl<boolean>(false, { nonNullable: true }))
+      this.statusArray.push(new FormControl<boolean>(false, { nonNullable: true })),
     );
   }
 
   aplicar(): void {
     const tiposSelecionados = this.tiposArray.value
-      .map((v: boolean, idx: number) =>
-        v ? this.tiposSala[idx].tipoSalaId : null
-      )
+      .map((v: boolean, idx: number) => (v ? this.tiposSala[idx].tipoSalaId : null))
       .filter((x): x is number => x !== null);
 
     const pisosSelecionados = this.pisosArray.value
@@ -95,9 +93,7 @@ export class SpaceFilter implements OnInit {
       .filter((x): x is string => x !== null);
 
     const statusSelecionado = this.statusArray.value
-      .map((v: boolean, idx: number) =>
-        v ? this.OPCOES_DISPONIBILIDADE[idx].value : null
-      )
+      .map((v: boolean, idx: number) => (v ? this.OPCOES_DISPONIBILIDADE[idx].value : null))
       .filter((x): x is string => x !== null);
 
     const result: SpaceFilterType = {
@@ -113,9 +109,9 @@ export class SpaceFilter implements OnInit {
     this.filterForm.reset();
 
     this.filterChange.emit({
-    pisos: [],
-    status: [],
-    tipos: []
-  });
+      pisos: [],
+      status: [],
+      tipos: [],
+    });
   }
 }

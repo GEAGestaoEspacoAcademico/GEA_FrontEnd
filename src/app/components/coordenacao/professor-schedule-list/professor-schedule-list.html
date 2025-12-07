@@ -1,23 +1,24 @@
 <div class="container-schedule">
-  
   @if (modoVisualizacao === 'Hoje') {
     <h3 class="text-center w-100 mb-3">
       Aulas – {{ dataSelecionada | date: 'dd/MM/yyyy' : 'UTC' }}
     </h3>
 
     @if (professoresFiltradosHoje.length > 0) {
-      
       @for (prof of professoresFiltradosHoje; track prof.key) {
         <div class="card my-4">
-          <div class="card-header fw-bold text-white" style="background-color: #b91c1c;">
+          <div class="card-header fw-bold text-white" style="background-color: #b91c1c">
             Professor: {{ prof.key }}
           </div>
 
           <ul class="list-group list-group-flush">
-            @for (ag of expandedProfessor[prof.key] ? prof.value : prof.value.slice(0, 3); track ag.agendamentoId) {
+            @for (
+              ag of expandedProfessor[prof.key] ? prof.value : prof.value.slice(0, 3);
+              track ag.agendamentoId
+            ) {
               <li class="list-group-item d-flex justify-content-between align-items-center">
                 <div>
-                  <strong class="captions fw-bold" style="color: #b91c1c;">
+                  <strong class="captions fw-bold" style="color: #b91c1c">
                     {{ getNomeSala(ag.sala.salaId) }}
                   </strong>
                   <br />
@@ -26,15 +27,18 @@
                   </span>
                 </div>
 
-                <span class="time-caption horario fw-bold"> 
-                  {{ ag.horaInicio }} – {{ ag.horaFim }} 
+                <span class="time-caption horario fw-bold">
+                  {{ ag.horaInicio }} – {{ ag.horaFim }}
                 </span>
               </li>
             }
 
             @if (prof.value.length > 3 && !expandedProfessor[prof.key]) {
               <li class="list-group-item text-center">
-                <button class="btn btn-link p-0 text-decoration-none" (click)="expandedProfessor[prof.key] = true">
+                <button
+                  class="btn btn-link p-0 text-decoration-none"
+                  (click)="expandedProfessor[prof.key] = true"
+                >
                   Carregar mais
                 </button>
               </li>
@@ -42,7 +46,10 @@
 
             @if (expandedProfessor[prof.key]) {
               <li class="list-group-item text-center">
-                <button class="btn btn-link p-0 text-decoration-none" (click)="expandedProfessor[prof.key] = false">
+                <button
+                  class="btn btn-link p-0 text-decoration-none"
+                  (click)="expandedProfessor[prof.key] = false"
+                >
                   Mostrar menos
                 </button>
               </li>
@@ -50,7 +57,6 @@
           </ul>
         </div>
       }
-
     } @else {
       <div class="alert alert-light text-center mt-4">
         Nenhum professor encontrado com aulas hoje.
@@ -60,7 +66,6 @@
 
   @if (modoVisualizacao === 'Semana') {
     @for (dia of diasSemana; track dia.iso) {
-      
       <h3 class="text-center my-4 text-capitalize border-bottom pb-2">
         {{ dia.nome }} – {{ dia.data | date: 'dd/MM/yyyy' : 'UTC' }}
       </h3>
@@ -69,22 +74,24 @@
 
       @if (listaProfessores.length > 0) {
         @for (prof of listaProfessores; track prof.key) {
-          
           <div class="card my-3 shadow-sm">
-            <div class="card-header fw-bold text-white" style="background-color: #b91c1c;">
-               {{ prof.key }}
+            <div class="card-header fw-bold text-white" style="background-color: #b91c1c">
+              {{ prof.key }}
             </div>
 
             <ul class="list-group list-group-flush">
-              @for (ag of expandedProfessor[prof.key + dia.iso] ? prof.value : prof.value.slice(0, 3); track ag.agendamentoId) {
+              @for (
+                ag of expandedProfessor[prof.key + dia.iso] ? prof.value : prof.value.slice(0, 3);
+                track ag.agendamentoId
+              ) {
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   <div>
-                    <strong class="captions fw-bold" style="color: #b91c1c;">
+                    <strong class="captions fw-bold" style="color: #b91c1c">
                       {{ getNomeSala(ag.sala.salaId) }}
                     </strong>
                     <br />
                     <span class="text-muted small">
-                       {{ ag.disciplinaNome }}
+                      {{ ag.disciplinaNome }}
                     </span>
                   </div>
 
@@ -96,26 +103,30 @@
 
               @if (prof.value.length > 3 && !expandedProfessor[prof.key + dia.iso]) {
                 <li class="list-group-item text-center">
-                  <button class="btn btn-link p-0 text-decoration-none" (click)="expandedProfessor[prof.key + dia.iso] = true">
+                  <button
+                    class="btn btn-link p-0 text-decoration-none"
+                    (click)="expandedProfessor[prof.key + dia.iso] = true"
+                  >
                     visualizar mais
                   </button>
                 </li>
               }
               @if (expandedProfessor[prof.key + dia.iso]) {
                 <li class="list-group-item text-center">
-                  <button class="btn btn-link p-0 text-decoration-none" (click)="expandedProfessor[prof.key + dia.iso] = false">
+                  <button
+                    class="btn btn-link p-0 text-decoration-none"
+                    (click)="expandedProfessor[prof.key + dia.iso] = false"
+                  >
                     visualizar menos
                   </button>
                 </li>
               }
             </ul>
           </div>
-
         }
       } @else {
         <p class="text-center text-muted small fst-italic">Sem aulas registradas.</p>
       }
     }
   }
-
 </div>

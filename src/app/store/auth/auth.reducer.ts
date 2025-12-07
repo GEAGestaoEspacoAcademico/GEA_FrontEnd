@@ -8,15 +8,15 @@ export const authReducer = createReducer(
   on(AuthActions.login, (state) => ({
     ...state,
     isLoading: true,
-    error: null
+    error: null,
   })),
 
-  on(AuthActions.loginSuccess, (state, {user}) => {
+  on(AuthActions.loginSuccess, (state, { user }) => {
     return {
       ...state,
       user: user,
       error: null,
-      isLoading: false
+      isLoading: false,
     };
   }),
 
@@ -24,7 +24,7 @@ export const authReducer = createReducer(
     ...state,
     user: null,
     isLoading: false,
-    error: error
+    error: error,
   })),
 
   on(AuthActions.logout, (state) => {
@@ -32,7 +32,7 @@ export const authReducer = createReducer(
       ...state,
       user: null,
       isLoading: false,
-      error: null
+      error: null,
     };
-  })
+  }),
 );

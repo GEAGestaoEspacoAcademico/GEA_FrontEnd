@@ -17,14 +17,13 @@ import { HeaderTitleService } from '../../../services/header-title/header-title.
   styleUrls: ['./funcionario-form.css'],
 })
 export class FuncionarioForm implements OnInit {
-
   @Output() saveForm = new EventEmitter<FormGroup>();
   @Output() cancelForm = new EventEmitter<void>();
 
   private readonly disciplinaService: DisciplinaService = inject(DisciplinaService);
   private readonly snackBar: SnackBarService = inject(SnackBarService);
   private readonly secretariaService: SecretariaService = inject(SecretariaService);
-  private readonly headerService = inject(HeaderTitleService)
+  private readonly headerService = inject(HeaderTitleService);
 
   form!: FormGroup;
   modalDisciplinaAberto = false;
@@ -35,8 +34,8 @@ export class FuncionarioForm implements OnInit {
   private readonly fb = inject(FormBuilder);
 
   ngOnInit(): void {
-    this.headerService.setTitle('Novo Funcionário')
-    this.headerService.showBack()
+    this.headerService.setTitle('Novo Funcionário');
+    this.headerService.showBack();
 
     this.form = this.fb.group({
       nomeCompleto: ['', [Validators.required, Validators.minLength(3)]],
@@ -121,7 +120,7 @@ export class FuncionarioForm implements OnInit {
         this.secretariaService.cadastrar(dados).subscribe({
           next: () => {
             this.snackBar.showSuccess('Secretaria cadastrada com sucesso!');
-            
+
             this.form.reset({ perfil: 'PROFESSOR' });
             this.saveForm.emit(this.form);
           },

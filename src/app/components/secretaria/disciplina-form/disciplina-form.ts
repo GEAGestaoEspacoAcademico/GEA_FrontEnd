@@ -18,7 +18,7 @@ import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 export class DisciplinaForm implements OnInit {
   private cursoService = inject(CursoService);
   private disciplinaService = inject(DisciplinaService);
-  private snackbarService = inject(SnackBarService)
+  private snackbarService = inject(SnackBarService);
 
   @Input() title!: string;
   @Input() disciplina: Disciplina | null = null;
@@ -67,21 +67,20 @@ export class DisciplinaForm implements OnInit {
 
     if (this.isEditMode && this.disciplina) {
       this.disciplinaService.editDisciplina(this.disciplina.disciplinaId, payload).subscribe({
-          next: () => {
-            this.saved.emit()
-            this.snackbarService.showSuccess("Sucesso ao editar disciplina")
-          },
-          error: () => this.snackbarService.showError("Erro ao editar disciplina")
-        }
-      );
+        next: () => {
+          this.saved.emit();
+          this.snackbarService.showSuccess('Sucesso ao editar disciplina');
+        },
+        error: () => this.snackbarService.showError('Erro ao editar disciplina'),
+      });
     } else {
       this.disciplinaService.criarDisciplina(payload).subscribe({
         next: () => {
           this.saved.emit();
-          this.snackbarService.showSuccess("Sucesso ao criar uma disciplina")
+          this.snackbarService.showSuccess('Sucesso ao criar uma disciplina');
         },
-        error: () => this.snackbarService.showError("Erro ao editar uma disciplina")
-      })
+        error: () => this.snackbarService.showError('Erro ao editar uma disciplina'),
+      });
     }
   }
 

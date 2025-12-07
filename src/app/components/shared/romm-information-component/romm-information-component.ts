@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import type { BuscarRecomendacaoResponse } from '../../../types/sala.type';
 import type { Sala } from '../../../models/sala.model';
 
-
 /**
  * Componente de apresentação (dumb component) responsável por
  * exibir as informações de uma sala (RoomData) e fornecer
@@ -17,7 +16,7 @@ import type { Sala } from '../../../models/sala.model';
   selector: 'app-romm-information-component',
   standalone: false,
   templateUrl: './romm-information-component.html',
-  styleUrl: './romm-information-component.css'
+  styleUrl: './romm-information-component.css',
 })
 export class RommInformationComponent {
   /**

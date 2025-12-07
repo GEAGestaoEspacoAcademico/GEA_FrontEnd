@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-agendar-aula',
   standalone: false,
   templateUrl: './agendar-aula.html',
-  styleUrl: './agendar-aula.css'
+  styleUrl: './agendar-aula.css',
 })
-export class AgendarAula {
-
-}
+export class AgendarAula {}

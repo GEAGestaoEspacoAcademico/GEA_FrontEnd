@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { TabBar } from './tab-bar';
@@ -9,9 +9,8 @@ describe('TabBar', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TabBar]
-    })
-    .compileComponents();
+      declarations: [TabBar],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TabBar);
     component = fixture.componentInstance;

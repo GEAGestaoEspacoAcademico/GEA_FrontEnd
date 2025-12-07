@@ -1,5 +1,13 @@
 import type { AfterViewInit } from '@angular/core';
-import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormatUtils } from '../../../utils/format.utils';
 import type { AgendamentoAula } from '../../../models/agendamentoAula.model';
 
@@ -37,7 +45,7 @@ export interface Day {
   selector: 'app-day-selector',
   standalone: false,
   templateUrl: './day-selector.html',
-  styleUrl: './day-selector.css'
+  styleUrl: './day-selector.css',
 })
 export class DaySelector implements AfterViewInit {
   /** Referência ao elemento host do componente injetado. */
@@ -98,9 +106,9 @@ export class DaySelector implements AfterViewInit {
     if (!container) {
       return;
     }
-    
+
     const activeElement = container.querySelector('.day-item.active') as HTMLElement;
-    
+
     if (activeElement && this.activeDayId === this.currentDay) {
       activeElement.scrollIntoView({
         behavior: 'smooth',
@@ -148,7 +156,9 @@ export class DaySelector implements AfterViewInit {
    */
   private checkScroll(element?: HTMLElement): void {
     const el = element || this.el.nativeElement.querySelector('.day-selector');
-    if (!el) { return; }
+    if (!el) {
+      return;
+    }
 
     const scrollLeft = el.scrollLeft;
     const scrollWidth = el.scrollWidth;
@@ -160,7 +170,7 @@ export class DaySelector implements AfterViewInit {
 
   temAgendamento(dia: Day): boolean {
     return this.diasSelecionados.some((agendamento) => {
-      return agendamento.data === dia.id; 
+      return agendamento.data === dia.id;
     });
   }
 }

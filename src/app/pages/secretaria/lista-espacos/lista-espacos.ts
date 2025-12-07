@@ -57,7 +57,7 @@ export class ListaEspacos implements OnInit {
 
     this.salaService.getSalas().subscribe({
       next: (salas) => {
-        let filtrados = salas.filter(s => s.tipoSalaId === 1);
+        let filtrados = salas.filter((s) => s.tipoSalaId === 1);
 
         if (this.searchTerm.trim() !== '') {
           const term = this.searchTerm.toLowerCase();
@@ -136,13 +136,13 @@ export class ListaEspacos implements OnInit {
 
     this.salaService.deleteSala(this.salaSelecionada.salaId).subscribe({
       next: () => {
-        this.carregarEspacos()
-        this.snackBarService.showSuccess("Sala deletada com sucesso!");
+        this.carregarEspacos();
+        this.snackBarService.showSuccess('Sala deletada com sucesso!');
       },
-      error: (erro) =>{
+      error: (erro) => {
         console.log(erro);
-        this.snackBarService.showError("Erro ao deletar sala!");
-      }
+        this.snackBarService.showError('Erro ao deletar sala!');
+      },
     });
   }
 

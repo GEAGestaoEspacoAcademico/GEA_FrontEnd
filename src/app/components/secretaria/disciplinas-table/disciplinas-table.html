@@ -30,10 +30,15 @@
           <option value="6">6° semestre</option>
         </select>
 
-        <select class="form-select" aria-label="Selecione um curso para filtrar" [(ngModel)]="cursoSelecionado" (ngModelChange)="emitirSelecao()">
+        <select
+          class="form-select"
+          aria-label="Selecione um curso para filtrar"
+          [(ngModel)]="cursoSelecionado"
+          (ngModelChange)="emitirSelecao()"
+        >
           <option [ngValue]="null">Selecione o curso</option>
           @for (curso of cursos; track curso.cursoId) {
-            <option [ngValue]="curso.cursoNome">{{curso.cursoNome}}</option>
+            <option [ngValue]="curso.cursoNome">{{ curso.cursoNome }}</option>
           }
         </select>
       </div>

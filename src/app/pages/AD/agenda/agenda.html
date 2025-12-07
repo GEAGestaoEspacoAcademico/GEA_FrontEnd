@@ -1,14 +1,10 @@
 <div class="d-flex flex-column gap-4">
-
   @if (isloading) {
     <div class="d-flex justify-content-center align-items-center mt-4">
       <mat-spinner diameter="50"></mat-spinner>
     </div>
-  } 
-  @else if (cargo$ | async; as cargo) {
-
-    @if (cargo === 'PROFESSOR' || cargo === 'COORDENADOR') { 
-      
+  } @else if (cargo$ | async; as cargo) {
+    @if (cargo === 'PROFESSOR' || cargo === 'COORDENADOR') {
       <app-title-highlightt class="mt-2" title="Agendar"></app-title-highlightt>
 
       @if (formFields) {
@@ -25,8 +21,7 @@
         <div class="d-flex justify-content-center align-items-center mt-4">
           <mat-spinner diameter="50"></mat-spinner>
         </div>
-      } 
-      @else if (salasRecomendadas) {
+      } @else if (salasRecomendadas) {
         <div class="container-fluid">
           <app-title-highlightt class="mt-2" title="Baseado no seu perfil"></app-title-highlightt>
           <div class="d-flex flex-wrap gap-2 flex-row">
@@ -49,18 +44,14 @@
             }
           </div>
         </div>
-      } 
-      @else if (requisicaoRecomendacao) {
+      } @else if (requisicaoRecomendacao) {
         <p>Nenhuma sala encontrada com os requisitos solicitados.</p>
       }
-    } 
 
-    @else {
+    } @else {
       <p>Ocorreu um erro: tipo de cargo não reconhecido.</p>
     }
-
-  } 
-  @else {
+  } @else {
     <p>Ocorreu um erro ao carregar os dados do usuário.</p>
   }
 
@@ -72,5 +63,4 @@
     (onconfirm)="agendarAula()"
   >
   </app-confirmation-modal>
-
 </div>

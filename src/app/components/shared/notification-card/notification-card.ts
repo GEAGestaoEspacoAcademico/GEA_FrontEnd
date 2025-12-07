@@ -26,7 +26,7 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
    * quando suas propriedades @Input mudarem,
    * melhorando a performance.
    */
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationCard {
   /** A origem da notificação (ex: "Biblioteca", "Sistema Acadêmico"). */

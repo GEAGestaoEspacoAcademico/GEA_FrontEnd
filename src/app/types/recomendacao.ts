@@ -1,29 +1,28 @@
 export interface RecomendacaoRequest {
-  horarios: Horario,
-  data: string //aaaa-mm-dd
-  tipoSalaId: number
-  recursosIds: number[],
-  capacidade: number
+  horarios: Horario;
+  data: string; //aaaa-mm-dd
+  tipoSalaId: number;
+  recursosIds: number[];
+  capacidade: number;
 }
 
 export interface SalasRecomendadas {
-  id: number,
-  nome: string,
-  capacidade: number,
-  piso: number,
-
+  id: number;
+  nome: string;
+  capacidade: number;
+  piso: number;
 }
 
 interface Horario {
-  horaInicio: string,
-  horaFim: string
+  horaInicio: string;
+  horaFim: string;
 }
 
 export interface Recomendacoes {
-  id: number,
-  nome: string,
-  capacidade: number,
-  piso: number,
-  disponibilidade: boolean,
-  tipoSala: string
+  id: number;
+  nome: string;
+  capacidade: number;
+  piso: number;
+  disponibilidade: boolean;
+  tipoSala: string;
 }

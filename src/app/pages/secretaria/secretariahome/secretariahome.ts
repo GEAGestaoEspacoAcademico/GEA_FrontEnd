@@ -6,14 +6,13 @@ import { HeaderTitleService } from '../../../services/header-title/header-title.
   selector: 'app-secretariahome',
   standalone: false,
   templateUrl: './secretariahome.html',
-  styleUrl: './secretariahome.css'
+  styleUrl: './secretariahome.css',
 })
-export class Secretariahome implements OnInit{
-  private headerService = inject(HeaderTitleService)
-  
-  ngOnInit(): void {
-    this.headerService.setTitle('Home')
-    this.headerService.hideBack()
-  }
+export class Secretariahome implements OnInit {
+  private headerService = inject(HeaderTitleService);
 
+  ngOnInit(): void {
+    this.headerService.setTitle('Home');
+    this.headerService.hideBack();
+  }
 }

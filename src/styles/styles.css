@@ -16,8 +16,6 @@ body {
 main {
   flex: 1;
   overflow-y: auto;
-  padding-top: 1.25rem;
-  padding-bottom: 3.813rem;
   padding: 1.25rem var(--spacing-6) 3.813rem var(--spacing-6);
   box-sizing: border-box;
 }

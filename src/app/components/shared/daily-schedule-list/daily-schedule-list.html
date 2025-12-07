@@ -1,66 +1,95 @@
 <div class="flex-grow-1 overflow-auto pe-2">
-
-    @if (agendamentosFiltrados.length === 0) {
+  @if (agendamentosFiltrados.length === 0) {
     <div class="alert alert-light text-center text-muted mt-3">
-        Nenhum agendamento para esta data/sala.
+      Nenhum agendamento para esta data/sala.
     </div>
-    }
+  }
 
-    @if (agendamentosFiltrados.length > 0) {
+  @if (agendamentosFiltrados.length > 0) {
     <div class="d-flex justify-content-center mb-3">
-        <h3><b>Horário do dia {{ dataSelecionada | date: 'dd/MM/yyyy' }}</b></h3>
+      <h3>
+        <b>Horário do dia {{ dataSelecionada | date: 'dd/MM/yyyy' }}</b>
+      </h3>
     </div>
-    }
+  }
 
-    <div class="input-group mb-4">
-        <input class="form-control me-2" type="search" placeholder="Buscar por sala..." aria-label="Search" [(ngModel)]="termoBusca" (ngModelChange)="filtrarAgendamentos()"/>
-    </div>
+  <div class="input-group mb-4">
+    <input
+      class="form-control me-2"
+      type="search"
+      placeholder="Buscar por sala..."
+      aria-label="Search"
+      [(ngModel)]="termoBusca"
+      (ngModelChange)="filtrarAgendamentos()"
+    />
+  </div>
 
-    @for (item of agendamentosFiltrados; track $index) {
+  @for (item of agendamentosFiltrados; track $index) {
     <div class="d-flex align-items-center mb-3">
-        <div class="fw-bold text-dark me-3 text-end" style="min-width: 90px; font-size: 0.9rem;">
-            {{ item.horaInicio | slice:0:5 }} - {{ item.horaFim | slice:0:5 }}
+      <div class="fw-bold text-dark me-3 text-end" style="min-width: 90px; font-size: 0.9rem">
+        {{ item.horaInicio | slice: 0 : 5 }} - {{ item.horaFim | slice: 0 : 5 }}
+      </div>
+
+      <div class="card flex-grow-1 border-0 bg-light shadow-sm">
+        <div class="card-body py-2 px-3 d-flex justify-content-between align-items-center">
+          <div class="text-inline">
+            @if (item.disciplinaNome) {
+              <div class="fw-bold text-dark" style="font-size: 0.95rem">
+                {{ item.disciplinaNome }}
+              </div>
+            }
+            <small class="text-secondary fw-semibold">
+              {{ item.sala.salaNome }}
+            </small>
+            <small class="text-muted d-block">{{ item.disciplinaNome }}</small>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button
+              type="button"
+              class="btn btn-link text-dark p-0 text-decoration-none"
+              (click)="onedit.emit(item.agendamentoId)"
+              title="Editar"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="currentColor"
+                class="bi bi-pencil"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"
+                />
+              </svg>
+            </button>
+
+            <button
+              type="button"
+              class="btn btn-link text-dark p-0 text-decoration-none"
+              (click)="ondelete.emit(item.agendamentoId)"
+              title="Excluir"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                fill="currentColor"
+                class="bi bi-trash"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"
+                />
+                <path
+                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
-
-        <div class="card flex-grow-1 border-0 bg-light shadow-sm">
-            <div class="card-body py-2 px-3 d-flex justify-content-between align-items-center">
-
-                <div class="text-inline">
-                    @if (item.disciplinaNome) {
-                    <div class="fw-bold text-dark" style="font-size: 0.95rem;">
-                        {{ item.disciplinaNome }}
-                    </div>
-                    }
-                    <small class="text-secondary fw-semibold">
-                        {{ item.sala.salaNome }}
-                    </small>
-                    <small class="text-muted d-block">{{ item.disciplinaNome }}</small>
-                </div>
-
-                <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-link text-dark p-0 text-decoration-none"
-                        (click)="onedit.emit(item.agendamentoId)" title="Editar">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                            class="bi bi-pencil" viewBox="0 0 16 16">
-                            <path
-                                d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
-                        </svg>
-                    </button>
-
-                    <button type="button" class="btn btn-link text-dark p-0 text-decoration-none"
-                        (click)="ondelete.emit(item.agendamentoId)" title="Excluir">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor"
-                            class="bi bi-trash" viewBox="0 0 16 16">
-                            <path
-                                d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                            <path
-                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                        </svg>
-                    </button>
-                </div>
-
-            </div>
-        </div>
+      </div>
     </div>
-    }
+  }
 </div>
