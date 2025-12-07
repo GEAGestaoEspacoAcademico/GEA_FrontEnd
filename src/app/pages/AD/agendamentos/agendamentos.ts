@@ -13,7 +13,7 @@ import { HeaderTitleService } from '../../../services/header-title/header-title.
   styleUrl: './agendamentos.css',
 })
 export class Agendamentos implements OnInit {
-  dataAtual: string | Date = '';
+  dataAtual: Date | string = '';
   listaAgendamentos: Agendamento[] = [];
 
   agendamentoService = inject(AgendamentoService);
@@ -25,7 +25,7 @@ export class Agendamentos implements OnInit {
 
   idAgendamento?: number;
 
-  private cdr = inject(ChangeDetectorRef);
+  private readonly cdr = inject(ChangeDetectorRef);
 
   ngOnInit(): void {
     this.headerService.setTitle('Agendamentos');
@@ -48,10 +48,14 @@ export class Agendamentos implements OnInit {
 
     this.agendamentoService.getAgendamentoPorData(dataFormatada).subscribe({
       next: (response) => {
-        this.listaAgendamentos = response;
+        if (response) {
+          this.listaAgendamentos = response;
+        } else {
+          this.listaAgendamentos = [];
+        }
       },
       error: (err) => {
-        this.snackbarService.showError(err);
+        console.log(err);
         this.listaAgendamentos = [];
       },
     });
@@ -68,20 +72,19 @@ export class Agendamentos implements OnInit {
   }
 
   fazerAcao() {
-    this.agendamentoService.deleteAgendamentoAula(this.idAgendamento!).subscribe({
-      next: () => {
-        this.snackbarService.showSuccess('Agendamento excluido com sucesso!');
-
-        setTimeout(() => {
-          window.location.reload();
-          sessionStorage.clear();
-        }, 1000);
-      },
-      error: (err) => {
-        this.snackbarService.showError(err);
-        this.idAgendamento = undefined;
-      },
-    });
+    if (this.idAgendamento) {
+      this.agendamentoService.deleteAgendamentoAula(this.idAgendamento).subscribe({
+        next: () => {
+          this.snackbarService.showSuccess('Agendamento excluido com sucesso!');
+          this.buscarAgendamentos(new Date(this.dataAtual));
+        },
+        error: (err) => {
+          this.snackbarService.showError('Não foi possível deletar agendamento!');
+          console.log(err);
+          this.idAgendamento = undefined;
+        },
+      });
+    }
   }
 
   navegarParaNovoRecorrente(): void {

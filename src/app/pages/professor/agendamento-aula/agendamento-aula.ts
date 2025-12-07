@@ -257,11 +257,12 @@ export class AgendamentoAula implements OnInit {
             isEvento: false,
             quantidade: Number(this.submittedData.qtdAulas),
           };
-          return this.agendamentoService.criarAgendamentoAula(corpoCriarAgendamento);
+          return this.agendamentoService.criarAgendamentoAula(corpoCriarAgendamento);;
         }),
       )
       .subscribe({
         next: (_) => {
+
           this.snackBarService.showSuccess('Agendamento feito com sucesso');
           this.form.reset();
           this.salasRecomendadas = null;
