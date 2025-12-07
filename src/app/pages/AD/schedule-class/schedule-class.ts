@@ -40,7 +40,6 @@ export class ScheduleClass implements OnInit{
   }
 
   salvarAgendamentoAula(aula: CriarAgendamentoAulaFormulario){
-    console.log("[AGENDAR Aula] data: ", aula)  
     this.isLoadingCriarAula = true;
 
     if(!aula) {return;}

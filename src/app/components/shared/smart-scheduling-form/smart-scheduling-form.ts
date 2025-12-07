@@ -1,5 +1,5 @@
 import type { OnInit } from '@angular/core';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormBuilder, type FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { JanelasHorarioService } from '../../../services/janelas-horario/janelas-horario.service';
@@ -28,6 +28,7 @@ export class SmartSchedulingForm implements OnInit {
   private serviceCurso = inject(CursoService);
   private serviceSala = inject(SalaService);
   private serviceDisciplina = inject(DisciplinaService);
+  private cdr = inject(ChangeDetectorRef);
 
   private _singleDate: Date | null = null;
   private _dateArray: Date[] = [];
@@ -110,6 +111,14 @@ export class SmartSchedulingForm implements OnInit {
     this.eventoForm.get('local')?.valueChanges.subscribe(() => {
       this.buscarJanelasHorario();
     });
+    
+    this.aulaForm.get('inicio')?.valueChanges.subscribe((horarioInicio) => {
+      this.atualizarHorariosFim(horarioInicio, 'aula');
+    });
+
+    this.eventoForm.get('inicio')?.valueChanges.subscribe((horarioInicio) => {
+      this.atualizarHorariosFim(horarioInicio, 'evento');
+    });
   }
 
   carregarDadosAuxiliares() {
@@ -118,8 +127,16 @@ export class SmartSchedulingForm implements OnInit {
     this.getSalas();
   }
 
+  formatarHorario(horario: string){
+    return FormatUtils.formatHour(horario)
+  }
+
 
   buscarJanelasHorario(): void {
+    if (!this.aulaForm || !this.eventoForm) {
+      return;
+    }
+
     let dataReferencia: Date | null = null;
     
     if (this._singleDate) {
@@ -131,7 +148,7 @@ export class SmartSchedulingForm implements OnInit {
 
     if(this.mode === "aula"){
       salaId = this.aulaForm.get('local')?.value;
-    }else{
+    }else if(this.mode === "evento"){
       salaId = this.eventoForm.get('local')?.value;
     }
 
@@ -150,6 +167,10 @@ export class SmartSchedulingForm implements OnInit {
     this.serviceHorario.getJanelaHorarioPorData(buscarJanelaHorarioRequest).subscribe({
       next: (janelas: JanelaHorario[]) => {
         this.listaHorarios = janelas;
+        const iniciosUnicos = new Set(janelas.map(j => j.horaInicio)); 
+        this.horariosDisponiveisInicio = Array.from(iniciosUnicos).sort();
+        
+        this.horariosDisponiveisFim = [];
       },
       error: (err) => {
         console.error('Erro ao buscar janelas', err);
@@ -293,5 +314,25 @@ export class SmartSchedulingForm implements OnInit {
       },
       error: () => { this.salas = []; }
     });
+  }
+  atualizarHorariosFim(inicioSelecionado: string, modo: 'aula' | 'evento') {
+    if (!inicioSelecionado) {
+      this.horariosDisponiveisFim = [];
+      return;
+    }
+
+    const todosFins = this.listaHorarios.map(j => j.horaFim);
+    const finsValidos = todosFins.filter(fim => fim > inicioSelecionado);
+    this.horariosDisponiveisFim = Array.from(new Set(finsValidos)).sort();
+
+    const form = modo === 'aula' ? this.aulaForm : this.eventoForm;
+    const fimAtual = form.get('fim')?.value;
+
+    if (fimAtual && fimAtual <= inicioSelecionado) {
+      form.get('fim')?.setValue('');
+    }
+
+    this.cdr.detectChanges();
+    
   }
 }
