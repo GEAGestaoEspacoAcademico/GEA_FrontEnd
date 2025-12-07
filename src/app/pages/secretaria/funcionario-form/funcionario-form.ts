@@ -211,7 +211,7 @@ export class FuncionarioForm implements OnInit {
             nome: nomeCompleto,
             email: email,
             senha: senha,
-            registroProfessor: registro,
+            matricula: registro,
             disciplinasId: disciplinasPayload,
           };
 

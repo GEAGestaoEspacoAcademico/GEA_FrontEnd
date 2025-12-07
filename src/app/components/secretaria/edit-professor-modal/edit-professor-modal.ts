@@ -173,7 +173,7 @@ export class EditProfessorModal implements OnInit {
           usuarioId: resposta.usuarioId,
           nome: resposta.professorNome,
           email: resposta.professorEmail,
-          registro: resposta.registroProfessor,
+          registro: resposta.matricula,
           cargoId: resposta.cargoId,
         });
       },

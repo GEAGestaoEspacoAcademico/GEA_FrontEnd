@@ -15,7 +15,7 @@ export interface CriarProfessorRequest {
   nome: string,
   email: string,
   senha: string,
-  registroProfessor: number
+  matricula: number
 }
 
 ///professores/{professorId}/cursos
