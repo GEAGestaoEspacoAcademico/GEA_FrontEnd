@@ -23,6 +23,7 @@ import { FormatUtils } from '../../../utils/format.utils';
 import type { Option } from '../../../types/utils.types';
 import ProfessorService from '../../../services/professor/professor.service';
 import { Scheduling } from '../../../components/shared/scheduling/scheduling';
+import type { JanelaHorario } from '../../../models/janelasHorario.model';
 
 @Component({
   selector: 'app-agenda',
@@ -47,13 +48,14 @@ export class Agenda implements OnInit {
 
   cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
 
-  requisicaoRecomendacao!: BuscarRecomendacaoRequest;
+  requisicaoRecomendacao: BuscarRecomendacaoRequest | null = null;
   isloading: boolean = false;
   isRecomendacaoLoading: boolean = false;
   submittedData!: AgendarForm;
   formFields: Field[] | undefined;
   salasRecomendadas: BuscarRecomendacaoResponse | null = null;
   idSalaRecomendadaAtual!: number;
+  horarios: JanelaHorario[] = [];
 
   ngOnInit(): void {
     this.headerService.setTitle('');
@@ -102,6 +104,7 @@ export class Agenda implements OnInit {
             const hf = FormatUtils.formatHour(jh.horaFim);
             return { label: `${hi}-${hf}`, value: jh.janelasHorarioId };
           });
+          this.horarios = janelasHorario;
           this.isloading = false;
           this.formFields = this.createFormFields(
             disciplinaOptions,
@@ -204,14 +207,23 @@ export class Agenda implements OnInit {
   }
 
   criarRequisicaoParaRecomendacao(formData: AgendarForm) {
-    //TODO: COLOCAR DINÂMICO QUANDO /recomendacao FOR ADAPTADO
+    const horarioSelecionado = this.horarios.find(
+      (h) => h.janelasHorarioId === Number(formData.janelaHorarioId),
+    );
+
+    if (!horarioSelecionado) {
+      this.snackbarService.showError('Horário não encontrado. Verifique a seleção.');
+      this.requisicaoRecomendacao = null;
+      return;
+    }
+
     const recursosIds = formData.recursos.map((r) => r.id);
     this.requisicaoRecomendacao = {
       capacidade: Number(formData.capacidade),
       data: formData.data,
       horarios: {
-        horaFim: '7:40',
-        horaInicio: '9:20',
+        horaFim: horarioSelecionado.horaFim,
+        horaInicio: horarioSelecionado.horaInicio,
       },
       recursosIds,
       tipoSalaId: Number(formData.localId),
@@ -225,6 +237,7 @@ export class Agenda implements OnInit {
   }
 
   buscarRecomendacoes() {
+    if(!this.requisicaoRecomendacao) {return}
     this.isRecomendacaoLoading = true;
     this.salaService.getRecomendacao(this.requisicaoRecomendacao).subscribe({
       next: (data) => {
