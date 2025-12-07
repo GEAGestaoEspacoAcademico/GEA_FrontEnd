@@ -211,7 +211,7 @@ export class EditarEspacoModal implements OnInit {
         (r) => r.tipoRecurso === 'Software',
       );
     }
-
+    console.log("Abrindo modal")
     this.addItemModal.open();
   }
 
