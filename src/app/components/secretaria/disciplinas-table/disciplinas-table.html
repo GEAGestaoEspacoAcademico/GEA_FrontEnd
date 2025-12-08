@@ -20,21 +20,23 @@
           </button>
         </form>
 
-        <select class="form-select" aria-label="Selecione um semestre para filtrar">
-          <option selected>Selecione o semestre</option>
-          <option value="1">1° semestre</option>
-          <option value="2">2° semestre</option>
-          <option value="3">3° semestre</option>
-          <option value="4">4° semestre</option>
-          <option value="5">5° semestre</option>
-          <option value="6">6° semestre</option>
+        <select
+          class="form-select"
+          aria-label="Selecione um semestre para filtrar"
+          [(ngModel)]="semestreSelecionado"
+          (ngModelChange)="emitirSelecaoSemestre()"
+        >
+          <option [ngValue]="null">Selecione o semestre</option>
+          @for (semestre of semestres; track semestre.id) {
+            <option [ngValue]="semestre.id">{{ semestre.nome }}</option>
+          }
         </select>
 
         <select
           class="form-select"
           aria-label="Selecione um curso para filtrar"
           [(ngModel)]="cursoSelecionado"
-          (ngModelChange)="emitirSelecao()"
+          (ngModelChange)="emitirSelecaoCurso()"
         >
           <option [ngValue]="null">Selecione o curso</option>
           @for (curso of cursos; track curso.cursoId) {
@@ -71,7 +73,7 @@
           @for (disciplina of disciplinas; track disciplina.disciplinaId) {
             <tr>
               <td>{{ disciplina.disciplinaNome }}</td>
-              <td>{{ disciplina.disciplinaSemestre }}</td>
+              <td>{{ disciplina.semestreNome }}</td>
               <td>{{ disciplina.cursoNome }}</td>
               <td class="actions">
                 <button

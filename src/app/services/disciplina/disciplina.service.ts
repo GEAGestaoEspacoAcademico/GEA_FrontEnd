@@ -22,7 +22,7 @@ export class DisciplinaService {
 
   public editDisciplina(
     disciplinaId: number,
-    disciplina: AtualizarDisciplinaRequest,
+    disciplina: CriarDisciplinaRequest,
   ): Observable<Disciplina> {
     return this.http.put<Disciplina>(`${this.baseUrl}/${disciplinaId}`, disciplina);
   }

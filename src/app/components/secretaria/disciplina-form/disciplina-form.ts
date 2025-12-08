@@ -1,13 +1,17 @@
+import type { Semestre } from './../../../models/semestre.model';
 import type { OnInit } from '@angular/core';
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { CursoService } from '../../../services/curso/curso.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import type { Curso } from '../../../models/curso.model';
 import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
-import type { CriarDisciplinaRequest } from '../../../types/disciplina.model';
+import type {
+  AtualizarDisciplinaRequest,
+  CriarDisciplinaRequest,
+} from '../../../types/disciplina.model';
 import type { Disciplina } from '../../../models/disciplina.model';
-import { SEMESTRES } from '../../../models/enums/semestres.enum';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
+import { SemestreService } from '../../../services/semestre/semestre.service';
 
 @Component({
   selector: 'app-disciplina-form',
@@ -19,6 +23,7 @@ export class DisciplinaForm implements OnInit {
   private cursoService = inject(CursoService);
   private disciplinaService = inject(DisciplinaService);
   private snackbarService = inject(SnackBarService);
+  private semestreService = inject(SemestreService);
 
   @Input() title!: string;
   @Input() disciplina: Disciplina | null = null;
@@ -26,14 +31,14 @@ export class DisciplinaForm implements OnInit {
   @Output() closed = new EventEmitter<void>();
 
   cursos: Curso[] = [];
-  public semestres = Object.values(SEMESTRES);
+  semestres: Semestre[] = [];
 
   isEditMode = false;
 
   disciplinaForm = new FormGroup({
     disciplinaNome: new FormControl('', Validators.required),
-    cursoNome: new FormControl(0, Validators.required),
-    disciplinaSemestre: new FormControl('', Validators.required),
+    cursoId: new FormControl(1, Validators.required),
+    semestreId: new FormControl(1, Validators.required),
   });
 
   ngOnInit(): void {
@@ -45,10 +50,14 @@ export class DisciplinaForm implements OnInit {
       if (this.disciplina && this.isEditMode) {
         this.disciplinaForm.patchValue({
           disciplinaNome: this.disciplina.disciplinaNome,
-          cursoNome: Number(this.disciplina.cursoNome),
-          disciplinaSemestre: this.disciplina.disciplinaSemestre,
+          cursoId: this.disciplina.cursoId,
+          semestreId: this.disciplina.semestreId,
         });
       }
+    });
+
+    this.semestreService.listarTodos().subscribe({
+      next: (resposta) => (this.semestres = resposta),
     });
   }
 
@@ -59,22 +68,24 @@ export class DisciplinaForm implements OnInit {
 
     const v = this.disciplinaForm.value;
 
-    const payload: CriarDisciplinaRequest = {
+    const criarDisciplina: CriarDisciplinaRequest = {
       disciplinaNome: v.disciplinaNome as string,
-      cursoId: v.cursoNome as number,
-      disciplinaSemestre: v.disciplinaSemestre as string,
+      cursoId: v.cursoId as number,
+      semestreId: v.semestreId as number,
     };
 
     if (this.isEditMode && this.disciplina) {
-      this.disciplinaService.editDisciplina(this.disciplina.disciplinaId, payload).subscribe({
-        next: () => {
-          this.saved.emit();
-          this.snackbarService.showSuccess('Sucesso ao editar disciplina');
-        },
-        error: () => this.snackbarService.showError('Erro ao editar disciplina'),
-      });
+      this.disciplinaService
+        .editDisciplina(this.disciplina.disciplinaId, criarDisciplina)
+        .subscribe({
+          next: () => {
+            this.saved.emit();
+            this.snackbarService.showSuccess('Sucesso ao editar disciplina');
+          },
+          error: () => this.snackbarService.showError('Erro ao editar disciplina'),
+        });
     } else {
-      this.disciplinaService.criarDisciplina(payload).subscribe({
+      this.disciplinaService.criarDisciplina(criarDisciplina).subscribe({
         next: () => {
           this.saved.emit();
           this.snackbarService.showSuccess('Sucesso ao criar uma disciplina');

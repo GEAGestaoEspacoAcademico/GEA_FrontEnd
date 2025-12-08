@@ -11,7 +11,7 @@ export class SemestreService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = environment.apiUrl + '/semestres';
 
-  public listar(): Observable<Semestre[]> {
+  public listarTodos(): Observable<Semestre[]> {
     return this.http.get<Semestre[]>(this.baseUrl);
   }
 }

@@ -12,13 +12,13 @@
           Semestre:
           <select
             id="Semestre"
-            formControlName="disciplinaSemestre"
+            formControlName="semestreId"
             class="gea-input-field justify-content-end"
           >
-            <option value="">Selecione...</option>
+            <option [ngValue]="null">Selecione...</option>
             @for (semestre of semestres; track semestre) {
-              <option [value]="semestre">
-                {{ semestre }}
+              <option [ngValue]="semestre.id">
+                {{ semestre.nome }}
               </option>
             }
           </select>
@@ -29,12 +29,12 @@
           Curso:
           <select
             id="cursoNome"
-            formControlName="cursoNome"
+            formControlName="cursoId"
             class="gea-input-field justify-content-end"
           >
-            <option value="0" disabled>Selecione...</option>
+            <option [ngValue]="null" disabled>Selecione...</option>
             @for (c of cursos; track c.cursoId) {
-              <option [value]="c.cursoId">
+              <option [ngValue]="c.cursoId">
                 {{ c.cursoNome }}
               </option>
             }
