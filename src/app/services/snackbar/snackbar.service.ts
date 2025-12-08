@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import type { MatSnackBarHorizontalPosition, MatSnackBarConfig } from '@angular/material/snack-bar';
+import type { MatSnackBarHorizontalPosition, MatSnackBarConfig, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 /**
  * Serviço responsável pelo gerenciamento das noticações to tipo snackbar da aplicação
@@ -11,6 +11,7 @@ export class SnackBarService {
   private snackBar = inject(MatSnackBar);
 
   horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  verticalPosition: MatSnackBarVerticalPosition = 'bottom';
 
   /**
    * Cria uma conofiguração para o snackbar
@@ -22,6 +23,7 @@ export class SnackBarService {
     return {
       duration,
       horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
       panelClass: [panelClass],
     };
   }

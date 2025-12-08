@@ -6,7 +6,8 @@ export interface AtualizarProfessorRequest {
   nome: string,
   email: string,
   cargoId: number,
-  disciplinasIds: number[]
+  disciplinasIds: number[],
+  registroProfessor: number
 }
 
 ///professores
@@ -15,7 +16,7 @@ export interface CriarProfessorRequest {
   nome: string,
   email: string,
   senha: string,
-  registroProfessor: number
+  matricula: number
 }
 
 ///professores/{professorId}/cursos

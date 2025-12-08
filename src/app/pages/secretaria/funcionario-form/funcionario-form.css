@@ -20,7 +20,10 @@
 }
 
 /* radios */
-.perfil-group { gap: 18px; }
+.perfil-group {
+  gap: 18px;
+}
+
 .radio-label {
   font-weight: 700;
   display: flex;
@@ -28,6 +31,7 @@
   gap: 8px;
   cursor: pointer;
 }
+
 .radio-label input[type="radio"] {
   accent-color: #b60000;
 }
@@ -74,7 +78,7 @@
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(0,0,0,0.45);
+  background-color: rgba(0, 0, 0, 0.45);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,7 +91,7 @@
   border-radius: 6px;
   width: 420px;
   max-width: 95%;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
   overflow: hidden;
 }
 
@@ -145,10 +149,31 @@
   padding: 10px 14px;
   border-radius: 6px;
   margin-top: 12px;
-  box-shadow: 0 6px 0 rgba(0,0,0,0.06);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
   font-weight: 700;
 }
 
 @media (max-width: 576px) {
-  .modal-content-box { width: 320px; }
+  .modal-content-box {
+    width: 320px;
+  }
+}
+
+.senha-input-container {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.input-com-botao {
+  padding-right: 2.5rem !important;
+}
+
+.toggle-senha-btn {
+  position: absolute;
+  top: 70%;
+  right: 0;
+  transform: translateY(-50%);
+  margin-right: 0.5rem;
+  padding: 0 !important;
+  z-index: 10;
 }

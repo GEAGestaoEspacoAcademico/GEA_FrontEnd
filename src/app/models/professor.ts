@@ -2,6 +2,6 @@ export interface ProfessorResponse {
   usuarioId: number;
   professorNome: string;
   professorEmail: string;
-  registroProfessor: number;
+  matricula: number;
   cargoId: number;
 }
