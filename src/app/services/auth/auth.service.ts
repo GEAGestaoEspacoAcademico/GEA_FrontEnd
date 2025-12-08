@@ -8,15 +8,15 @@ import type { AuthRegisterRequest, AuthRegisterResponse } from '../../types/auth
  * Serviço responsável pelas ações de autenticação do usuário
  */
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private http = inject(HttpClient);
-  
-  private baseUrl = environment.apiUrl + "/auth";
+
+  private baseUrl = environment.apiUrl + '/auth';
 
   public logarUsuario(dadosUsuario: AuthLoginRequest): Observable<AuthLoginResponse> {
-    return this.http.post<AuthLoginResponse>(`${this.baseUrl}/login`, dadosUsuario)
+    return this.http.post<AuthLoginResponse>(`${this.baseUrl}/login`, dadosUsuario);
   }
 
   public registrarUsuario(usuario: AuthRegisterRequest): Observable<AuthRegisterResponse> {

@@ -19,7 +19,7 @@ export class ScheduleDayModal {
   @Output() deleteAgendamento = new EventEmitter<number>();
   loading = false;
   selectedDate!: Date;
-  
+
   @ViewChild('ScheduleDayModal')
   modalTemplate!: TemplateRef<ScheduleDayModal>;
 
@@ -39,7 +39,7 @@ export class ScheduleDayModal {
       },
       error: (err) => {
         console.error('Erro ao buscar agendamentos:', err);
-        this.snackbarService.showError("Erro ao buscar agendamentos")
+        this.snackbarService.showError('Erro ao buscar agendamentos');
         this.agendamento = [];
         this.loading = false;
       },
@@ -106,5 +106,4 @@ export class ScheduleDayModal {
     { horarioExibicao: '21:40 - 22:30', horarioComparacao: '21:40:00 - 22:30:00' },
     { horarioExibicao: '23:00 - 23:50', horarioComparacao: '23:00:00 - 23:50:00' },
   ];
-
 }

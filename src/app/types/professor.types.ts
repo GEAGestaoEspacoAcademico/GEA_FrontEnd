@@ -1,4 +1,4 @@
-import type { Curso } from "../models/curso.model"
+import type { Curso } from '../models/curso.model';
 
 ///professores/{professorId}
 export interface AtualizarProfessorRequest {
@@ -12,12 +12,12 @@ export interface AtualizarProfessorRequest {
 
 ///professores
 export interface CriarProfessorRequest {
-  login: string,
-  nome: string,
-  email: string,
-  senha: string,
-  matricula: number
+  login: string;
+  nome: string;
+  email: string;
+  senha: string;
+  registroProfessor: number;
 }
 
 ///professores/{professorId}/cursos
-export type BuscarCursosProfessorResponse  = Omit<Curso, 'coordenadorId'>
+export type BuscarCursosProfessorResponse = Omit<Curso, 'coordenadorId'>;

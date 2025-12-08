@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
+import { Component, EventEmitter, Output, ViewChild, inject } from '@angular/core';
 import type { TemplateRef, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import type { FormGroup } from '@angular/forms';
@@ -8,7 +8,6 @@ import type { Disciplina } from '../../../models/disciplina.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { DisciplinaService } from '../../../services/disciplina/disciplina.service';
 import { UsuarioService } from '../../../services/usuario/usuario.service';
-import type { Curso } from '../../../models/curso.model';
 import type { Observable } from 'rxjs';
 import type { Professor } from '../../../models/professor.model';
 import type {

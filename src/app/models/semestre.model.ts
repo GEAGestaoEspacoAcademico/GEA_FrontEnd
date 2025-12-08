@@ -1,4 +1,4 @@
-export interface Cargo {
+export interface Semestre {
   id: number;
   nome: string;
 }

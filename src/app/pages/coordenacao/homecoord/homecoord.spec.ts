@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import type { ComponentFixture } from '@angular/core/testing';
 
-
 import { Homecoord } from './homecoord';
 
 describe('Homecoord', () => {
@@ -10,9 +9,8 @@ describe('Homecoord', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [Homecoord]
-    })
-    .compileComponents();
+      declarations: [Homecoord],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Homecoord);
     component = fixture.componentInstance;

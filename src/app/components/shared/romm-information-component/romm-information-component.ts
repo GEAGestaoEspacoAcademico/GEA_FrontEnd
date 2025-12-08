@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import type { BuscarRecomendacaoResponse } from '../../../types/sala.type';
-
+import type { Sala } from '../../../models/sala.model';
 
 /**
  * Componente de apresentação (dumb component) responsável por
@@ -16,14 +16,14 @@ import type { BuscarRecomendacaoResponse } from '../../../types/sala.type';
   selector: 'app-romm-information-component',
   standalone: false,
   templateUrl: './romm-information-component.html',
-  styleUrl: './romm-information-component.css'
+  styleUrl: './romm-information-component.css',
 })
 export class RommInformationComponent {
   /**
    * Os dados da sala/laboratório (RoomData) que serão
    * exibidos neste componente.
    */
-  @Input() labData!: BuscarRecomendacaoResponse;
+  @Input() labData!: Sala;
 
   /**
    * Evento emitido quando o usuário executa a ação de confirmação

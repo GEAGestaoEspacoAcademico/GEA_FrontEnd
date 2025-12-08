@@ -1,11 +1,18 @@
-import { Component, EventEmitter, Input, type OnChanges, Output, type SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  type OnChanges,
+  Output,
+  type SimpleChanges,
+} from '@angular/core';
 import type { Agendamento } from '../../../models/agendamento.model';
 
 @Component({
   selector: 'app-daily-schedule-list',
   standalone: false,
   templateUrl: './daily-schedule-list.html',
-  styleUrl: './daily-schedule-list.css'
+  styleUrl: './daily-schedule-list.css',
 })
 export class DailyScheduleList implements OnChanges {
   @Input() dataSelecionada: Date | string = new Date();
@@ -28,8 +35,8 @@ export class DailyScheduleList implements OnChanges {
       this.agendamentosFiltrados = [...this.agendamentos];
     } else {
       const termo = this.termoBusca.toLowerCase();
-      this.agendamentosFiltrados = this.agendamentos.filter(a =>
-        a.sala.salaNome.toLowerCase().includes(termo)
+      this.agendamentosFiltrados = this.agendamentos.filter((a) =>
+        a.sala.salaNome.toLowerCase().includes(termo),
       );
     }
 

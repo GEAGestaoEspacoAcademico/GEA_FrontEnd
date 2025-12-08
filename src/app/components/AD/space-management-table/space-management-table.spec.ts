@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 import { SpaceManagementTable } from './space-management-table';
 
@@ -8,9 +8,8 @@ describe('SpaceManagementTable', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SpaceManagementTable]
-    })
-    .compileComponents();
+      declarations: [SpaceManagementTable],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SpaceManagementTable);
     component = fixture.componentInstance;

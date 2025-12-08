@@ -52,13 +52,13 @@ import { JanelasHorarioService } from '../../../services/janelas-horario/janelas
   templateUrl: './confirmation-modal.html',
   styleUrl: './confirmation-modal.css',
 })
-export class ConfirmationModal{
+export class ConfirmationModal {
   /** Serviço do Ng-Bootstrap para controlar a instância do modal. */
   private modalService = inject(NgbModal);
   private salaService = inject(SalaService);
-  private snackbarService = inject(SnackBarService)
+  private snackbarService = inject(SnackBarService);
   private janelaHorarioService = inject(JanelasHorarioService);
-  
+
   /**
    * Define o modo de operação do modal.
    * - `aviso`: Mostra mensagem, botões de confirmar/cancelar.
@@ -67,21 +67,21 @@ export class ConfirmationModal{
    */
   @Input({ required: true }) mode: 'aviso' | 'detalhes' | 'feedback' = 'aviso';
 
- /** O texto a ser exibido no cabeçalho (header) do modal. */
+  /** O texto a ser exibido no cabeçalho (header) do modal. */
   @Input({ required: true }) title!: string;
 
- /** (Opcional) A mensagem principal a ser exibida no corpo do modal (modos 'aviso' e 'feedback'). */
+  /** (Opcional) A mensagem principal a ser exibida no corpo do modal (modos 'aviso' e 'feedback'). */
   @Input() message!: string;
 
- /** (Opcional) Texto customizado para o botão de confirmação (default: 'Confirmar'). */
+  /** (Opcional) Texto customizado para o botão de confirmação (default: 'Confirmar'). */
   @Input() confirmText: string = 'Confirmar';
 
   /** (Opcional) Texto customizado para o botão de cancelar/fechar (default: 'Cancelar'). */
   @Input() cancelText: string = 'Cancelar';
-  
+
   /** (Opcional) Um link de roteador (routerLink) para ser usado por um botão no template. */
   @Input() routerLink: string = ' ';
-  
+
   @Input() formData!: AgendarForm;
   /**
    * Evento emitido quando o usuário clica no botão de confirmação.
@@ -89,43 +89,38 @@ export class ConfirmationModal{
    */
   @Output() onconfirm = new EventEmitter<void>();
 
- /** Evento emitido quando o usuário clica em 'Cancelar' ou fecha o modal. */
+  /** Evento emitido quando o usuário clica em 'Cancelar' ou fecha o modal. */
   @Output() oncancel = new EventEmitter<void>();
 
- /** Referência interna ao <ng-template> que define o modal no HTML. */
+  /** Referência interna ao <ng-template> que define o modal no HTML. */
   @ViewChild('ConfirmationModal')
   modalTemplate!: TemplateRef<ConfirmationModal>;
   detalhesSala: Sala | undefined;
   janelaHorario!: JanelaHorario;
 
-  /**
-   * Método PÚBLICO. Deve ser chamado pelo componente pai para abrir o modal.
-   * @param salaidRecmoendadao
-   * @example
-   * // No componente pai:
-   * this.meuModal.open();
-   */
   public open(salaidRecmoendadao?: number): void {
     if (this.mode === 'detalhes') {
       if (salaidRecmoendadao) {
-        this.salaService.getSalaPorId(salaidRecmoendadao)
-        .pipe(
-          switchMap(sala => {
-            this.detalhesSala = sala;
-            return this.janelaHorarioService.getJanelaHorarioPorId(this.formData.janelaHorarioId)
-          })
-        ).subscribe({
-          next: jh => {
-            this.janelaHorario = jh;
-            this.abrirInstaciaModal();
-          },
-          error: e => this.snackbarService.showError(e.message || 'Erro ao buscar detalhes de sala')
-        });
+        this.salaService
+          .getSalaPorId(salaidRecmoendadao)
+          .pipe(
+            switchMap((sala) => {
+              this.detalhesSala = sala;
+              return this.janelaHorarioService.getJanelaHorarioPorId(this.formData.janelaHorarioId);
+            }),
+          )
+          .subscribe({
+            next: (jh) => {
+              this.janelaHorario = jh;
+              this.abrirInstaciaModal();
+            },
+            error: (e) =>
+              this.snackbarService.showError(e.message || 'Erro ao buscar detalhes de sala'),
+          });
       } else {
-        this.snackbarService.showError("Modal 'detalhes' foi aberto sem um 'salaRecomendadaId'.")
+        this.snackbarService.showError("Modal 'detalhes' foi aberto sem um 'salaRecomendadaId'.");
       }
-    } 
-    else {
+    } else {
       this.abrirInstaciaModal();
     }
   }

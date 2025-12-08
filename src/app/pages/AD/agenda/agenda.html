@@ -1,14 +1,10 @@
 <div class="d-flex flex-column gap-4">
-
   @if (isloading) {
     <div class="d-flex justify-content-center align-items-center mt-4">
       <mat-spinner diameter="50"></mat-spinner>
     </div>
-  } 
-  @else if (cargo$ | async; as cargo) {
-
-    @if (cargo === 'PROFESSOR' || cargo === 'COORDENADOR') { 
-      
+  } @else if (cargo$ | async; as cargo) {
+    @if (cargo === 'PROFESSOR' || cargo === 'COORDENADOR') {
       <app-title-highlightt class="mt-2" title="Agendar"></app-title-highlightt>
 
       @if (formFields) {
@@ -25,12 +21,11 @@
         <div class="d-flex justify-content-center align-items-center mt-4">
           <mat-spinner diameter="50"></mat-spinner>
         </div>
-      } 
-      @else if (salasRecomendadas.length > 0) {
+      } @else if (salasRecomendadas) {
         <div class="container-fluid">
           <app-title-highlightt class="mt-2" title="Baseado no seu perfil"></app-title-highlightt>
           <div class="d-flex flex-wrap gap-2 flex-row">
-            @for (sala of salasRecomendadas; track sala.salaId) {
+            @for (sala of salasRecomendadas.recomendacoes; track sala.salaId) {
               <app-romm-information-component
                 [labData]="sala"
                 (ConfirmSchedule)="openInfoModal($event)"
@@ -40,26 +35,23 @@
         </div>
         <div class="container-fluid">
           <app-title-highlightt class="mt-2" title="Outras Opções"></app-title-highlightt>
-          <p>Não há outras opções neste momento.</p>
+          <div class="d-flex flex-wrap gap-2 flex-row">
+            @for (sala of salasRecomendadas.outrasOpcoes; track sala.salaId) {
+              <app-romm-information-component
+                [labData]="sala"
+                (ConfirmSchedule)="openInfoModal($event)"
+              ></app-romm-information-component>
+            }
+          </div>
         </div>
-      } 
-      @else if (requisicaoRecomendacao) {
+      } @else if (requisicaoRecomendacao) {
         <p>Nenhuma sala encontrada com os requisitos solicitados.</p>
       }
-    } 
 
-    @else if (cargo === 'AUXILIAR_DOCENTE') {
-      <app-title-highlightt
-      title="Visão ad"
-      ></app-title-highlightt>
-    } 
-    
-    @else {
+    } @else {
       <p>Ocorreu um erro: tipo de cargo não reconhecido.</p>
     }
-
-  } 
-  @else {
+  } @else {
     <p>Ocorreu um erro ao carregar os dados do usuário.</p>
   }
 
@@ -71,5 +63,4 @@
     (onconfirm)="agendarAula()"
   >
   </app-confirmation-modal>
-
 </div>

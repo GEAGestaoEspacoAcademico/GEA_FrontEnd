@@ -42,6 +42,7 @@ export class EditarEspacoModal implements OnInit {
   recursosDisponiveisFiltrados: Recurso[] = [];
   private todosRecursos: Recurso[] = [];
 
+
   ngOnInit(): void {
     this.tipoSalaService.getTiposSala().subscribe({
       next: (salas) => (this.tipoSalaOpcoes = salas),
@@ -211,7 +212,6 @@ export class EditarEspacoModal implements OnInit {
         (r) => r.tipoRecurso === 'Software',
       );
     }
-    console.log("Abrindo modal")
     this.addItemModal.open();
   }
 

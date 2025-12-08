@@ -1,5 +1,4 @@
 export class FormatUtils {
-
   /**
    * Converte string de data (ex: "2025-03-15T00:00:00Z") para formato yyyy-MM-dd
    * usado em inputs <input type="date">.
@@ -19,8 +18,8 @@ export class FormatUtils {
    */
   static formatHour(h: string): string {
     const partes = h.split(':');
-    const hora = parseInt(partes[0], 10).toString(); 
-    const minutos = partes[1];
+    const hora = parseInt(partes[0], 10).toString().padStart(2,'0');
+    const minutos = partes[1].padStart(2,'0');
     return `${hora}:${minutos}`;
   }
 
@@ -72,8 +71,15 @@ export class FormatUtils {
       .replace('.', '');
   }
 
-  static colocarSegundos(horario: string): string{
-    horario = this.normalizeHour(horario)
-    return `${horario}:00`
+  static colocarSegundos(horario: string): string {
+    horario = this.normalizeHour(horario);
+    return `${horario}:00`;
+  }
+
+  static formatTime(inicio: string, fim: string): string {
+    const inicioSemSegundos = inicio.substring(0, 5);
+    const fimSemSegundos = fim.substring(0, 5);
+
+    return `${inicioSemSegundos} - ${fimSemSegundos}`;
   }
 }

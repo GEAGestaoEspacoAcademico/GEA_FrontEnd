@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { TitleHighligh } from './title-highlight';
@@ -9,9 +9,8 @@ describe('TitleHighligh', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [TitleHighligh]
-    })
-    .compileComponents();
+      declarations: [TitleHighligh],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TitleHighligh);
     component = fixture.componentInstance;

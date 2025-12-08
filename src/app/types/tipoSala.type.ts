@@ -1,8 +1,7 @@
 //PUT /tipos-salas/{idTipoSala}
 export interface AtualizarTipoSalaRequest {
-  tipoSalaNome: string
+  tipoSalaNome: string;
 }
 
 //POST /tipos-salas
-export type CriarTipoSalaRequest = AtualizarTipoSalaRequest
-
+export type CriarTipoSalaRequest = AtualizarTipoSalaRequest;

@@ -5,7 +5,7 @@ import type { Sala } from '../../../models/sala.model';
   selector: 'app-space-management-table',
   standalone: false,
   templateUrl: './space-management-table.html',
-  styleUrl: './space-management-table.css'
+  styleUrl: './space-management-table.css',
 })
 export class SpaceManagementTable {
   @Input() data: Sala[] = [];
@@ -16,7 +16,7 @@ export class SpaceManagementTable {
   @Output() pageChange = new EventEmitter<number>();
   @Output() editSala = new EventEmitter<Sala>();
   @Output() deleteSala = new EventEmitter<Sala>();
-  @Output() clickCriarRecurso = new EventEmitter<"SOFTWARE" | "HARDWARE">();
+  @Output() clickCriarRecurso = new EventEmitter<'SOFTWARE' | 'HARDWARE'>();
   @Output() filterToggle = new EventEmitter<void>();
 
   searchTerm: string = '';
@@ -42,7 +42,7 @@ export class SpaceManagementTable {
       this.pageChange.emit(page);
     }
   }
-  onNovoRecurso(tipo: "SOFTWARE" | "HARDWARE") {
+  onNovoRecurso(tipo: 'SOFTWARE' | 'HARDWARE') {
     this.clickCriarRecurso.emit(tipo);
   }
 }

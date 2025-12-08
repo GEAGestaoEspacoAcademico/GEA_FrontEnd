@@ -2,19 +2,15 @@ import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import type { Day } from '../../../components/shared/day-selector/day-selector';
 import { Router } from '@angular/router';
-import { map, take, type Observable } from 'rxjs';
-import {
-  selectTodasOsAgendamentos,
-  selectAgendamentoLoading,
-} from '../../../store/agendamento/agendamento.selectors';
+import { BehaviorSubject, filter, switchMap, take, type Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AgendamentoActions } from '../../../store/agendamento/agendamento.actions';
 import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { FormatUtils } from '../../../utils/format.utils';
 import type { AgendamentoAula } from '../../../models/agendamentoAula.model';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
-import { selectUserCargo } from '../../../store/auth/auth.selectors';
+import { selectUserCargo, selectUserId } from '../../../store/auth/auth.selectors';
+import { AgendamentoService } from '../../../services/agendamento/agendamento.service';
 
 @Component({
   selector: 'app-aulas',
@@ -25,8 +21,9 @@ import { selectUserCargo } from '../../../store/auth/auth.selectors';
 export class Aulas implements OnInit {
   private store = inject(Store);
   private router = inject(Router);
-  private notificationService = inject(SnackBarService);
+  private agendamentoService = inject(AgendamentoService);
   private headerService = inject(HeaderTitleService);
+  private snackBarService = inject(SnackBarService);
 
   private currentDate = new Date();
 
@@ -34,11 +31,13 @@ export class Aulas implements OnInit {
   activeDayId!: string;
   monthToDisplay!: string;
 
-  agendamentos$: Observable<AgendamentoAula[]> = this.store.select(selectTodasOsAgendamentos);
-  loading$: Observable<boolean> = this.store.select(selectAgendamentoLoading);
+  aulasCorrentes: AgendamentoAula[] = [];
+  agendamentosDoDiaSelecionado$ = new BehaviorSubject<AgendamentoAula[]>([]);
+  isLoading = false;
 
-  agendamentosDoDiaSelecionado$!: Observable<AgendamentoAula[]>;
-  cargo$: Observable<string | undefined> = this.store.select(selectUserCargo)
+  cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
+  cargoUsuario: string = '';
+  usuarioId$: Observable<number | undefined> = this.store.select(selectUserId);
 
   @ViewChild('confirmCancelModel') confirmModal!: ConfirmationModal;
   agendamentoToCancelId: number | null = null;
@@ -46,34 +45,60 @@ export class Aulas implements OnInit {
   ngOnInit(): void {
     this.headerService.setTitle('Aulas');
     this.headerService.hideBack();
-    this.store.dispatch(AgendamentoActions.loadAgendamentos());
+
     this.activeDayId = FormatUtils.toId(new Date());
     this.generateDaysForMonth();
-    this.updateAgendamentosForActivyDay();
-    this.cargo$
-      .pipe(take(1))
-      .subscribe((cargo) => {
-        if (cargo === 'COORDENADOR') {
-          this.headerService.setTitle("")
-          this.headerService.showBack()
-        } else {
-          this.headerService.hideBack();
-        }
+    this.cargo$.pipe(take(1)).subscribe((cargo) => {
+      if (!cargo) {
+        return;
+      }
+      this.cargoUsuario = cargo;
+      if (cargo === 'COORDENADOR') {
+        this.headerService.setTitle('');
+        this.headerService.showBack();
+        this.carregarAulasCoordenador();
+      } else {
+        this.headerService.hideBack();
+        this.carregarAulasProfessor();
+      }
+    });
+  }
+
+  carregarAulasProfessor() {
+    this.usuarioId$
+      .pipe(
+        filter((id) => !!id),
+        take(1),
+        switchMap((usuarioId) => {
+          return this.agendamentoService.getAgendamentosPorfessor(usuarioId!);
+        }),
+      )
+      .subscribe({
+        next: (agendamento) => (this.aulasCorrentes = agendamento),
+        error: (_) => this.snackBarService.showError('Erro ao carregar agendamentos'),
       });
   }
 
+  carregarAulasCoordenador() {
+    this.agendamentoService.getAgendamentoAula().subscribe({
+      next: (agendamentos) => (this.aulasCorrentes = agendamentos),
+      error: (_) =>
+        this.snackBarService.showError('Erro ao carregar agendamentos para Coordenador'),
+    });
+  }
+
   onMonthNavigate(direction: 'previous' | 'next'): void {
-    // Adiciona ou subtrai um mês da data atual
     const newMonth = this.currentDate.getMonth() + (direction === 'next' ? 1 : -1);
     this.currentDate.setMonth(newMonth);
     this.generateDaysForMonth();
     this.activeDayId = this.days[0].id;
-    this.updateAgendamentosForActivyDay();
+
+    this.filtrarAulasDiaAtual();
   }
 
   onDayChange(id: string | number): void {
     this.activeDayId = String(id);
-    this.updateAgendamentosForActivyDay();
+    this.filtrarAulasDiaAtual();
   }
 
   requestCancelConfirmation(id: number): void {
@@ -81,13 +106,37 @@ export class Aulas implements OnInit {
     this.confirmModal.open();
   }
 
+  private filtrarAulasDiaAtual() {
+    const aulasdoDia = this.aulasCorrentes.filter((aula) => {
+      return aula.data === this.activeDayId;
+    });
+
+    aulasdoDia.sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
+
+    this.agendamentosDoDiaSelecionado$.next(aulasdoDia);
+  }
+
   confirmCancel(): void {
     if (this.agendamentoToCancelId === null) {
       return;
     }
-    this.store.dispatch(AgendamentoActions.deleteAgendamento({ id: this.agendamentoToCancelId }));
-    this.agendamentoToCancelId = null;
-    this.notificationService.showSuccess('Aula cancelada com sucesso');
+    this.isLoading = true;
+    this.agendamentoService.deleteAgendamentoAula(this.agendamentoToCancelId).subscribe({
+      next: () => {
+        this.snackBarService.showSuccess('Agendamento cancelado com sucesso');
+        this.aulasCorrentes = this.aulasCorrentes.filter(
+          (a) => a.agendamentoAulaId !== this.agendamentoToCancelId,
+        );
+        this.filtrarAulasDiaAtual();
+
+        this.agendamentoToCancelId = null;
+        this.isLoading = false;
+      },
+      error: (_) => {
+        this.snackBarService.showError('Erro ao cancelar o agendamento');
+        this.isLoading = false;
+      },
+    });
   }
 
   closeModal() {
@@ -100,17 +149,6 @@ export class Aulas implements OnInit {
 
   handleViewAgendamento(id: number): void {
     this.router.navigate(['/aulas/alterar', id]);
-  }
-  private updateAgendamentosForActivyDay(): void {
-    this.agendamentosDoDiaSelecionado$ = this.agendamentos$.pipe(
-      map((agendamentos) => {
-        const agendamentosFiltrados = agendamentos.filter((agendamento) => {
-          const isDentroDoIntervalo = this.activeDayId === agendamento.data;
-          return isDentroDoIntervalo;
-        });
-        return agendamentosFiltrados.sort((a, b) => a.horaInicio.localeCompare(b.horaInicio));
-      }),
-    );
   }
 
   private generateDaysForMonth(): void {

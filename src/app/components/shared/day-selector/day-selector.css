@@ -1,3 +1,9 @@
+.bola{
+  background-color: #dc3545;  
+  width: 6px;
+  height: 6px;  
+}
+
 .day-selector-wrapper {
   position: relative;
 

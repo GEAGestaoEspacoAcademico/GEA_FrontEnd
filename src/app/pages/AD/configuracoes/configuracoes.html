@@ -1,26 +1,24 @@
-<div class="d-flex flex-column gap-3 color">
-  <div class="container">
+<div class="d-flex flex-column gap-3 color config-principal">
+  <div class="container content-principal">
     <div class="mt-2">
       <app-title-highlightt title="Configurações"></app-title-highlightt>
     </div>
-    <div class="d-flex flex-column">
-      <div class="d-flex flex-row btn-houver">
-        <div class="line mt-3"></div>
-        <a class="subtitle p-1 cursor-pointer" routerLink="/redefinir-senha">Alterar Senha</a>
+    <div class="d-flex flex-column sub-content-principal gap-1">
+      <div class="d-flex houver align-items-center option-alterar-senha">
+        <div class="line"></div>
+        <a class="subtitle p-1" routerLink="/redefinir-senha">Alterar Senha</a>
       </div>
-      <div class="d-flex flex-row gap-2 btn-houver">
-        <div class="line mt-3"></div>
-        <a tabindex="0" class="subtitle cursor-pointer" (click)="openModal()" (keypress)="openModal()"
-          >Logout</a
-        >
+      <div class="d-flex gap-2 houver align-items-center option-logout">
+        <div class="line"></div>
+        <a tabindex="0" class="subtitle" (click)="openModal()" (keypress)="openModal()">Logout</a>
         <mat-icon svgIcon="logout" class="icon-logout"></mat-icon>
       </div>
     </div>
   </div>
 </div>
-<div class="container informations mt-3">
+<div class="container informations mt-3 config-secondario">
   <app-title-highlightt title="Informações"></app-title-highlightt>
-  <dl>
+  <dl class="content-secondario">
     <div class="d-flex flex-row gap-1 mt-2">
       <dt>Nome:</dt>
       @if (user$ | async; as user) {
@@ -42,7 +40,7 @@
         <ul>
           @for (disciplina of disciplinas; track $index) {
             <li>
-              {{ disciplina.cursoNome }} - {{ disciplina.disciplinaSemestre }} -
+              {{ disciplina.cursoNome }} - {{ disciplina.semestreNome }} -
               {{ disciplina.disciplinaNome }}
             </li>
           }

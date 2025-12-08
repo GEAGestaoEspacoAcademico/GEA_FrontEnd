@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { EspacosTable } from './espacos-table';
@@ -9,9 +9,8 @@ describe('EspacosTable', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [EspacosTable]
-    })
-    .compileComponents();
+      declarations: [EspacosTable],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(EspacosTable);
     component = fixture.componentInstance;

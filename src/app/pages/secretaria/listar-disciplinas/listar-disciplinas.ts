@@ -7,10 +7,12 @@ import { HeaderTitleService } from '../../../services/header-title/header-title.
 import { BehaviorSubject } from 'rxjs';
 import { DisciplinaForm } from '../../../components/secretaria/disciplina-form/disciplina-form';
 import { MatDialog } from '@angular/material/dialog';
-import type { AtualizarDisciplinaRequest, CriarDisciplinaRequest } from '../../../types/disciplina.model';
+import type { CriarDisciplinaRequest } from '../../../types/disciplina.model';
 import { CursoService } from '../../../services/curso/curso.service';
 import type { Curso } from '../../../models/curso.model';
 import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
+import type { Semestre } from '../../../models/semestre.model';
+import { SemestreService } from '../../../services/semestre/semestre.service';
 
 @Component({
   selector: 'app-listar-disciplinas',
@@ -22,18 +24,21 @@ export class ListarDisciplinas implements OnInit {
   disciplinaSelecionado!: Disciplina | null;
   disciplinaIdParaEditar!: number;
   cursos: Curso[] = [];
+  semestres: Semestre[] = [];
 
   private readonly dialog = inject(MatDialog);
   private readonly disciplinaService = inject(DisciplinaService);
   private readonly cursoService = inject(CursoService);
   private readonly snackBarService = inject(SnackBarService);
   private readonly headerService = inject(HeaderTitleService);
+  private readonly semestreService = inject(SemestreService);
 
   @ViewChild('deleteModal') deleteModal!: ConfirmationModal;
 
   disciplinas$ = new BehaviorSubject<Disciplina[]>([]);
   isLoading = false;
   filtroCursoNome: string | null = null;
+  filtroSemestre: number | null = null;
 
   totalPages = 1;
   currentPage = 1;
@@ -42,8 +47,15 @@ export class ListarDisciplinas implements OnInit {
   ngOnInit() {
     this.carregarDisciplinas();
     this.carregarCursos();
+    this.carregarSemestres();
     this.headerService.setTitle('Disciplinas');
     this.headerService.showBack();
+  }
+
+  carregarSemestres() {
+    this.semestreService.listarTodos().subscribe({
+      next: (resposta) => (this.semestres = resposta),
+    });
   }
 
   carregarDisciplinas() {
@@ -52,7 +64,6 @@ export class ListarDisciplinas implements OnInit {
     this.disciplinaService.getDisciplinas().subscribe({
       next: (disciplinas) => {
         let filtrados = disciplinas;
-        console.log("Filtro nome: " + this.filtroCursoNome)
         if (this.filtroCursoNome) {
           filtrados = filtrados.filter((d) => d.cursoNome === this.filtroCursoNome);
         }
@@ -60,6 +71,12 @@ export class ListarDisciplinas implements OnInit {
         if (this.searchTerm.trim() !== '') {
           const term = this.searchTerm.toLowerCase();
           filtrados = disciplinas.filter((s) => s.disciplinaNome.toLowerCase().includes(term));
+        }
+
+        if (this.filtroSemestre) {
+          filtrados = filtrados.filter(
+            (disciplina) => disciplina.semestreId === this.filtroSemestre,
+          );
         }
 
         const itensPorPagina = 10;
@@ -81,6 +98,7 @@ export class ListarDisciplinas implements OnInit {
     instance.disciplina = disciplina ?? null;
 
     instance.saved.subscribe(() => {
+      this.carregarDisciplinas();
       dialogRef.close();
     });
 
@@ -88,29 +106,36 @@ export class ListarDisciplinas implements OnInit {
       dialogRef.close();
     });
   }
-  carregarCursos(){
+
+  carregarCursos() {
     this.isLoading = true;
 
     this.cursoService.getCursos().subscribe({
-      next: (cursos) => this.cursos = cursos
-    })
+      next: (cursos) => (this.cursos = cursos),
+    });
   }
 
   onSelecionaCurso(cursonome: string | null) {
-    this.filtroCursoNome = cursonome; 
-    this.currentPage = 1;    
+    this.filtroCursoNome = cursonome;
+    this.currentPage = 1;
+    this.carregarDisciplinas();
+  }
+
+  onSelecionaSemestre(semestreId: number | null) {
+    this.filtroSemestre = semestreId;
+    this.currentPage = 1;
     this.carregarDisciplinas();
   }
 
   adicionarDisciplina() {
-    this.manipularDisciplina()
+    this.manipularDisciplina();
   }
 
   criarDisciplina(disciplina: Disciplina) {
     const criarDisciplina: CriarDisciplinaRequest = {
-      cursoId: 1, //mudar depois
+      cursoId: disciplina.cursoId,
       disciplinaNome: disciplina.disciplinaNome,
-      disciplinaSemestre: disciplina.disciplinaSemestre,
+      semestreId: disciplina.semestreId,
     };
     this.disciplinaService.criarDisciplina(criarDisciplina).subscribe({
       next: () => this.snackBarService.showSuccess('Disciplina criada com sucesso'),
@@ -131,7 +156,7 @@ export class ListarDisciplinas implements OnInit {
 
   onDelete(disciplina: Disciplina) {
     this.disciplinaSelecionado = disciplina;
-    this.deleteModal.open()
+    this.deleteModal.open();
   }
 
   confirmDelete() {
@@ -140,14 +165,18 @@ export class ListarDisciplinas implements OnInit {
     }
 
     this.disciplinaService.deleteDisciplina(this.disciplinaSelecionado.disciplinaId).subscribe({
-      next: () => this.carregarDisciplinas(),
+      next: () => {
+        this.carregarDisciplinas();
+        this.snackBarService.showSuccess('Disciplina deletada com sucesso!');
+      },
+      error: () => this.snackBarService.showError('Disciplina não pode ser deletada'),
     });
   }
 
   onEdit(disciplina: Disciplina): void {
-    this.disciplinaIdParaEditar = disciplina.disciplinaId;
-    this.manipularDisciplina(disciplina);
+    if (disciplina) {
+      this.disciplinaIdParaEditar = disciplina.disciplinaId;
+      this.manipularDisciplina(disciplina);
+    }
   }
-
-
 }

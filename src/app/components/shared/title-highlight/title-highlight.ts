@@ -17,12 +17,12 @@ import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
    * OnPush: O componente só será verificado (e re-renderizado)
    * quando sua propriedade @Input 'title' mudar.
    */
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TitleHighlight {
   /**
    * O texto (string) que será exibido como o título principal.
    * Este @Input é obrigatório.
    */
-  @Input ({required: true}) title!: string;
+  @Input({ required: true }) title!: string;
 }

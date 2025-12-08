@@ -22,7 +22,7 @@ import { Router } from '@angular/router';
 export class Header {
   private store = inject(Store);
   private headerTitleService = inject(HeaderTitleService);
-  private router = inject(Router)
+  private router = inject(Router);
 
   public cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
 
@@ -32,37 +32,31 @@ export class Header {
     this.store.dispatch(AuthActions.logout());
   }
 
-
-
   voltarHome() {
-    this.cargo$
-      .pipe(
-        take(1)
-      )
-      .subscribe((cargo) => {
-        switch (cargo) {
-          case 'AUXILIAR_DOCENTE':
-            this.router.navigate(['ad/home']);
-            break;
+    this.cargo$.pipe(take(1)).subscribe((cargo) => {
+      switch (cargo) {
+        case 'AUXILIAR_DOCENTE':
+          this.router.navigate(['ad/home']);
+          break;
 
-          case 'PROFESSOR':
-            this.router.navigate(['aulas']);
-            break;
-          case 'SECRETARIA':
-            this.router.navigate(['secretaria/home']);
-            break
-          case 'COORDENACAO':
-            this.router.navigate(['coordenacao/home'])
-            break;
-          default:
-            this.router.navigate(['/login']);
-            break;
-        }
-      });
+        case 'PROFESSOR':
+          this.router.navigate(['aulas']);
+          break;
+        case 'SECRETARIA':
+          this.router.navigate(['secretaria/home']);
+          break;
+        case 'COORDENACAO':
+          this.router.navigate(['coordenacao/home']);
+          break;
+        default:
+          this.router.navigate(['/login']);
+          break;
+      }
+    });
   }
 
   public navigateToHome(): void {
-    this.cargo$.pipe(take(1)).subscribe(cargo => {
+    this.cargo$.pipe(take(1)).subscribe((cargo) => {
       let route = '/';
       switch (cargo?.toUpperCase()) {
         case 'SECRETARIA':

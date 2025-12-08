@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { SmartSchedulingForm } from './smart-scheduling-form';
@@ -9,9 +9,8 @@ describe('SmartSchedulingForm', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SmartSchedulingForm]
-    })
-    .compileComponents();
+      declarations: [SmartSchedulingForm],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SmartSchedulingForm);
     component = fixture.componentInstance;

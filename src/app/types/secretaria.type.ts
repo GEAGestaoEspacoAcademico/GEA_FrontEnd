@@ -5,5 +5,4 @@ export interface CriarSecretariaRequest {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
-export interface AtualizarSecretariaResquest extends CriarSecretariaRequest {
-}
+export interface AtualizarSecretariaResquest extends CriarSecretariaRequest {}

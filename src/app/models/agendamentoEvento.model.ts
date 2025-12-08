@@ -4,9 +4,9 @@ export interface AgendamentoEvento {
   salaNome: string;
   eventoNome: string;
   data: string;
-  diaDaSemana: string;  
-  horaInicio: string;   
-  horaFim: string;      
-  recorrenciaId: number; 
+  diaDaSemana: string;
+  horaInicio: string;
+  horaFim: string;
+  recorrenciaId: number;
   solicitante: string;
 }

@@ -10,34 +10,34 @@ import { selectAuthError, selectAuthIsLoading } from '../../../store/auth/auth.s
   selector: 'app-login',
   standalone: false,
   templateUrl: './login.html',
-  styleUrl: './login.css'
+  styleUrl: './login.css',
 })
-export class Login implements OnInit{
-  private store = inject(Store)
+export class Login implements OnInit {
+  private store = inject(Store);
   error$!: Observable<string | null>;
   loading$: Observable<boolean | null> = this.store.select(selectAuthIsLoading);
 
   loginForm = new FormGroup({
     user: new FormControl('', [Validators.required]),
-    password: new FormControl('', [Validators.required])
+    password: new FormControl('', [Validators.required]),
   });
 
   hidePassword: boolean = false;
   btnVisibility: boolean = false;
 
   ngOnInit(): void {
-    this.loginForm.get('password')?.valueChanges.subscribe(value => {
+    this.loginForm.get('password')?.valueChanges.subscribe((value) => {
       this.btnVisibility = !!(value && value.trim().length > 0);
     });
     this.error$ = this.store.select(selectAuthError);
     this.loginForm.reset();
   }
 
-  fetchUser(){
-    const username = this.loginForm.get('user')?.value?.trim()
-    const password = this.loginForm.get('password')?.value?.trim()
+  fetchUser() {
+    const username = this.loginForm.get('user')?.value?.trim();
+    const password = this.loginForm.get('password')?.value?.trim();
 
-    if(!username || !password){
+    if (!username || !password) {
       this.loginForm.reset();
       this.loginForm.setErrors({ infoInvalid: true });
       return;
@@ -45,12 +45,11 @@ export class Login implements OnInit{
 
     const AuthLoginRequest: AuthLoginRequest = {
       usuarioLogin: username,
-      usuarioSenha: password
-    }
-    
+      usuarioSenha: password,
+    };
+
     this.store.dispatch(AuthActions.login({ AuthLoginRequest }));
   }
-
 
   changeVisibility() {
     this.hidePassword = !this.hidePassword;

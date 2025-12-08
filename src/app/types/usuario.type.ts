@@ -3,7 +3,7 @@ export interface GetUsuarioResponse {
   usuarioNome: string;
   usuarioEmail: string;
   cargoId: number;
-  cargoNome: string
+  cargoNome: string;
 }
 
 export interface AtualizarUsuarioAdminResquest {
@@ -13,22 +13,22 @@ export interface AtualizarUsuarioAdminResquest {
 }
 
 export interface AlterarSenhaUsuarioRequest {
-  senhaAtual: string;       
+  senhaAtual: string;
   novaSenha: string;
   repetirNovaSenha: string;
 }
 
 ///usuarios/resetPassword
 export interface EnviarEmailRequest {
-  email: string
+  email: string;
 }
 
 export interface EnviarEmailResponse {
-  message: string
+  message: string;
 }
 
 export interface AlterarSenhaEsquecidaRequest {
-  senha: string,
-  repetirSenha: string,
-  token: string
+  senha: string;
+  repetirSenha: string;
+  token: string;
 }

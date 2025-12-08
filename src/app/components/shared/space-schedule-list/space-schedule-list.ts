@@ -16,11 +16,10 @@ export class SpaceScheduleList implements OnInit {
   private _modoVisualizacao: 'Hoje' | 'Semana' = 'Hoje';
   @Input() dataSelecionada: Date = new Date();
 
-  
   @Input()
   set modoVisualizacao(valor: 'Hoje' | 'Semana') {
     this._modoVisualizacao = valor;
-    this.carregarDados(); 
+    this.carregarDados();
   }
   get modoVisualizacao(): 'Hoje' | 'Semana' {
     return this._modoVisualizacao;

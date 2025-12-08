@@ -4,7 +4,11 @@ import type { OnInit } from '@angular/core';
 import { Component, inject } from '@angular/core';
 import { SalaService } from '../../../services/sala/sala.service';
 import { catchError, of, switchMap } from 'rxjs';
-import type { AdicionarRecursoSalaRequest, CriarSalaRequest, RecursoAdiconarSala } from '../../../types/sala.type';
+import type {
+  AdicionarRecursoSalaRequest,
+  CriarSalaRequest,
+  RecursoAdiconarSala,
+} from '../../../types/sala.type';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
@@ -15,17 +19,16 @@ import { HeaderTitleService } from '../../../services/header-title/header-title.
   templateUrl: './space-registration.page.html',
   styleUrl: './space-registration.page.css',
 })
-export class SpaceRegistrationPage implements OnInit{
-  
+export class SpaceRegistrationPage implements OnInit {
   private readonly salaService = inject(SalaService);
   private readonly snackBar = inject(SnackBarService);
   private readonly router = inject(Router);
-  private readonly location = inject(Location)
+  private readonly location = inject(Location);
   private readonly headerService = inject(HeaderTitleService);
 
   ngOnInit(): void {
-    this.headerService.setTitle('Lista de Espaços Acadêmicos')
-    this.headerService.showBack()
+    this.headerService.setTitle('Cadastro de Laboratório');
+    this.headerService.showBack();
   }
 
   onFormSubimit(formularioCriarSala: CriarSalaFormulario) {
@@ -70,14 +73,14 @@ export class SpaceRegistrationPage implements OnInit{
       .subscribe({
         next: () => {
           this.snackBar.showSuccess('Sala salva com sucesso!');
-          this.router.navigate(['/secretaria/visualizar-espacos']);
+          this.router.navigate(['/ad/home']);
         },
         error: () => {
           this.snackBar.showError('Erro ao salvar sala.');
         },
       });
-    }
-  cancelForm(){
-    this.location.back()
+  }
+  cancelForm() {
+    this.location.back();
   }
 }

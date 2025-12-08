@@ -50,7 +50,7 @@ export class SalaService {
   }
 
   public getSalas(): Observable<Sala[]> {
-    return this.http.get<Sala[]>(`${this.baseUrl}`)
+    return this.http.get<Sala[]>(this.baseUrl);
   }
 
   public criarSala(sala: CriarSalaRequest): Observable<CriarSalaResponse> {
@@ -60,7 +60,7 @@ export class SalaService {
   public getRecursosSalaPorId(salaid: number): Observable<BuscarRecursoSalaResponse> {
     return this.http.get<BuscarRecursoSalaResponse>(`${this.baseUrl}/${salaid}/recursos`);
   }
-
+  
   public getRecursosSalaPorIdArray(salaid: number): Observable<BuscarRecursoSalaResponseArray[]> {
     return this.http.get<BuscarRecursoSalaResponseArray[]>(`${this.baseUrl}/${salaid}/recursos`);
   }
@@ -75,12 +75,10 @@ export class SalaService {
     );
   }
 
-  public getRecomendacao(
-    data: BuscarRecomendacaoRequest,
-  ): Observable<BuscarRecomendacaoResponse[]> {
+  public getRecomendacao(data: BuscarRecomendacaoRequest): Observable<BuscarRecomendacaoResponse> {
     data.horarios.horaFim = FormatUtils.colocarSegundos(data.horarios.horaFim);
     data.horarios.horaInicio = FormatUtils.colocarSegundos(data.horarios.horaInicio);
-    return this.http.post<BuscarRecomendacaoResponse[]>(`${this.baseUrl}/recomendacoes`, data);
+    return this.http.post<BuscarRecomendacaoResponse>(`${this.baseUrl}/recomendacoes`, data);
   }
 
   public getSalaDisponivel(): Observable<BuscarSalaDisponivel[]> {
@@ -114,9 +112,4 @@ export class SalaService {
 
     return keywords.some((k) => combined.includes(k));
   }
-}
-
-interface SalaPageable {
-  conteudo: Sala[];
-  numeroDaPagina: number;
 }

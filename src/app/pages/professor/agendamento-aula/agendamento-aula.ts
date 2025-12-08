@@ -1,5 +1,5 @@
 import type { OnInit } from '@angular/core';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import type { Disciplina } from '../../../models/disciplina.model';
 import { JanelasHorarioService } from '../../../services/janelas-horario/janelas-horario.service';
 import type { JanelaHorario } from '../../../models/janelasHorario.model';
@@ -21,6 +21,10 @@ import type {
 } from '../../../types/sala.type';
 import { SalaService } from '../../../services/sala/sala.service';
 import ProfessorService from '../../../services/professor/professor.service';
+import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
+import type { AgendamentoAulaCriarRequest } from '../../../types/agendamentoAula.type';
+import { AgendamentoService } from '../../../services/agendamento/agendamento.service';
+import { FormatUtils } from '../../../utils/format.utils';
 
 @Component({
   selector: 'app-agendamento-aula',
@@ -37,14 +41,17 @@ export class AgendamentoAula implements OnInit {
   private fb = inject(FormBuilder);
   private snackBarService = inject(SnackBarService);
   private salaService = inject(SalaService);
+  private agendamentoService = inject(AgendamentoService);
 
   public form!: FormGroup;
 
+  @ViewChild('classInfoModal') classInfoModal!: ConfirmationModal;
+
   isRecomendacaoLoading = false;
   requisicaoRecomendacao!: BuscarRecomendacaoRequest | null;
-  salasRecomendadas: BuscarRecomendacaoResponse[] = [];
+  salasRecomendadas: BuscarRecomendacaoResponse | null = null;
   idSalaRecomendadaAtual!: number;
-  submittedData: AgendarForm | null = null;
+  submittedData!: AgendarForm;
   equipamentoSelectControl = new FormControl<Recurso | null>(null);
   softwareSelectControl = new FormControl<Recurso | null>(null);
   quantidadeControl = new FormControl<number>(1, [Validators.required, Validators.min(1)]);
@@ -54,12 +61,18 @@ export class AgendamentoAula implements OnInit {
   horarios: JanelaHorario[] = [];
   tiposSala: TipoSala[] = [];
 
+  dataMinima: string = ''
+
   ngOnInit(): void {
+    const hoje = new Date()
+    this.dataMinima = hoje.toISOString().split('T')[0];
+    
     this.form = this.fb.group({
       data: [this.getData(), Validators.required],
-      horarioId: [null, Validators.required],
+      janelaHorarioId: [null, Validators.required],
       tipoSalaId: [null, Validators.required],
       capacidade: [null],
+      qtdAulas: [null, Validators.required],
       disciplinaId: [null, Validators.required],
       equipamentosArray: this.fb.array([]),
       softwaresArray: this.fb.array([]),
@@ -127,7 +140,7 @@ export class AgendamentoAula implements OnInit {
     this.equipamentosArray.push(novoItemControl);
 
     this.equipamentoSelectControl.reset(null);
-    this.quantidadeControl.setValue(null);
+    this.quantidadeControl.setValue(1);
   }
 
   adicionarSoftwareSelecionado(): void {
@@ -172,7 +185,7 @@ export class AgendamentoAula implements OnInit {
     const recursosIds = [...equipamentosIds, ...softwaresIds];
 
     const horarioSelecionado = this.horarios.find(
-      (h) => h.janelasHorarioId === Number(formData.horarioId),
+      (h) => h.janelasHorarioId === Number(formData.janelaHorarioId),
     );
 
     if (!horarioSelecionado) {
@@ -226,5 +239,52 @@ export class AgendamentoAula implements OnInit {
     if (this.requisicaoRecomendacao) {
       this.buscarRecomendacoes();
     }
+  }
+  openInfoModal(id: number) {
+    this.idSalaRecomendadaAtual = id;
+    this.classInfoModal.open(id);
+  }
+
+  agendarAula() {
+    this.store
+      .select(selectUserId)
+      .pipe(
+        filter(Boolean),
+        take(1),
+        switchMap((userId) => {
+          const corpoCriarAgendamento: AgendamentoAulaCriarRequest = {
+            usuarioId: userId,
+            salaId: Number(this.idSalaRecomendadaAtual),
+            disciplinaId: Number(this.submittedData.disciplinaId),
+            data: this.submittedData.data,
+            janelasHorarioId: Number(this.submittedData.janelaHorarioId),
+            isEvento: false,
+            quantidade: Number(this.submittedData.qtdAulas),
+          };
+          return this.agendamentoService.criarAgendamentoAula(corpoCriarAgendamento);;
+        }),
+      )
+      .subscribe({
+        next: (_) => {
+
+          this.snackBarService.showSuccess('Agendamento feito com sucesso');
+          this.form.reset({
+            data: this.getData(),
+          });
+
+          this.equipamentosArray.clear();
+          this.softwaresArray.clear();
+          
+          this.salasRecomendadas = null;
+        },
+        error: (err) => {
+          console.error('Erro ao criar agendamento:', err);
+          this.snackBarService.showError('Falha ao agendar. Tente novamente.');
+        },
+      });
+  }
+
+  formatarTempo(inicio: string, fim: string) {
+    return FormatUtils.formatTime(inicio, fim);
   }
 }

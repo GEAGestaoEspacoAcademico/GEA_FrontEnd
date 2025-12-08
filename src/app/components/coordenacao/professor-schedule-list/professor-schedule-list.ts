@@ -18,15 +18,15 @@ export class ProfessorScheduleList implements OnInit {
 
   salas: Sala[] = [];
   agendamentos: Agendamento[] = [];
-  
-  agendamentosPorProfessor: Record<string, Agendamento[]> = {}; 
-  
-  agendamentosPorDiaProfessor: Record<string, Record<string, Agendamento[]>> = {}; 
+
+  agendamentosPorProfessor: Record<string, Agendamento[]> = {};
+
+  agendamentosPorDiaProfessor: Record<string, Record<string, Agendamento[]>> = {};
 
   diasSemana: Array<{ data: Date; iso: string; nome: string }> = [];
-  
-  professorPorDisciplina: Record<number, string> = {}; 
-  
+
+  professorPorDisciplina: Record<number, string> = {};
+
   expandedProfessor: Record<string, boolean> = {};
 
   private salaService = inject(SalaService);
@@ -39,16 +39,14 @@ export class ProfessorScheduleList implements OnInit {
 
   iniciarCarregamento() {
     this.professorService.getProfessores().subscribe((profs) => {
-      
-      const requests = profs.map(prof => 
-        this.professorService.getDisciplinasDoProfessor(prof.usuarioId)
+      const requests = profs.map((prof) =>
+        this.professorService.getDisciplinasDoProfessor(prof.usuarioId),
       );
 
       forkJoin(requests).subscribe((respostasDisciplinas) => {
-        
         respostasDisciplinas.forEach((disciplinas, index) => {
           const nomeProfessor = profs[index].professorNome;
-          disciplinas.forEach(d => {
+          disciplinas.forEach((d) => {
             this.professorPorDisciplina[d.disciplinaId] = nomeProfessor;
           });
         });
@@ -104,11 +102,13 @@ export class ProfessorScheduleList implements OnInit {
   private agruparPorProfessor(lista: Agendamento[]) {
     const map: Record<string, Agendamento[]> = {};
 
-    if (!Array.isArray(lista)) {return map;}
+    if (!Array.isArray(lista)) {
+      return map;
+    }
 
     for (const ag of lista) {
       const nomeProfessor = this.getProfessorPorDisciplina(ag.disciplinaId);
-      
+
       if (!map[nomeProfessor]) {
         map[nomeProfessor] = [];
       }
@@ -129,19 +129,21 @@ export class ProfessorScheduleList implements OnInit {
 
   get professoresFiltradosHoje() {
     return Object.entries(this.agendamentosPorProfessor)
-      .filter(([nomeProfessor]) => 
-        nomeProfessor.toLowerCase().includes(this.filtroTexto.toLowerCase())
+      .filter(([nomeProfessor]) =>
+        nomeProfessor.toLowerCase().includes(this.filtroTexto.toLowerCase()),
       )
       .map(([key, value]) => ({ key, value }));
   }
 
   getProfessoresDoDia(iso: string) {
     const dadosDia = this.agendamentosPorDiaProfessor[iso];
-    if (!dadosDia) {return [];}
+    if (!dadosDia) {
+      return [];
+    }
 
     return Object.entries(dadosDia)
-      .filter(([nomeProfessor]) => 
-        nomeProfessor.toLowerCase().includes(this.filtroTexto.toLowerCase())
+      .filter(([nomeProfessor]) =>
+        nomeProfessor.toLowerCase().includes(this.filtroTexto.toLowerCase()),
       )
       .map(([key, value]) => ({ key, value }));
   }
@@ -149,7 +151,7 @@ export class ProfessorScheduleList implements OnInit {
   private calcularSemana() {
     const base = new Date(this.dataSelecionada);
     const diaSemana = base.getDay();
-    const diff = base.getDate() - diaSemana + (diaSemana === 0 ? -6 : 1); 
+    const diff = base.getDate() - diaSemana + (diaSemana === 0 ? -6 : 1);
     const segunda = new Date(base.setDate(diff));
 
     this.diasSemana = [];

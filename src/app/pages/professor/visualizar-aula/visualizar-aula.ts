@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-visualizar-aula',
   standalone: false,
   templateUrl: './visualizar-aula.html',
-  styleUrl: './visualizar-aula.css'
+  styleUrl: './visualizar-aula.css',
 })
-export class VisualizarAula {
-
-}
+export class VisualizarAula {}

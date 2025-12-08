@@ -1,9 +1,9 @@
 <div class="space-management-container">
   <h2 class="main-title">Lista de espaços Acadêmicos</h2>
-  
+
   @if (mostrarFiltro) {
     <app-space-filter (filterChange)="onFilterChange($event)"></app-space-filter>
-  } 
+  }
 
   <app-space-management-table
     [data]="displayedSalas"

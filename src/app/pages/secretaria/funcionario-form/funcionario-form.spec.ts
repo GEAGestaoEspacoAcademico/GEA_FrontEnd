@@ -9,9 +9,8 @@ describe('FuncionarioForm', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [FuncionarioForm]
-    })
-    .compileComponents();
+      declarations: [FuncionarioForm],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FuncionarioForm);
     component = fixture.componentInstance;

@@ -57,7 +57,7 @@ export class ListaEspacos implements OnInit {
 
     this.salaService.getSalas().subscribe({
       next: (salas) => {
-        let filtrados = salas;
+        let filtrados = salas.filter((s) => s.tipoSalaId === 1);
 
         if (this.searchTerm.trim() !== '') {
           const term = this.searchTerm.toLowerCase();
@@ -109,7 +109,7 @@ export class ListaEspacos implements OnInit {
     };
     this.recursoService.criarRecurso(corpoCriarRecurso).subscribe({
       next: () => this.snackBarService.showSuccess('Recurso criado com sucesso'),
-      error: () => this.snackBarService.showError('Erro ao crari recurso'),
+      error: () => this.snackBarService.showError('Erro ao criar recurso'),
     });
   }
 
@@ -135,7 +135,14 @@ export class ListaEspacos implements OnInit {
     }
 
     this.salaService.deleteSala(this.salaSelecionada.salaId).subscribe({
-      next: () => this.carregarEspacos(),
+      next: () => {
+        this.carregarEspacos();
+        this.snackBarService.showSuccess('Sala deletada com sucesso!');
+      },
+      error: (erro) => {
+        console.log(erro);
+        this.snackBarService.showError('Erro ao deletar sala!');
+      },
     });
   }
 

@@ -24,7 +24,6 @@ import ProfessorService from '../../../services/professor/professor.service';
   styleUrls: ['./funcionario-form.css'],
 })
 export class FuncionarioForm implements OnInit {
-
   @Output() saveForm = new EventEmitter<FormGroup>();
   @Output() cancelForm = new EventEmitter<void>();
 
@@ -51,8 +50,8 @@ export class FuncionarioForm implements OnInit {
 
 
   ngOnInit(): void {
-    this.headerService.setTitle('Novo Funcionário')
-    this.headerService.showBack()
+    this.headerService.setTitle('Novo Funcionário');
+    this.headerService.showBack();
 
     this.form = this.fb.group({
       nomeCompleto: ['', [Validators.required, Validators.minLength(3)]],
@@ -261,6 +260,15 @@ export class FuncionarioForm implements OnInit {
         this.snackBar.showSuccess(mensagemSucesso);
 
         this.form.reset({ perfil: perfil });
+
+        if (perfil === this.PERFIL_PROFESSOR) {
+          this.disciplinas.clear();
+
+          this.disciplinaService.getDisciplinas().subscribe({
+          next: (data) => (this.disciplinasDisponiveis = data),
+          });
+        }
+        
         this.atualizarEstruturaFormulario(perfil);
         this.saveForm.emit(this.form);
       },

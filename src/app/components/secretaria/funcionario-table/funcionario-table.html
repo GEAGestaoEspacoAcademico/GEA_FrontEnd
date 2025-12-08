@@ -1,8 +1,6 @@
 <section class="space-table-container" aria-labelledby="funcionarios-title">
-
   <header class="table-header">
     <div class="header-controls">
-
       <form class="search-bar" role="search" (submit)="$event.preventDefault()">
         <label for="searchInput" class="visually-hidden">Buscar funcionário</label>
 
@@ -24,9 +22,8 @@
       </form>
       <button type="button" class="add-btn" routerLink="/secretaria/cadastrar-funcionario">
         <mat-icon>add_circle_outline</mat-icon>
-          Novo Funcionário
+        Novo Funcionário
       </button>
-
     </div>
   </header>
 
@@ -43,7 +40,10 @@
       </thead>
 
       <tbody>
-        @for (funcionario of data; track funcionario?.usuarioId ?? funcionario.usuarioNome ?? $index) {
+        @for (
+          funcionario of data;
+          track funcionario?.usuarioId ?? funcionario.usuarioNome ?? $index
+        ) {
           <tr>
             <td>{{ funcionario.usuarioNome }}</td>
             <td>{{ funcionario.usuarioEmail }}</td>
@@ -72,11 +72,7 @@
   </div>
 
   <nav class="pagination">
-    <button
-      type="button"
-      (click)="changePage(currentPage - 1)"
-      [disabled]="currentPage === 1"
-    >
+    <button type="button" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
       &lt;
     </button>
 
@@ -92,5 +88,4 @@
       &gt;
     </button>
   </nav>
-
 </section>

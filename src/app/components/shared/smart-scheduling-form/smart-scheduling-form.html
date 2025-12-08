@@ -1,152 +1,167 @@
-@if (mode === "aula") {
-<div class="d-flex justify-content-center align-itens-center aula-form">
+@if (mode === 'aula') {
+  <div class="d-flex justify-content-center align-itens-center aula-form">
     <form [formGroup]="aulaForm" class="form">
-
-        <div class="row g-3">
-            <div class="col-6">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Local</mat-label>
-                    <mat-select formControlName="local">
-                        @for (s of salas; track s.salaId) {
-                        <mat-option [value]="s.salaId">{{s.salaNome}}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-6">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Disciplina</mat-label>
-                    <mat-select formControlName="disciplina">
-                        @for (d of disciplinas; track d.disciplinaId) {
-                        <mat-option [value]="d.disciplinaId">{{d.disciplinaNome}}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-6">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Início</mat-label>
-                    <mat-select formControlName="inicio">
-                        @for (hInicio of listaHorarios; track hInicio.janelasHorarioId) {
-                        <mat-option [value]="hInicio.horaInicio">{{ hInicio.horaInicio.slice(0, 5) }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-6">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Fim</mat-label>
-                    <mat-select formControlName="fim">
-                        @for (hFim of listaHorarios; track hFim.janelasHorarioId) {
-                        <mat-option [value]="hFim.horaFim">{{ hFim.horaFim.slice(0, 5) }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-6">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Solicitante</mat-label>
-                    <input matInput formControlName="solicitante">
-                </mat-form-field>
-            </div>
-
-            <div class="col-12 mt-3" style="width: fit-content; margin-left: auto; margin-right: auto;">
-                <button mat-raised-button class="btn btn-aula" (click)="submitAula()" [disabled]="aulaForm.invalid">
-                    Agendar
-                </button>
-            </div>
+      <div class="row g-3">
+        <div class="col-6" (click)="verificarPreRequisitos()" (keydown.enter)="verificarPreRequisitos()" tabindex="0">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Local</mat-label>
+            <mat-select formControlName="local">
+              @for (s of salas; track s.salaId) {
+                <mat-option [value]="s.salaId">{{ s.salaNome }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
         </div>
+
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Disciplina</mat-label>
+            <mat-select formControlName="disciplina">
+              @for (d of disciplinas; track d.disciplinaId) {
+                <mat-option [value]="d.disciplinaId">{{ d.disciplinaNome }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Início</mat-label>
+            <mat-select formControlName="inicio">
+              @for (hInicio of horariosDisponiveisInicio; track $index) {
+                <mat-option [value]="formatarHorario(hInicio)">{{ formatarHorario(hInicio) }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Fim</mat-label>
+            <mat-select formControlName="fim">
+              @for (hFim of horariosDisponiveisFim; track $index) {
+                <mat-option [value]="formatarHorario(hFim)">{{ formatarHorario(hFim) }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Solicitante</mat-label>
+            <input matInput formControlName="solicitante" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-12 mt-3" style="width: fit-content; margin-left: auto; margin-right: auto">
+          <button
+            mat-raised-button
+            class="btn btn-aula"
+            (click)="submitAula()"
+            [disabled]="aulaForm.invalid"
+          >
+            Agendar
+          </button>
+        </div>
+      </div>
     </form>
-</div>
+  </div>
 }
 
-
-@if (mode === "evento") {
-<div class="row flex-column agenda-form">
+@if (mode === 'evento') {
+  <div class="row flex-column agenda-form">
     <form [formGroup]="eventoForm" class="form">
-        <div class="row g-3">
-            <div class="col-6">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Nome do Evento</mat-label>
-                    <input matInput formControlName="nomeEvento">
-                </mat-form-field>
-            </div>
-
-            <div class="col-6">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Local</mat-label>
-                    <mat-select formControlName="local">
-                        @for (sala of salas; track sala.salaId) {
-                            <mat-option [value]="sala.salaId">{{sala.salaNome}}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-6">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Data Selecionada</mat-label>
-                    <input matInput [value]="singleDate || dateArray[0] | date:'dd/MM/yyyy'" [disabled]="true"> </mat-form-field>
-            </div>
-
-            <div class="col-6">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Início</mat-label>
-                    <mat-select formControlName="inicio">
-                        @for (hInicio of listaHorarios; track hInicio.janelasHorarioId) {
-                        <mat-option [value]="hInicio.horaInicio">{{ hInicio.horaInicio.slice(0, 5) }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-6">
-                <mat-form-field appearance="outline" class="w-100">
-                    <mat-label>Fim</mat-label>
-                    <mat-select formControlName="fim">
-                        @for (hFim of listaHorarios; track hFim.janelasHorarioId) {
-                        <mat-option [value]="hFim.horaFim">{{ hFim.horaFim.slice(0, 5) }}</mat-option>
-                        }
-                    </mat-select>
-                </mat-form-field>
-            </div>
-
-            <div class="col-12" style="width: fit-content; margin-left: auto;">
-                <button mat-raised-button class="btn btn-primary" (click)="addEventoConfig()"
-                    [disabled]="eventoForm.invalid">
-                    Salvar
-                </button>
-            </div>
+      <div class="row g-3">
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Nome do Evento</mat-label>
+            <input matInput formControlName="nomeEvento" />
+          </mat-form-field>
         </div>
+        
+        <div class="col-6" (click)="verificarPreRequisitos()" (keydown.enter)="verificarPreRequisitos()" tabindex="0">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Local</mat-label>
+            <mat-select formControlName="local" >
+              @for (sala of salas; track sala.salaId) {
+                <mat-option [value]="sala.salaId">{{ sala.salaNome }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Data Selecionada</mat-label>
+            <input
+              matInput
+              [value]="singleDate || dateArray[0] | date: 'dd/MM/yyyy'"
+              [disabled]="true"
+            />
+          </mat-form-field>
+        </div>
+
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Início</mat-label>
+            <mat-select formControlName="inicio">
+              @for (hInicio of horariosDisponiveisInicio; track $index) {
+                <mat-option [value]="formatarHorario(hInicio)">{{
+                  formatarHorario(hInicio)
+                }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Fim</mat-label>
+            <mat-select formControlName="fim">
+              @for (hFim of horariosDisponiveisFim; track $index) {
+                <mat-option [value]="formatarHorario(hFim)">{{ formatarHorario(hFim) }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-12" style="width: fit-content; margin-left: auto">
+          <button
+            mat-raised-button
+            class="btn btn-primary"
+            (click)="addEventoConfig()"
+            [disabled]="eventoForm.invalid"
+          >
+            Salvar
+          </button>
+        </div>
+      </div>
     </form>
-</div>
+  </div>
 
-<div class="d-flex flex-column text-center">
+  <div class="d-flex flex-column text-center w-100 justify-content-center">
     <div class="border-card">
-        <h3>Dias Agendados</h3>
+      <h3>Dias Agendados</h3>
 
-        <ul class="list-group">
-            <li class="list-group-item" style="border: none;">
-                @for (ev of eventBatch; track ev; let i = $index) {
-                <mat-chip selectable="false" removable="true">
-                    {{ ev.date | date:'dd/MM/yyyy' }} — {{ ev.nomeEvento }}
-                    <mat-icon (click)="removeBatchItem(i)" style="cursor:pointer">close</mat-icon>
-                </mat-chip>
-                }
-            </li>
-        </ul>
+      <ul class="list-group">
+        <li class="list-group-item" style="border: none">
+          @for (ev of eventBatch; track ev; let i = $index) {
+            <mat-chip selectable="false" removable="true">
+              {{ ev.date | date: 'dd/MM/yyyy' }} — {{ ev.nomeEvento }}
+              <mat-icon (click)="removeBatchItem(i)" style="cursor: pointer">close</mat-icon>
+            </mat-chip>
+          }
+        </li>
+      </ul>
 
-        <button mat-raised-button class="btn btn-secundary" (click)="submitBatch()"
-            [disabled]="eventBatch.length === 0"> Agendar
-        </button>
+      <button
+        mat-raised-button
+        class="btn btn-secundary"
+        (click)="submitBatch()"
+        [disabled]="eventBatch.length === 0"
+      >
+        Agendar
+      </button>
     </div>
-
-
-</div>
-
-
+  </div>
 }

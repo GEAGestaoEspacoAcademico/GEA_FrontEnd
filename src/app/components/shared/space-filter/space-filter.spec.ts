@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { SpaceFilter } from './space-filter';
@@ -9,9 +9,8 @@ describe('SpaceFilter', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SpaceFilter]
-    })
-    .compileComponents();
+      declarations: [SpaceFilter],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SpaceFilter);
     component = fixture.componentInstance;

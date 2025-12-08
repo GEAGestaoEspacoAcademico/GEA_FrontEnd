@@ -5,6 +5,9 @@ import { UsuarioService } from '../../../services/usuario/usuario.service';
 import type { GetUsuarioResponse } from '../../../types/usuario.type';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
 import type { EditProfessorModal } from '../../../components/secretaria/edit-professor-modal/edit-professor-modal';
+import { Store } from '@ngrx/store';
+import { filter, take, type Observable } from 'rxjs';
+import { selectUserId } from '../../../store/auth/auth.selectors';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 
 @Component({
@@ -17,11 +20,14 @@ export class Funcionarios implements OnInit {
   @ViewChild('confirmDeleteModal') confirmDeleteModal!: ConfirmationModal;
   @ViewChild('modalEditar') modalEditar!: EditProfessorModal;
 
-  private usuarioService = inject(UsuarioService);
-  private headerService = inject(HeaderTitleService)
-  private snackbarService = inject(SnackBarService);
+  private readonly store = inject(Store);
+  private readonly snackbarService = inject(SnackBarService);
+  private readonly usuarioService = inject(UsuarioService);
+  private readonly headerService = inject(HeaderTitleService);
 
   funcionarioParaDeletar!: GetUsuarioResponse | null;
+  currentUserId$: Observable<number | undefined> = this.store.select(selectUserId);
+  currentUserId!: number;
 
   masterFuncionarioList: GetUsuarioResponse[] = [];
   displayedFuncionarios: GetUsuarioResponse[] = [];
@@ -32,12 +38,26 @@ export class Funcionarios implements OnInit {
   pageSize = 7;
 
   ngOnInit(): void {
-    this.headerService.setTitle('Funcionários')
-    this.headerService.showBack()
-    this.listarUsuario()
+    this.headerService.setTitle('Funcionários');
+    this.headerService.showBack();
+    this.listarUsuario();
+    this.currentUserId$
+      .pipe(
+        filter((userId) => !!userId),
+        take(1),
+      )
+      .subscribe({
+        next: (userId) => {
+          if (!userId) {
+            return;
+          }
+          this.currentUserId = userId;
+        },
+        error: (_) => this.snackbarService.showError('Erro ao carregar usuário'),
+      });
   }
 
-  listarUsuario(){
+  listarUsuario() {
     this.usuarioService.listarUsuarios().subscribe({
       next: (result: GetUsuarioResponse[]) => {
         this.masterFuncionarioList = result;
@@ -48,6 +68,10 @@ export class Funcionarios implements OnInit {
   }
 
   openDeleteModal(funcionario: GetUsuarioResponse): void {
+    if (funcionario.usuarioId === this.currentUserId) {
+      this.snackbarService.showError('Não é possível excluir o seu usuário atual');
+      return;
+    }
     this.funcionarioParaDeletar = funcionario;
     this.confirmDeleteModal.open();
   }
@@ -63,10 +87,14 @@ export class Funcionarios implements OnInit {
           (f) => f.usuarioId !== this.funcionarioParaDeletar!.usuarioId,
         );
         this.listarUsuario();
+        this.snackbarService.showSuccess('Usuário deletado com sucesso!');
         this.funcionarioParaDeletar = null;
-        this.snackbarService.showSuccess("Funcionário deletado com sucesso")
+        this.snackbarService.showSuccess('Funcionário deletado com sucesso');
       },
-      error: (_) => this.snackbarService.showError('Erro ao deletar funcionário:'),
+      error: (err) => {
+        console.error('Erro ao deletar funcionário:', err);
+        this.snackbarService.showError('Erro ao deletar usuário');
+      },
     });
   }
 
@@ -103,6 +131,6 @@ export class Funcionarios implements OnInit {
 
   onEditFuncionario(funcionario: GetUsuarioResponse): void {
     this.modalEditar.abrirInstaciaModal(funcionario.usuarioId);
-    this.listarUsuario()
+    this.listarUsuario();
   }
 }

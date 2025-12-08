@@ -20,7 +20,7 @@ export class ListarCursos implements OnInit {
   cursoSelecionado!: Curso | null;
   cursoIdParaEditar!: number;
 
-  @ViewChild("deleteModal") deleteModal!: ConfirmationModal;
+  @ViewChild('deleteModal') deleteModal!: ConfirmationModal;
 
   private readonly dialog = inject(MatDialog);
   private readonly cursoService = inject(CursoService);
@@ -106,7 +106,7 @@ export class ListarCursos implements OnInit {
 
   onDelete(curso: Curso) {
     this.cursoSelecionado = curso;
-    this.deleteModal.open()
+    this.deleteModal.open();
   }
 
   confirmDelete() {
@@ -123,5 +123,4 @@ export class ListarCursos implements OnInit {
     this.cursoIdParaEditar = curso.cursoId;
     this.manipularCurso(curso);
   }
-  
 }

@@ -3,7 +3,11 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import type { Datas, JanelaHorario } from '../../models/janelasHorario.model';
 import type { Observable } from 'rxjs';
-import type { AtualizarJanelaHorarioRequest, CriarJanelaHorarioRequest, JanelasHorarioPorDataRequest } from '../../types/janelaHorario.type';
+import type {
+  AtualizarJanelaHorarioRequest,
+  CriarJanelaHorarioRequest,
+  JanelasHorarioPorDataRequest,
+} from '../../types/janelaHorario.type';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +35,9 @@ export class JanelasHorarioService {
     return this.http.post<JanelaHorario>(`${this.baseUrl}`, janelaHorario);
   }
 
-  public getJanelaHorarioPorData(requisicao: JanelasHorarioPorDataRequest): Observable<JanelaHorario[]> {
+  public getJanelaHorarioPorData(
+    requisicao: JanelasHorarioPorDataRequest,
+  ): Observable<JanelaHorario[]> {
     return this.http.post<JanelaHorario[]>(`${this.baseUrl}/disponiveis`, requisicao);
   }
 

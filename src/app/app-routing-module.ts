@@ -64,8 +64,8 @@ const routes: Routes = [
       { path: 'agendar-evento', component: ScheduleEvent },
       { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
       { path: 'cadastrar-espaco', component: SpaceRegistrationPage },
-      { path: 'agendamentos', component: Agendamentos},
-      { path: '', redirectTo: 'home', pathMatch: 'full' }
+      { path: 'agendamentos', component: Agendamentos },
+      { path: '', redirectTo: 'home', pathMatch: 'full' },
     ],
   },
   {
@@ -80,22 +80,22 @@ const routes: Routes = [
       { path: 'agendar-sala', component: AgendarSalaMateria },
       { path: 'funcionarios', component: Funcionarios },
       { path: 'cadastrar-funcionario', component: FuncionarioForm },
-      { path: 'listar-cursos', component: ListarCursos},
-      {path: 'listar-disciplinas', component: ListarDisciplinas}
+      { path: 'listar-cursos', component: ListarCursos },
+      { path: 'listar-disciplinas', component: ListarDisciplinas },
     ],
   },
   {
     path: 'coordenacao',
     component: MainLayout,
     canActivate: [RoleGuard],
-    data: {roles: ['COORDENADOR']},
+    data: { roles: ['COORDENADOR'] },
     children: [
       ...commonRoutes,
-      { path: 'visualizar-espaco', component: EspacosAcademicos},
-      { path: 'home', component: Homecoord},
-      { path: 'calendario', component: Calendario},
-      { path: '', redirectTo: 'homecoord', pathMatch: 'full' }
-    ]
+      { path: 'visualizar-espaco', component: EspacosAcademicos },
+      { path: 'home', component: Homecoord },
+      { path: 'calendario', component: Calendario },
+      { path: '', redirectTo: 'homecoord', pathMatch: 'full' },
+    ],
   },
   {
     path: '',

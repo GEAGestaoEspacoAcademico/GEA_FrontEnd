@@ -3,8 +3,8 @@
   <main class="flex-grow-1 overflow-auto">
     <router-outlet></router-outlet>
   </main>
-  @if (cargo$ | async; as cargo){
-    @if (cargo === "PROFESSOR") {
+  @if (cargo$ | async; as cargo) {
+    @if (cargo === 'PROFESSOR') {
       <app-tab-bar></app-tab-bar>
     }
   }

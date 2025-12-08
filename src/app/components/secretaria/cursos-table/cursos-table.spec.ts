@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { CursosTable } from './cursos-table';
@@ -9,9 +9,8 @@ describe('CursosTable', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CursosTable]
-    })
-    .compileComponents();
+      declarations: [CursosTable],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CursosTable);
     component = fixture.componentInstance;

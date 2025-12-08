@@ -1,4 +1,4 @@
-import type { OnInit} from '@angular/core';
+import type { OnInit } from '@angular/core';
 import { Component, inject, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { take, switchMap, throwError } from 'rxjs';
@@ -15,67 +15,68 @@ import { HeaderTitleService } from '../../../services/header-title/header-title.
   selector: 'app-schedule-class',
   standalone: false,
   templateUrl: './schedule-class.html',
-  styleUrl: './schedule-class.css'
+  styleUrl: './schedule-class.css',
 })
-export class ScheduleClass implements OnInit{
+export class ScheduleClass implements OnInit {
   private headerService = inject(HeaderTitleService);
   data: Date = new Date();
   isLoadingCriarAula = false;
-  private agendamentoService = inject(AgendamentoService)
-  private snackBarService = inject(SnackBarService)
-  private store = inject(Store)
+  private agendamentoService = inject(AgendamentoService);
+  private snackBarService = inject(SnackBarService);
+  private store = inject(Store);
 
-  usuarioId$ = this.store.select(selectUserId)
-  
-  
-  @ViewChild("scheduleModal") scheduleModal!: ScheduleDayModal;
-  
+  usuarioId$ = this.store.select(selectUserId);
+
+  @ViewChild('scheduleModal') scheduleModal!: ScheduleDayModal;
+
   ngOnInit(): void {
-    this.headerService.setTitle('Agendar Aula')
-    this.headerService.showBack()
+    this.headerService.setTitle('Agendar Aula');
+    this.headerService.showBack();
   }
 
-  pegarDias(dias: Date[]){
-    this.data = dias[0]
+  pegarDias(dias: Date[]) {
+    this.data = dias[0];
   }
 
-  salvarAgendamentoAula(aula: CriarAgendamentoAulaFormulario){
-    console.log("[AGENDAR Aula] data: ", aula)  
+  salvarAgendamentoAula(aula: CriarAgendamentoAulaFormulario) {
     this.isLoadingCriarAula = true;
 
-    if(!aula) {return;}
-    this.usuarioId$.pipe(
-      take(1),
-      switchMap((usuarioId) => {
-        if(!usuarioId) {
-          return throwError(() => new Error("Não foi possível identificar o usuário logado."))
-        }
+    if (!aula) {
+      return;
+    }
+    this.usuarioId$
+      .pipe(
+        take(1),
+        switchMap((usuarioId) => {
+          if (!usuarioId) {
+            return throwError(() => new Error('Não foi possível identificar o usuário logado.'));
+          }
 
-        const corpoRequisicao: AgendamentoAulaCriarADRequest = {
-          data: FormatUtils.formatDateForInput(aula.date),
-          disciplinaId: aula.disciplina,
-          horaFim: aula.fim,
-          horaInicio: aula.inicio,
-          salaId: aula.local,
-          solicitante: aula.solicitante,
-          usuarioId: usuarioId
-        }
-        return this.agendamentoService.criarAgendamentoAulaAD(corpoRequisicao)
-      })
-    ).subscribe({
-      next: (_) => {
-        this.snackBarService.showSuccess("Agendamento aula criado com sucesso")
-        this.isLoadingCriarAula = false
-      },
-      error: () => {
-        this.snackBarService.showError("Erro ao criar agendamento aula")
-        this.isLoadingCriarAula = false
-      }
-    })
+          const corpoRequisicao: AgendamentoAulaCriarADRequest = {
+            data: FormatUtils.formatDateForInput(aula.date),
+            disciplinaId: aula.disciplina,
+            horaFim: aula.fim,
+            horaInicio: aula.inicio,
+            salaId: aula.local,
+            solicitante: aula.solicitante,
+            usuarioId: usuarioId,
+          };
+          return this.agendamentoService.criarAgendamentoAulaAD(corpoRequisicao);
+        }),
+      )
+      .subscribe({
+        next: (_) => {
+          this.snackBarService.showSuccess('Agendamento aula criado com sucesso');
+          this.isLoadingCriarAula = false;
+        },
+        error: () => {
+          this.snackBarService.showError('Erro ao criar agendamento aula');
+          this.isLoadingCriarAula = false;
+        },
+      });
   }
 
-
-  abirModalDetalhe(data: Date){
+  abirModalDetalhe(data: Date) {
     this.scheduleModal.abrirModal(data);
   }
 }

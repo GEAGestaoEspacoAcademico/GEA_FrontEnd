@@ -65,21 +65,20 @@ export class CursoForm implements OnInit {
 
     if (this.isEditMode && this.curso) {
       this.cursoService.editCurso(this.curso.cursoId, payload).subscribe({
-          next: () => {
-            this.saved.emit()
-            this.snackbarService.showSuccess("Sucesso ao editar curso")
-          },
-          error: () => this.snackbarService.showError("Erro ao editar curso")
-        }
-      );
+        next: () => {
+          this.saved.emit();
+          this.snackbarService.showSuccess('Sucesso ao editar curso');
+        },
+        error: () => this.snackbarService.showError('Erro ao editar curso'),
+      });
     } else {
       this.cursoService.criarCurso(payload).subscribe({
         next: () => {
           this.saved.emit();
-          this.snackbarService.showSuccess("Sucesso ao criar um curso")
+          this.snackbarService.showSuccess('Sucesso ao criar um curso');
         },
-        error: () => this.snackbarService.showError("Erro ao criar um curso")
-      })
+        error: () => this.snackbarService.showError('Erro ao criar um curso'),
+      });
     }
   }
 

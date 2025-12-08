@@ -6,13 +6,15 @@
     [currentPage]="currentPage"
     [isLoading]="isLoading"
     [cursos]="cursos"
+    [semestres]="semestres"
     (searchChange)="onSearch($event)"
     (pageChange)="onPageChange($event)"
     (editClick)="onEdit($event)"
     (deleteClick)="onDelete($event)"
     (selecionaCurso)="onSelecionaCurso($event)"
+    (selecionaSemestre)="onSelecionaSemestre($event)"
     (clickAdicionarDisciplina)="adicionarDisciplina()"
-    >
+  >
   </app-disciplinas-table>
 </div>
 

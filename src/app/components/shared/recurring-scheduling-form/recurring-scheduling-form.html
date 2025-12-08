@@ -1,104 +1,122 @@
 <div class="d-center">
-    <div class="h-100 d-flex flex-column">
-        <h4 class="mb-4 text-secondary fw-bold">Detalhes do Agendamento</h4>
+  <div class="h-100 d-flex flex-column">
+    <h4 class="mb-4 text-secondary fw-bold">Detalhes do Agendamento</h4>
 
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" #formDirective="ngForm" class="d-flex flex-column h-100">
-            <div class="row g-3 mb-3">
-                <div class="col-md-6">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Data de Início</mat-label>
-                        <input formControlName="dataInicio" matInput [matDatepicker]="pickerInicio">
-                        <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
-                        <mat-datepicker #pickerInicio></mat-datepicker>
-                    </mat-form-field>
-                    @if (form.get('dataInicio')?.invalid && form.get('dataInicio')?.touched) {
-                    <div class="text-danger small mt-1">A data de início é obrigatória.</div>
-                    }
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      #formDirective="ngForm"
+      class="d-flex flex-column h-100"
+    >
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Data de Início</mat-label>
+            <input formControlName="dataInicio" matInput [min]="dataMinima" [matDatepicker]="pickerInicio" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="pickerInicio"></mat-datepicker-toggle>
+            <mat-datepicker #pickerInicio></mat-datepicker>
+          </mat-form-field>
+          @if (form.get('dataInicio')?.invalid && form.get('dataInicio')?.touched) {
+            <div class="text-danger small mt-1">A data de início é obrigatória.</div>
+          }
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Data do Final</mat-label>
+            <input formControlName="dataFim" [min]="dataMinima" matInput [matDatepicker]="pickerFim" />
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="pickerFim"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFim></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Disciplina</mat-label>
+            <mat-select formControlName="disciplina">
+              <mat-option [value]="" disabled>Selecione a Disciplina</mat-option>
+              @for (disc of disciplinas(); track disc.disciplinaId) {
+                <mat-option [value]="disc.disciplinaId">{{ disc.disciplinaNome }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          @if (form.get('disciplina')?.invalid && form.get('disciplina')?.touched) {
+            <div class="text-danger small mt-1">A disciplina é obrigatória.</div>
+          }
+        </div>
+
+        <div class="col-md-6">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Local</mat-label>
+            <mat-select formControlName="local">
+              <mat-option [value]="" disabled>Selecione o Local</mat-option>
+              @for (local of locais(); track local.salaId) {
+                <mat-option [value]="local.salaId">{{ local.salaNome }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+          @if (form.get('local')?.invalid && form.get('local')?.touched) {
+            <div class="text-danger small mt-1">O local é obrigatório.</div>
+          }
+        </div>
+      </div>
+
+      <div class="flex-grow-1 mb-3">
+        <label class="form-label fw-bold" for="horarios"
+          >Horários<span class="text-danger">*</span></label
+        >
+
+        <div
+          formArrayName="horarios"
+          class="horarios-container p-4"
+          [class.border-danger]="horariosFormArray.invalid && horariosFormArray.touched"
+        >
+          <div class="row g-3">
+            @for (janela of horarios(); track janela.janelasHorarioId; let i = $index) {
+              <div class="col-sm-6">
+                <div
+                  class="d-flex justify-content-between align-items-center p-2 bg-white border rounded h-100"
+                >
+                  <label [for]="'h-' + i" class="horario-label m-0 flex-grow-1">
+                    {{ formatarTempo(janela.horaInicio, janela.horaFim) }}
+                  </label>
+
+                  <input
+                    [formControlName]="i"
+                    [id]="'h-' + i"
+                    type="checkbox"
+                    class="form-check-input checkbox-lg m-0 border-secondary"
+                    style="cursor: pointer"
+                  />
                 </div>
+              </div>
+            }
+          </div>
+        </div>
 
-                <div class="col-md-6">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Data do Final</mat-label>
-                        <input formControlName="dataFim" matInput [matDatepicker]="pickerFim">
-                        <mat-hint>MM/DD/YYYY</mat-hint>
-                        <mat-datepicker-toggle matIconSuffix [for]="pickerFim"></mat-datepicker-toggle>
-                        <mat-datepicker #pickerFim></mat-datepicker>
-                    </mat-form-field>
-                </div>
+        @if (horarios().length === 0) {
+          <div class="mt-1">
+            <h4>Selecione uma data para listar os horários.</h4>
+          </div>
+        }
 
-                <div class="col-md-6">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Disciplina</mat-label>
-                        <mat-select formControlName="disciplina">
-                            <mat-option [value]="" disabled>Selecione a Disciplina</mat-option>
-                            @for (disc of disciplinas(); track disc.disciplinaId) {
-                            <mat-option [value]="disc.disciplinaId">{{ disc.disciplinaNome }}</mat-option>
-                            }
-                        </mat-select>
-                    </mat-form-field>
-                    @if (form.get('disciplina')?.invalid && form.get('disciplina')?.touched) {
-                    <div class="text-danger small mt-1">A disciplina é obrigatória.</div>
-                    }
-                </div>
+        @if (horariosFormArray.invalid && horarios().length !== 0) {
+          <div class="text-danger small mt-1">Selecione pelo menos um horário</div>
+        }
+      </div>
 
-                <div class="col-md-6">
-                    <mat-form-field appearance="outline" class="w-100">
-                        <mat-label>Local</mat-label>
-                        <mat-select formControlName="local">
-                            <mat-option [value]="" disabled>Selecione o Local</mat-option>
-                            @for (local of locais(); track local.salaId) {
-                            <mat-option [value]="local.salaId">{{ local.salaNome }}</mat-option>
-                            }
-                        </mat-select>
-                    </mat-form-field>
-                    @if (form.get('local')?.invalid && form.get('local')?.touched) {
-                    <div class="text-danger small mt-1">O local é obrigatório.</div>
-                    }
-                </div>
-
-
-            </div>
-
-            <div class="flex-grow-1 mb-3">
-                <label class="form-label fw-bold" for="horarios">Horários<span class="text-danger">*</span></label>
-
-                <div formArrayName="horarios" class="horarios-container p-4"
-                    [class.border-danger]="horariosFormArray.invalid && horariosFormArray.touched">
-                    <div class="row g-3">
-                        @for (janela of horarios(); track janela.janelasHorarioId; let i = $index) {
-                        <div class="col-sm-6">
-                            <div
-                                class="d-flex justify-content-between align-items-center p-2 bg-white border rounded h-100">
-                                <label [for]="'h-' + i" class="horario-label m-0 flex-grow-1">
-                                    {{ formatTime(janela.horaInicio, janela.horaFim) }}
-                                </label>
-
-                                <input [formControlName]="i" [id]="'h-' + i" type="checkbox"
-                                    class="form-check-input checkbox-lg m-0 border-secondary" style="cursor: pointer;">
-                            </div>
-                        </div>
-                        }
-                    </div>
-                </div>
-
-                @if (horarios().length === 0) {
-                <div class="mt-1">
-                    <h4>Selecione uma data para listar os horários.</h4>
-                </div>
-                }
-
-                @if (horariosFormArray.invalid && horarios().length !== 0) {
-                <div class="text-danger small mt-1">Selecione pelo menos um horário</div>
-                }
-            </div>
-
-            <div class="mt-auto d-flex justify-content-end border-top pt-3">
-                <button type="submit" [disabled]="horarios().length === 0" class="btn btn-primary shadow-sm"
-                    style="width: fit-content; margin-right: auto; margin-left: auto;">
-                    Confirmar Agendamento
-                </button>
-            </div>
-        </form>
-    </div>
+      <div class="mt-auto d-flex justify-content-end border-top pt-3">
+        <button
+          type="submit"
+          [disabled]="horarios().length === 0"
+          class="btn btn-primary shadow-sm"
+          style="width: fit-content; margin-right: auto; margin-left: auto"
+        >
+          Confirmar Agendamento
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

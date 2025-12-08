@@ -23,7 +23,7 @@ export class Calendario implements OnInit {
   mostrarLista = false;
 
   private professorService = inject(ProfessorService);
-  private titleService = inject(HeaderTitleService)
+  private titleService = inject(HeaderTitleService);
 
   ngOnInit(): void {
     this.professorService.getProfessores().subscribe((res) => {
@@ -35,24 +35,22 @@ export class Calendario implements OnInit {
       this.filtrarProfessores(valor ?? '');
     });
 
-    this.titleService.showBack()
-    this.titleService.setTitle("")
+    this.titleService.showBack();
+    this.titleService.setTitle('');
   }
 
   filtrarProfessores(valor: string): void {
-  const termo = valor?.toLowerCase().trim() || '';
+    const termo = valor?.toLowerCase().trim() || '';
 
-  this.professoresFiltrados = this.professores.filter(p =>
-    p.professorNome.toLowerCase().includes(termo)
-  );
-  const selecionado = this.professores.find(p =>
-    p.professorNome.toLowerCase() === termo
-  );
+    this.professoresFiltrados = this.professores.filter((p) =>
+      p.professorNome.toLowerCase().includes(termo),
+    );
+    const selecionado = this.professores.find((p) => p.professorNome.toLowerCase() === termo);
 
-  if (selecionado) {
-    this.selecionarProfessor(selecionado);
+    if (selecionado) {
+      this.selecionarProfessor(selecionado);
+    }
   }
-}
 
   selecionarProfessor(professor: Professor): void {
     this.professorSelecionado = professor;

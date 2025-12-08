@@ -56,7 +56,11 @@ export class EsqueciSenha implements OnInit {
 
   formRedefinirSenha = new FormGroup(
     {
-      novaSenha: new FormControl('', [Validators.required, Validators.minLength(6)]),
+      novaSenha: new FormControl('', [
+        Validators.required,
+        Validators.minLength(8),
+        this.senhaSegura(),
+      ]),
       novaSenhaRepetida: new FormControl('', [Validators.required]),
     },
     {
@@ -64,12 +68,41 @@ export class EsqueciSenha implements OnInit {
     },
   );
 
+  private senhaSegura(): ValidatorFn {
+    return (input: AbstractControl): ValidationErrors | null => {
+      const value = input.value;
+
+      if (!value) {
+        return null;
+      }
+
+      const temLetraMaiscula = /[A-Z]+/.test(value);
+      const temLetraMinuscula = /[a-z]+/.test(value);
+      const temNumero = /\d+/.test(value);
+      const temCaracterEspecial = /[^a-zA-Z0-9]/.test(value);
+
+      const senhaValida = temLetraMaiscula && temLetraMinuscula && temNumero && temCaracterEspecial;
+
+      if (!senhaValida) {
+        return {
+          senha: {
+            temLetraMaiscula: temLetraMaiscula,
+            temLetraMinuscula: temLetraMinuscula,
+            temNumero: temNumero,
+            temCaracterEspecial: temCaracterEspecial,
+          },
+        };
+      }
+      return null;
+    };
+  }
+
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((params) => {
       this.token = params['token'] || null;
 
       if (this.token) {
-        this.formRedefinirSenha.reset();    
+        this.formRedefinirSenha.reset();
         this.setupPasswordObservers();
       } else {
         this.formEmail.reset();
@@ -78,13 +111,17 @@ export class EsqueciSenha implements OnInit {
   }
 
   setupPasswordObservers() {
-    this.formRedefinirSenha.get('novaSenha')?.valueChanges.subscribe(value => {
+    this.formRedefinirSenha.get('novaSenha')?.valueChanges.subscribe((value) => {
       this.btnNewVisibility = !!(value && value.trim().length > 0);
     });
 
-    this.formRedefinirSenha.get('novaSenhaRepetida')?.valueChanges.subscribe(value => {
+    this.formRedefinirSenha.get('novaSenhaRepetida')?.valueChanges.subscribe((value) => {
       this.btnRepeatVisibility = !!(value && value.trim().length > 0);
     });
+  }
+
+  get errosDeSenhaSegura() {
+    return this.formRedefinirSenha.get('novaSenha')?.errors?.['senha'];
   }
 
   toggleNewPassword() {
@@ -94,7 +131,7 @@ export class EsqueciSenha implements OnInit {
   toggleRepeatPassword() {
     this.hideRepeatPassword = !this.hideRepeatPassword;
   }
-  
+
   async enviarEmail() {
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -103,29 +140,29 @@ export class EsqueciSenha implements OnInit {
 
     const email = this.formEmail.get('email')?.value?.trim();
 
-    if(!email) {
-      this.snackbarService.showError("Informe um email")
+    if (!email) {
+      this.snackbarService.showError('Informe um email');
       return;
     }
 
     const corpoEnviarEmail: EnviarEmailRequest = {
-      email
-    }
+      email,
+    };
     this.usuarioService.enviarEmailRedefinirSenha(corpoEnviarEmail).subscribe({
       next: (_) => {
         this.isEmailSucess = true;
-      }, 
+      },
       error: (_) => {
-        this.snackbarService.showError("Erro enviar email")
+        this.snackbarService.showError('Erro enviar email');
         this.isEmailSucess = false;
-      }
-    })
+      },
+    });
   }
 
   voltarParaPaginaAnterior(): void {
-    if(this.token){
-      this.router.navigate(['/login'])
-    }else{
+    if (this.token) {
+      this.router.navigate(['/login']);
+    } else {
       this.location.back();
     }
   }
@@ -134,24 +171,25 @@ export class EsqueciSenha implements OnInit {
     const novaSenha = this.formRedefinirSenha.get('novaSenha')?.value?.trim();
     const novaSenhaRepetida = this.formRedefinirSenha.get('novaSenhaRepetida')?.value?.trim();
 
-    if(!novaSenha || !novaSenhaRepetida || !this.token) { return }
+    if (!novaSenha || !novaSenhaRepetida || !this.token) {
+      return;
+    }
 
     const corpoEsqueciSenha: AlterarSenhaEsquecidaRequest = {
       repetirSenha: novaSenhaRepetida,
       senha: novaSenha,
-      token: this.token
-    }
+      token: this.token,
+    };
 
     this.usuarioService.alterarSenhaEsquecida(corpoEsqueciSenha).subscribe({
-      next: (resposta) => {
+      next: () => {
         this.snackbarService.showSuccess('Senha alterada com sucesso!');
         this.router.navigate(['/login']);
-        console.log(resposta)
       },
       error: (_) => {
-        this.snackbarService.showError("Erro ao alterar senha")
-      }
-    })
+        this.snackbarService.showError('Erro ao alterar senha');
+      },
+    });
   }
 
   validarEmail() {

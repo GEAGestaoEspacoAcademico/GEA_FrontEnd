@@ -1,4 +1,4 @@
-import type { ComponentFixture} from '@angular/core/testing';
+import type { ComponentFixture } from '@angular/core/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { Scheduling } from './scheduling';
@@ -9,9 +9,8 @@ describe('Scheduling', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [Scheduling]
-    })
-    .compileComponents();
+      declarations: [Scheduling],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(Scheduling);
     component = fixture.componentInstance;

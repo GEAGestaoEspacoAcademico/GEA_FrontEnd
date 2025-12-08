@@ -1,9 +1,9 @@
-import type { Agendamento } from "./agendamento.model";
+import type { Agendamento } from './agendamento.model';
 
-export interface JanelaHorario{
-  janelasHorarioId: number,
-  horaInicio: string,
-  horaFim: string
+export interface JanelaHorario {
+  janelasHorarioId: number;
+  horaInicio: string;
+  horaFim: string;
 }
 
 export interface SlotHorario {

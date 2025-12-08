@@ -1,5 +1,5 @@
 //!MUDAR
 export interface TipoRecurso {
-  tipoRecursoId: number,
-  tipoRecursoNome: string
+  tipoRecursoId: number;
+  tipoRecursoNome: string;
 }

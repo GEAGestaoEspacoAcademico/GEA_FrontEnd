@@ -1,5 +1,5 @@
 import type { OnInit } from '@angular/core';
-import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { FormBuilder, type FormGroup } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { JanelasHorarioService } from '../../../services/janelas-horario/janelas-horario.service';
@@ -14,20 +14,22 @@ import type { CriarEventoFormulario } from '../../../types/agendamentoEvento.typ
 import { FormatUtils } from '../../../utils/format.utils';
 import type { CriarAgendamentoAulaFormulario } from '../../../types/util.types';
 import type { JanelasHorarioPorDataRequest } from '../../../types/janelaHorario.type';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-smart-scheduling-form',
   standalone: false,
   templateUrl: './smart-scheduling-form.html',
-  styleUrl: './smart-scheduling-form.css'
+  styleUrl: './smart-scheduling-form.css',
 })
 export class SmartSchedulingForm implements OnInit {
-
   private fb = inject(FormBuilder);
   private serviceHorario = inject(JanelasHorarioService);
   private serviceCurso = inject(CursoService);
   private serviceSala = inject(SalaService);
   private serviceDisciplina = inject(DisciplinaService);
+  private cdr = inject(ChangeDetectorRef);
+  private snackBarService = inject(SnackBarService)
 
   private _singleDate: Date | null = null;
   private _dateArray: Date[] = [];
@@ -81,8 +83,19 @@ export class SmartSchedulingForm implements OnInit {
 
   ngOnInit(): void {
     this.buildForms();
-    this.setupListeners(); 
-    this.carregarDadosAuxiliares(); 
+    this.setupListeners();
+    this.carregarDadosAuxiliares();
+  }
+  verificarPreRequisitos(): void {
+    const temSingle = !!this.singleDate;
+    const temArray = this.dateArray && this.dateArray.length > 0;
+
+    if (!temSingle && !temArray) {
+      this.snackBarService.showError("Por favor, selecione uma data no calendário primeiro.")
+      
+      this.aulaForm.get('local')?.setValue(null, { emitEvent: false });
+      this.eventoForm.get('local')?.setValue(null, { emitEvent: false });
+    }
   }
 
   buildForms() {
@@ -91,7 +104,7 @@ export class SmartSchedulingForm implements OnInit {
       fim: ['', Validators.required],
       local: ['', Validators.required],
       disciplina: ['', Validators.required],
-      solicitante: ['', Validators.required]
+      solicitante: ['', Validators.required],
     });
 
     this.eventoForm = this.fb.group({
@@ -110,6 +123,14 @@ export class SmartSchedulingForm implements OnInit {
     this.eventoForm.get('local')?.valueChanges.subscribe(() => {
       this.buscarJanelasHorario();
     });
+
+    this.aulaForm.get('inicio')?.valueChanges.subscribe((horarioInicio) => {
+      this.atualizarHorariosFim(horarioInicio, 'aula');
+    });
+
+    this.eventoForm.get('inicio')?.valueChanges.subscribe((horarioInicio) => {
+      this.atualizarHorariosFim(horarioInicio, 'evento');
+    });
   }
 
   carregarDadosAuxiliares() {
@@ -118,10 +139,20 @@ export class SmartSchedulingForm implements OnInit {
     this.getSalas();
   }
 
+  formatarHorario(horario: string) {
+    if (horario === null || horario === '') {
+      return '';
+    }
+    return FormatUtils.formatHour(horario);
+  }
 
   buscarJanelasHorario(): void {
+    if (!this.aulaForm || !this.eventoForm) {
+      return;
+    }
+
     let dataReferencia: Date | null = null;
-    
+
     if (this._singleDate) {
       dataReferencia = this._singleDate;
     } else if (this._dateArray && this._dateArray.length > 0) {
@@ -129,14 +160,16 @@ export class SmartSchedulingForm implements OnInit {
     }
     let salaId = null;
 
-    if(this.mode === "aula"){
+    if (this.mode === 'aula') {
       salaId = this.aulaForm.get('local')?.value;
-    }else{
+    } else if (this.mode === 'evento') {
       salaId = this.eventoForm.get('local')?.value;
     }
 
     if (!dataReferencia || !salaId) {
       this.listaHorarios = [];
+      this.horariosDisponiveisInicio = []; 
+      this.horariosDisponiveisFim = [];
       return;
     }
 
@@ -144,22 +177,28 @@ export class SmartSchedulingForm implements OnInit {
 
     const buscarJanelaHorarioRequest: JanelasHorarioPorDataRequest = {
       data: dataString,
-      salaId
-    }
+      salaId,
+    };
 
     this.serviceHorario.getJanelaHorarioPorData(buscarJanelaHorarioRequest).subscribe({
       next: (janelas: JanelaHorario[]) => {
-        this.listaHorarios = janelas;
+        this.listaHorarios = janelas || [];
+        const iniciosUnicos = new Set(janelas.map((j) => j.horaInicio));
+        this.horariosDisponiveisInicio = Array.from(iniciosUnicos).sort();
+
+        this.horariosDisponiveisFim = [];
       },
       error: (err) => {
         console.error('Erro ao buscar janelas', err);
         this.listaHorarios = [];
-      }
+        this.horariosDisponiveisInicio = []; 
+        this.horariosDisponiveisFim = [];
+      },
     });
   }
 
   getHorariosDisponiveis(date: Date): void {
-    this._singleDate = date; 
+    this._singleDate = date;
     this.buscarJanelasHorario();
   }
 
@@ -176,11 +215,13 @@ export class SmartSchedulingForm implements OnInit {
   }
 
   submitAula() {
-    if (this.aulaForm.invalid) { return };
+    if (this.aulaForm.invalid) {
+      return;
+    }
 
     const payload = {
       ...this.aulaForm.value,
-      date: this.singleDate
+      date: this.singleDate,
     };
 
     this.scheduleSubmit.emit(payload);
@@ -200,21 +241,21 @@ export class SmartSchedulingForm implements OnInit {
     const temSingle = !!this.singleDate;
 
     if (!temArray && !temSingle) {
-      console.warn("Nenhuma data selecionada para adicionar o evento.");
+      console.warn('Nenhuma data selecionada para adicionar o evento.');
       return;
     }
 
     const config = this.eventoForm.value;
 
     if (temArray) {
-      this.dateArray.forEach(data => {
+      this.dateArray.forEach((data) => {
         this.eventBatch.push({
           date: data,
           nomeEvento: config.nomeEvento,
           local: config.local,
           inicio: config.inicio,
           fim: config.fim,
-          todosHorarios: config.todosHorarios
+          todosHorarios: config.todosHorarios,
         });
       });
     } else if (temSingle) {
@@ -224,7 +265,7 @@ export class SmartSchedulingForm implements OnInit {
         local: config.local,
         inicio: config.inicio,
         fim: config.fim,
-        todosHorarios: config.todosHorarios
+        todosHorarios: config.todosHorarios,
       });
     }
 
@@ -236,29 +277,31 @@ export class SmartSchedulingForm implements OnInit {
   }
 
   submitBatch() {
-    if (this.eventBatch.length === 0) { return; }
+    if (this.eventBatch.length === 0) {
+      return;
+    }
     const payloadAgrupado: CriarEventoFormulario[] = [];
-    
-    this.eventBatch.forEach(item => {
-      let grupoExistente = payloadAgrupado.find(g =>
-        g.eventoNome === item.nomeEvento && g.salaId === Number(item.local)
+
+    this.eventBatch.forEach((item) => {
+      let grupoExistente = payloadAgrupado.find(
+        (g) => g.eventoNome === item.nomeEvento && g.salaId === Number(item.local),
       );
 
       if (!grupoExistente) {
         grupoExistente = {
           eventoNome: item.nomeEvento,
           salaId: Number(item.local),
-          dias: []
+          dias: [],
         };
         payloadAgrupado.push(grupoExistente);
       }
 
-      const dataFormatada = FormatUtils.formatDateForInput(new Date(item.date))
+      const dataFormatada = FormatUtils.formatDateForInput(new Date(item.date));
 
       grupoExistente.dias.push({
         dia: dataFormatada,
         horaInicio: item.inicio,
-        horaFim: item.fim
+        horaFim: item.fim,
       });
     });
 
@@ -271,27 +314,57 @@ export class SmartSchedulingForm implements OnInit {
   getCursosProfessor() {
     this.serviceCurso.getCursos().subscribe({
       next: (cursos: Curso[]) => {
-        this.cursos = cursos;
+        this.cursos = cursos || [];
       },
-      error: () => { this.cursos = []; }
+      error: () => {
+        this.cursos = [];
+      },
     });
   }
 
   getDisciplinas() {
     this.serviceDisciplina.getDisciplinas().subscribe({
       next: (disciplinas: Disciplina[]) => {
-        this.disciplinas = disciplinas;
+        this.disciplinas = disciplinas || [];
       },
-      error: () => { this.disciplinas = []; }
+      error: () => {
+        this.disciplinas = [];
+      },
     });
   }
 
   getSalas() {
     this.serviceSala.getSalas().subscribe({
       next: (salas: Sala[]) => {
-        this.salas = salas;
+        this.salas = salas || [];
       },
-      error: () => { this.salas = []; }
+      error: () => {
+        this.salas = [];
+      },
     });
+  }
+  atualizarHorariosFim(inicioSelecionado: string, modo: 'aula' | 'evento') {
+    if (!inicioSelecionado) {
+      this.horariosDisponiveisFim = [];
+      return;
+    }
+
+    let inicioFormatado = inicioSelecionado;
+    if (inicioSelecionado.length === 4) {
+      inicioFormatado = '0' + inicioSelecionado;
+    }
+
+    const todosFins = this.listaHorarios.map((j) => j.horaFim);
+    const finsValidos = todosFins.filter((fim) => fim > inicioFormatado);
+    this.horariosDisponiveisFim = Array.from(new Set(finsValidos)).sort();
+
+    const form = modo === 'aula' ? this.aulaForm : this.eventoForm;
+    const fimAtual = form.get('fim')?.value;
+
+    if (fimAtual && fimAtual <= inicioSelecionado) {
+      form.get('fim')?.setValue('');
+    }
+
+    this.cdr.detectChanges();
   }
 }

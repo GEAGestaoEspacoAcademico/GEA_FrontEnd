@@ -1,24 +1,29 @@
-import type { OnInit} from "@angular/core";
-import { Component, inject, ViewChild } from "@angular/core";
-import { Store } from "@ngrx/store";
-import type { Observable} from "rxjs";
-import { filter, take, switchMap, forkJoin } from "rxjs";
-import type { ConfirmationModal } from "../../../components/modals/confirmation-modal/confirmation-modal";
-import type { Field } from "../../../components/shared/scheduling/types";
-import { AgendamentoService } from "../../../services/agendamento/agendamento.service";
-import { HeaderTitleService } from "../../../services/header-title/header-title.service";
-import { JanelasHorarioService } from "../../../services/janelas-horario/janelas-horario.service";
-import { RecursoService } from "../../../services/recurso/recurso.service";
-import { SalaService } from "../../../services/sala/sala.service";
-import { SnackBarService } from "../../../services/snackbar/snackbar.service";
-import { TipoSalaService } from "../../../services/tipo-sala/tipo-sala.service";
-import { selectUserCargo, selectUserId } from "../../../store/auth/auth.selectors";
-import type { AgendamentoAulaCriarRequest } from "../../../types/agendamentoAula.type";
-import type { AgendarForm } from "../../../types/agendar";
-import type { BuscarRecomendacaoRequest, BuscarRecomendacaoResponse } from "../../../types/sala.type";
-import { FormatUtils } from "../../../utils/format.utils";
-import type { Option } from "../../../types/utils.types"
-import ProfessorService from "../../../services/professor/professor.service";
+import type { OnInit } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
+import { Store } from '@ngrx/store';
+import type { Observable } from 'rxjs';
+import { filter, take, switchMap, forkJoin } from 'rxjs';
+import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
+import type { Field } from '../../../components/shared/scheduling/types';
+import { AgendamentoService } from '../../../services/agendamento/agendamento.service';
+import { HeaderTitleService } from '../../../services/header-title/header-title.service';
+import { JanelasHorarioService } from '../../../services/janelas-horario/janelas-horario.service';
+import { RecursoService } from '../../../services/recurso/recurso.service';
+import { SalaService } from '../../../services/sala/sala.service';
+import { SnackBarService } from '../../../services/snackbar/snackbar.service';
+import { TipoSalaService } from '../../../services/tipo-sala/tipo-sala.service';
+import { selectUserCargo, selectUserId } from '../../../store/auth/auth.selectors';
+import type { AgendamentoAulaCriarRequest } from '../../../types/agendamentoAula.type';
+import type { AgendarForm } from '../../../types/agendar';
+import type {
+  BuscarRecomendacaoRequest,
+  BuscarRecomendacaoResponse,
+} from '../../../types/sala.type';
+import { FormatUtils } from '../../../utils/format.utils';
+import type { Option } from '../../../types/utils.types';
+import ProfessorService from '../../../services/professor/professor.service';
+import { Scheduling } from '../../../components/shared/scheduling/scheduling';
+import type { JanelaHorario } from '../../../models/janelasHorario.model';
 
 @Component({
   selector: 'app-agenda',
@@ -39,25 +44,25 @@ export class Agenda implements OnInit {
 
   @ViewChild('sucessModal') sucessModal!: ConfirmationModal;
   @ViewChild('classInfoModal') classInfoModal!: ConfirmationModal;
+  @ViewChild(Scheduling) formulario!: Scheduling;
 
   cargo$: Observable<string | undefined> = this.store.select(selectUserCargo);
-  
-  requisicaoRecomendacao!: BuscarRecomendacaoRequest
+
+  requisicaoRecomendacao: BuscarRecomendacaoRequest | null = null;
   isloading: boolean = false;
   isRecomendacaoLoading: boolean = false;
   submittedData!: AgendarForm;
   formFields: Field[] | undefined;
-  salasRecomendadas: BuscarRecomendacaoResponse[] = []
-  idSalaRecomendadaAtual!: number
+  salasRecomendadas: BuscarRecomendacaoResponse | null = null;
+  idSalaRecomendadaAtual!: number;
+  horarios: JanelaHorario[] = [];
 
   ngOnInit(): void {
     this.headerService.setTitle('');
     this.loadDataAndBuildForm();
-    this.cargo$
-    .pipe(take(1))
-    .subscribe((cargo) => {
+    this.cargo$.pipe(take(1)).subscribe((cargo) => {
       if (cargo === 'COORDENADOR') {
-        this.headerService.showBack()
+        this.headerService.showBack();
       } else {
         this.headerService.hideBack();
       }
@@ -66,51 +71,55 @@ export class Agenda implements OnInit {
 
   private loadDataAndBuildForm(): void {
     this.isloading = true;
-    this.store.select(selectUserId).pipe(
-      filter(Boolean),
-      take(1),
-      switchMap(userId => {
-        return forkJoin({
-        disciplinas: this.professorService.getDisciplinasDoProfessor(userId),
-        cursos: this.professorService.getCursosDoProfessor(userId),
-        tipoSalas: this.tiposSalaService.getTiposSala(),
-        recursos: this.recursosService.getRecursos(),
-        janelasHorario: this.janelasHorarioService.getJanelasHorario()
+    this.store
+      .select(selectUserId)
+      .pipe(
+        filter(Boolean),
+        take(1),
+        switchMap((userId) => {
+          return forkJoin({
+            disciplinas: this.professorService.getDisciplinasDoProfessor(userId),
+            tipoSalas: this.tiposSalaService.getTiposSala(),
+            recursos: this.recursosService.getRecursos(),
+            janelasHorario: this.janelasHorarioService.getJanelasHorario(),
+          });
+        }),
+      )
+      .subscribe({
+        next: ({ disciplinas, tipoSalas, recursos, janelasHorario }) => {
+          const disciplinaOptions = disciplinas.map((d) => ({
+            label: d.disciplinaNome,
+            value: d.disciplinaId,
+          }));
+          const tiposSalaOptions = tipoSalas.map((ts) => ({
+            label: ts.tipoSalaNome,
+            value: ts.tipoSalaId,
+          }));
+
+          const recursoOptions = recursos.map((r) => ({ label: r.nome, value: r.id }));
+          const janelaHorarioOptions = janelasHorario.map((jh) => {
+            const hi = FormatUtils.formatHour(jh.horaInicio);
+            const hf = FormatUtils.formatHour(jh.horaFim);
+            return { label: `${hi}-${hf}`, value: jh.janelasHorarioId };
+          });
+          this.horarios = janelasHorario;
+          this.isloading = false;
+          this.formFields = this.createFormFields(
+            disciplinaOptions,
+            tiposSalaOptions,
+            recursoOptions,
+            janelaHorarioOptions,
+          );
+        },
+        error: (err) => {
+          console.error('Falha ao carregar dados do formulário:', err);
+          this.isloading = false;
+        },
       });
-      })
-    ).subscribe({
-      next: ({disciplinas, cursos, tipoSalas, recursos, janelasHorario}) => {
-        const disciplinaOptions = disciplinas.map(d => ({ label: d.disciplinaNome, value: d.disciplinaId }));
-        const cursoOptions = cursos.map(c => ({ label: c.cursoNome, value: c.cursoId }));
-        const tiposSalaOptions = tipoSalas.map(ts => ({ label: ts.tipoSalaNome, value: ts.tipoSalaId }));
-        
-        const recursoOptions = recursos.map(r => ({label: r.nome, value: r.id}))
-        const janelaHorarioOptions = janelasHorario.map(jh => {
-          const hi = FormatUtils.formatHour(jh.horaInicio);
-          const hf = FormatUtils.formatHour(jh.horaFim);
-          return(
-            {label: `${hi}-${hf}`, value: jh.janelasHorarioId}
-          )
-        })
-        this.isloading = false;
-        this.formFields = this.createFormFields(
-          disciplinaOptions,
-          cursoOptions,
-          tiposSalaOptions,
-          recursoOptions,
-          janelaHorarioOptions
-        );
-      },
-      error: (err) => {
-        console.error('Falha ao carregar dados do formulário:', err);
-        this.isloading = false;
-      }
-    })
   }
 
   private createFormFields(
     disciplinaOptions: Option[],
-    cursoOptions: Option[],
     tiposSalaOptions: Option[],
     recursoOptions: Option[],
     janelaHorarioOptions: Option[],
@@ -146,13 +155,6 @@ export class Agenda implements OnInit {
         type: 'select',
         options: janelaHorarioOptions,
         validators: { required: true, errorMessages: { required: 'O horário é obrigatório.' } },
-      },
-      {
-        name: 'cursoId',
-        label: 'Curso',
-        type: 'select',
-        options: cursoOptions,
-        validators: { required: true, errorMessages: { required: 'O curso é obrigatório.' } },
       },
       {
         name: 'disciplinaId',
@@ -194,14 +196,23 @@ export class Agenda implements OnInit {
   }
 
   criarRequisicaoParaRecomendacao(formData: AgendarForm) {
-    //TODO: COLOCAR DINÂMICO QUANDO /recomendacao FOR ADAPTADO
+    const horarioSelecionado = this.horarios.find(
+      (h) => h.janelasHorarioId === Number(formData.janelaHorarioId),
+    );
+
+    if (!horarioSelecionado) {
+      this.snackbarService.showError('Horário não encontrado. Verifique a seleção.');
+      this.requisicaoRecomendacao = null;
+      return;
+    }
+
     const recursosIds = formData.recursos.map((r) => r.id);
     this.requisicaoRecomendacao = {
       capacidade: Number(formData.capacidade),
       data: formData.data,
       horarios: {
-        horaFim: '7:40',
-        horaInicio: '9:20',
+        horaFim: horarioSelecionado.horaFim,
+        horaInicio: horarioSelecionado.horaInicio,
       },
       recursosIds,
       tipoSalaId: Number(formData.localId),
@@ -215,6 +226,7 @@ export class Agenda implements OnInit {
   }
 
   buscarRecomendacoes() {
+    if(!this.requisicaoRecomendacao) {return}
     this.isRecomendacaoLoading = true;
     this.salaService.getRecomendacao(this.requisicaoRecomendacao).subscribe({
       next: (data) => {
@@ -234,30 +246,35 @@ export class Agenda implements OnInit {
     this.classInfoModal.open(id);
   }
 
-agendarAula() {
-  this.store.select(selectUserId).pipe(
-    filter(Boolean),
-    take(1),
-    switchMap(userId => {
-      const corpoCriarAgendamento: AgendamentoAulaCriarRequest = {
-        usuarioId: userId,
-        salaId: Number(this.idSalaRecomendadaAtual),
-        disciplinaId: Number(this.submittedData.disciplinaId),
-        data: this.submittedData.data,
-        janelasHorarioId: Number(this.submittedData.janelaHorarioId),
-        isEvento: false,
-        quantidade: Number(this.submittedData.qtdAulas)
-      };
-      return this.agendamentoService.criarAgendamentoAula(corpoCriarAgendamento);
-    })
-  ).subscribe({
-    next: (_) => {
-      this.snackbarService.showSuccess("Agendamento feito com sucesso");
-    },
-    error: (err) => {
-      console.error("Erro ao criar agendamento:", err);
-      this.snackbarService.showError("Falha ao agendar. Tente novamente.");
-    }
-  });
-}
+  agendarAula() {
+    this.store
+      .select(selectUserId)
+      .pipe(
+        filter(Boolean),
+        take(1),
+        switchMap((userId) => {
+          const corpoCriarAgendamento: AgendamentoAulaCriarRequest = {
+            usuarioId: userId,
+            salaId: Number(this.idSalaRecomendadaAtual),
+            disciplinaId: Number(this.submittedData.disciplinaId),
+            data: this.submittedData.data,
+            janelasHorarioId: Number(this.submittedData.janelaHorarioId),
+            isEvento: false,
+            quantidade: Number(this.submittedData.qtdAulas),
+          };
+          return this.agendamentoService.criarAgendamentoAula(corpoCriarAgendamento);
+        }),
+      )
+      .subscribe({
+        next: (_) => {
+          this.snackbarService.showSuccess('Agendamento feito com sucesso');
+          this.formulario.resetarFormulario();
+          this.salasRecomendadas = null;
+        },
+        error: (err) => {
+          console.error('Erro ao criar agendamento:', err);
+          this.snackbarService.showError('Falha ao agendar. Tente novamente.');
+        },
+      });
+  }
 }

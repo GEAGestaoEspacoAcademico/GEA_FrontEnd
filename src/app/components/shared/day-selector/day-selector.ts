@@ -1,6 +1,15 @@
 import type { AfterViewInit } from '@angular/core';
-import { Component, ElementRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  inject,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormatUtils } from '../../../utils/format.utils';
+import type { AgendamentoAula } from '../../../models/agendamentoAula.model';
 
 /**
  * Define a estrutura de dados para um único dia
@@ -23,7 +32,6 @@ export interface Day {
  * e a seleção de um dia específico. Controla fades
  * (gradientes) nas laterais para indicar a
  * possibilidade de rolagem.
- *
  * @usage
  * <app-day-selector
  * [currentMonthName]="'Outubro'"
@@ -37,7 +45,7 @@ export interface Day {
   selector: 'app-day-selector',
   standalone: false,
   templateUrl: './day-selector.html',
-  styleUrl: './day-selector.css'
+  styleUrl: './day-selector.css',
 })
 export class DaySelector implements AfterViewInit {
   /** Referência ao elemento host do componente injetado. */
@@ -45,6 +53,8 @@ export class DaySelector implements AfterViewInit {
 
   /** O nome do mês atual a ser exibido (ex: "Outubro"). */
   @Input() currentMonthName!: string;
+
+  @Input() diasSelecionados: AgendamentoAula[] = [];
 
   /** O array de objetos Day a ser renderizado no seletor. */
   @Input() days!: Day[];
@@ -96,9 +106,9 @@ export class DaySelector implements AfterViewInit {
     if (!container) {
       return;
     }
-    
+
     const activeElement = container.querySelector('.day-item.active') as HTMLElement;
-    
+
     if (activeElement && this.activeDayId === this.currentDay) {
       activeElement.scrollIntoView({
         behavior: 'smooth',
@@ -146,7 +156,9 @@ export class DaySelector implements AfterViewInit {
    */
   private checkScroll(element?: HTMLElement): void {
     const el = element || this.el.nativeElement.querySelector('.day-selector');
-    if (!el) { return; }
+    if (!el) {
+      return;
+    }
 
     const scrollLeft = el.scrollLeft;
     const scrollWidth = el.scrollWidth;
@@ -154,5 +166,11 @@ export class DaySelector implements AfterViewInit {
     const tolerance = 1;
     this.showLeftFade = scrollLeft > tolerance;
     this.showRightFade = scrollLeft + clientWidth < scrollWidth - tolerance;
+  }
+
+  temAgendamento(dia: Day): boolean {
+    return this.diasSelecionados.some((agendamento) => {
+      return agendamento.data === dia.id;
+    });
   }
 }
