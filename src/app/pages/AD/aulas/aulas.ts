@@ -121,22 +121,33 @@ export class Aulas implements OnInit {
       return;
     }
     this.isLoading = true;
-    this.agendamentoService.deleteAgendamentoAula(this.agendamentoToCancelId).subscribe({
-      next: () => {
-        this.snackBarService.showSuccess('Agendamento cancelado com sucesso');
-        this.aulasCorrentes = this.aulasCorrentes.filter(
-          (a) => a.agendamentoAulaId !== this.agendamentoToCancelId,
-        );
-        this.filtrarAulasDiaAtual();
+    this.usuarioId$
+      .pipe(
+        filter((id) => !!id),
+        take(1),
+        switchMap((usuarioId) => {
+          return this.agendamentoService.cancelarAgendamentoAula(
+            this.agendamentoToCancelId!,
+            usuarioId!,
+          );
+        }),
+      )
+      .subscribe({
+        next: () => {
+          this.snackBarService.showSuccess('Agendamento cancelado com sucesso');
+          this.aulasCorrentes = this.aulasCorrentes.filter(
+            (a) => a.agendamentoAulaId !== this.agendamentoToCancelId,
+          );
+          this.filtrarAulasDiaAtual();
 
-        this.agendamentoToCancelId = null;
-        this.isLoading = false;
-      },
-      error: (_) => {
-        this.snackBarService.showError('Erro ao cancelar o agendamento');
-        this.isLoading = false;
-      },
-    });
+          this.agendamentoToCancelId = null;
+          this.isLoading = false;
+        },
+        error: (_) => {
+          this.snackBarService.showError('Erro ao cancelar o agendamento');
+          this.isLoading = false;
+        },
+      });
   }
 
   closeModal() {
