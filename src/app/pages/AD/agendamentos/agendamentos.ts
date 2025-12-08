@@ -1,10 +1,13 @@
 import { ChangeDetectorRef, Component, inject, type OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { filter, switchMap, take, type Observable } from 'rxjs';
 import { AgendamentoService } from '../../../services/agendamento/agendamento.service';
 import type { Agendamento } from '../../../models/agendamento.model';
 import type { ConfirmationModal } from '../../../components/modals/confirmation-modal/confirmation-modal';
 import { SnackBarService } from '../../../services/snackbar/snackbar.service';
 import { HeaderTitleService } from '../../../services/header-title/header-title.service';
+import { selectUserId } from '../../../store/auth/auth.selectors';
 
 @Component({
   selector: 'app-agendamentos',
@@ -16,10 +19,13 @@ export class Agendamentos implements OnInit {
   dataAtual: Date | string = '';
   listaAgendamentos: Agendamento[] = [];
 
+  private store = inject(Store);
   agendamentoService = inject(AgendamentoService);
   router = inject(Router);
   snackbarService = inject(SnackBarService);
   headerService = inject(HeaderTitleService);
+
+  usuarioId$: Observable<number | undefined> = this.store.select(selectUserId);
 
   @ViewChild('meuModalAviso') modalAviso!: ConfirmationModal;
 
@@ -73,17 +79,29 @@ export class Agendamentos implements OnInit {
 
   fazerAcao() {
     if (this.idAgendamento) {
-      this.agendamentoService.deleteAgendamentoAula(this.idAgendamento).subscribe({
-        next: () => {
-          this.snackbarService.showSuccess('Agendamento excluido com sucesso!');
-          this.buscarAgendamentos(new Date(this.dataAtual));
-        },
-        error: (err) => {
-          this.snackbarService.showError('Não foi possível deletar agendamento!');
-          console.log(err);
-          this.idAgendamento = undefined;
-        },
-      });
+      this.usuarioId$
+        .pipe(
+          filter((id) => !!id),
+          take(1),
+          switchMap((usuarioId) => {
+            return this.agendamentoService.cancelarAgendamentoAula(
+              this.idAgendamento!,
+              usuarioId!,
+            );
+          }),
+        )
+        .subscribe({
+          next: () => {
+            this.snackbarService.showSuccess('Agendamento cancelado com sucesso!');
+            this.buscarAgendamentos(new Date(this.dataAtual));
+            this.idAgendamento = undefined;
+          },
+          error: (err) => {
+            this.snackbarService.showError('Não foi possível cancelar agendamento!');
+            console.log(err);
+            this.idAgendamento = undefined;
+          },
+        });
     }
   }
 

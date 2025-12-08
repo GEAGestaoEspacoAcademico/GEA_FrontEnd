@@ -37,6 +37,16 @@ export class AgendamentoService {
     return this.http.delete<void>(`${this.baseUrl}/aulas/${agendamentoAulaId}`);
   }
 
+  public cancelarAgendamentoAula(
+    agendamentoAulaId: number,
+    usuarioId: number,
+  ): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${agendamentoAulaId}/cancelar`, {
+      usuarioId,
+      motivoCancelamento: 'Solicitação do professor',
+    });
+  }
+
   public getAgendamentoAula(): Observable<AgendamentoAula[]> {
     return this.http.get<AgendamentoAula[]>(`${this.baseUrl}/aulas`);
   }
