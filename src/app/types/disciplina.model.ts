@@ -1,15 +1,18 @@
 ///disciplinas/{disciplinaId}
 export interface AtualizarDisciplinaRequest {
-  cursoId: number;
+  disciplinaId: number;
   disciplinaNome: string;
-  disciplinaSemestre: string;
+  semestreId: number;
+  semestreNome: string;
+  cursoId: number;
+  cursoNome: string;
 }
 
 ///disciplinas
 export interface CriarDisciplinaRequest {
   cursoId: number;
   disciplinaNome: string;
-  disciplinaSemestre: string;
+  semestreId: number;
 }
 
 //!Caso no final do desenvolvimento, elas continuem iguais, simplificar para apenas uma interface
