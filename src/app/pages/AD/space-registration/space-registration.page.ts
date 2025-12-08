@@ -73,7 +73,7 @@ export class SpaceRegistrationPage implements OnInit {
       .subscribe({
         next: () => {
           this.snackBar.showSuccess('Sala salva com sucesso!');
-          this.router.navigate(['/secretaria/visualizar-espacos']);
+          this.router.navigate(['/ad/home']);
         },
         error: () => {
           this.snackBar.showError('Erro ao salvar sala.');

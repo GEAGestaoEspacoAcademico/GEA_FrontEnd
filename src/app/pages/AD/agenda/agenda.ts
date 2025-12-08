@@ -79,7 +79,6 @@ export class Agenda implements OnInit {
         switchMap((userId) => {
           return forkJoin({
             disciplinas: this.professorService.getDisciplinasDoProfessor(userId),
-            cursos: this.professorService.getCursosDoProfessor(userId),
             tipoSalas: this.tiposSalaService.getTiposSala(),
             recursos: this.recursosService.getRecursos(),
             janelasHorario: this.janelasHorarioService.getJanelasHorario(),
@@ -87,12 +86,11 @@ export class Agenda implements OnInit {
         }),
       )
       .subscribe({
-        next: ({ disciplinas, cursos, tipoSalas, recursos, janelasHorario }) => {
+        next: ({ disciplinas, tipoSalas, recursos, janelasHorario }) => {
           const disciplinaOptions = disciplinas.map((d) => ({
             label: d.disciplinaNome,
             value: d.disciplinaId,
           }));
-          const cursoOptions = cursos.map((c) => ({ label: c.cursoNome, value: c.cursoId }));
           const tiposSalaOptions = tipoSalas.map((ts) => ({
             label: ts.tipoSalaNome,
             value: ts.tipoSalaId,
@@ -108,7 +106,6 @@ export class Agenda implements OnInit {
           this.isloading = false;
           this.formFields = this.createFormFields(
             disciplinaOptions,
-            cursoOptions,
             tiposSalaOptions,
             recursoOptions,
             janelaHorarioOptions,
@@ -123,7 +120,6 @@ export class Agenda implements OnInit {
 
   private createFormFields(
     disciplinaOptions: Option[],
-    cursoOptions: Option[],
     tiposSalaOptions: Option[],
     recursoOptions: Option[],
     janelaHorarioOptions: Option[],
@@ -159,13 +155,6 @@ export class Agenda implements OnInit {
         type: 'select',
         options: janelaHorarioOptions,
         validators: { required: true, errorMessages: { required: 'O horário é obrigatório.' } },
-      },
-      {
-        name: 'cursoId',
-        label: 'Curso',
-        type: 'select',
-        options: cursoOptions,
-        validators: { required: true, errorMessages: { required: 'O curso é obrigatório.' } },
       },
       {
         name: 'disciplinaId',

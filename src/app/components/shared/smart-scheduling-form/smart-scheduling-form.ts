@@ -349,8 +349,13 @@ export class SmartSchedulingForm implements OnInit {
       return;
     }
 
+    let inicioFormatado = inicioSelecionado;
+    if (inicioSelecionado.length === 4) {
+      inicioFormatado = '0' + inicioSelecionado;
+    }
+
     const todosFins = this.listaHorarios.map((j) => j.horaFim);
-    const finsValidos = todosFins.filter((fim) => fim > inicioSelecionado);
+    const finsValidos = todosFins.filter((fim) => fim > inicioFormatado);
     this.horariosDisponiveisFim = Array.from(new Set(finsValidos)).sort();
 
     const form = modo === 'aula' ? this.aulaForm : this.eventoForm;
