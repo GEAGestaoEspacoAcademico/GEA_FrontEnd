@@ -17,8 +17,9 @@ import type {
 } from '../../../types/professor.types';
 import type { Cargo } from '../../../models/cargo.model';
 import { CargoService } from '../../../services/cargo/cargo.service';
-import type { AtualizarUsuarioAdminResquest } from '../../../types/usuario.type';
+import type { AtualizarUsuarioAdminResquest, GetUsuarioResponse } from '../../../types/usuario.type';
 import type { AtulizarUsuarioFormulario } from '../../../types/util.types';
+import { CoordenadorService } from '../../../services/coordenador/coordenador.service';
 
 @Component({
   selector: 'app-edit-professor-modal',
@@ -35,6 +36,7 @@ export class EditProfessorModal implements OnInit {
   private readonly snackbarService = inject(SnackBarService);
   private readonly modalService = inject(NgbModal);
   private readonly professorService = inject(ProfessorService);
+  private readonly coordenadorService = inject(CoordenadorService);
   private readonly usuarioService = inject(UsuarioService);
   private readonly disciplinaService = inject(DisciplinaService);
   private readonly cargoService = inject(CargoService);
@@ -43,13 +45,14 @@ export class EditProfessorModal implements OnInit {
 
   listaDisciplinas: Disciplina[] = [];
   listaCursos: BuscarCursosProfessorResponse[] = [];
-
-  @ViewChild('EditProfessor') modalTemplate!: TemplateRef<EditProfessorModal>;
-
   listaTodasDisciplinas: Disciplina[] = []; // Todas as do sistema (para o select)
   disciplinaSelecionadaControl = new FormControl(null, Validators.required); // O controle do Select
+  
   cargos: Cargo[] = [];
+  usuarioEditar!: GetUsuarioResponse;
+  
 
+  @ViewChild('EditProfessor') modalTemplate!: TemplateRef<EditProfessorModal>;
   @ViewChild('modalAddDisciplina') modalAddDisciplina!: TemplateRef<any>;
 
   /* --- CONFIGURAÇÃO INICIAL DO FORMULÁRIO --- */
@@ -134,16 +137,20 @@ export class EditProfessorModal implements OnInit {
     this.usuarioService.buscarUsuarioPorId(id).subscribe({
       next: (usuario) => {
         this.buscarDadosAuxiliar(usuario);
+        this.usuarioEditar=usuario;
 
         const cargo = usuario.cargoId;
 
         this.validarRegistroCondicional(cargo);
 
-        if (this.isCargoAcademico(cargo)) {
+        if (usuario.cargoNome === "PROFESSOR") {
           this.buscarDadosProfessor(id);
           this.carregarDisciplinas();
           this.carregarCursos();
-        } else {
+        } else if(usuario.cargoNome === "COORDENADOR"){
+          this.buscarDadosCoordenador(usuario.usuarioId);
+          this.carregarDisciplinas();
+        }else{
           this.listaDisciplinas = [];
           this.listaCursos = [];
         }
@@ -173,7 +180,7 @@ export class EditProfessorModal implements OnInit {
           usuarioId: resposta.usuarioId,
           nome: resposta.professorNome,
           email: resposta.professorEmail,
-          registro: resposta.matricula,
+          registro: resposta.registroProfessor,
           cargoId: resposta.cargoId,
         });
       },
@@ -182,6 +189,20 @@ export class EditProfessorModal implements OnInit {
         this.snackbarService.showError('Erro ao buscar detalhes do funcionario');
       },
     });
+  }
+
+  buscarDadosCoordenador(coornadorId: number) {
+    this.coordenadorService.getCoordenadorPorId(coornadorId).subscribe({
+      next: (coordenador) => {
+        this.form.patchValue({
+          usuarioId: coordenador.coordenadorUsuarioId,
+          nome: coordenador.coordenadorNome,
+          email: coordenador.coordenadorEmail,
+          registro: coordenador.registroCoordenacao,
+          cargoId: coordenador.cargoId,
+        });
+      }
+    })
   }
 
   /* --- SALVAR --- */
@@ -196,11 +217,10 @@ export class EditProfessorModal implements OnInit {
 
     const dadosForm: AtulizarUsuarioFormulario = this.form.getRawValue();
     const id = this.usuarioId || dadosForm.usuarioId;
-    const isAcademico = this.isProfessorOuCoordenador;
 
     let requestObservable: Observable<Professor | any>;
 
-    if (isAcademico) {
+    if (this.usuarioEditar.cargoNome === "PROFESSOR") {
       const idsDisciplinas = this.listaDisciplinas.map((d) => d.disciplinaId);
 
       const dadosParaApi: AtualizarProfessorRequest = {
@@ -209,11 +229,11 @@ export class EditProfessorModal implements OnInit {
         email: dadosForm.email,
         cargoId: dadosForm.cargoId,
         disciplinasIds: idsDisciplinas,
+        registroProfessor: dadosForm.registro
       };
 
       requestObservable = this.professorService.editarProfessor(id, dadosParaApi);
     } else {
-      console.log("Atualizar usuario")
       const dadosParaApi: AtualizarUsuarioAdminResquest = {
         usuarioNome: dadosForm.nome,
         usuarioEmail: dadosForm.email,
@@ -221,6 +241,7 @@ export class EditProfessorModal implements OnInit {
       };
 
       requestObservable = this.usuarioService.atualizarUsuarioAdmin(id, dadosParaApi);
+
     }
 
     requestObservable.subscribe({
@@ -231,7 +252,7 @@ export class EditProfessorModal implements OnInit {
       },
       error: (err) => {
         console.error('Erro ao atualizar usuário:', err);
-        this.snackbarService.showError('Erro ao atualizar. Verifique os dados e tente novamente.');
+        this.snackbarService.showError(err.error.message);
       },
     });
   }
@@ -262,7 +283,7 @@ export class EditProfessorModal implements OnInit {
 
   isCargoAcademico(cargoId: number): boolean {
     return [3, 4].includes(cargoId);
-  }
+  } 
 
   get isProfessorOuCoordenador(): boolean {
     const id = this.form.get('cargoId')?.value;

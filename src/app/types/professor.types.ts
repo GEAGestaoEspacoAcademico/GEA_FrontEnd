@@ -6,7 +6,8 @@ export interface AtualizarProfessorRequest {
   nome: string,
   email: string,
   cargoId: number,
-  disciplinasIds: number[]
+  disciplinasIds: number[],
+  registroProfessor: number
 }
 
 ///professores

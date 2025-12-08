@@ -2,6 +2,6 @@ export interface Professor {
   usuarioId: number,
   professorNome: string,
   professorEmail: string,
-  matricula: number,
+  registroProfessor: number,
   cargoId: number
 }

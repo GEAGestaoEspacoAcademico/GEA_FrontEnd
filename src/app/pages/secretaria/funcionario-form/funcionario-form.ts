@@ -126,7 +126,11 @@ export class FuncionarioForm implements OnInit {
     }
 
     const emailCtrl = this.form.get('email') as AbstractControl;
-    emailCtrl.setValidators([Validators.required, Validators.email]);
+    emailCtrl.setValidators([
+      Validators.required, 
+      Validators.email,
+      Validators.pattern(/^[a-zA-Z0-9._%+-]+@fatec\.sp\.gov\.br$/)
+    ]);
 
     this.form.updateValueAndValidity();
   }
@@ -230,7 +234,6 @@ export class FuncionarioForm implements OnInit {
           matricula: registro,
         } as CriarSecretariaRequest;
 
-        debugger;
         observableSalvar = this.secretariaService.cadastrar(payload);
         mensagemSucesso = 'Secretaria cadastrada com sucesso!';
         break;
